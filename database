@@ -1,0 +1,16 @@
+CREATE DATABASE sistema_login;
+USE sistema_login;              
+
+CREATE TABLE usuarios (          
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario VARCHAR(50) NOT NULL UNIQUE,
+    cargo VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    CHECK (usuario REGEXP '^[a-zA-Z]+$'),
+    CHECK (senha REGEXP '^[a-zA-Z0-9]+$'),
+    CHECK (cargo REGEXP '^[a-zA-Z]+$')
+);
+
+USE sistema_login;
+SELECT * FROM usuarios
