@@ -52,6 +52,7 @@ public class TelaLogin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jCheckBox1 = new javax.swing.JCheckBox();
         txtLogin = new javax.swing.JTextField();
         btnLogin = new javax.swing.JButton();
         txtSenha = new javax.swing.JPasswordField();
@@ -65,6 +66,19 @@ public class TelaLogin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
+
+        jCheckBox1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/olho-aberto.png"))); // NOI18N
+        jCheckBox1.setInheritsPopupMenu(true);
+        jCheckBox1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/images/olho-vermelho.png"))); // NOI18N
+        jCheckBox1.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/olho-vermelho.png"))); // NOI18N
+        jCheckBox1.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/olho-vermelho.png"))); // NOI18N
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jCheckBox1);
+        jCheckBox1.setBounds(510, 230, 30, 28);
         getContentPane().add(txtLogin);
         txtLogin.setBounds(270, 130, 280, 60);
 
@@ -173,6 +187,10 @@ public class TelaLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSenhaActionPerformed
 
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -213,6 +231,7 @@ public class TelaLogin extends javax.swing.JFrame {
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnResgistrar;
     private javax.swing.JCheckBox chbLembre;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
