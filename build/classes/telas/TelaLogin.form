@@ -33,13 +33,13 @@
         </Property>
         <Property name="inheritsPopupMenu" type="boolean" value="true"/>
         <Property name="rolloverIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/images/olho-vermelho.png"/>
+          <Image iconType="3" name="/images/olho-fechado.png"/>
         </Property>
         <Property name="rolloverSelectedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/images/olho-vermelho.png"/>
+          <Image iconType="3" name="/images/olho-fechado.png"/>
         </Property>
         <Property name="selectedIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/images/olho-vermelho.png"/>
+          <Image iconType="3" name="/images/olho-fechado.png"/>
         </Property>
       </Properties>
       <Events>
