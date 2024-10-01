@@ -229,7 +229,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void btnEsqueceuASenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsqueceuASenhaActionPerformed
         dispose();
-       new TelaRegistro().setVisible(true);
+       new TelaSenha().setVisible(true);
     }//GEN-LAST:event_btnEsqueceuASenhaActionPerformed
 
     /**
