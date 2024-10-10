@@ -53,7 +53,7 @@ public class TelaLogin extends javax.swing.JFrame {
     private void initComponents() {
 
         jlibEsqueceuASenha = new javax.swing.JLabel();
-        btnEsqueceuASenha = new javax.swing.JToggleButton();
+        btnEsqueceuSenha = new javax.swing.JButton();
         chbMostrarSenha = new javax.swing.JCheckBox();
         txtLogin = new javax.swing.JTextField();
         btnLogin = new javax.swing.JButton();
@@ -79,15 +79,17 @@ public class TelaLogin extends javax.swing.JFrame {
         jlibEsqueceuASenha.setForeground(new java.awt.Color(194, 166, 40));
         jlibEsqueceuASenha.setText("Esqueceu a senha?");
         getContentPane().add(jlibEsqueceuASenha);
-        jlibEsqueceuASenha.setBounds(590, 290, 100, 30);
+        jlibEsqueceuASenha.setBounds(450, 200, 100, 20);
 
-        btnEsqueceuASenha.addActionListener(new java.awt.event.ActionListener() {
+        btnEsqueceuSenha.setBackground(new java.awt.Color(30, 30, 30));
+        btnEsqueceuSenha.setContentAreaFilled(false);
+        btnEsqueceuSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEsqueceuASenhaActionPerformed(evt);
+                btnEsqueceuSenhaActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEsqueceuASenha);
-        btnEsqueceuASenha.setBounds(580, 290, 115, 27);
+        getContentPane().add(btnEsqueceuSenha);
+        btnEsqueceuSenha.setBounds(440, 200, 110, 20);
 
         chbMostrarSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/olho-aberto.png"))); // NOI18N
         chbMostrarSenha.setInheritsPopupMenu(true);
@@ -167,7 +169,7 @@ public class TelaLogin extends javax.swing.JFrame {
         jilbTermosDeServiço.setText("Termos de Serviço | Politica de Privacidade");
         jilbTermosDeServiço.setToolTipText("");
         getContentPane().add(jilbTermosDeServiço);
-        jilbTermosDeServiço.setBounds(330, 440, 180, 20);
+        jilbTermosDeServiço.setBounds(330, 430, 180, 20);
 
         jilbCreditos2.setBackground(new java.awt.Color(255, 255, 255));
         jilbCreditos2.setFont(new java.awt.Font("SansSerif", 1, 8)); // NOI18N
@@ -206,14 +208,14 @@ public class TelaLogin extends javax.swing.JFrame {
         getContentPane().add(btnResgistrar);
         btnResgistrar.setBounds(430, 350, 70, 20);
 
-        jlibLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/5b47b19d-edec-41ce-b932-50a519723782 (1) (1).png"))); // NOI18N
+        jlibLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo.png"))); // NOI18N
         getContentPane().add(jlibLogo);
-        jlibLogo.setBounds(270, 10, 280, 130);
+        jlibLogo.setBounds(280, 40, 260, 60);
 
         jlibBlueSquad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/azul.png"))); // NOI18N
         jlibBlueSquad.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(5, 27, 74), 1, true));
         getContentPane().add(jlibBlueSquad);
-        jlibBlueSquad.setBounds(230, 20, 360, 450);
+        jlibBlueSquad.setBounds(230, 20, 360, 440);
 
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/background-contabil.png"))); // NOI18N
         Background.setText("jLabel3");
@@ -270,14 +272,14 @@ public class TelaLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_chbMostrarSenhaActionPerformed
 
-    private void btnEsqueceuASenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsqueceuASenhaActionPerformed
-        dispose();
-       new TelaSenha().setVisible(true);
-    }//GEN-LAST:event_btnEsqueceuASenhaActionPerformed
-
     private void txtLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtLoginActionPerformed
+
+    private void btnEsqueceuSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsqueceuSenhaActionPerformed
+        dispose();
+       new TelaSenha().setVisible(true);
+    }//GEN-LAST:event_btnEsqueceuSenhaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -316,7 +318,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
-    private javax.swing.JToggleButton btnEsqueceuASenha;
+    private javax.swing.JButton btnEsqueceuSenha;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnResgistrar;
     private javax.swing.JCheckBox chbLembre;
