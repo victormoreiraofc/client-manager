@@ -45,12 +45,30 @@ public class TelaRegistrar extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
+
+        txtEmail.setBackground(new java.awt.Color(4, 21, 57));
+        txtEmail.setForeground(new java.awt.Color(115, 115, 115));
+        txtEmail.setText("  seuemail@gmail.com");
+        txtEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
+        txtEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEmailActionPerformed(evt);
+            }
+        });
         getContentPane().add(txtEmail);
-        txtEmail.setBounds(250, 100, 310, 60);
+        txtEmail.setBounds(260, 100, 280, 40);
+
+        txtUsuario.setBackground(new java.awt.Color(4, 21, 57));
+        txtUsuario.setForeground(new java.awt.Color(115, 115, 115));
+        txtUsuario.setText("  desenvolvedoradmin123");
+        txtUsuario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
         getContentPane().add(txtUsuario);
-        txtUsuario.setBounds(250, 190, 310, 60);
+        txtUsuario.setBounds(260, 190, 280, 40);
+
+        txtSenha.setBackground(new java.awt.Color(4, 21, 57));
+        txtSenha.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
         getContentPane().add(txtSenha);
-        txtSenha.setBounds(260, 280, 300, 50);
+        txtSenha.setBounds(260, 280, 280, 40);
 
         btnRegistrar.setText("Registrar-se");
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
@@ -98,6 +116,10 @@ public class TelaRegistrar extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmailActionPerformed
 
     /**
      * @param args the command line arguments

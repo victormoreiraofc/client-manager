@@ -8,7 +8,35 @@ import java.util.Properties;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.geom.RoundRectangle2D;
+import javax.swing.JLabel;
 
+class RoundedLabel extends JLabel {
+    private int cornerRadius;
+
+    public RoundedLabel(String text, int cornerRadius) {
+        super(text);
+        this.cornerRadius = cornerRadius;
+        setOpaque(false); // Permite que o fundo seja transparente
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        // Desenha o fundo arredondado
+        g2.setColor(getBackground());
+        g2.fill(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius));
+
+        // Desenha o texto normalmente
+        super.paintComponent(g);
+    }
+}
 
 public class TelaLogin extends javax.swing.JFrame {
 
@@ -16,6 +44,20 @@ public class TelaLogin extends javax.swing.JFrame {
     
     public TelaLogin() {
         initComponents();
+            initComponents();
+    
+    // Substitua o jlibBlueSquad com um RoundedLabel
+    RoundedLabel roundedLabel = new RoundedLabel("", 30);  // 30 é o raio dos cantos
+    roundedLabel.setBackground(new Color(5, 27, 74));  // Definir a cor de fundo
+    roundedLabel.setBounds(jlibBlueSquad.getBounds());  // Pega as dimensões do jlibBlueSquad original
+    
+    // Remove o JLabel original e adiciona o RoundedLabel no lugar
+    getContentPane().remove(jlibBlueSquad);
+    getContentPane().add(roundedLabel);
+
+    // Atualiza a tela para refletir as mudanças
+    getContentPane().revalidate();
+    getContentPane().repaint();
         carregarCredenciais(); // Carrega as credenciais salvas
     }
     // Método para salvar as credenciais no arquivo
@@ -47,7 +89,7 @@ public class TelaLogin extends javax.swing.JFrame {
             
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -72,7 +114,7 @@ public class TelaLogin extends javax.swing.JFrame {
         Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Sistema da CTCONTAB");
+        setTitle("CT CONTAB Contabilidade & Consultaria");
         getContentPane().setLayout(null);
 
         jlibEsqueceuASenha.setFont(new java.awt.Font("SansSerif", 1, 10)); // NOI18N
@@ -280,7 +322,7 @@ public class TelaLogin extends javax.swing.JFrame {
         dispose();
        new TelaSenha().setVisible(true);
     }//GEN-LAST:event_btnEsqueceuSenhaActionPerformed
-
+    
     /**
      * @param args the command line arguments
      */
