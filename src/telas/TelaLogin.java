@@ -8,35 +8,6 @@ import java.util.Properties;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.geom.RoundRectangle2D;
-import javax.swing.JLabel;
-
-class RoundedLabel extends JLabel {
-    private int cornerRadius;
-
-    public RoundedLabel(String text, int cornerRadius) {
-        super(text);
-        this.cornerRadius = cornerRadius;
-        setOpaque(false); // Permite que o fundo seja transparente
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-        // Desenha o fundo arredondado
-        g2.setColor(getBackground());
-        g2.fill(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), cornerRadius, cornerRadius));
-
-        // Desenha o texto normalmente
-        super.paintComponent(g);
-    }
-}
 
 public class TelaLogin extends javax.swing.JFrame {
 
@@ -44,22 +15,9 @@ public class TelaLogin extends javax.swing.JFrame {
     
     public TelaLogin() {
         initComponents();
-            initComponents();
-    
-    // Substitua o jlibBlueSquad com um RoundedLabel
-    RoundedLabel roundedLabel = new RoundedLabel("", 30);  // 30 é o raio dos cantos
-    roundedLabel.setBackground(new Color(5, 27, 74));  // Definir a cor de fundo
-    roundedLabel.setBounds(jlibBlueSquad.getBounds());  // Pega as dimensões do jlibBlueSquad original
-    
-    // Remove o JLabel original e adiciona o RoundedLabel no lugar
-    getContentPane().remove(jlibBlueSquad);
-    getContentPane().add(roundedLabel);
-
-    // Atualiza a tela para refletir as mudanças
-    getContentPane().revalidate();
-    getContentPane().repaint();
         carregarCredenciais(); // Carrega as credenciais salvas
     }
+    
     // Método para salvar as credenciais no arquivo
     private void salvarCredenciais(String usuario, String senha) {
         Properties props = new Properties();
@@ -117,11 +75,11 @@ public class TelaLogin extends javax.swing.JFrame {
         setTitle("CT CONTAB Contabilidade & Consultaria");
         getContentPane().setLayout(null);
 
-        jlibEsqueceuASenha.setFont(new java.awt.Font("SansSerif", 1, 10)); // NOI18N
+        jlibEsqueceuASenha.setFont(new java.awt.Font("SansSerif", 0, 10)); // NOI18N
         jlibEsqueceuASenha.setForeground(new java.awt.Color(194, 166, 40));
         jlibEsqueceuASenha.setText("Esqueceu a senha?");
         getContentPane().add(jlibEsqueceuASenha);
-        jlibEsqueceuASenha.setBounds(450, 200, 100, 20);
+        jlibEsqueceuASenha.setBounds(510, 250, 100, 20);
 
         btnEsqueceuSenha.setBackground(new java.awt.Color(30, 30, 30));
         btnEsqueceuSenha.setContentAreaFilled(false);
@@ -131,7 +89,7 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnEsqueceuSenha);
-        btnEsqueceuSenha.setBounds(440, 200, 110, 20);
+        btnEsqueceuSenha.setBounds(500, 250, 110, 20);
 
         chbMostrarSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/olho-aberto.png"))); // NOI18N
         chbMostrarSenha.setInheritsPopupMenu(true);
@@ -144,7 +102,7 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
         getContentPane().add(chbMostrarSenha);
-        chbMostrarSenha.setBounds(510, 220, 30, 40);
+        chbMostrarSenha.setBounds(560, 270, 30, 40);
 
         txtLogin.setBackground(new java.awt.Color(4, 21, 57));
         txtLogin.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
@@ -156,7 +114,7 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txtLogin);
-        txtLogin.setBounds(270, 150, 280, 40);
+        txtLogin.setBounds(320, 200, 280, 40);
 
         btnLogin.setBackground(new java.awt.Color(194, 166, 40));
         btnLogin.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
@@ -168,7 +126,7 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnLogin);
-        btnLogin.setBounds(300, 300, 220, 40);
+        btnLogin.setBounds(320, 360, 280, 40);
 
         txtSenha.setBackground(new java.awt.Color(4, 21, 57));
         txtSenha.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
@@ -180,21 +138,21 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txtSenha);
-        txtSenha.setBounds(270, 220, 280, 40);
+        txtSenha.setBounds(320, 270, 280, 40);
 
         jilbEmailOuUsuario.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jilbEmailOuUsuario.setForeground(new java.awt.Color(194, 166, 40));
         jilbEmailOuUsuario.setText("Email ou Usuário:");
         getContentPane().add(jilbEmailOuUsuario);
-        jilbEmailOuUsuario.setBounds(270, 130, 190, 16);
+        jilbEmailOuUsuario.setBounds(320, 180, 190, 16);
 
         jilbSenha.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jilbSenha.setForeground(new java.awt.Color(194, 166, 40));
         jilbSenha.setText("Senha:");
         getContentPane().add(jilbSenha);
-        jilbSenha.setBounds(270, 200, 170, 20);
+        jilbSenha.setBounds(320, 250, 170, 20);
 
-        chbLembre.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        chbLembre.setFont(new java.awt.Font("Open Sans", 1, 10)); // NOI18N
         chbLembre.setForeground(new java.awt.Color(194, 166, 40));
         chbLembre.setText("Lembre-me");
         chbLembre.addActionListener(new java.awt.event.ActionListener() {
@@ -203,7 +161,7 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
         getContentPane().add(chbLembre);
-        chbLembre.setBounds(270, 270, 100, 20);
+        chbLembre.setBounds(320, 320, 100, 19);
 
         jilbTermosDeServiço.setBackground(new java.awt.Color(255, 255, 255));
         jilbTermosDeServiço.setFont(new java.awt.Font("SansSerif", 1, 8)); // NOI18N
@@ -211,34 +169,34 @@ public class TelaLogin extends javax.swing.JFrame {
         jilbTermosDeServiço.setText("Termos de Serviço | Politica de Privacidade");
         jilbTermosDeServiço.setToolTipText("");
         getContentPane().add(jilbTermosDeServiço);
-        jilbTermosDeServiço.setBounds(330, 430, 180, 20);
+        jilbTermosDeServiço.setBounds(380, 480, 180, 20);
 
         jilbCreditos2.setBackground(new java.awt.Color(255, 255, 255));
         jilbCreditos2.setFont(new java.awt.Font("SansSerif", 1, 8)); // NOI18N
         jilbCreditos2.setForeground(new java.awt.Color(115, 115, 115));
         jilbCreditos2.setText("18 do curso de Ciência da Computação da Uninove.");
         getContentPane().add(jilbCreditos2);
-        jilbCreditos2.setBounds(310, 390, 210, 40);
+        jilbCreditos2.setBounds(360, 440, 210, 40);
 
         jilbCreditos.setBackground(new java.awt.Color(255, 255, 255));
         jilbCreditos.setFont(new java.awt.Font("SansSerif", 1, 8)); // NOI18N
         jilbCreditos.setForeground(new java.awt.Color(115, 115, 115));
         jilbCreditos.setText("© 2024 Uninove. CT CONTAB é um projeto desenvolvido pela Turma");
         getContentPane().add(jilbCreditos);
-        jilbCreditos.setBounds(280, 390, 270, 20);
+        jilbCreditos.setBounds(330, 440, 270, 20);
 
         jilbAindaNaoTemConta.setBackground(new java.awt.Color(255, 255, 255));
-        jilbAindaNaoTemConta.setFont(new java.awt.Font("SansSerif", 1, 10)); // NOI18N
+        jilbAindaNaoTemConta.setFont(new java.awt.Font("SansSerif", 0, 10)); // NOI18N
         jilbAindaNaoTemConta.setForeground(new java.awt.Color(115, 115, 115));
         jilbAindaNaoTemConta.setText("Ainda não tem conta?");
         getContentPane().add(jilbAindaNaoTemConta);
-        jilbAindaNaoTemConta.setBounds(320, 350, 130, 20);
+        jilbAindaNaoTemConta.setBounds(380, 400, 130, 20);
 
-        jilbRegistreSe.setFont(new java.awt.Font("SansSerif", 1, 10)); // NOI18N
+        jilbRegistreSe.setFont(new java.awt.Font("SansSerif", 0, 10)); // NOI18N
         jilbRegistreSe.setForeground(new java.awt.Color(194, 166, 40));
         jilbRegistreSe.setText("  Registre-se");
         getContentPane().add(jilbRegistreSe);
-        jilbRegistreSe.setBounds(430, 350, 70, 20);
+        jilbRegistreSe.setBounds(480, 400, 70, 20);
 
         btnResgistrar.setBackground(new java.awt.Color(30, 30, 30));
         btnResgistrar.setContentAreaFilled(false);
@@ -248,23 +206,22 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnResgistrar);
-        btnResgistrar.setBounds(430, 350, 70, 20);
+        btnResgistrar.setBounds(480, 400, 70, 20);
 
         jlibLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo.png"))); // NOI18N
         getContentPane().add(jlibLogo);
-        jlibLogo.setBounds(280, 40, 260, 60);
+        jlibLogo.setBounds(350, 100, 220, 50);
 
-        jlibBlueSquad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/azul.png"))); // NOI18N
-        jlibBlueSquad.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(5, 27, 74), 1, true));
+        jlibBlueSquad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/retangulo-azul.png"))); // NOI18N
         getContentPane().add(jlibBlueSquad);
-        jlibBlueSquad.setBounds(230, 20, 360, 440);
+        jlibBlueSquad.setBounds(300, 70, 320, 440);
 
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/background-contabil.png"))); // NOI18N
         Background.setText("jLabel3");
         getContentPane().add(Background);
-        Background.setBounds(0, 0, 790, 510);
+        Background.setBounds(0, -10, 930, 660);
 
-        setSize(new java.awt.Dimension(800, 516));
+        setSize(new java.awt.Dimension(919, 622));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

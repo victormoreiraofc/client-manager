@@ -35,9 +35,9 @@ public class TelaSenha extends javax.swing.JFrame {
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/background-contabil.png"))); // NOI18N
         Background.setText("jLabel3");
         getContentPane().add(Background);
-        Background.setBounds(0, 0, 790, 510);
+        Background.setBounds(0, -10, 930, 660);
 
-        setSize(new java.awt.Dimension(801, 513));
+        setSize(new java.awt.Dimension(919, 622));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
