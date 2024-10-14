@@ -12,12 +12,14 @@ import java.io.IOException;
 public class TelaLogin extends javax.swing.JFrame {
 
     private static final String FILE_NAME = "login.properties";
-    
+
     public TelaLogin() {
         initComponents();
         carregarCredenciais(); // Carrega as credenciais salvas
+        jlibErroLogin.setVisible(false);
+        jlibErroLoginIcon.setVisible(false);
     }
-    
+
     // Método para salvar as credenciais no arquivo
     private void salvarCredenciais(String usuario, String senha) {
         Properties props = new Properties();
@@ -41,17 +43,19 @@ public class TelaLogin extends javax.swing.JFrame {
             if (usuario != null && senha != null) {
                 txtLogin.setText(usuario);
                 txtSenha.setText(senha);
-                chbLembre.setSelected(true); 
+                chbLembre.setSelected(true);
             }
         } catch (IOException e) {
-            
+
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jlibErroLoginIcon = new javax.swing.JLabel();
+        jlibErroLogin = new javax.swing.JLabel();
         jlibEsqueceuASenha = new javax.swing.JLabel();
         btnEsqueceuSenha = new javax.swing.JButton();
         chbMostrarSenha = new javax.swing.JCheckBox();
@@ -74,6 +78,18 @@ public class TelaLogin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CT CONTAB Contabilidade & Consultaria");
         getContentPane().setLayout(null);
+
+        jlibErroLoginIcon.setFont(new java.awt.Font("Segoe UI", 2, 10)); // NOI18N
+        jlibErroLoginIcon.setForeground(new java.awt.Color(255, 0, 0));
+        jlibErroLoginIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/alert-icon.png"))); // NOI18N
+        getContentPane().add(jlibErroLoginIcon);
+        jlibErroLoginIcon.setBounds(570, 210, 20, 20);
+
+        jlibErroLogin.setFont(new java.awt.Font("Segoe UI", 2, 10)); // NOI18N
+        jlibErroLogin.setForeground(new java.awt.Color(255, 0, 0));
+        jlibErroLogin.setText("Usuário ou senha estão errados!");
+        getContentPane().add(jlibErroLogin);
+        jlibErroLogin.setBounds(456, 310, 144, 40);
 
         jlibEsqueceuASenha.setFont(new java.awt.Font("SansSerif", 0, 10)); // NOI18N
         jlibEsqueceuASenha.setForeground(new java.awt.Color(194, 166, 40));
@@ -106,7 +122,8 @@ public class TelaLogin extends javax.swing.JFrame {
 
         txtLogin.setBackground(new java.awt.Color(4, 21, 57));
         txtLogin.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        txtLogin.setForeground(new java.awt.Color(255, 255, 255));
+        txtLogin.setForeground(new java.awt.Color(115, 115, 115));
+        txtLogin.setText("  seuemail@gmail.com");
         txtLogin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
         txtLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,8 +146,8 @@ public class TelaLogin extends javax.swing.JFrame {
         btnLogin.setBounds(320, 360, 280, 40);
 
         txtSenha.setBackground(new java.awt.Color(4, 21, 57));
-        txtSenha.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        txtSenha.setForeground(new java.awt.Color(255, 255, 255));
+        txtSenha.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        txtSenha.setForeground(new java.awt.Color(115, 115, 115));
         txtSenha.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
         txtSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -152,7 +169,7 @@ public class TelaLogin extends javax.swing.JFrame {
         getContentPane().add(jilbSenha);
         jilbSenha.setBounds(320, 250, 170, 20);
 
-        chbLembre.setFont(new java.awt.Font("Open Sans", 1, 10)); // NOI18N
+        chbLembre.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         chbLembre.setForeground(new java.awt.Color(194, 166, 40));
         chbLembre.setText("Lembre-me");
         chbLembre.addActionListener(new java.awt.event.ActionListener() {
@@ -228,7 +245,8 @@ public class TelaLogin extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         try {
             Usuario usuarioLogado = CTCONTAB.fazerLoginU(txtLogin.getText(), new String(txtSenha.getPassword()));
-        
+
+            // Se o login for bem-sucedido
             if (usuarioLogado != null) {
                 if (chbLembre.isSelected()) {
                     salvarCredenciais(txtLogin.getText(), new String(txtSenha.getPassword()));
@@ -238,9 +256,9 @@ public class TelaLogin extends javax.swing.JFrame {
 
                 dispose();
                 new TelaMenu(usuarioLogado).setVisible(true);
-
             } else {
-                JOptionPane.showMessageDialog(null,"Usuário, email e/ou senha inválidos");
+                // Se o login falhar
+                mostrarMensagemErro();
             }
 
         } catch (ClassNotFoundException x) {
@@ -250,9 +268,15 @@ public class TelaLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
+    private void mostrarMensagemErro() {
+        jlibErroLoginIcon.setVisible(true);
+        jlibErroLogin.setText("Usuário ou senha estão errados!");
+        jlibErroLogin.setVisible(true); // Mostra a mensagem de erro
+    }
+
     private void btnResgistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResgistrarActionPerformed
-       dispose();
-       new TelaRegistrar().setVisible(true);
+        dispose();
+        new TelaRegistrar().setVisible(true);
     }//GEN-LAST:event_btnResgistrarActionPerformed
 
     private void chbLembreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbLembreActionPerformed
@@ -277,9 +301,9 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void btnEsqueceuSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEsqueceuSenhaActionPerformed
         dispose();
-       new TelaSenha().setVisible(true);
+        new TelaSenha().setVisible(true);
     }//GEN-LAST:event_btnEsqueceuSenhaActionPerformed
-    
+
     /**
      * @param args the command line arguments
      */
@@ -294,16 +318,24 @@ public class TelaLogin extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaLogin.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaLogin.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaLogin.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaLogin.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -330,6 +362,8 @@ public class TelaLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jilbSenha;
     private javax.swing.JLabel jilbTermosDeServiço;
     private javax.swing.JLabel jlibBlueSquad;
+    private javax.swing.JLabel jlibErroLogin;
+    private javax.swing.JLabel jlibErroLoginIcon;
     private javax.swing.JLabel jlibEsqueceuASenha;
     private javax.swing.JLabel jlibLogo;
     private javax.swing.JTextField txtLogin;

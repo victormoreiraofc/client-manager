@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package telas;
 
 import Dados.Usuario;
@@ -12,6 +8,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+import java.awt.Color;
+
 /**
  *
  * @author Lucas
@@ -34,13 +34,17 @@ public class TelaRegistrar extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jlibForcaSenha = new javax.swing.JLabel();
+        jlibErroUsuario = new javax.swing.JLabel();
+        jlibErroEmail = new javax.swing.JLabel();
+        jProgressBar = new javax.swing.JProgressBar();
         jilbTermosDeServiço = new javax.swing.JLabel();
         jilbCreditos = new javax.swing.JLabel();
         jilbCreditos2 = new javax.swing.JLabel();
         btnLogin = new javax.swing.JButton();
         jlibLogo = new javax.swing.JLabel();
-        jilbEmailOuUsuario1 = new javax.swing.JLabel();
-        jilbEmailOuUsuario = new javax.swing.JLabel();
+        jilbUsuario = new javax.swing.JLabel();
+        jilbEmail = new javax.swing.JLabel();
         jilbSenha = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
         txtUsuario = new javax.swing.JTextField();
@@ -50,6 +54,26 @@ public class TelaRegistrar extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(null);
+
+        jlibForcaSenha.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jlibForcaSenha.setForeground(new java.awt.Color(115, 115, 115));
+        jlibForcaSenha.setText("Força da Senha:");
+        getContentPane().add(jlibForcaSenha);
+        jlibForcaSenha.setBounds(490, 360, 110, 14);
+
+        jlibErroUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/error-icon.png"))); // NOI18N
+        getContentPane().add(jlibErroUsuario);
+        jlibErroUsuario.setBounds(585, 230, 20, 20);
+
+        jlibErroEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/error-icon.png"))); // NOI18N
+        getContentPane().add(jlibErroEmail);
+        jlibErroEmail.setBounds(585, 160, 15, 20);
+
+        jProgressBar.setBackground(new java.awt.Color(115, 115, 115));
+        jProgressBar.setForeground(new java.awt.Color(115, 115, 115));
+        jProgressBar.setBorder(null);
+        getContentPane().add(jProgressBar);
+        jProgressBar.setBounds(320, 364, 110, 10);
 
         jilbTermosDeServiço.setBackground(new java.awt.Color(255, 255, 255));
         jilbTermosDeServiço.setFont(new java.awt.Font("SansSerif", 1, 8)); // NOI18N
@@ -89,17 +113,17 @@ public class TelaRegistrar extends javax.swing.JFrame {
         getContentPane().add(jlibLogo);
         jlibLogo.setBounds(350, 90, 220, 50);
 
-        jilbEmailOuUsuario1.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        jilbEmailOuUsuario1.setForeground(new java.awt.Color(194, 166, 40));
-        jilbEmailOuUsuario1.setText("Usuário:");
-        getContentPane().add(jilbEmailOuUsuario1);
-        jilbEmailOuUsuario1.setBounds(320, 230, 190, 16);
+        jilbUsuario.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jilbUsuario.setForeground(new java.awt.Color(194, 166, 40));
+        jilbUsuario.setText("Usuário:");
+        getContentPane().add(jilbUsuario);
+        jilbUsuario.setBounds(320, 230, 190, 16);
 
-        jilbEmailOuUsuario.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        jilbEmailOuUsuario.setForeground(new java.awt.Color(194, 166, 40));
-        jilbEmailOuUsuario.setText("Email:");
-        getContentPane().add(jilbEmailOuUsuario);
-        jilbEmailOuUsuario.setBounds(320, 160, 190, 16);
+        jilbEmail.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jilbEmail.setForeground(new java.awt.Color(194, 166, 40));
+        jilbEmail.setText("Email:");
+        getContentPane().add(jilbEmail);
+        jilbEmail.setBounds(320, 160, 190, 16);
 
         jilbSenha.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jilbSenha.setForeground(new java.awt.Color(194, 166, 40));
@@ -116,6 +140,11 @@ public class TelaRegistrar extends javax.swing.JFrame {
                 txtEmailActionPerformed(evt);
             }
         });
+        txtEmail.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtEmailKeyReleased(evt);
+            }
+        });
         getContentPane().add(txtEmail);
         txtEmail.setBounds(320, 180, 280, 40);
 
@@ -123,11 +152,22 @@ public class TelaRegistrar extends javax.swing.JFrame {
         txtUsuario.setForeground(new java.awt.Color(115, 115, 115));
         txtUsuario.setText("  desenvolvedoradmin123");
         txtUsuario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
+        txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtUsuarioKeyReleased(evt);
+            }
+        });
         getContentPane().add(txtUsuario);
         txtUsuario.setBounds(320, 250, 280, 40);
 
         txtSenha.setBackground(new java.awt.Color(4, 21, 57));
+        txtSenha.setForeground(new java.awt.Color(115, 115, 115));
         txtSenha.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
+        txtSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSenhaKeyReleased(evt);
+            }
+        });
         getContentPane().add(txtSenha);
         txtSenha.setBounds(320, 320, 280, 40);
 
@@ -150,7 +190,7 @@ public class TelaRegistrar extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         try {
-           CTCONTAB.registrarUsuario(txtUsuario.getText(), txtEmail.getText(), txtSenha.getText());
+            CTCONTAB.registrarUsuario(txtUsuario.getText(), txtEmail.getText(), txtSenha.getText());
             JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso");
             dispose();
             new TelaLogin().setVisible(true);
@@ -164,6 +204,73 @@ public class TelaRegistrar extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void txtEmailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyReleased
+        String email = txtEmail.getText();
+        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        Matcher matcher = pattern.matcher(email);
+
+        if (matcher.matches()) {
+            jlibErroEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/correct-icon.png")));
+        } else {
+            jlibErroEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/error-icon.png")));
+        }
+    }//GEN-LAST:event_txtEmailKeyReleased
+
+    private void txtUsuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyReleased
+        String usuario = txtUsuario.getText();
+
+        if (usuario.length() >= 5) {
+            jlibErroUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/correct-icon.png")));
+        } else {
+            jlibErroUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/error-icon.png")));
+        }
+    }//GEN-LAST:event_txtUsuarioKeyReleased
+
+    private void txtSenhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSenhaKeyReleased
+        verificarForcaSenha();
+    }//GEN-LAST:event_txtSenhaKeyReleased
+
+    private void verificarForcaSenha() {
+        String senha = new String(txtSenha.getText()); // Obtém a senha digitada
+        int forca = calcularForcaSenha(senha); // Calcula a força da senha
+
+        // Atualiza a barra de progresso e o rótulo
+        jProgressBar.setValue(forca);
+        if (forca < 40) {
+            jlibForcaSenha.setText("Força da Senha: Fraca");
+            jlibForcaSenha.setForeground(Color.RED);
+        } else if (forca < 70) {
+            jlibForcaSenha.setText("Força da Senha: Média");
+            jlibForcaSenha.setForeground(Color.ORANGE);
+        } else {
+            jlibForcaSenha.setText("Força da Senha: Forte");
+            jlibForcaSenha.setForeground(Color.GREEN);
+        }
+    }
+
+    private int calcularForcaSenha(String senha) {
+        int forca = 0;
+
+        // Verifica os critérios para a força da senha
+        if (senha.length() >= 8) {
+            forca += 20; // Comprimento mínimo
+        }
+        if (senha.matches(".*[0-9].*")) {
+            forca += 20; // Contém números
+        }
+        if (senha.matches(".*[a-z].*")) {
+            forca += 20; // Contém letras minúsculas
+        }
+        if (senha.matches(".*[A-Z].*")) {
+            forca += 20; // Contém letras maiúsculas
+        }
+        if (senha.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*")) {
+            forca += 20; // Contém caracteres especiais
+        }
+        return forca; // Retorna a força total calculada
+    }
 
     /**
      * @param args the command line arguments
@@ -204,13 +311,17 @@ public class TelaRegistrar extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
     private javax.swing.JButton btnLogin;
+    private javax.swing.JProgressBar jProgressBar;
     private javax.swing.JLabel jilbCreditos;
     private javax.swing.JLabel jilbCreditos2;
-    private javax.swing.JLabel jilbEmailOuUsuario;
-    private javax.swing.JLabel jilbEmailOuUsuario1;
+    private javax.swing.JLabel jilbEmail;
     private javax.swing.JLabel jilbSenha;
     private javax.swing.JLabel jilbTermosDeServiço;
+    private javax.swing.JLabel jilbUsuario;
     private javax.swing.JLabel jlibBlueSquad;
+    private javax.swing.JLabel jlibErroEmail;
+    private javax.swing.JLabel jlibErroUsuario;
+    private javax.swing.JLabel jlibForcaSenha;
     private javax.swing.JLabel jlibLogo;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtSenha;

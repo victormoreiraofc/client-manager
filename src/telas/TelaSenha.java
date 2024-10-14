@@ -37,7 +37,7 @@ public class TelaSenha extends javax.swing.JFrame {
         getContentPane().add(Background);
         Background.setBounds(0, -10, 930, 660);
 
-        setSize(new java.awt.Dimension(919, 622));
+        pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
