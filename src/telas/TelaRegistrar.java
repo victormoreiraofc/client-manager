@@ -63,7 +63,7 @@ public class TelaRegistrar extends javax.swing.JFrame {
 
         jlibErroUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/error-icon.png"))); // NOI18N
         getContentPane().add(jlibErroUsuario);
-        jlibErroUsuario.setBounds(585, 230, 20, 20);
+        jlibErroUsuario.setBounds(585, 230, 15, 20);
 
         jlibErroEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/error-icon.png"))); // NOI18N
         getContentPane().add(jlibErroEmail);
@@ -78,7 +78,7 @@ public class TelaRegistrar extends javax.swing.JFrame {
         jilbTermosDeServiço.setBackground(new java.awt.Color(255, 255, 255));
         jilbTermosDeServiço.setFont(new java.awt.Font("SansSerif", 1, 8)); // NOI18N
         jilbTermosDeServiço.setForeground(new java.awt.Color(115, 115, 115));
-        jilbTermosDeServiço.setText("Termos de Serviço | Politica de Privacidade");
+        jilbTermosDeServiço.setText("<html><u>Termos de Serviço | Politica de Privacidade</u></html>");
         jilbTermosDeServiço.setToolTipText("");
         getContentPane().add(jilbTermosDeServiço);
         jilbTermosDeServiço.setBounds(380, 480, 180, 20);

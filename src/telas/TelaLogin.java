@@ -83,7 +83,7 @@ public class TelaLogin extends javax.swing.JFrame {
         jlibErroLoginIcon.setForeground(new java.awt.Color(255, 0, 0));
         jlibErroLoginIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/alert-icon.png"))); // NOI18N
         getContentPane().add(jlibErroLoginIcon);
-        jlibErroLoginIcon.setBounds(570, 210, 20, 20);
+        jlibErroLoginIcon.setBounds(570, 210, 30, 20);
 
         jlibErroLogin.setFont(new java.awt.Font("Segoe UI", 2, 10)); // NOI18N
         jlibErroLogin.setForeground(new java.awt.Color(255, 0, 0));
@@ -93,7 +93,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
         jlibEsqueceuASenha.setFont(new java.awt.Font("SansSerif", 0, 10)); // NOI18N
         jlibEsqueceuASenha.setForeground(new java.awt.Color(194, 166, 40));
-        jlibEsqueceuASenha.setText("Esqueceu a senha?");
+        jlibEsqueceuASenha.setText("<html><u>Esqueceu a senha?</u></html>");
         getContentPane().add(jlibEsqueceuASenha);
         jlibEsqueceuASenha.setBounds(510, 250, 100, 20);
 
@@ -183,7 +183,7 @@ public class TelaLogin extends javax.swing.JFrame {
         jilbTermosDeServiço.setBackground(new java.awt.Color(255, 255, 255));
         jilbTermosDeServiço.setFont(new java.awt.Font("SansSerif", 1, 8)); // NOI18N
         jilbTermosDeServiço.setForeground(new java.awt.Color(115, 115, 115));
-        jilbTermosDeServiço.setText("Termos de Serviço | Politica de Privacidade");
+        jilbTermosDeServiço.setText("<html><u>Termos de Serviço | Politica de Privacidade</u></html>");
         jilbTermosDeServiço.setToolTipText("");
         getContentPane().add(jilbTermosDeServiço);
         jilbTermosDeServiço.setBounds(380, 480, 180, 20);
@@ -203,17 +203,17 @@ public class TelaLogin extends javax.swing.JFrame {
         jilbCreditos.setBounds(330, 440, 270, 20);
 
         jilbAindaNaoTemConta.setBackground(new java.awt.Color(255, 255, 255));
-        jilbAindaNaoTemConta.setFont(new java.awt.Font("SansSerif", 0, 10)); // NOI18N
+        jilbAindaNaoTemConta.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         jilbAindaNaoTemConta.setForeground(new java.awt.Color(115, 115, 115));
         jilbAindaNaoTemConta.setText("Ainda não tem conta?");
         getContentPane().add(jilbAindaNaoTemConta);
         jilbAindaNaoTemConta.setBounds(380, 400, 130, 20);
 
-        jilbRegistreSe.setFont(new java.awt.Font("SansSerif", 0, 10)); // NOI18N
+        jilbRegistreSe.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         jilbRegistreSe.setForeground(new java.awt.Color(194, 166, 40));
         jilbRegistreSe.setText("  Registre-se");
         getContentPane().add(jilbRegistreSe);
-        jilbRegistreSe.setBounds(480, 400, 70, 20);
+        jilbRegistreSe.setBounds(483, 400, 70, 20);
 
         btnResgistrar.setBackground(new java.awt.Color(30, 30, 30));
         btnResgistrar.setContentAreaFilled(false);
@@ -223,7 +223,7 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnResgistrar);
-        btnResgistrar.setBounds(480, 400, 70, 20);
+        btnResgistrar.setBounds(490, 400, 60, 20);
 
         jlibLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo.png"))); // NOI18N
         getContentPane().add(jlibLogo);
