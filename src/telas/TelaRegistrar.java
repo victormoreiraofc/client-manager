@@ -163,6 +163,11 @@ public class TelaRegistrar extends javax.swing.JFrame {
         txtSenha.setBackground(new java.awt.Color(4, 21, 57));
         txtSenha.setForeground(new java.awt.Color(115, 115, 115));
         txtSenha.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
+        txtSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSenhaActionPerformed(evt);
+            }
+        });
         txtSenha.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtSenhaKeyReleased(evt);
@@ -231,6 +236,10 @@ public class TelaRegistrar extends javax.swing.JFrame {
     private void txtSenhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSenhaKeyReleased
         verificarForcaSenha();
     }//GEN-LAST:event_txtSenhaKeyReleased
+
+    private void txtSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSenhaActionPerformed
 
     private void verificarForcaSenha() {
         String senha = new String(txtSenha.getText()); // Obtém a senha digitada
