@@ -52,7 +52,70 @@ public class CTCONTAB {
     st.setInt(3, usuario.getId());  // Usa setInt para o id
     st.executeUpdate();
 }
+    
+    public static int clienteTotalRegis() throws ClassNotFoundException, SQLException {
+    conectado = conectar();
+    PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) AS total FROM cliente");
+    ResultSet resultado = st.executeQuery();
 
- 
+    int total = 0;
+    if (resultado.next()) {
+        total = resultado.getInt("total"); 
+    }
+
+    return total;
+}
+
+    public static int tarefaPendentes() throws ClassNotFoundException, SQLException {
+    conectado = conectar();
+    PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) AS pendentes FROM tarefa WHERE StatusTarefa = 'pendente'");
+    ResultSet resultado = st.executeQuery();
+
+    int pendente = 0;
+    if (resultado.next()) {
+        pendente = resultado.getInt("pendentes"); 
+    }
+
+    return pendente;
+}
+   
+    public static int serviçosNaoRealizados() throws ClassNotFoundException, SQLException {
+    conectado = conectar();
+    PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) AS andamento FROM tarefa WHERE StatusTarefa = 'em andamento'");
+    ResultSet resultado = st.executeQuery();
+
+    int andamento = 0;
+    if (resultado.next()) {
+        andamento = resultado.getInt("andamento"); 
+    }
+
+    return andamento;
+}
+    
+    public static int serviçosRealizados() throws ClassNotFoundException, SQLException {
+    conectado = conectar();
+    PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) AS concluido FROM tarefa WHERE StatusTarefa = 'concluido'");
+    ResultSet resultado = st.executeQuery();
+
+    int concluido = 0;
+    if (resultado.next()) {
+        concluido = resultado.getInt("concluido"); 
+    }
+
+    return concluido;
+}
+    
+    public static int totalRelatorios() throws ClassNotFoundException, SQLException {
+    conectado = conectar();
+    PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) AS total FROM relatorio");
+    ResultSet resultado = st.executeQuery();
+
+    int total = 0;
+    if (resultado.next()) {
+        total = resultado.getInt("total"); 
+    }
+
+    return total;
+}
     
 }

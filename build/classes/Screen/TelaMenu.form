@@ -420,7 +420,7 @@
           <Color blue="ba" green="ba" red="ba" type="rgb"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="TOTAL DE VENDAS"/>
+        <Property name="text" type="java.lang.String" value="TOTAL DE RELAT&#xd3;RIOS"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -437,7 +437,7 @@
           <Color blue="ba" green="ba" red="ba" type="rgb"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="SERVI&#xc7;OS N&#xc3;O REALIZADOS"/>
+        <Property name="text" type="java.lang.String" value="TAREFAS N&#xc3;O REALIZADAS"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -454,7 +454,7 @@
           <Color blue="ba" green="ba" red="ba" type="rgb"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="SERVI&#xc7;OS FINALIZADOS"/>
+        <Property name="text" type="java.lang.String" value="TAREFAS FINALIZADAS"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

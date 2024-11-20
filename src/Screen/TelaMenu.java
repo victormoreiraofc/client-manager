@@ -1,6 +1,11 @@
 package Screen;
 
+import Data.CTCONTAB;
 import Data.Usuario;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class TelaMenu extends javax.swing.JFrame {
 
@@ -9,12 +14,74 @@ public class TelaMenu extends javax.swing.JFrame {
     public TelaMenu(Usuario usuario) {
         this.usuarioLogado = usuario; // Armazena o usuário passado no construtor
         initComponents();
-        
+        atualizarTotalClientes();  
+        tarefaPendentes();
+        tarefasNaoRealizadas();
+        tarefasRealizadas();
+        totalRelatorios();
+    }
+    
+    private void totalRelatorios() {
+        try {
+        int total = CTCONTAB.totalRelatorios();
+        jlibVariavel3.setText(String.valueOf(total));
+        }  catch (SQLException ex) {
+        Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        jlibVariavel3.setText("Erro"); 
+    } catch (ClassNotFoundException ex) {
+          Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
+    
+    private void tarefasRealizadas() {
+        try {
+        int concluido = CTCONTAB.serviçosRealizados();
+        jlibVariavel5.setText(String.valueOf(concluido));
+        }  catch (SQLException ex) {
+        Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        jlibVariavel5.setText("Erro"); 
+    } catch (ClassNotFoundException ex) {
+          Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+      }
     }
 
-    public TelaMenu() {
-        initComponents();
+    private void tarefasNaoRealizadas() {
+        try {
+        int andamento = CTCONTAB.serviçosNaoRealizados();
+        jlibVariavel4.setText(String.valueOf(andamento));
+        }  catch (SQLException ex) {
+        Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        jlibVariavel4.setText("Erro"); 
+    } catch (ClassNotFoundException ex) {
+          Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+      }
     }
+    
+    private void tarefaPendentes() {
+        try {
+        int pendentes = CTCONTAB.tarefaPendentes();
+        jlibVariavel2.setText(String.valueOf(pendentes));
+        }  catch (SQLException ex) {
+        Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        jlibVariavel2.setText("Erro"); 
+    } catch (ClassNotFoundException ex) {
+          Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
+    
+    private void atualizarTotalClientes() {
+    try {
+        
+        int total = CTCONTAB.clienteTotalRegis();
+        jlibVariavel1.setText(String.valueOf(total)); 
+    } catch (SQLException ex) {
+        Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        jlibVariavel1.setText("Erro");
+    } catch (ClassNotFoundException ex) {
+          Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+      }
+}
+    
 
 
     /**
@@ -248,21 +315,21 @@ public class TelaMenu extends javax.swing.JFrame {
         lblTotalVendas.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTotalVendas.setForeground(new java.awt.Color(186, 186, 186));
         lblTotalVendas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTotalVendas.setText("TOTAL DE VENDAS");
+        lblTotalVendas.setText("TOTAL DE RELATÓRIOS");
         getContentPane().add(lblTotalVendas);
         lblTotalVendas.setBounds(970, 330, 270, 20);
 
         lblServicosNaoRealizados.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblServicosNaoRealizados.setForeground(new java.awt.Color(186, 186, 186));
         lblServicosNaoRealizados.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblServicosNaoRealizados.setText("SERVIÇOS NÃO REALIZADOS");
+        lblServicosNaoRealizados.setText("TAREFAS NÃO REALIZADAS");
         getContentPane().add(lblServicosNaoRealizados);
         lblServicosNaoRealizados.setBounds(390, 450, 280, 20);
 
         lblServicosFinalizados.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblServicosFinalizados.setForeground(new java.awt.Color(186, 186, 186));
         lblServicosFinalizados.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblServicosFinalizados.setText("SERVIÇOS FINALIZADOS");
+        lblServicosFinalizados.setText("TAREFAS FINALIZADAS");
         getContentPane().add(lblServicosFinalizados);
         lblServicosFinalizados.setBounds(680, 450, 280, 20);
 
@@ -308,7 +375,7 @@ public class TelaMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
-        new TelaMenu().setVisible(true);
+        new TelaMenu(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnHomeActionPerformed
 
@@ -342,40 +409,7 @@ public class TelaMenu extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnAdministracaoActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaMenu().setVisible(true);
-            }
-        });
-    }
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;

@@ -31,6 +31,7 @@ public class TelaCliente extends javax.swing.JFrame {
 
         btnNotificacoes = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -56,12 +57,11 @@ public class TelaCliente extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         txtNovaSenha7 = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        txtNovaSenha8 = new javax.swing.JTextField();
-        txtNovaSenha9 = new javax.swing.JTextField();
         lblDataDeCadastro = new javax.swing.JLabel();
         lblDataDeCadastro1 = new javax.swing.JLabel();
         lblDataDeCadastro2 = new javax.swing.JLabel();
         lblDataDeCadastro3 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox<>();
         btnHome = new javax.swing.JButton();
         btnCalendario = new javax.swing.JButton();
         btnClientes = new javax.swing.JButton();
@@ -87,6 +87,13 @@ public class TelaCliente extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(5, 27, 74));
         jPanel1.setLayout(null);
+
+        jComboBox1.setBackground(new java.awt.Color(102, 102, 102));
+        jComboBox1.setForeground(new java.awt.Color(255, 255, 255));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendente", "Em andamento", "Concluido" }));
+        jComboBox1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
+        jPanel1.add(jComboBox1);
+        jComboBox1.setBounds(260, 420, 220, 35);
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save-icon.png"))); // NOI18N
@@ -228,7 +235,7 @@ public class TelaCliente extends javax.swing.JFrame {
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Situação do Serviço");
         jPanel1.add(jLabel14);
-        jLabel14.setBounds(260, 390, 200, 40);
+        jLabel14.setBounds(260, 390, 200, 30);
 
         txtNovaSenha6.setBackground(new java.awt.Color(4, 21, 57));
         txtNovaSenha6.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
@@ -274,32 +281,6 @@ public class TelaCliente extends javax.swing.JFrame {
         jPanel1.add(jLabel17);
         jLabel17.setBounds(500, 320, 100, 30);
 
-        txtNovaSenha8.setBackground(new java.awt.Color(4, 21, 57));
-        txtNovaSenha8.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        txtNovaSenha8.setForeground(new java.awt.Color(115, 115, 115));
-        txtNovaSenha8.setText("  Em andamento ou Finalizado");
-        txtNovaSenha8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
-        txtNovaSenha8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNovaSenha8ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(txtNovaSenha8);
-        txtNovaSenha8.setBounds(260, 420, 220, 35);
-
-        txtNovaSenha9.setBackground(new java.awt.Color(4, 21, 57));
-        txtNovaSenha9.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        txtNovaSenha9.setForeground(new java.awt.Color(115, 115, 115));
-        txtNovaSenha9.setText("  Física ou Jurídica");
-        txtNovaSenha9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
-        txtNovaSenha9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNovaSenha9ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(txtNovaSenha9);
-        txtNovaSenha9.setBounds(20, 420, 220, 35);
-
         lblDataDeCadastro.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         lblDataDeCadastro.setForeground(new java.awt.Color(186, 186, 186));
         lblDataDeCadastro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -331,6 +312,13 @@ public class TelaCliente extends javax.swing.JFrame {
         lblDataDeCadastro3.setToolTipText("");
         jPanel1.add(lblDataDeCadastro3);
         lblDataDeCadastro3.setBounds(200, 140, 140, 30);
+
+        jComboBox2.setBackground(new java.awt.Color(102, 102, 102));
+        jComboBox2.setForeground(new java.awt.Color(255, 255, 255));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fisica", "Juridica", "NI" }));
+        jComboBox2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
+        jPanel1.add(jComboBox2);
+        jComboBox2.setBounds(20, 420, 220, 35);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(110, 100, 1140, 540);
@@ -438,7 +426,7 @@ public class TelaCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
-        new TelaMenu().setVisible(true);
+        new TelaMenu(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnHomeActionPerformed
 
@@ -501,63 +489,7 @@ public class TelaCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNovaSenha7ActionPerformed
 
-    private void txtNovaSenha8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNovaSenha8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNovaSenha8ActionPerformed
 
-    private void txtNovaSenha9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNovaSenha9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNovaSenha9ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaCliente().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
@@ -573,6 +505,8 @@ public class TelaCliente extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -605,7 +539,5 @@ public class TelaCliente extends javax.swing.JFrame {
     private javax.swing.JTextField txtNovaSenha5;
     private javax.swing.JTextField txtNovaSenha6;
     private javax.swing.JTextField txtNovaSenha7;
-    private javax.swing.JTextField txtNovaSenha8;
-    private javax.swing.JTextField txtNovaSenha9;
     // End of variables declaration//GEN-END:variables
 }

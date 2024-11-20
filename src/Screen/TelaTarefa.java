@@ -45,12 +45,12 @@ public class TelaTarefa extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         txtNovaSenha1 = new javax.swing.JTextField();
         txtNovaSenha2 = new javax.swing.JTextField();
-        txtNovaSenha3 = new javax.swing.JTextField();
         txtNovaSenha4 = new javax.swing.JTextField();
         btnLogin1 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         txtNovaSenha5 = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
         btnHome = new javax.swing.JButton();
         btnCalendario = new javax.swing.JButton();
         btnClientes = new javax.swing.JButton();
@@ -174,19 +174,6 @@ public class TelaTarefa extends javax.swing.JFrame {
         jPanel1.add(txtNovaSenha2);
         txtNovaSenha2.setBounds(20, 170, 430, 40);
 
-        txtNovaSenha3.setBackground(new java.awt.Color(4, 21, 57));
-        txtNovaSenha3.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        txtNovaSenha3.setForeground(new java.awt.Color(115, 115, 115));
-        txtNovaSenha3.setText("  Status da Tarefa.");
-        txtNovaSenha3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
-        txtNovaSenha3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNovaSenha3ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(txtNovaSenha3);
-        txtNovaSenha3.setBounds(20, 240, 250, 40);
-
         txtNovaSenha4.setBackground(new java.awt.Color(4, 21, 57));
         txtNovaSenha4.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         txtNovaSenha4.setForeground(new java.awt.Color(115, 115, 115));
@@ -239,6 +226,13 @@ public class TelaTarefa extends javax.swing.JFrame {
         jLabel13.setText("Prioridade");
         jPanel1.add(jLabel13);
         jLabel13.setBounds(20, 350, 160, 30);
+
+        jComboBox1.setBackground(new java.awt.Color(102, 102, 102));
+        jComboBox1.setForeground(new java.awt.Color(255, 255, 255));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendente", "Em andamento", "Concluido" }));
+        jComboBox1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
+        jPanel1.add(jComboBox1);
+        jComboBox1.setBounds(20, 240, 250, 35);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(110, 100, 1140, 540);
@@ -346,7 +340,7 @@ public class TelaTarefa extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
-        new TelaMenu().setVisible(true);
+        new TelaMenu(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnHomeActionPerformed
 
@@ -377,10 +371,6 @@ public class TelaTarefa extends javax.swing.JFrame {
     private void txtNovaSenha2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNovaSenha2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNovaSenha2ActionPerformed
-
-    private void txtNovaSenha3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNovaSenha3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNovaSenha3ActionPerformed
 
     private void txtNovaSenha4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNovaSenha4ActionPerformed
         // TODO add your handling code here:
@@ -480,6 +470,7 @@ public class TelaTarefa extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -498,7 +489,6 @@ public class TelaTarefa extends javax.swing.JFrame {
     private javax.swing.JLabel lblUserIcon;
     private javax.swing.JTextField txtNovaSenha1;
     private javax.swing.JTextField txtNovaSenha2;
-    private javax.swing.JTextField txtNovaSenha3;
     private javax.swing.JTextField txtNovaSenha4;
     private javax.swing.JTextField txtNovaSenha5;
     // End of variables declaration//GEN-END:variables

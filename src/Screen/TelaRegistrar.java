@@ -23,6 +23,7 @@ public class TelaRegistrar extends javax.swing.JFrame {
      */
     public TelaRegistrar() {
         initComponents();
+        System. out. println("arbitrary text");
     }
 
     /**

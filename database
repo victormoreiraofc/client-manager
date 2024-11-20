@@ -7,8 +7,8 @@ CREATE TABLE usuarios (
     cargo VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
-    Imagem BLOB NOT NULL,
-    Permissao ENUM ('NULL','ADM') DEFAULT 'NULL', -- "NULL" = funcionario, "ADM" = administrador
+    Imagem BLOB,
+    Permissao ENUM ('NULL', 'ADM', 'SUPER_ADM') DEFAULT 'NULL',
     CHECK (usuario REGEXP '^[a-zA-Z]+$'),
     CHECK (senha REGEXP '^[a-zA-Z0-9]+$'),
     CHECK (cargo REGEXP '^[a-zA-Z]+$')
@@ -18,22 +18,22 @@ CREATE TABLE cliente (
     ID INT PRIMARY KEY AUTO_INCREMENT,
     DataCadastro VARCHAR(255) NOT NULL,
     Nome VARCHAR(255) NOT NULL,
-    TipoPessoa ENUM ('fisica','juridica','NI') NOT NULL,
+    TipoPessoa ENUM ('Fisica','Juridica','NI') NOT NULL,
     Email VARCHAR(255) NOT NULL,
     Servico TEXT NOT NULL,
-    SituacaoServico ENUM ('pendente','em andamento','concluido'),
+    SituacaoServico ENUM ('Pendente','Em andamento','Concluido'),
     Celular VARCHAR(255) NOT NULL,
     Telefone VARCHAR (255) NOT NULL,
     FuncionarioCadastrante ENUM ('funcionario','administrador'),
-    Observacoes VARCHAR (555) NOT NULL
+    Observacoes VARCHAR (555)
 );
 
 CREATE TABLE tarefa (
     ID INT PRIMARY KEY AUTO_INCREMENT,
     NomeTarefa VARCHAR(255) NOT NULL,
     Descrição TEXT NOT NULL,
-    StatusTarefa ENUM ('pendente','em andamento','concluido') NOT NULL,
-    DataVencimento VARCHAR(50) NOT NULL,
+    StatusTarefa ENUM ('Pendente','Em andamento','Concluido') NOT NULL,
+    DataVencimento DATE NOT NULL,
     Prioridade ENUM ('baixa','media','alta') NOT NULL
 );
 
@@ -41,17 +41,17 @@ CREATE TABLE relatorio (
     ID INT PRIMARY KEY AUTO_INCREMENT,
     NomeRelatorio VARCHAR(255) NOT NULL,
     Descrição TEXT NOT NULL,
-    StatusRelatorio ENUM ('pendente','em andamento','concluido') NOT NULL,
-    DataCadastro VARCHAR(50) NOT NULL
+    StatusRelatorio ENUM ('Pendente','Em andamento','Concluido') NOT NULL,
+    DataCadastro DATE NOT NULL
 );
 
 CREATE TABLE agenda (
     ID INT PRIMARY KEY AUTO_INCREMENT,
     Evento VARCHAR(255) NOT NULL,
-    DataInicio VARCHAR(255) NOT NULL,
-    DataFinal VARCHAR(255) NOT NULL,
-    HorarioInicial VARCHAR(255) NOT NULL,
-    HorarioFinal VARCHAR(255) NOT NULL
+    DataInicio DATE NOT NULL,
+    DataFinal DATE NOT NULL,
+    HorarioInicial TIME NOT NULL,
+    HorarioFinal TIME NOT NULL
 );
 
 SHOW TABLES;
