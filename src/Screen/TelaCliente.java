@@ -3,22 +3,53 @@ package Screen;
 import Data.CTCONTAB;
 import Data.Usuario;
 import java.sql.SQLException;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 
 public class TelaCliente extends javax.swing.JFrame {
 
-  private Usuario usuarioLogado; // Variável para armazenar o usuário logado
+    private Usuario usuarioLogado; // Variável para armazenar o usuário logado
 
     public TelaCliente(Usuario usuario) {
         this.usuarioLogado = usuario; // Armazena o usuário passado no construtor
         initComponents();
-        
+
     }
 
     public TelaCliente() {
         initComponents();
     }
 
+    private void salvarEventoNoBanco() {
+        try {
+            ZonedDateTime dataBrasilia = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String dataCadastro = dataBrasilia.format(formatter); // Formato de data para o banco de dados
+        
+            String nome = txtNome.getText();
+            String tipoPessoa  = txtTipoPessoa.getSelectedItem().toString();
+            String email = txtEmail.getText();
+            String servico  = txtServico.getText();
+            String situacaoServico = txtSituacaoServico.getSelectedItem().toString();
+            String celular = txtCelular.getText();
+            String telefone = txtTelefone.getText();
+            String observacoes  = txtObservacoes.getText();
+                    
+            if (usuarioLogado != null) {
+                String nomeUsuario = usuarioLogado.getUsuario(); // Obtém o nome do usuário logado
+
+                // Chama o método para registrar o evento no banco
+                CTCONTAB.registrarCliente(dataCadastro, nome, tipoPessoa, email, servico, situacaoServico, celular, telefone, observacoes, nomeUsuario);
+                JOptionPane.showMessageDialog(this, "Evento salvo com sucesso!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Nenhum usuário logado. Não foi possível salvar o evento.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao salvar evento: " + e.getMessage());
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,7 +62,7 @@ public class TelaCliente extends javax.swing.JFrame {
 
         btnNotificacoes = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        txtSituacaoServico = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -43,25 +74,25 @@ public class TelaCliente extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        txtNovaSenha2 = new javax.swing.JTextField();
-        txtNovaSenha3 = new javax.swing.JTextField();
-        txtNovaSenha4 = new javax.swing.JTextField();
+        txtObservacoes = new javax.swing.JTextField();
+        txtNome = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        txtNovaSenha5 = new javax.swing.JTextField();
+        txtCelular = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        txtNovaSenha6 = new javax.swing.JTextField();
+        txtServico = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        txtNovaSenha7 = new javax.swing.JTextField();
+        txtTelefone = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         lblDataDeCadastro = new javax.swing.JLabel();
         lblDataDeCadastro1 = new javax.swing.JLabel();
         lblDataDeCadastro2 = new javax.swing.JLabel();
         lblDataDeCadastro3 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        txtTipoPessoa = new javax.swing.JComboBox<>();
         btnHome = new javax.swing.JButton();
         btnCalendario = new javax.swing.JButton();
         btnClientes = new javax.swing.JButton();
@@ -88,12 +119,12 @@ public class TelaCliente extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(5, 27, 74));
         jPanel1.setLayout(null);
 
-        jComboBox1.setBackground(new java.awt.Color(102, 102, 102));
-        jComboBox1.setForeground(new java.awt.Color(255, 255, 255));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendente", "Em andamento", "Concluido" }));
-        jComboBox1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
-        jPanel1.add(jComboBox1);
-        jComboBox1.setBounds(260, 420, 220, 35);
+        txtSituacaoServico.setBackground(new java.awt.Color(102, 102, 102));
+        txtSituacaoServico.setForeground(new java.awt.Color(255, 255, 255));
+        txtSituacaoServico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendente", "Em andamento", "Concluido" }));
+        txtSituacaoServico.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
+        jPanel1.add(txtSituacaoServico);
+        txtSituacaoServico.setBounds(260, 420, 220, 35);
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save-icon.png"))); // NOI18N
@@ -119,6 +150,11 @@ public class TelaCliente extends javax.swing.JFrame {
         jButton3.setBounds(1010, 10, 40, 40);
 
         jButton2.setBackground(new java.awt.Color(126, 217, 87));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton2);
         jButton2.setBounds(1050, 10, 40, 40);
 
@@ -152,44 +188,44 @@ public class TelaCliente extends javax.swing.JFrame {
         jPanel1.add(jLabel12);
         jLabel12.setBounds(20, 390, 120, 30);
 
-        txtNovaSenha2.setBackground(new java.awt.Color(4, 21, 57));
-        txtNovaSenha2.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        txtNovaSenha2.setForeground(new java.awt.Color(115, 115, 115));
-        txtNovaSenha2.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txtNovaSenha2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
-        txtNovaSenha2.addActionListener(new java.awt.event.ActionListener() {
+        txtObservacoes.setBackground(new java.awt.Color(4, 21, 57));
+        txtObservacoes.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        txtObservacoes.setForeground(new java.awt.Color(115, 115, 115));
+        txtObservacoes.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtObservacoes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
+        txtObservacoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNovaSenha2ActionPerformed(evt);
+                txtObservacoesActionPerformed(evt);
             }
         });
-        jPanel1.add(txtNovaSenha2);
-        txtNovaSenha2.setBounds(760, 350, 350, 170);
+        jPanel1.add(txtObservacoes);
+        txtObservacoes.setBounds(760, 350, 350, 170);
 
-        txtNovaSenha3.setBackground(new java.awt.Color(4, 21, 57));
-        txtNovaSenha3.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        txtNovaSenha3.setForeground(new java.awt.Color(115, 115, 115));
-        txtNovaSenha3.setText("  Nome e Sobrenome");
-        txtNovaSenha3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
-        txtNovaSenha3.addActionListener(new java.awt.event.ActionListener() {
+        txtNome.setBackground(new java.awt.Color(4, 21, 57));
+        txtNome.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        txtNome.setForeground(new java.awt.Color(115, 115, 115));
+        txtNome.setText("  Nome e Sobrenome");
+        txtNome.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
+        txtNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNovaSenha3ActionPerformed(evt);
+                txtNomeActionPerformed(evt);
             }
         });
-        jPanel1.add(txtNovaSenha3);
-        txtNovaSenha3.setBounds(20, 350, 220, 35);
+        jPanel1.add(txtNome);
+        txtNome.setBounds(20, 350, 220, 35);
 
-        txtNovaSenha4.setBackground(new java.awt.Color(4, 21, 57));
-        txtNovaSenha4.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        txtNovaSenha4.setForeground(new java.awt.Color(115, 115, 115));
-        txtNovaSenha4.setText("  seuemail@gmail.com");
-        txtNovaSenha4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
-        txtNovaSenha4.addActionListener(new java.awt.event.ActionListener() {
+        txtEmail.setBackground(new java.awt.Color(4, 21, 57));
+        txtEmail.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        txtEmail.setForeground(new java.awt.Color(115, 115, 115));
+        txtEmail.setText("  seuemail@gmail.com");
+        txtEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
+        txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNovaSenha4ActionPerformed(evt);
+                txtEmailActionPerformed(evt);
             }
         });
-        jPanel1.add(txtNovaSenha4);
-        txtNovaSenha4.setBounds(20, 490, 220, 35);
+        jPanel1.add(txtEmail);
+        txtEmail.setBounds(20, 490, 220, 35);
 
         jButton1.setBackground(new java.awt.Color(239, 65, 54));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -218,18 +254,18 @@ public class TelaCliente extends javax.swing.JFrame {
         jPanel1.add(jLabel13);
         jLabel13.setBounds(260, 460, 120, 30);
 
-        txtNovaSenha5.setBackground(new java.awt.Color(4, 21, 57));
-        txtNovaSenha5.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        txtNovaSenha5.setForeground(new java.awt.Color(115, 115, 115));
-        txtNovaSenha5.setText("  (11) 912345678");
-        txtNovaSenha5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
-        txtNovaSenha5.addActionListener(new java.awt.event.ActionListener() {
+        txtCelular.setBackground(new java.awt.Color(4, 21, 57));
+        txtCelular.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        txtCelular.setForeground(new java.awt.Color(115, 115, 115));
+        txtCelular.setText("  (11) 912345678");
+        txtCelular.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
+        txtCelular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNovaSenha5ActionPerformed(evt);
+                txtCelularActionPerformed(evt);
             }
         });
-        jPanel1.add(txtNovaSenha5);
-        txtNovaSenha5.setBounds(260, 490, 220, 35);
+        jPanel1.add(txtCelular);
+        txtCelular.setBounds(260, 490, 220, 35);
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
@@ -237,18 +273,18 @@ public class TelaCliente extends javax.swing.JFrame {
         jPanel1.add(jLabel14);
         jLabel14.setBounds(260, 390, 200, 30);
 
-        txtNovaSenha6.setBackground(new java.awt.Color(4, 21, 57));
-        txtNovaSenha6.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        txtNovaSenha6.setForeground(new java.awt.Color(115, 115, 115));
-        txtNovaSenha6.setText("  Abertura de Empresa");
-        txtNovaSenha6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
-        txtNovaSenha6.addActionListener(new java.awt.event.ActionListener() {
+        txtServico.setBackground(new java.awt.Color(4, 21, 57));
+        txtServico.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        txtServico.setForeground(new java.awt.Color(115, 115, 115));
+        txtServico.setText("  Abertura de Empresa");
+        txtServico.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
+        txtServico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNovaSenha6ActionPerformed(evt);
+                txtServicoActionPerformed(evt);
             }
         });
-        jPanel1.add(txtNovaSenha6);
-        txtNovaSenha6.setBounds(260, 350, 220, 35);
+        jPanel1.add(txtServico);
+        txtServico.setBounds(260, 350, 220, 35);
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
@@ -262,18 +298,18 @@ public class TelaCliente extends javax.swing.JFrame {
         jPanel1.add(jLabel16);
         jLabel16.setBounds(20, 460, 120, 30);
 
-        txtNovaSenha7.setBackground(new java.awt.Color(4, 21, 57));
-        txtNovaSenha7.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        txtNovaSenha7.setForeground(new java.awt.Color(115, 115, 115));
-        txtNovaSenha7.setText("  (11) 23456789");
-        txtNovaSenha7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
-        txtNovaSenha7.addActionListener(new java.awt.event.ActionListener() {
+        txtTelefone.setBackground(new java.awt.Color(4, 21, 57));
+        txtTelefone.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        txtTelefone.setForeground(new java.awt.Color(115, 115, 115));
+        txtTelefone.setText("  (11) 23456789");
+        txtTelefone.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
+        txtTelefone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNovaSenha7ActionPerformed(evt);
+                txtTelefoneActionPerformed(evt);
             }
         });
-        jPanel1.add(txtNovaSenha7);
-        txtNovaSenha7.setBounds(500, 350, 220, 35);
+        jPanel1.add(txtTelefone);
+        txtTelefone.setBounds(500, 350, 220, 35);
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
@@ -313,12 +349,12 @@ public class TelaCliente extends javax.swing.JFrame {
         jPanel1.add(lblDataDeCadastro3);
         lblDataDeCadastro3.setBounds(200, 140, 140, 30);
 
-        jComboBox2.setBackground(new java.awt.Color(102, 102, 102));
-        jComboBox2.setForeground(new java.awt.Color(255, 255, 255));
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fisica", "Juridica", "NI" }));
-        jComboBox2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
-        jPanel1.add(jComboBox2);
-        jComboBox2.setBounds(20, 420, 220, 35);
+        txtTipoPessoa.setBackground(new java.awt.Color(102, 102, 102));
+        txtTipoPessoa.setForeground(new java.awt.Color(255, 255, 255));
+        txtTipoPessoa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fisica", "Juridica", "NI" }));
+        txtTipoPessoa.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
+        jPanel1.add(txtTipoPessoa);
+        txtTipoPessoa.setBounds(20, 420, 220, 35);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(110, 100, 1140, 540);
@@ -441,34 +477,34 @@ public class TelaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnAdministracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracaoActionPerformed
-        new TelaAdminTable().setVisible(true);
+        new TelaAdminTable(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAdministracaoActionPerformed
 
-    private void txtNovaSenha2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNovaSenha2ActionPerformed
+    private void txtObservacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtObservacoesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNovaSenha2ActionPerformed
+    }//GEN-LAST:event_txtObservacoesActionPerformed
 
-    private void txtNovaSenha3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNovaSenha3ActionPerformed
+    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNovaSenha3ActionPerformed
+    }//GEN-LAST:event_txtNomeActionPerformed
 
-    private void txtNovaSenha4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNovaSenha4ActionPerformed
+    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNovaSenha4ActionPerformed
+    }//GEN-LAST:event_txtEmailActionPerformed
 
     private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarioActionPerformed
-        new TelaEventoTable().setVisible(true);
+        new TelaEventoTable(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCalendarioActionPerformed
 
     private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
-        new TelaRelatorioTable().setVisible(true);
+        new TelaRelatorioTable(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRelatoriosActionPerformed
 
     private void btnTarefasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTarefasActionPerformed
-        new TelaTarefaTable().setVisible(true);
+        new TelaTarefaTable(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnTarefasActionPerformed
 
@@ -477,18 +513,21 @@ public class TelaCliente extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void txtNovaSenha5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNovaSenha5ActionPerformed
+    private void txtCelularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCelularActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNovaSenha5ActionPerformed
+    }//GEN-LAST:event_txtCelularActionPerformed
 
-    private void txtNovaSenha6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNovaSenha6ActionPerformed
+    private void txtServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtServicoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNovaSenha6ActionPerformed
+    }//GEN-LAST:event_txtServicoActionPerformed
 
-    private void txtNovaSenha7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNovaSenha7ActionPerformed
+    private void txtTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefoneActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNovaSenha7ActionPerformed
+    }//GEN-LAST:event_txtTelefoneActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        salvarEventoNoBanco();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -505,8 +544,6 @@ public class TelaCliente extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -533,11 +570,13 @@ public class TelaCliente extends javax.swing.JFrame {
     private javax.swing.JLabel lblDataDeCadastro2;
     private javax.swing.JLabel lblDataDeCadastro3;
     private javax.swing.JLabel lblUserIcon;
-    private javax.swing.JTextField txtNovaSenha2;
-    private javax.swing.JTextField txtNovaSenha3;
-    private javax.swing.JTextField txtNovaSenha4;
-    private javax.swing.JTextField txtNovaSenha5;
-    private javax.swing.JTextField txtNovaSenha6;
-    private javax.swing.JTextField txtNovaSenha7;
+    private javax.swing.JTextField txtCelular;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtObservacoes;
+    private javax.swing.JTextField txtServico;
+    private javax.swing.JComboBox<String> txtSituacaoServico;
+    private javax.swing.JTextField txtTelefone;
+    private javax.swing.JComboBox<String> txtTipoPessoa;
     // End of variables declaration//GEN-END:variables
 }

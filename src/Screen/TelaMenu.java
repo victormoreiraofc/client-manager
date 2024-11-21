@@ -19,6 +19,7 @@ public class TelaMenu extends javax.swing.JFrame {
         tarefasNaoRealizadas();
         tarefasRealizadas();
         totalRelatorios();
+        novosclientesdomes();  
     }
     
     private void totalRelatorios() {
@@ -82,8 +83,19 @@ public class TelaMenu extends javax.swing.JFrame {
       }
 }
     
-
-
+    private void novosclientesdomes(){
+    try {
+        
+        int total = CTCONTAB.novosclientesdomes();
+        jlibVariavel.setText(String.valueOf(total)); 
+    } catch (SQLException ex) {
+        Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        jlibVariavel.setText("Erro");
+    } catch (ClassNotFoundException ex) {
+          Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+    }    
+ }  
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -370,7 +382,7 @@ public class TelaMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        new TelaCliente().setVisible(true);
+        new TelaCliente(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
@@ -380,22 +392,22 @@ public class TelaMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHomeActionPerformed
 
     private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarioActionPerformed
-        new TelaEventoTable().setVisible(true);
+        new TelaEventoTable(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCalendarioActionPerformed
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-        new TelaClienteTable().setVisible(true);
+        new TelaClienteTable(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
-        new TelaRelatorioTable().setVisible(true);
+        new TelaRelatorioTable(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRelatoriosActionPerformed
 
     private void btnTarefasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTarefasActionPerformed
-        new TelaTarefaTable().setVisible(true);
+        new TelaTarefaTable(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnTarefasActionPerformed
 
@@ -405,7 +417,7 @@ public class TelaMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConfiguracoesActionPerformed
 
     private void btnAdministracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracaoActionPerformed
-        new TelaAdminTable().setVisible(true);
+        new TelaAdminTable(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAdministracaoActionPerformed
 

@@ -1368,7 +1368,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAdministracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracaoActionPerformed
-        new TelaAdminTable().setVisible(true);
+        new TelaAdminTable(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAdministracaoActionPerformed
 
@@ -1378,17 +1378,17 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConfiguracoesActionPerformed
 
     private void btnTarefasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTarefasActionPerformed
-        new TelaTarefaTable().setVisible(true);
+        new TelaTarefaTable(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnTarefasActionPerformed
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-        new TelaClienteTable().setVisible(true);
+        new TelaClienteTable(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
-        new TelaRelatorioTable().setVisible(true);
+        new TelaRelatorioTable(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRelatoriosActionPerformed
 
@@ -1407,12 +1407,12 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEventoKeyPressed
 
     private void btnCadastrarEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEventoActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEventoActionPerformed
 
     private void btnCadastrarEvento2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento2ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento2ActionPerformed
 
@@ -1421,7 +1421,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento2KeyPressed
 
     private void btnCadastrarEvento3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento3ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento3ActionPerformed
 
@@ -1430,7 +1430,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento3KeyPressed
 
     private void btnCadastrarEvento4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento4ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento4ActionPerformed
 
@@ -1439,7 +1439,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento4KeyPressed
 
     private void btnCadastrarEvento5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento5ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento5ActionPerformed
 
@@ -1448,7 +1448,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento5KeyPressed
 
     private void btnCadastrarEvento6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento6ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento6ActionPerformed
 
@@ -1457,7 +1457,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento6KeyPressed
 
     private void btnCadastrarEvento7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento7ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento7ActionPerformed
 
@@ -1466,7 +1466,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento7KeyPressed
 
     private void btnCadastrarEvento8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento8ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento8ActionPerformed
 
@@ -1475,7 +1475,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento8KeyPressed
 
     private void btnCadastrarEvento9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento9ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento9ActionPerformed
 
@@ -1484,7 +1484,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento9KeyPressed
 
     private void btnCadastrarEvento10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento10ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento10ActionPerformed
 
@@ -1493,7 +1493,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento10KeyPressed
 
     private void btnCadastrarEvento11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento11ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento11ActionPerformed
 
@@ -1502,7 +1502,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento11KeyPressed
 
     private void btnCadastrarEvento12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento12ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento12ActionPerformed
 
@@ -1511,7 +1511,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento12KeyPressed
 
     private void btnCadastrarEvento13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento13ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento13ActionPerformed
 
@@ -1520,7 +1520,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento13KeyPressed
 
     private void btnCadastrarEvento14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento14ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento14ActionPerformed
 
@@ -1529,7 +1529,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento14KeyPressed
 
     private void btnCadastrarEvento15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento15ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento15ActionPerformed
 
@@ -1538,7 +1538,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento15KeyPressed
 
     private void btnCadastrarEvento17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento17ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento17ActionPerformed
 
@@ -1547,7 +1547,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento17KeyPressed
 
     private void btnCadastrarEvento18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento18ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento18ActionPerformed
 
@@ -1556,7 +1556,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento18KeyPressed
 
     private void btnCadastrarEvento19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento19ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento19ActionPerformed
 
@@ -1565,7 +1565,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento19KeyPressed
 
     private void btnCadastrarEvento20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento20ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento20ActionPerformed
 
@@ -1574,7 +1574,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento20KeyPressed
 
     private void btnCadastrarEvento22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento22ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento22ActionPerformed
 
@@ -1583,7 +1583,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento22KeyPressed
 
     private void btnCadastrarEvento23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento23ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento23ActionPerformed
 
@@ -1592,7 +1592,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento23KeyPressed
 
     private void btnCadastrarEvento24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento24ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento24ActionPerformed
 
@@ -1601,7 +1601,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento24KeyPressed
 
     private void btnCadastrarEvento25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento25ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento25ActionPerformed
 
@@ -1610,7 +1610,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento25KeyPressed
 
     private void btnCadastrarEvento27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento27ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento27ActionPerformed
 
@@ -1619,7 +1619,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento27KeyPressed
 
     private void btnCadastrarEvento28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento28ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento28ActionPerformed
 
@@ -1628,7 +1628,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento28KeyPressed
 
     private void btnCadastrarEvento29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento29ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento29ActionPerformed
 
@@ -1637,7 +1637,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento29KeyPressed
 
     private void btnCadastrarEvento30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento30ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento30ActionPerformed
 
@@ -1646,7 +1646,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento30KeyPressed
 
     private void btnCadastrarEvento32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento32ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento32ActionPerformed
 
@@ -1655,7 +1655,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento32KeyPressed
 
     private void btnCadastrarEvento33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento33ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento33ActionPerformed
 
@@ -1664,7 +1664,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento33KeyPressed
 
     private void btnCadastrarEvento34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento34ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento34ActionPerformed
 
@@ -1673,7 +1673,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCadastrarEvento34KeyPressed
 
     private void btnCadastrarEvento35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarEvento35ActionPerformed
-        new TelaEvento().setVisible(true);
+        new TelaEvento(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarEvento35ActionPerformed
 

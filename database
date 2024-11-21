@@ -24,8 +24,9 @@ CREATE TABLE cliente (
     SituacaoServico ENUM ('Pendente','Em andamento','Concluido'),
     Celular VARCHAR(255) NOT NULL,
     Telefone VARCHAR (255) NOT NULL,
-    FuncionarioCadastrante ENUM ('funcionario','administrador'),
-    Observacoes VARCHAR (555)
+    Observacoes VARCHAR (555),
+    usuario VARCHAR(255) NOT NULL,
+    CONSTRAINT fk_usuarioCadastrante FOREIGN KEY (usuario) REFERENCES usuarios(usuario) ON UPDATE CASCADE
 );
 
 CREATE TABLE tarefa (
@@ -51,7 +52,9 @@ CREATE TABLE agenda (
     DataInicio DATE NOT NULL,
     DataFinal DATE NOT NULL,
     HorarioInicial TIME NOT NULL,
-    HorarioFinal TIME NOT NULL
+    HorarioFinal TIME NOT NULL,
+    usuario VARCHAR(255) NOT NULL,
+    CONSTRAINT fk_usuario FOREIGN KEY (usuario) REFERENCES usuarios(usuario) ON UPDATE CASCADE
 );
 
 SHOW TABLES;

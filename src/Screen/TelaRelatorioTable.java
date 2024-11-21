@@ -294,7 +294,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
     }//GEN-LAST:event_txtLoginActionPerformed
 
     private void btnAdministracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracaoActionPerformed
-        new TelaAdminTable().setVisible(true);
+        new TelaAdminTable(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnAdministracaoActionPerformed
 
@@ -304,22 +304,22 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConfiguracoesActionPerformed
 
     private void btnTarefasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTarefasActionPerformed
-        new TelaTarefaTable().setVisible(true);
+        new TelaTarefaTable(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnTarefasActionPerformed
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-        new TelaClienteTable().setVisible(true);
+        new TelaClienteTable(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
-        new TelaRelatorioTable().setVisible(true);
+        new TelaRelatorioTable(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnRelatoriosActionPerformed
 
     private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarioActionPerformed
-        new TelaEventoTable().setVisible(true);
+        new TelaEventoTable(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCalendarioActionPerformed
 
