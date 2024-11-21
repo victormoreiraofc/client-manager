@@ -5,102 +5,95 @@ import Data.Usuario;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 public class TelaMenu extends javax.swing.JFrame {
 
-  private Usuario usuarioLogado; // Variável para armazenar o usuário logado
+    private Usuario usuarioLogado;
 
     public TelaMenu(Usuario usuario) {
-        this.usuarioLogado = usuario; // Armazena o usuário passado no construtor
+        this.usuarioLogado = usuario;
         initComponents();
-        atualizarTotalClientes();  
+        atualizarTotalClientes();
         tarefaPendentes();
         tarefasNaoRealizadas();
         tarefasRealizadas();
         totalRelatorios();
-        novosclientesdomes();  
+        novosclientesdomes();
     }
-    
+
     private void totalRelatorios() {
         try {
-        int total = CTCONTAB.totalRelatorios();
-        jlibVariavel3.setText(String.valueOf(total));
-        }  catch (SQLException ex) {
-        Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
-        jlibVariavel3.setText("Erro"); 
-    } catch (ClassNotFoundException ex) {
-          Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
-      }
+            int total = CTCONTAB.totalRelatorios();
+            jlibVariavel3.setText(String.valueOf(total));
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+            jlibVariavel3.setText("Erro");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
+
     private void tarefasRealizadas() {
         try {
-        int concluido = CTCONTAB.serviçosRealizados();
-        jlibVariavel5.setText(String.valueOf(concluido));
-        }  catch (SQLException ex) {
-        Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
-        jlibVariavel5.setText("Erro"); 
-    } catch (ClassNotFoundException ex) {
-          Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
-      }
+            int concluido = CTCONTAB.serviçosRealizados();
+            jlibVariavel5.setText(String.valueOf(concluido));
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+            jlibVariavel5.setText("Erro");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void tarefasNaoRealizadas() {
         try {
-        int andamento = CTCONTAB.serviçosNaoRealizados();
-        jlibVariavel4.setText(String.valueOf(andamento));
-        }  catch (SQLException ex) {
-        Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
-        jlibVariavel4.setText("Erro"); 
-    } catch (ClassNotFoundException ex) {
-          Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
-      }
+            int andamento = CTCONTAB.serviçosNaoRealizados();
+            jlibVariavel4.setText(String.valueOf(andamento));
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+            jlibVariavel4.setText("Erro");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
+
     private void tarefaPendentes() {
         try {
-        int pendentes = CTCONTAB.tarefaPendentes();
-        jlibVariavel2.setText(String.valueOf(pendentes));
-        }  catch (SQLException ex) {
-        Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
-        jlibVariavel2.setText("Erro"); 
-    } catch (ClassNotFoundException ex) {
-          Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
-      }
+            int pendentes = CTCONTAB.tarefaPendentes();
+            jlibVariavel2.setText(String.valueOf(pendentes));
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+            jlibVariavel2.setText("Erro");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
+
     private void atualizarTotalClientes() {
-    try {
-        
-        int total = CTCONTAB.clienteTotalRegis();
-        jlibVariavel1.setText(String.valueOf(total)); 
-    } catch (SQLException ex) {
-        Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
-        jlibVariavel1.setText("Erro");
-    } catch (ClassNotFoundException ex) {
-          Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
-      }
-}
-    
-    private void novosclientesdomes(){
-    try {
-        
-        int total = CTCONTAB.novosclientesdomes();
-        jlibVariavel.setText(String.valueOf(total)); 
-    } catch (SQLException ex) {
-        Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
-        jlibVariavel.setText("Erro");
-    } catch (ClassNotFoundException ex) {
-          Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
-    }    
- }  
-    
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
+        try {
+            int total = CTCONTAB.clienteTotalRegis();
+            jlibVariavel1.setText(String.valueOf(total));
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+            jlibVariavel1.setText("Erro");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void novosclientesdomes() {
+        try {
+
+            int total = CTCONTAB.novosclientesdomes();
+            jlibVariavel.setText(String.valueOf(total));
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+            jlibVariavel.setText("Erro");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -421,7 +414,6 @@ public class TelaMenu extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnAdministracaoActionPerformed
 
- 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;

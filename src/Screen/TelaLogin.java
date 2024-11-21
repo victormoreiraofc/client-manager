@@ -15,12 +15,11 @@ public class TelaLogin extends javax.swing.JFrame {
 
     public TelaLogin() {
         initComponents();
-        carregarCredenciais(); // Carrega as credenciais salvas
+        carregarCredenciais();
         jlibErroLogin.setVisible(false);
         jlibErroLoginIcon.setVisible(false);
     }
 
-    // Método para salvar as credenciais no arquivo
     private void salvarCredenciais(String usuario, String senha) {
         Properties props = new Properties();
         try (FileOutputStream out = new FileOutputStream(FILE_NAME)) {
@@ -32,7 +31,6 @@ public class TelaLogin extends javax.swing.JFrame {
         }
     }
 
-    // Método para carregar as credenciais do arquivo
     private void carregarCredenciais() {
         Properties props = new Properties();
         try (FileInputStream in = new FileInputStream(FILE_NAME)) {
@@ -246,7 +244,6 @@ public class TelaLogin extends javax.swing.JFrame {
         try {
             Usuario usuarioLogado = CTCONTAB.fazerLoginU(txtLogin.getText(), new String(txtSenha.getPassword()));
 
-            // Se o login for bem-sucedido
             if (usuarioLogado != null) {
                 if (chbLembre.isSelected()) {
                     salvarCredenciais(txtLogin.getText(), new String(txtSenha.getPassword()));
@@ -257,7 +254,6 @@ public class TelaLogin extends javax.swing.JFrame {
                 dispose();
                 new TelaMenu(usuarioLogado).setVisible(true);
             } else {
-                // Se o login falhar
                 mostrarMensagemErro();
             }
 
@@ -271,7 +267,7 @@ public class TelaLogin extends javax.swing.JFrame {
     private void mostrarMensagemErro() {
         jlibErroLoginIcon.setVisible(true);
         jlibErroLogin.setText("Usuário ou senha estão errados!");
-        jlibErroLogin.setVisible(true); // Mostra a mensagem de erro
+        jlibErroLogin.setVisible(true);
     }
 
     private void btnResgistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResgistrarActionPerformed
@@ -303,15 +299,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnEsqueceuSenhaActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -336,9 +324,7 @@ public class TelaLogin extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(TelaLogin.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new TelaLogin().setVisible(true);

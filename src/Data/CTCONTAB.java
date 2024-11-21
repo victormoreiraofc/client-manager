@@ -33,7 +33,7 @@ public class CTCONTAB {
             usuario.setEmail(resultado.getString("email"));
         }
 
-        return usuario; // Retorna o objeto Usuario ou null se não encontrado
+        return usuario;
     }
 
     public static void registrarUsuario(String u, String e, String s) throws ClassNotFoundException, SQLException {
@@ -50,7 +50,7 @@ public class CTCONTAB {
         PreparedStatement st = conectado.prepareStatement("UPDATE usuarios SET email = ?, senha = ? WHERE id = ?");
         st.setString(1, email);
         st.setString(2, senha);
-        st.setInt(3, usuario.getId());  // Usa setInt para o id
+        st.setInt(3, usuario.getId());
         st.executeUpdate();
     }
 
@@ -121,7 +121,7 @@ public class CTCONTAB {
 
     public static int novosclientesdomes() throws ClassNotFoundException, SQLException {
         conectado = conectar();
-        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) AS total FROM cliente");
+        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) AS total FROM cliente WHERE MONTH(DataCadastro) = MONTH(CURRENT_DATE()) AND YEAR(DataCadastro) = YEAR(CURRENT_DATE())");
         ResultSet resultado = st.executeQuery();
 
         int totalClientes = 0;
@@ -143,7 +143,7 @@ public class CTCONTAB {
         st.setString(3, dataFinal);
         st.setString(4, horarioInicial);
         st.setString(5, horarioFinal);
-        st.setString(6, nomeUsuario); // Associa o evento ao usuário logado
+        st.setString(6, nomeUsuario);
         st.executeUpdate();
     }
 
@@ -161,7 +161,32 @@ public class CTCONTAB {
         st.setString(7, celular);
         st.setString(8, telefone);
         st.setString(9, observacoes);
-        st.setString(10, nomeUsuario); // Associa o evento ao usuário logado
+        st.setString(10, nomeUsuario);
+        st.executeUpdate();
+    }
+    
+    public static void registrarTarefa(String nomeTarefa, String descricao, String statusTarefa, String dataVencimento, String prioridade) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement(
+                "INSERT INTO tarefa (NomeTarefa, Descrição, StatusTarefa, DataVencimento, Prioridade) VALUES (?, ?, ?, ?, ?)"
+        );
+        st.setString(1, nomeTarefa);
+        st.setString(2, descricao);
+        st.setString(3, statusTarefa);
+        st.setString(4, dataVencimento);
+        st.setString(5, prioridade);
+        st.executeUpdate();
+    }
+    
+    public static void registrarRelatorio(String nomeRelatorio, String descricao, String statusRelatorio, String dataCadastro) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement(
+                "INSERT INTO relatorio (NomeRelatorio, Descrição, StatusRelatorio, DataCadastro) VALUES (?, ?, ?, ?)"
+        );
+        st.setString(1, nomeRelatorio);
+        st.setString(2, descricao);
+        st.setString(3, statusRelatorio);
+        st.setString(4, dataCadastro);
         st.executeUpdate();
     }
 
