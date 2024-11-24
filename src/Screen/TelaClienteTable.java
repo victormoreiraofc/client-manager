@@ -4,6 +4,7 @@ import Data.Cliente;
 import Data.CTCONTAB;
 import Data.Usuario;
 import java.util.List;
+import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,16 +16,40 @@ public class TelaClienteTable extends javax.swing.JFrame {
     public TelaClienteTable(Usuario usuario) {
         this.usuarioLogado = usuario;
         initComponents();
-        carregarClientes();
+        exibirMensagemCarregando();
+        carregarClientesAssincrono();
     }
 
-    private void carregarClientes() {
-        try {
-            listaClientes = CTCONTAB.listarClientes();
-            atualizarTabela(listaClientes);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void exibirMensagemCarregando() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        model.addRow(new Object[]{"Carregando...", "", "", "", "", ""});
+    }
+
+    private void carregarClientesAssincrono() {
+        new SwingWorker<List<Cliente>, Void>() {
+            @Override
+            protected List<Cliente> doInBackground() throws Exception {
+                return CTCONTAB.listarClientes();
+            }
+
+            @Override
+            protected void done() {
+                try {
+                    listaClientes = get();
+                    atualizarTabela(listaClientes);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    exibirMensagemErro();
+                }
+            }
+        }.execute();
+    }
+
+    private void exibirMensagemErro() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        model.addRow(new Object[]{"Erro ao carregar dados.", "", "", "", "", ""});
     }
 
     private void atualizarTabela(List<Cliente> clientes) {

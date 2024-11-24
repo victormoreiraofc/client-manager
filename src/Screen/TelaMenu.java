@@ -2,58 +2,117 @@ package Screen;
 
 import Data.CTCONTAB;
 import Data.Usuario;
+import java.awt.Font;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.SwingWorker;
 
 public class TelaMenu extends javax.swing.JFrame {
 
     private Usuario usuarioLogado;
+    private Font fonteOriginal;
 
     public TelaMenu(Usuario usuario) {
         this.usuarioLogado = usuario;
         initComponents();
-        atualizarTotalClientes();
-        tarefaPendentes();
-        tarefasNaoRealizadas();
-        tarefasRealizadas();
-        totalRelatorios();
-        novosclientesdomes();
+        salvarFonteOriginal();
+        exibirMensagemCarregando();
+        carregarDadosSimultaneamente();
     }
 
-    private void totalRelatorios() {
-        try {
-            int total = CTCONTAB.totalRelatorios();
-            jlibVariavel3.setText(String.valueOf(total));
-        } catch (SQLException ex) {
-            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
-            jlibVariavel3.setText("Erro");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    private void salvarFonteOriginal() {
+        fonteOriginal = jlibVariavel1.getFont();
     }
 
-    private void tarefasRealizadas() {
-        try {
-            int concluido = CTCONTAB.serviçosRealizados();
-            jlibVariavel5.setText(String.valueOf(concluido));
-        } catch (SQLException ex) {
-            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
-            jlibVariavel5.setText("Erro");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    private void alterarFonteTemporaria() {
+        Font fonteCarregando = fonteOriginal.deriveFont(Font.BOLD, 18);
+        jlibVariavel1.setFont(fonteCarregando);
+        jlibVariavel2.setFont(fonteCarregando);
+        jlibVariavel3.setFont(fonteCarregando);
+        jlibVariavel4.setFont(fonteCarregando);
+        jlibVariavel5.setFont(fonteCarregando);
+        jlibVariavel.setFont(fonteCarregando);
     }
 
-    private void tarefasNaoRealizadas() {
+    private void restaurarFonteOriginal() {
+        // Restaura o tamanho original da fonte
+        jlibVariavel1.setFont(fonteOriginal);
+        jlibVariavel2.setFont(fonteOriginal);
+        jlibVariavel3.setFont(fonteOriginal);
+        jlibVariavel4.setFont(fonteOriginal);
+        jlibVariavel5.setFont(fonteOriginal);
+        jlibVariavel.setFont(fonteOriginal);
+    }
+
+    private void exibirMensagemCarregando() {
+        alterarFonteTemporaria();
+        jlibVariavel1.setText("Carregando...");
+        jlibVariavel2.setText("Carregando...");
+        jlibVariavel3.setText("Carregando...");
+        jlibVariavel4.setText("Carregando...");
+        jlibVariavel5.setText("Carregando...");
+        jlibVariavel.setText("Carregando...");
+    }
+
+    private void carregarDadosSimultaneamente() {
+        new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                atualizarTotalClientes();
+                return null;
+            }
+        }.execute();
+
+        new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                tarefaPendentes();
+                return null;
+            }
+        }.execute();
+
+        new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                tarefasNaoRealizadas();
+                return null;
+            }
+        }.execute();
+
+        new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                tarefasRealizadas();
+                return null;
+            }
+        }.execute();
+
+        new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                totalRelatorios();
+                return null;
+            }
+        }.execute();
+
+        new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+                novosclientesdomes();
+                return null;
+            }
+        }.execute();
+    }
+
+    private void atualizarTotalClientes() {
         try {
-            int andamento = CTCONTAB.serviçosNaoRealizados();
-            jlibVariavel4.setText(String.valueOf(andamento));
-        } catch (SQLException ex) {
+            int total = CTCONTAB.clienteTotalRegis();
+            jlibVariavel1.setText(String.valueOf(total));
+            restaurarFonteOriginal();
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
-            jlibVariavel4.setText("Erro");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+            jlibVariavel1.setText("Erro");
         }
     }
 
@@ -61,36 +120,54 @@ public class TelaMenu extends javax.swing.JFrame {
         try {
             int pendentes = CTCONTAB.tarefaPendentes();
             jlibVariavel2.setText(String.valueOf(pendentes));
-        } catch (SQLException ex) {
+            restaurarFonteOriginal();
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
             jlibVariavel2.setText("Erro");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private void atualizarTotalClientes() {
+    private void tarefasNaoRealizadas() {
         try {
-            int total = CTCONTAB.clienteTotalRegis();
-            jlibVariavel1.setText(String.valueOf(total));
-        } catch (SQLException ex) {
+            int andamento = CTCONTAB.serviçosNaoRealizados();
+            jlibVariavel4.setText(String.valueOf(andamento));
+            restaurarFonteOriginal();
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
-            jlibVariavel1.setText("Erro");
-        } catch (ClassNotFoundException ex) {
+            jlibVariavel4.setText("Erro");
+        }
+    }
+
+    private void tarefasRealizadas() {
+        try {
+            int concluido = CTCONTAB.serviçosRealizados();
+            jlibVariavel5.setText(String.valueOf(concluido));
+            restaurarFonteOriginal();
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+            jlibVariavel5.setText("Erro");
+        }
+    }
+
+    private void totalRelatorios() {
+        try {
+            int total = CTCONTAB.totalRelatorios();
+            jlibVariavel3.setText(String.valueOf(total));
+            restaurarFonteOriginal();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+            jlibVariavel3.setText("Erro");
         }
     }
 
     private void novosclientesdomes() {
         try {
-
             int total = CTCONTAB.novosclientesdomes();
             jlibVariavel.setText(String.valueOf(total));
-        } catch (SQLException ex) {
+            restaurarFonteOriginal();
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
             jlibVariavel.setText("Erro");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

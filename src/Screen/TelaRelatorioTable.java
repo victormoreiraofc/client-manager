@@ -4,6 +4,7 @@ import Data.CTCONTAB;
 import Data.Relatorio;
 import Data.Usuario;
 import java.util.List;
+import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,18 +16,40 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
     public TelaRelatorioTable(Usuario usuario) {
         this.usuarioLogado = usuario;
         initComponents();
-        carregarRelatorios();
+        exibirMensagemCarregando();
+        carregarRelatoriosAssincrono();
     }
 
-    private void carregarRelatorios() {
-        try {
-            listarRelatorios = CTCONTAB.listarRelatorios();
-            atualizarTabela(listarRelatorios);
+    private void exibirMensagemCarregando() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        model.addRow(new Object[]{"Carregando...", "", "", ""});
+    }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void carregarRelatoriosAssincrono() {
+        new SwingWorker<List<Relatorio>, Void>() {
+            @Override
+            protected List<Relatorio> doInBackground() throws Exception {
+                return CTCONTAB.listarRelatorios();
+            }
 
+            @Override
+            protected void done() {
+                try {
+                    listarRelatorios = get();
+                    atualizarTabela(listarRelatorios);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    exibirMensagemErro();
+                }
+            }
+        }.execute();
+    }
+
+    private void exibirMensagemErro() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        model.addRow(new Object[]{"Erro ao carregar dados.", "", "", ""});
     }
 
     private void atualizarTabela(List<Relatorio> relatorios) {
@@ -43,7 +66,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
             model.addRow(rowData);
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
