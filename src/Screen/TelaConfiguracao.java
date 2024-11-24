@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 
 public class TelaConfiguracao extends javax.swing.JFrame {
 
-  private Usuario usuarioLogado;
+    private Usuario usuarioLogado;
 
     public TelaConfiguracao(Usuario usuario) {
         this.usuarioLogado = usuario;
@@ -282,12 +282,12 @@ public class TelaConfiguracao extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         try {
-        CTCONTAB.editarDados(txtNovoEmail.getText(), txtNovaSenha.getText(), usuarioLogado);  // usuário logado
-        JOptionPane.showMessageDialog(this, "Dados atualizados com sucesso!");
-        
-    } catch (ClassNotFoundException | SQLException e) {
-        JOptionPane.showMessageDialog(this, "Erro ao atualizar dados: " + e.getMessage());
-    }
+            CTCONTAB.editarDados(txtNovoEmail.getText(), txtNovaSenha.getText(), usuarioLogado);
+            JOptionPane.showMessageDialog(this, "Dados atualizados com sucesso!");
+
+        } catch (ClassNotFoundException | SQLException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao atualizar dados: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void txtNovaSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNovaSenhaActionPerformed

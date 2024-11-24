@@ -4,7 +4,7 @@ import Data.Usuario;
 
 public class TelaEventoTable extends javax.swing.JFrame {
 
-  private Usuario usuarioLogado;
+    private Usuario usuarioLogado;
 
     public TelaEventoTable(Usuario usuario) {
         this.usuarioLogado = usuario;
@@ -1688,7 +1688,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(TelaEventoTable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-       
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new TelaEventoTable().setVisible(true);

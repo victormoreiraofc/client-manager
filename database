@@ -35,7 +35,9 @@ CREATE TABLE tarefa (
     Descrição TEXT NOT NULL,
     StatusTarefa ENUM ('Pendente','Em andamento','Concluido') NOT NULL,
     DataVencimento DATE NOT NULL,
-    Prioridade ENUM ('baixa','media','alta') NOT NULL
+    Prioridade ENUM ('baixa','media','alta') NOT NULL,
+    responsavel VARCHAR(255) NOT NULL,
+    CONSTRAINT fk_responsavel FOREIGN KEY (responsavel) REFERENCES usuarios(usuario) ON UPDATE CASCADE
 );
 
 CREATE TABLE relatorio (

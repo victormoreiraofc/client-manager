@@ -1,18 +1,47 @@
 package Screen;
 
+import Data.Cliente;
+import Data.CTCONTAB;
 import Data.Usuario;
+import java.util.List;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 public class TelaClienteTable extends javax.swing.JFrame {
 
-  private Usuario usuarioLogado;
+    private Usuario usuarioLogado;
+    private List<Cliente> listaClientes;
 
     public TelaClienteTable(Usuario usuario) {
         this.usuarioLogado = usuario;
         initComponents();
+        carregarClientes();
     }
 
-    public TelaClienteTable() {
-        initComponents();
+    private void carregarClientes() {
+        try {
+            listaClientes = CTCONTAB.listarClientes();
+            atualizarTabela(listaClientes);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void atualizarTabela(List<Cliente> clientes) {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+
+        for (Cliente cliente : clientes) {
+            Object[] rowData = new Object[]{
+                cliente.getNome(),
+                cliente.getTipoPessoa(),
+                cliente.getSituacaoServico(),
+                cliente.getServico(),
+                cliente.getDataCadastro(),
+                ""
+            };
+            model.addRow(rowData);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -20,6 +49,8 @@ public class TelaClienteTable extends javax.swing.JFrame {
     private void initComponents() {
 
         btnNotificacoes = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         btnCalendario = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -64,6 +95,44 @@ public class TelaClienteTable extends javax.swing.JFrame {
         btnNotificacoes.setContentAreaFilled(false);
         getContentPane().add(btnNotificacoes);
         btnNotificacoes.setBounds(1160, 10, 60, 60);
+
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
+
+        jTable1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jTable1.setForeground(new java.awt.Color(255, 255, 255));
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "NOME", "TIPO DE PESSOA", "STATUS", "SERVIÇO", "DATA DE CADASTRO", "AÇÕES"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.setGridColor(new java.awt.Color(115, 115, 115));
+        jTable1.setRowHeight(50);
+        jTable1.setRowSelectionAllowed(false);
+        jTable1.setShowHorizontalLines(true);
+        jTable1.setTableHeader(null);
+        jScrollPane1.setViewportView(jTable1);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(110, 220, 1130, 420);
+        jTable1.setOpaque(false);
+        ((DefaultTableCellRenderer) jTable1.getDefaultRenderer(Object.class)).setOpaque(false);
+        jScrollPane1.setOpaque(false);
+        jScrollPane1.getViewport().setOpaque(false);
 
         btnCalendario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/event-icon.png"))); // NOI18N
         btnCalendario.setContentAreaFilled(false);
@@ -115,7 +184,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         lblNome.setText("NOME");
         lblNome.setToolTipText("");
         getContentPane().add(lblNome);
-        lblNome.setBounds(110, 190, 180, 30);
+        lblNome.setBounds(110, 190, 190, 30);
 
         lblTipoDePessoa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTipoDePessoa.setForeground(new java.awt.Color(186, 186, 186));
@@ -123,7 +192,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         lblTipoDePessoa.setText("TIPOS DE PESSOA");
         lblTipoDePessoa.setToolTipText("");
         getContentPane().add(lblTipoDePessoa);
-        lblTipoDePessoa.setBounds(290, 190, 200, 30);
+        lblTipoDePessoa.setBounds(300, 190, 185, 30);
 
         lblStatus.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblStatus.setForeground(new java.awt.Color(186, 186, 186));
@@ -131,7 +200,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         lblStatus.setText("STATUS");
         lblStatus.setToolTipText("");
         getContentPane().add(lblStatus);
-        lblStatus.setBounds(490, 190, 180, 30);
+        lblStatus.setBounds(485, 190, 190, 30);
 
         lblServico.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblServico.setForeground(new java.awt.Color(186, 186, 186));
@@ -139,7 +208,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         lblServico.setText("SERVIÇO");
         lblServico.setToolTipText("");
         getContentPane().add(lblServico);
-        lblServico.setBounds(670, 190, 190, 30);
+        lblServico.setBounds(680, 190, 180, 30);
 
         lblDataDeCadastro.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblDataDeCadastro.setForeground(new java.awt.Color(186, 186, 186));
@@ -147,7 +216,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         lblDataDeCadastro.setText("DATA DE CADASTRO");
         lblDataDeCadastro.setToolTipText("");
         getContentPane().add(lblDataDeCadastro);
-        lblDataDeCadastro.setBounds(860, 190, 180, 30);
+        lblDataDeCadastro.setBounds(860, 190, 190, 30);
 
         lblTipoDePessoa4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTipoDePessoa4.setForeground(new java.awt.Color(186, 186, 186));
@@ -155,7 +224,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         lblTipoDePessoa4.setText("AÇÕES");
         lblTipoDePessoa4.setToolTipText("");
         getContentPane().add(lblTipoDePessoa4);
-        lblTipoDePessoa4.setBounds(1040, 190, 200, 30);
+        lblTipoDePessoa4.setBounds(1050, 190, 190, 30);
 
         jSeparator4.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator4.setForeground(new java.awt.Color(115, 115, 115));
@@ -166,25 +235,25 @@ public class TelaClienteTable extends javax.swing.JFrame {
         jSeparator2.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator2);
-        jSeparator2.setBounds(290, 190, 10, 450);
+        jSeparator2.setBounds(298, 190, 10, 450);
 
         jSeparator3.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator3.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator3);
-        jSeparator3.setBounds(490, 190, 20, 450);
+        jSeparator3.setBounds(485, 190, 30, 450);
 
         jSeparator5.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator5.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator5);
-        jSeparator5.setBounds(670, 190, 90, 450);
+        jSeparator5.setBounds(673, 190, 90, 450);
 
         jSeparator7.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator7.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator7.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator7);
-        jSeparator7.setBounds(1040, 190, 30, 450);
+        jSeparator7.setBounds(1048, 190, 30, 450);
 
         jSeparator6.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator6.setForeground(new java.awt.Color(115, 115, 115));
@@ -366,31 +435,6 @@ public class TelaClienteTable extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnCalendarioActionPerformed
 
-    public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaClienteTable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaClienteTable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaClienteTable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaClienteTable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaClienteTable().setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
     private javax.swing.JPanel JPanelTelaAcesso;
@@ -414,12 +458,14 @@ public class TelaClienteTable extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel jlibLogo2;
     private javax.swing.JLabel lblDataDeCadastro;
     private javax.swing.JLabel lblNome;

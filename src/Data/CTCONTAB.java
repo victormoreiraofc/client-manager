@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.util.List;
+import java.util.ArrayList;
 
 public class CTCONTAB {
 
@@ -164,7 +166,7 @@ public class CTCONTAB {
         st.setString(10, nomeUsuario);
         st.executeUpdate();
     }
-    
+
     public static void registrarTarefa(String nomeTarefa, String descricao, String statusTarefa, String dataVencimento, String prioridade) throws ClassNotFoundException, SQLException {
         conectado = conectar();
         PreparedStatement st = conectado.prepareStatement(
@@ -177,7 +179,7 @@ public class CTCONTAB {
         st.setString(5, prioridade);
         st.executeUpdate();
     }
-    
+
     public static void registrarRelatorio(String nomeRelatorio, String descricao, String statusRelatorio, String dataCadastro) throws ClassNotFoundException, SQLException {
         conectado = conectar();
         PreparedStatement st = conectado.prepareStatement(
@@ -188,6 +190,49 @@ public class CTCONTAB {
         st.setString(3, statusRelatorio);
         st.setString(4, dataCadastro);
         st.executeUpdate();
+    }
+
+    public static List<Cliente> listarClientes() throws ClassNotFoundException, SQLException {
+        List<Cliente> clientes = new ArrayList<>();
+        conectado = conectar();
+        String query = "SELECT ID, Nome, TipoPessoa, SituacaoServico, Servico, DataCadastro FROM cliente";
+        PreparedStatement st = conectado.prepareStatement(query);
+        ResultSet resultado = st.executeQuery();
+
+        while (resultado.next()) {
+            Cliente cliente = new Cliente(
+                    resultado.getInt("ID"),
+                    resultado.getString("Nome"),
+                    resultado.getString("TipoPessoa"),
+                    resultado.getString("SituacaoServico"),
+                    resultado.getString("Servico"),
+                    resultado.getString("DataCadastro")
+            );
+            clientes.add(cliente);
+        }
+
+        return clientes;
+    }
+
+    public static List<Relatorio> listarRelatorios() throws ClassNotFoundException, SQLException {
+        List<Relatorio> relatorios = new ArrayList<>();
+        conectado = conectar();
+        String query = "SELECT ID, NomeRelatorio, Descrição, StatusRelatorio, DataCadastro FROM relatorio";
+        PreparedStatement st = conectado.prepareStatement(query);
+        ResultSet resultado = st.executeQuery();
+
+        while (resultado.next()) {
+            Relatorio relatorio = new Relatorio(
+                    resultado.getInt("ID"),
+                    resultado.getString("NomeRelatorio"),
+                    resultado.getString("Descrição"),
+                    resultado.getString("StatusRelatorio"),
+                    resultado.getString("DataCadastro")
+            );
+            relatorios.add(relatorio);
+        }
+
+        return relatorios;
     }
 
 }

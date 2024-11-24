@@ -11,7 +11,7 @@ public class TelaRegistrar extends javax.swing.JFrame {
 
     public TelaRegistrar() {
         initComponents();
-        System. out. println("arbitrary text");
+        System.out.println("arbitrary text");
     }
 
     @SuppressWarnings("unchecked")

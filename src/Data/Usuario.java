@@ -3,11 +3,13 @@ package Data;
 import java.io.Serializable;
 
 public class Usuario implements Serializable {
+
     private int id;
     private String usuario;
-    private String email;   
-    
-    public Usuario() {}
+    private String email;
+
+    public Usuario() {
+    }
 
     public int getId() {
         return id;
@@ -32,5 +34,5 @@ public class Usuario implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-        
+
 }

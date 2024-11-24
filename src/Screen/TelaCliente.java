@@ -24,17 +24,17 @@ public class TelaCliente extends javax.swing.JFrame {
         try {
             ZonedDateTime dataBrasilia = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            String dataCadastro = dataBrasilia.format(formatter); // Formato de data para o banco de dados
-        
+            String dataCadastro = dataBrasilia.format(formatter);
+
             String nome = txtNome.getText();
-            String tipoPessoa  = txtTipoPessoa.getSelectedItem().toString();
+            String tipoPessoa = txtTipoPessoa.getSelectedItem().toString();
             String email = txtEmail.getText();
-            String servico  = txtServico.getText();
+            String servico = txtServico.getText();
             String situacaoServico = txtSituacaoServico.getSelectedItem().toString();
             String celular = txtCelular.getText();
             String telefone = txtTelefone.getText();
-            String observacoes  = txtObservacoes.getText();
-                    
+            String observacoes = txtObservacoes.getText();
+
             if (usuarioLogado != null) {
                 String nomeUsuario = usuarioLogado.getUsuario();
                 CTCONTAB.registrarCliente(dataCadastro, nome, tipoPessoa, email, servico, situacaoServico, celular, telefone, observacoes, nomeUsuario);
@@ -463,7 +463,7 @@ public class TelaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConfiguracoesActionPerformed
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-        new TelaClienteTable().setVisible(true);
+        new TelaClienteTable(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnClientesActionPerformed
 
@@ -500,7 +500,7 @@ public class TelaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTarefasActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new TelaClienteTable().setVisible(true);
+        new TelaClienteTable(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

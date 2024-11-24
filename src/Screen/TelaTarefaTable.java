@@ -1,10 +1,11 @@
 package Screen;
 
 import Data.Usuario;
+import javax.swing.table.DefaultTableCellRenderer;
 
 public class TelaTarefaTable extends javax.swing.JFrame {
 
-  private Usuario usuarioLogado;
+    private Usuario usuarioLogado;
 
     public TelaTarefaTable(Usuario usuario) {
         this.usuarioLogado = usuario;
@@ -19,6 +20,8 @@ public class TelaTarefaTable extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         btnNotificacoes = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -67,6 +70,43 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
+
+        jTable1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jTable1.setForeground(new java.awt.Color(255, 255, 255));
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "NOME DA TAREFA", "RESPONSÁVEL", "STATUS", "PRIORIDADE", "DATA DE VENCIMENTO", "AÇÕES"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.setGridColor(new java.awt.Color(115, 115, 115));
+        jTable1.setRowHeight(50);
+        jTable1.setShowHorizontalLines(true);
+        jTable1.setTableHeader(null);
+        jScrollPane1.setViewportView(jTable1);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(110, 220, 1130, 420);
+        jTable1.setOpaque(false);
+        ((DefaultTableCellRenderer) jTable1.getDefaultRenderer(Object.class)).setOpaque(false);
+        jScrollPane1.setOpaque(false);
+        jScrollPane1.getViewport().setOpaque(false);
+
         btnNotificacoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/alert-bell.png"))); // NOI18N
         btnNotificacoes.setContentAreaFilled(false);
         getContentPane().add(btnNotificacoes);
@@ -91,7 +131,7 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         jSeparator7.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator7.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator7);
-        jSeparator7.setBounds(1040, 190, 30, 450);
+        jSeparator7.setBounds(1050, 190, 30, 450);
 
         jButton1.setBackground(new java.awt.Color(239, 65, 54));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -114,7 +154,7 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         lblNome.setText("NOME DA TAREFA");
         lblNome.setToolTipText("");
         getContentPane().add(lblNome);
-        lblNome.setBounds(110, 190, 180, 30);
+        lblNome.setBounds(110, 190, 190, 30);
 
         lblTipoDePessoa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTipoDePessoa.setForeground(new java.awt.Color(186, 186, 186));
@@ -122,19 +162,19 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         lblTipoDePessoa.setText("RESPONSÁVEL");
         lblTipoDePessoa.setToolTipText("");
         getContentPane().add(lblTipoDePessoa);
-        lblTipoDePessoa.setBounds(290, 190, 200, 30);
+        lblTipoDePessoa.setBounds(300, 190, 190, 30);
 
         jSeparator2.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator2.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator2);
-        jSeparator2.setBounds(290, 190, 10, 450);
+        jSeparator2.setBounds(300, 190, 10, 450);
 
         jSeparator3.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator3.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator3);
-        jSeparator3.setBounds(490, 190, 20, 450);
+        jSeparator3.setBounds(487, 190, 20, 450);
 
         lblStatus.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblStatus.setForeground(new java.awt.Color(186, 186, 186));
@@ -142,7 +182,7 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         lblStatus.setText("STATUS");
         lblStatus.setToolTipText("");
         getContentPane().add(lblStatus);
-        lblStatus.setBounds(490, 190, 180, 30);
+        lblStatus.setBounds(490, 190, 190, 30);
 
         lblServico.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblServico.setForeground(new java.awt.Color(186, 186, 186));
@@ -150,13 +190,13 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         lblServico.setText("PRIORIDADE");
         lblServico.setToolTipText("");
         getContentPane().add(lblServico);
-        lblServico.setBounds(670, 190, 190, 30);
+        lblServico.setBounds(680, 190, 180, 30);
 
         jSeparator5.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator5.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator5);
-        jSeparator5.setBounds(670, 190, 90, 450);
+        jSeparator5.setBounds(675, 190, 90, 450);
 
         lblTipoDePessoa4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTipoDePessoa4.setForeground(new java.awt.Color(186, 186, 186));
@@ -164,7 +204,7 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         lblTipoDePessoa4.setText("AÇÕES");
         lblTipoDePessoa4.setToolTipText("");
         getContentPane().add(lblTipoDePessoa4);
-        lblTipoDePessoa4.setBounds(1040, 190, 200, 30);
+        lblTipoDePessoa4.setBounds(1050, 190, 190, 30);
 
         lblDataDeCadastro.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblDataDeCadastro.setForeground(new java.awt.Color(186, 186, 186));
@@ -172,13 +212,13 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         lblDataDeCadastro.setText("DATA DE VENCIMENTO");
         lblDataDeCadastro.setToolTipText("");
         getContentPane().add(lblDataDeCadastro);
-        lblDataDeCadastro.setBounds(860, 190, 180, 30);
+        lblDataDeCadastro.setBounds(860, 190, 190, 30);
 
         jSeparator6.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator6.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator6.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator6);
-        jSeparator6.setBounds(860, 190, 40, 450);
+        jSeparator6.setBounds(862, 190, 40, 450);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255, 15));
         getContentPane().add(jPanel1);
@@ -476,6 +516,7 @@ public class TelaTarefaTable extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
@@ -485,6 +526,7 @@ public class TelaTarefaTable extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel jlibLogo2;
     private javax.swing.JLabel lblDataDeCadastro;
     private javax.swing.JLabel lblNome;

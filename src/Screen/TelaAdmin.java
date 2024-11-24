@@ -4,7 +4,7 @@ import Data.Usuario;
 
 public class TelaAdmin extends javax.swing.JFrame {
 
-  private Usuario usuarioLogado;
+    private Usuario usuarioLogado;
 
     public TelaAdmin(Usuario usuario) {
         this.usuarioLogado = usuario;

@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 
 public class TelaEvento extends javax.swing.JFrame {
 
-  private Usuario usuarioLogado;
+    private Usuario usuarioLogado;
 
     public TelaEvento(Usuario usuario) {
         this.usuarioLogado = usuario;
@@ -15,8 +15,8 @@ public class TelaEvento extends javax.swing.JFrame {
 
     public TelaEvento() {
         initComponents();
-    } 
-    
+    }
+
     private void salvarEventoNoBanco() {
         try {
             String evento = txtEvento.getText();

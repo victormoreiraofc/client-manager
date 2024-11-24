@@ -4,11 +4,11 @@ import Data.Usuario;
 
 public class TelaAdminTable extends javax.swing.JFrame {
 
-  private Usuario usuarioLogado;
+    private Usuario usuarioLogado;
 
     public TelaAdminTable(Usuario usuario) {
         this.usuarioLogado = usuario;
-        initComponents(); 
+        initComponents();
     }
 
     public TelaAdminTable() {
@@ -367,7 +367,7 @@ public class TelaAdminTable extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(TelaAdminTable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new TelaAdminTable().setVisible(true);

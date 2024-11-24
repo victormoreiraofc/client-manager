@@ -1,24 +1,55 @@
 package Screen;
 
+import Data.CTCONTAB;
+import Data.Relatorio;
 import Data.Usuario;
+import java.util.List;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 public class TelaRelatorioTable extends javax.swing.JFrame {
 
-  private Usuario usuarioLogado;
+    private Usuario usuarioLogado;
+    private List<Relatorio> listarRelatorios;
 
     public TelaRelatorioTable(Usuario usuario) {
         this.usuarioLogado = usuario;
         initComponents();
+        carregarRelatorios();
     }
 
-    public TelaRelatorioTable() {
-        initComponents();
+    private void carregarRelatorios() {
+        try {
+            listarRelatorios = CTCONTAB.listarRelatorios();
+            atualizarTabela(listarRelatorios);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void atualizarTabela(List<Relatorio> relatorios) {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+
+        for (Relatorio relatorio : relatorios) {
+            Object[] rowData = new Object[]{
+                relatorio.getNomeRelatorio(),
+                relatorio.getStatusRelatorio(),
+                relatorio.getDataCadastro(),
+                ""
+            };
+            model.addRow(rowData);
+        }
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         btnNotificacoes = new javax.swing.JButton();
         lblNome1 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -54,6 +85,43 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
+
+        jTable1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jTable1.setForeground(new java.awt.Color(255, 255, 255));
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "NOME DO RELATÓRIO", "STATUS", "DATA DE CADASTRO", "AÇÕES"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.setGridColor(new java.awt.Color(115, 115, 115));
+        jTable1.setRowHeight(50);
+        jTable1.setShowHorizontalLines(true);
+        jTable1.setTableHeader(null);
+        jScrollPane1.setViewportView(jTable1);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(110, 220, 1130, 420);
+        jTable1.setOpaque(false);
+        ((DefaultTableCellRenderer) jTable1.getDefaultRenderer(Object.class)).setOpaque(false);
+        jScrollPane1.setOpaque(false);
+        jScrollPane1.getViewport().setOpaque(false);
+
         btnNotificacoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/alert-bell.png"))); // NOI18N
         btnNotificacoes.setContentAreaFilled(false);
         getContentPane().add(btnNotificacoes);
@@ -65,7 +133,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         lblNome1.setText("NOME DO RELATÓRIO");
         lblNome1.setToolTipText("");
         getContentPane().add(lblNome1);
-        lblNome1.setBounds(110, 190, 330, 30);
+        lblNome1.setBounds(110, 190, 290, 30);
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lupa-branca.png"))); // NOI18N
@@ -81,7 +149,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         jSeparator10.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator10.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator10);
-        jSeparator10.setBounds(440, 190, 60, 450);
+        jSeparator10.setBounds(392, 190, 110, 450);
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fechar.png"))); // NOI18N
@@ -98,7 +166,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         jSeparator9.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator9.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator9);
-        jSeparator9.setBounds(1040, 190, 30, 450);
+        jSeparator9.setBounds(955, 190, 120, 450);
 
         jButton2.setBackground(new java.awt.Color(239, 65, 54));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -115,13 +183,13 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         lblStatus.setText("STATUS");
         lblStatus.setToolTipText("");
         getContentPane().add(lblStatus);
-        lblStatus.setBounds(440, 190, 310, 30);
+        lblStatus.setBounds(400, 190, 270, 30);
 
         jSeparator5.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator5.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator5);
-        jSeparator5.setBounds(750, 190, 70, 450);
+        jSeparator5.setBounds(673, 190, 140, 450);
 
         lblTipoDePessoa4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTipoDePessoa4.setForeground(new java.awt.Color(186, 186, 186));
@@ -129,7 +197,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         lblTipoDePessoa4.setText("AÇÕES");
         lblTipoDePessoa4.setToolTipText("");
         getContentPane().add(lblTipoDePessoa4);
-        lblTipoDePessoa4.setBounds(1040, 190, 200, 30);
+        lblTipoDePessoa4.setBounds(950, 190, 290, 30);
 
         lblDataDeCadastro.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblDataDeCadastro.setForeground(new java.awt.Color(186, 186, 186));
@@ -137,7 +205,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         lblDataDeCadastro.setText("DATA DE CADASTRO");
         lblDataDeCadastro.setToolTipText("");
         getContentPane().add(lblDataDeCadastro);
-        lblDataDeCadastro.setBounds(750, 190, 290, 30);
+        lblDataDeCadastro.setBounds(680, 190, 270, 30);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255, 15));
         getContentPane().add(jPanel1);
@@ -344,10 +412,12 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel jlibLogo2;
     private javax.swing.JLabel lblDataDeCadastro;
     private javax.swing.JLabel lblNome1;

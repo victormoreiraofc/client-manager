@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 
 public class TelaRelatorio extends javax.swing.JFrame {
 
-  private Usuario usuarioLogado;
+    private Usuario usuarioLogado;
 
     public TelaRelatorio(Usuario usuario) {
         this.usuarioLogado = usuario;
@@ -16,7 +16,7 @@ public class TelaRelatorio extends javax.swing.JFrame {
     public TelaRelatorio() {
         initComponents();
     }
-    
+
     private void salvarEventoNoBanco() {
         try {
             String nomeRelatorio = txtNomeRelatorio.getText();
@@ -415,7 +415,7 @@ public class TelaRelatorio extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(TelaRelatorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new TelaRelatorio().setVisible(true);
