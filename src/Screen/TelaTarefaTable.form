@@ -28,6 +28,9 @@
   <SubComponents>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="null"/>
+        </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
@@ -512,13 +515,9 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="73" green="73" red="73" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="          Escreva o nome da tarefa que deseja buscar."/>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-            <LineBorder thickness="3">
-              <Color PropertyName="color" blue="54" green="54" red="54" type="rgb"/>
-            </LineBorder>
-          </Border>
+        <Property name="text" type="java.lang.String" value="Escreva o nome da tarefa que deseja buscar."/>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="javax.swing.BorderFactory.createCompoundBorder(&#xd;&#xa;    javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3), &#xd;&#xa;    javax.swing.BorderFactory.createEmptyBorder(0, 30, 0, 0)&#xd;&#xa;)" type="code"/>
         </Property>
       </Properties>
       <Events>

@@ -4,7 +4,10 @@ import Data.CTCONTAB;
 import Data.Relatorio;
 import Data.Usuario;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.SwingWorker;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -12,12 +15,14 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
 
     private Usuario usuarioLogado;
     private List<Relatorio> listarRelatorios;
+    private List<Relatorio> relatoriosFiltrados;
 
     public TelaRelatorioTable(Usuario usuario) {
         this.usuarioLogado = usuario;
         initComponents();
         exibirMensagemCarregando();
         carregarRelatoriosAssincrono();
+        configurarBusca();
     }
 
     private void exibirMensagemCarregando() {
@@ -37,7 +42,8 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
             protected void done() {
                 try {
                     listarRelatorios = get();
-                    atualizarTabela(listarRelatorios);
+                    relatoriosFiltrados = listarRelatorios; // Inicializa com todos os relatórios
+                    atualizarTabela(relatoriosFiltrados);
                 } catch (Exception e) {
                     e.printStackTrace();
                     exibirMensagemErro();
@@ -65,6 +71,38 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
             };
             model.addRow(rowData);
         }
+    }
+
+    // Método para configurar o mecanismo de busca
+    private void configurarBusca() {
+        txtLogin.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filtrarRelatorios();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filtrarRelatorios();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filtrarRelatorios();
+            }
+        });
+    }
+
+    // Método para filtrar os relatórios com base no texto digitado
+    private void filtrarRelatorios() {
+        String busca = txtLogin.getText().toLowerCase();
+        
+        // Filtra os relatórios para exibir somente os que contêm o texto digitado (em qualquer parte do nome)
+        relatoriosFiltrados = listarRelatorios.stream()
+            .filter(relatorio -> relatorio.getNomeRelatorio().toLowerCase().contains(busca))
+            .collect(Collectors.toList());
+
+        atualizarTabela(relatoriosFiltrados);
     }
     
     @SuppressWarnings("unchecked")
@@ -315,8 +353,11 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         txtLogin.setBackground(new java.awt.Color(4, 21, 57));
         txtLogin.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         txtLogin.setForeground(new java.awt.Color(115, 115, 115));
-        txtLogin.setText("          Escreva o nome do relatório que deseja buscar.");
-        txtLogin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
+        txtLogin.setText("Escreva o nome do relatório que deseja buscar.");
+        txtLogin.setBorder(javax.swing.BorderFactory.createCompoundBorder(
+            javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3), 
+            javax.swing.BorderFactory.createEmptyBorder(0, 30, 0, 0)
+        ));
         txtLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtLoginActionPerformed(evt);

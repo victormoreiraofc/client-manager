@@ -3,8 +3,11 @@ package Screen;
 import Data.Cliente;
 import Data.CTCONTAB;
 import Data.Usuario;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.SwingWorker;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,8 +19,28 @@ public class TelaClienteTable extends javax.swing.JFrame {
     public TelaClienteTable(Usuario usuario) {
         this.usuarioLogado = usuario;
         initComponents();
+        adicionarListenerDeBusca();
         exibirMensagemCarregando();
         carregarClientesAssincrono();
+    }
+
+    private void adicionarListenerDeBusca() {
+        txtLogin.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filtrarClientes();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filtrarClientes();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filtrarClientes();
+            }
+        });
     }
 
     private void exibirMensagemCarregando() {
@@ -67,6 +90,19 @@ public class TelaClienteTable extends javax.swing.JFrame {
             };
             model.addRow(rowData);
         }
+    }
+
+    private void filtrarClientes() {
+        String filtro = txtLogin.getText().toLowerCase();
+        List<Cliente> clientesFiltrados = new ArrayList<>();
+
+        for (Cliente cliente : listaClientes) {
+            if (cliente.getNome().toLowerCase().contains(filtro)) {
+                clientesFiltrados.add(cliente);
+            }
+        }
+
+        atualizarTabela(clientesFiltrados);
     }
 
     @SuppressWarnings("unchecked")
@@ -361,8 +397,11 @@ public class TelaClienteTable extends javax.swing.JFrame {
         txtLogin.setBackground(new java.awt.Color(4, 21, 57));
         txtLogin.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         txtLogin.setForeground(new java.awt.Color(115, 115, 115));
-        txtLogin.setText("          Escreva o nome do cliente que deseja buscar.");
-        txtLogin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
+        txtLogin.setText("Escreva o nome do cliente que deseja buscar.");
+        txtLogin.setBorder(javax.swing.BorderFactory.createCompoundBorder(
+            javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3), 
+            javax.swing.BorderFactory.createEmptyBorder(0, 30, 0, 0)
+        ));
         txtLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtLoginActionPerformed(evt);
