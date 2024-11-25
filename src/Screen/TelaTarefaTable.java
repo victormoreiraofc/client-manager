@@ -65,7 +65,9 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         for (Tarefa tarefa : tarefas) {
             Object[] rowData = new Object[]{
                 tarefa.getNomeTarefa(),
+                tarefa.getResponsavel(),
                 tarefa.getStatusTarefa(),
+                tarefa.getPrioridade(),
                 tarefa.getDataVencimento(),
                 ""
             };
