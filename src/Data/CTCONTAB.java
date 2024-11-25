@@ -234,5 +234,28 @@ public class CTCONTAB {
 
         return relatorios;
     }
-
+    
+    public static List<Tarefa> listarTarefas() throws ClassNotFoundException, SQLException {
+        List<Tarefa> tarefas = new ArrayList<>();
+        conectado = conectar(); 
+        String query = "SELECT ID, NomeTarefa, Descrição, StatusTarefa, DataVencimento, Prioridade, responsavel FROM tarefa";
+        PreparedStatement st = conectado.prepareStatement(query);
+        ResultSet resultado = st.executeQuery();
+        
+        while (resultado.next()) {
+            Tarefa tarefa = new Tarefa(
+                    resultado.getInt("ID"),
+                    resultado.getString("NomeTarefa"),
+                    resultado.getString("Descrição"),
+                    resultado.getString("StatusTarefa"),
+                    resultado.getString("DataVencimento"),
+                    resultado.getString("Prioridade"),
+                    resultado.getString("responsavel")
+            );
+            tarefas.add(tarefa); 
+        }
+        
+        return tarefas; 
+    }
+   
 }
