@@ -257,5 +257,28 @@ public class CTCONTAB {
         
         return tarefas; 
     }
-   
+    
+   public static List<Funcionario> listarFuncionarios() throws ClassNotFoundException, SQLException {
+        List<Funcionario> funcionarios = new ArrayList<>();
+        conectado = conectar(); 
+        String query = "SELECT id, usuario, cargo, email, senha, Imagem, Permissao, created_at FROM usuarios";
+        PreparedStatement st = conectado.prepareStatement(query);
+        ResultSet resultado = st.executeQuery();
+        
+        while (resultado.next()) {
+            Funcionario funcionario = new Funcionario(
+                    resultado.getInt("id"),
+                    resultado.getString("usuario"),
+                    resultado.getString("cargo"),
+                    resultado.getString("email"),
+                    resultado.getString("senha"),
+                    resultado.getBytes("Imagem"), 
+                    resultado.getString("Permissao"),
+                    resultado.getTimestamp("created_at") 
+            );
+            funcionarios.add(funcionario); 
+        }
+        
+        return funcionarios; 
+    }
 }

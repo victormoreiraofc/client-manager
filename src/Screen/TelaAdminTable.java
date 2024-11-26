@@ -1,14 +1,108 @@
 package Screen;
 
+import Data.CTCONTAB;
+import Data.Funcionario;
 import Data.Usuario;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.SwingWorker;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
 
 public class TelaAdminTable extends javax.swing.JFrame {
 
     private Usuario usuarioLogado;
+    private List<Funcionario> listaFuncionarios;
+
 
     public TelaAdminTable(Usuario usuario) {
         this.usuarioLogado = usuario;
         initComponents();
+        adicionarListenerDeBusca();
+        exibirMensagemCarregando();
+        carregarFuncionariosAssincrono();
+    }
+    
+    private void adicionarListenerDeBusca() {
+        txtLogin.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filtrarFuncionarios();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filtrarFuncionarios();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filtrarFuncionarios();
+            }
+        });
+    }
+    
+     private void exibirMensagemCarregando() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        model.addRow(new Object[]{"Carregando...", "", "", "", "", ""});
+    }
+     
+      private void carregarFuncionariosAssincrono() {
+        new SwingWorker<List<Funcionario>, Void>() {
+            @Override
+            protected List<Funcionario> doInBackground() throws Exception {
+                return CTCONTAB.listarFuncionarios();
+            }
+
+            @Override
+            protected void done() {
+                try {
+                    listaFuncionarios = get();
+                    atualizarTabela(listaFuncionarios);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    exibirMensagemErro();
+                }
+            }
+        }.execute();
+    }
+
+    private void exibirMensagemErro() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        model.addRow(new Object[]{"Erro ao carregar dados.", "", "", "", "", ""});
+    }
+
+    private void atualizarTabela(List<Funcionario> funcionarios) {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+
+        for (Funcionario funcionario : funcionarios) {
+            Object[] rowData = new Object[]{
+                funcionario.getUsuario(),
+                funcionario.getEmail(),
+                funcionario.getPermissao(),
+                funcionario.getCreated_at(),
+                "", // Aqui você pode adicionar mais dados ou opções conforme necessário
+                ""
+            };
+            model.addRow(rowData);
+        }
+    }
+
+    private void filtrarFuncionarios() {
+        String filtro = txtLogin.getText().toLowerCase();
+        List<Funcionario> funcionariosFiltrados = new ArrayList<>();
+
+        for (Funcionario funcionario : listaFuncionarios) {
+            if (funcionario.getUsuario().toLowerCase().contains(filtro)) {
+                funcionariosFiltrados.add(funcionario);
+            }
+        }
+
+        atualizarTabela(funcionariosFiltrados);
     }
 
     public TelaAdminTable() {
@@ -19,6 +113,8 @@ public class TelaAdminTable extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
         btnNotificacoes = new javax.swing.JButton();
         lblUserIcon = new javax.swing.JLabel();
@@ -57,6 +153,30 @@ public class TelaAdminTable extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "NOME", "EMAIL", "PERMISSÕES ", "DATA DE CRIAÇÃO", "AÇÕES "
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(110, 190, 1130, 450);
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/seta-cima.png"))); // NOI18N
@@ -401,11 +521,13 @@ public class TelaAdminTable extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel jlibLogo2;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblServico;
