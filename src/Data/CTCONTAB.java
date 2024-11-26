@@ -234,14 +234,14 @@ public class CTCONTAB {
 
         return relatorios;
     }
-    
+
     public static List<Tarefa> listarTarefas() throws ClassNotFoundException, SQLException {
         List<Tarefa> tarefas = new ArrayList<>();
-        conectado = conectar(); 
+        conectado = conectar();
         String query = "SELECT ID, NomeTarefa, Descrição, StatusTarefa, DataVencimento, Prioridade, responsavel FROM tarefa";
         PreparedStatement st = conectado.prepareStatement(query);
         ResultSet resultado = st.executeQuery();
-        
+
         while (resultado.next()) {
             Tarefa tarefa = new Tarefa(
                     resultado.getInt("ID"),
@@ -252,32 +252,32 @@ public class CTCONTAB {
                     resultado.getString("Prioridade"),
                     resultado.getString("responsavel")
             );
-            tarefas.add(tarefa); 
+            tarefas.add(tarefa);
         }
-        
-        return tarefas; 
+
+        return tarefas;
     }
-    
-   public static List<Funcionario> listarFuncionarios() throws ClassNotFoundException, SQLException {
+
+    public static List<Funcionario> listarFuncionarios() throws ClassNotFoundException, SQLException {
         List<Funcionario> funcionarios = new ArrayList<>();
-        conectado = conectar(); 
+        conectado = conectar();
         String query = "SELECT id, usuario, email, senha, Imagem, Permissao, created_at FROM usuarios";
         PreparedStatement st = conectado.prepareStatement(query);
         ResultSet resultado = st.executeQuery();
-        
+
         while (resultado.next()) {
             Funcionario funcionario = new Funcionario(
                     resultado.getInt("id"),
                     resultado.getString("usuario"),
                     resultado.getString("email"),
                     resultado.getString("senha"),
-                    resultado.getBytes("Imagem"), 
+                    resultado.getBytes("Imagem"),
                     resultado.getString("Permissao"),
-                    resultado.getTimestamp("created_at") 
+                    resultado.getTimestamp("created_at")
             );
-            funcionarios.add(funcionario); 
+            funcionarios.add(funcionario);
         }
-        
-        return funcionarios; 
+
+        return funcionarios;
     }
 }

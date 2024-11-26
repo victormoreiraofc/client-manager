@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 public class TelaTarefaTable extends javax.swing.JFrame {
-    
+
     private Usuario usuarioLogado;
     private List<Tarefa> listarTarefas;
     private List<Tarefa> tarefasFiltradas;
@@ -24,25 +24,25 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         carregarRelatoriosAssincrono();
         configurarBusca();
     }
-    
-    private void exibirMensagemCarregando(){
+
+    private void exibirMensagemCarregando() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
         model.addRow(new Object[]{"Carregando...", "", "", ""});
     }
-    
-    private void carregarRelatoriosAssincrono(){
+
+    private void carregarRelatoriosAssincrono() {
         new SwingWorker<List<Tarefa>, Void>() {
             @Override
             protected List<Tarefa> doInBackground() throws Exception {
-            return CTCONTAB.listarTarefas();  
-    }
-            
+                return CTCONTAB.listarTarefas();
+            }
+
             @Override
             protected void done() {
                 try {
                     listarTarefas = get();
-                    tarefasFiltradas = listarTarefas; // Inicializa com todas as tarefas
+                    tarefasFiltradas = listarTarefas;
                     atualizarTabela(tarefasFiltradas);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -51,8 +51,8 @@ public class TelaTarefaTable extends javax.swing.JFrame {
             }
         }.execute();
     }
-    
-    private void exibirMensagemErro(){
+
+    private void exibirMensagemErro() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
         model.addRow(new Object[]{"Erro ao carregar dados.", "", "", ""});
@@ -74,7 +74,7 @@ public class TelaTarefaTable extends javax.swing.JFrame {
             model.addRow(rowData);
         }
     }
-    
+
     private void configurarBusca() {
         txtLogin.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -93,14 +93,13 @@ public class TelaTarefaTable extends javax.swing.JFrame {
             }
         });
     }
-    
+
     private void filtrarTarefas() {
         String busca = txtLogin.getText().toLowerCase();
-        
-        // Filtra as tarefas para exibir somente as que contêm o texto digitado (em qualquer parte do nome)
+
         tarefasFiltradas = listarTarefas.stream()
-            .filter(tarefa -> tarefa.getNomeTarefa().toLowerCase().contains(busca))
-            .collect(Collectors.toList());
+                .filter(tarefa -> tarefa.getNomeTarefa().toLowerCase().contains(busca))
+                .collect(Collectors.toList());
 
         atualizarTabela(tarefasFiltradas);
     }

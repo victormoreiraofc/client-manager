@@ -16,7 +16,6 @@ public class TelaAdminTable extends javax.swing.JFrame {
     private Usuario usuarioLogado;
     private List<Funcionario> listaFuncionarios;
 
-
     public TelaAdminTable(Usuario usuario) {
         this.usuarioLogado = usuario;
         initComponents();
@@ -24,7 +23,7 @@ public class TelaAdminTable extends javax.swing.JFrame {
         exibirMensagemCarregando();
         carregarFuncionariosAssincrono();
     }
-    
+
     private void adicionarListenerDeBusca() {
         txtLogin.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -43,14 +42,14 @@ public class TelaAdminTable extends javax.swing.JFrame {
             }
         });
     }
-    
-     private void exibirMensagemCarregando() {
+
+    private void exibirMensagemCarregando() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
         model.addRow(new Object[]{"Carregando...", "", "", "", "", ""});
     }
-     
-      private void carregarFuncionariosAssincrono() {
+
+    private void carregarFuncionariosAssincrono() {
         new SwingWorker<List<Funcionario>, Void>() {
             @Override
             protected List<Funcionario> doInBackground() throws Exception {
@@ -86,7 +85,7 @@ public class TelaAdminTable extends javax.swing.JFrame {
                 funcionario.getEmail(),
                 funcionario.getPermissao(),
                 funcionario.getCreated_at(),
-                "", // Aqui você pode adicionar mais dados ou opções conforme necessário
+                "",
                 ""
             };
             model.addRow(rowData);

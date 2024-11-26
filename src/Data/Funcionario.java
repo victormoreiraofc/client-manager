@@ -10,7 +10,7 @@ public class Funcionario {
     private String senha;
     private byte[] imagem;
     private String permissao;
-    private Date created_at; 
+    private Date created_at;
 
     public Funcionario(int id, String usuario, String email, String senha, byte[] imagem, String permissao, Date created_at) {
         this.id = id;
@@ -19,7 +19,7 @@ public class Funcionario {
         this.senha = senha;
         this.imagem = imagem;
         this.permissao = permissao;
-        this.created_at = created_at; 
+        this.created_at = created_at;
     }
 
     public int getId() {
@@ -78,4 +78,3 @@ public class Funcionario {
         this.created_at = created_at;
     }
 }
-    

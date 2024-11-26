@@ -42,7 +42,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
             protected void done() {
                 try {
                     listarRelatorios = get();
-                    relatoriosFiltrados = listarRelatorios; // Inicializa com todos os relatórios
+                    relatoriosFiltrados = listarRelatorios;
                     atualizarTabela(relatoriosFiltrados);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -73,7 +73,6 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         }
     }
 
-    // Método para configurar o mecanismo de busca
     private void configurarBusca() {
         txtLogin.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -93,18 +92,16 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         });
     }
 
-    // Método para filtrar os relatórios com base no texto digitado
     private void filtrarRelatorios() {
         String busca = txtLogin.getText().toLowerCase();
-        
-        // Filtra os relatórios para exibir somente os que contêm o texto digitado (em qualquer parte do nome)
+
         relatoriosFiltrados = listarRelatorios.stream()
-            .filter(relatorio -> relatorio.getNomeRelatorio().toLowerCase().contains(busca))
-            .collect(Collectors.toList());
+                .filter(relatorio -> relatorio.getNomeRelatorio().toLowerCase().contains(busca))
+                .collect(Collectors.toList());
 
         atualizarTabela(relatoriosFiltrados);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
