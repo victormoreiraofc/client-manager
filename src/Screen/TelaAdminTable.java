@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.SwingWorker;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 public class TelaAdminTable extends javax.swing.JFrame {
@@ -154,6 +155,11 @@ public class TelaAdminTable extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
+
+        jTable1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jTable1.setForeground(new java.awt.Color(255, 255, 255));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -173,10 +179,18 @@ public class TelaAdminTable extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.setGridColor(new java.awt.Color(115, 115, 115));
+        jTable1.setRowHeight(50);
+        jTable1.setShowHorizontalLines(true);
+        jTable1.setTableHeader(null);
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(110, 190, 1130, 450);
+        jScrollPane1.setBounds(110, 220, 1130, 420);
+        jTable1.setOpaque(false);
+        ((DefaultTableCellRenderer) jTable1.getDefaultRenderer(Object.class)).setOpaque(false);
+        jScrollPane1.setOpaque(false);
+        jScrollPane1.getViewport().setOpaque(false);
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/seta-cima.png"))); // NOI18N
@@ -227,7 +241,7 @@ public class TelaAdminTable extends javax.swing.JFrame {
         lblNome.setText("NOME");
         lblNome.setToolTipText("");
         getContentPane().add(lblNome);
-        lblNome.setBounds(110, 190, 180, 30);
+        lblNome.setBounds(110, 190, 230, 30);
 
         lblTipoDePessoa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTipoDePessoa.setForeground(new java.awt.Color(186, 186, 186));
@@ -235,7 +249,7 @@ public class TelaAdminTable extends javax.swing.JFrame {
         lblTipoDePessoa.setText("EMAIL");
         lblTipoDePessoa.setToolTipText("");
         getContentPane().add(lblTipoDePessoa);
-        lblTipoDePessoa.setBounds(290, 190, 350, 30);
+        lblTipoDePessoa.setBounds(340, 190, 220, 30);
 
         lblStatus.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblStatus.setForeground(new java.awt.Color(186, 186, 186));
@@ -243,7 +257,7 @@ public class TelaAdminTable extends javax.swing.JFrame {
         lblStatus.setText("PERMISSÕES");
         lblStatus.setToolTipText("");
         getContentPane().add(lblStatus);
-        lblStatus.setBounds(640, 190, 200, 30);
+        lblStatus.setBounds(560, 190, 230, 30);
 
         lblServico.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblServico.setForeground(new java.awt.Color(186, 186, 186));
@@ -251,7 +265,7 @@ public class TelaAdminTable extends javax.swing.JFrame {
         lblServico.setText("DATA DE CRIAÇÃO");
         lblServico.setToolTipText("");
         getContentPane().add(lblServico);
-        lblServico.setBounds(840, 190, 200, 30);
+        lblServico.setBounds(790, 190, 220, 30);
 
         lblTipoDePessoa4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTipoDePessoa4.setForeground(new java.awt.Color(186, 186, 186));
@@ -259,7 +273,7 @@ public class TelaAdminTable extends javax.swing.JFrame {
         lblTipoDePessoa4.setText("AÇÕES");
         lblTipoDePessoa4.setToolTipText("");
         getContentPane().add(lblTipoDePessoa4);
-        lblTipoDePessoa4.setBounds(1040, 190, 200, 30);
+        lblTipoDePessoa4.setBounds(1010, 190, 230, 30);
 
         jSeparator4.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator4.setForeground(new java.awt.Color(115, 115, 115));
@@ -270,25 +284,25 @@ public class TelaAdminTable extends javax.swing.JFrame {
         jSeparator2.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator2);
-        jSeparator2.setBounds(290, 190, 10, 450);
+        jSeparator2.setBounds(336, 190, 20, 450);
 
         jSeparator3.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator3.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator3);
-        jSeparator3.setBounds(640, 190, 50, 450);
+        jSeparator3.setBounds(561, 190, 20, 450);
 
         jSeparator5.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator5.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator5);
-        jSeparator5.setBounds(840, 190, 30, 450);
+        jSeparator5.setBounds(786, 190, 90, 450);
 
         jSeparator7.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator7.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator7.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator7);
-        jSeparator7.setBounds(1040, 190, 30, 450);
+        jSeparator7.setBounds(1011, 190, 60, 450);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255, 15));
         getContentPane().add(jPanel1);
