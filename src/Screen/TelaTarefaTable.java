@@ -3,13 +3,13 @@ package Screen;
 import Data.CTCONTAB;
 import Data.Tarefa;
 import Data.Usuario;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.swing.SwingWorker;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 
 public class TelaTarefaTable extends javax.swing.JFrame {
 
@@ -28,7 +28,7 @@ public class TelaTarefaTable extends javax.swing.JFrame {
     private void exibirMensagemCarregando() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-        model.addRow(new Object[]{"Carregando...", "", "", ""});
+        model.addRow(new Object[]{"Carregando...", "", "", "", "", "", "", ""});
     }
 
     private void carregarRelatoriosAssincrono() {
@@ -55,7 +55,7 @@ public class TelaTarefaTable extends javax.swing.JFrame {
     private void exibirMensagemErro() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-        model.addRow(new Object[]{"Erro ao carregar dados.", "", "", ""});
+        model.addRow(new Object[]{"Erro ao carregar dados.", "", "", "", "", "", "", ""});
     }
 
     private void atualizarTabela(List<Tarefa> tarefas) {
@@ -69,26 +69,28 @@ public class TelaTarefaTable extends javax.swing.JFrame {
                 tarefa.getStatusTarefa(),
                 tarefa.getPrioridade(),
                 tarefa.getDataVencimento(),
-                ""
+                "Abrir Janela 1",
+                "Abrir Janela 2",
+                "Abrir Janela 3"
             };
             model.addRow(rowData);
         }
     }
 
     private void configurarBusca() {
-        txtLogin.getDocument().addDocumentListener(new DocumentListener() {
+        txtLogin.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
             @Override
-            public void insertUpdate(DocumentEvent e) {
+            public void insertUpdate(javax.swing.event.DocumentEvent e) {
                 filtrarTarefas();
             }
 
             @Override
-            public void removeUpdate(DocumentEvent e) {
+            public void removeUpdate(javax.swing.event.DocumentEvent e) {
                 filtrarTarefas();
             }
 
             @Override
-            public void changedUpdate(DocumentEvent e) {
+            public void changedUpdate(javax.swing.event.DocumentEvent e) {
                 filtrarTarefas();
             }
         });
@@ -102,6 +104,77 @@ public class TelaTarefaTable extends javax.swing.JFrame {
                 .collect(Collectors.toList());
 
         atualizarTabela(tarefasFiltradas);
+    }
+
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+
+        public ButtonRenderer() {
+            setOpaque(true);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            setText(value == null ? "" : value.toString());
+            return this;
+        }
+    }
+
+    class ButtonEditor extends DefaultCellEditor {
+
+        private JButton button;
+        private String label;
+        private String actionType;
+
+        public ButtonEditor(JCheckBox checkBox, String actionType) {
+            super(checkBox);
+            this.actionType = actionType;
+
+            button = new JButton();
+            button.setOpaque(true);
+
+            button.addActionListener(e -> {
+                openWindow(actionType);
+                fireEditingStopped();
+            });
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            label = value == null ? "" : value.toString();
+            button.setText(label);
+            return button;
+        }
+
+        @Override
+        public Object getCellEditorValue() {
+            return label;
+        }
+
+        private void openWindow(String actionType) {
+            JFrame newFrame = new JFrame(actionType);
+            newFrame.setSize(300, 200);
+            newFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+            JLabel label = new JLabel("Você abriu: " + actionType, SwingConstants.CENTER);
+            newFrame.add(label, BorderLayout.CENTER);
+
+            switch (actionType) {
+                case "Janela 1":
+                    newFrame.setTitle("Detalhes da Janela 1");
+                    label.setText("Conteúdo da Janela 1");
+                    break;
+                case "Janela 2":
+                    newFrame.setTitle("Detalhes da Janela 2");
+                    label.setText("Conteúdo da Janela 2");
+                    break;
+                case "Janela 3":
+                    newFrame.setTitle("Detalhes da Janela 3");
+                    label.setText("Conteúdo da Janela 3");
+                    break;
+            }
+
+            newFrame.setVisible(true);
+        }
     }
 
     public TelaTarefaTable() {
@@ -162,24 +235,23 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
-        jScrollPane1.setBorder(null);
         jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
 
         jTable1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jTable1.setForeground(new java.awt.Color(255, 255, 255));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "NOME DA TAREFA", "RESPONSÁVEL", "STATUS", "PRIORIDADE", "DATA DE VENCIMENTO", "AÇÕES"
+                "NOME DA TAREFA", "RESPONSÁVEL", "STATUS", "PRIORIDADE", "DATA DE VENCIMENTO", "AÇÃO 1", "AÇÃO 2", "AÇÃO 3"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -188,8 +260,19 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         });
         jTable1.setGridColor(new java.awt.Color(115, 115, 115));
         jTable1.setRowHeight(50);
+        // Adiciona renderizadores e editores para botões
+        jTable1.getColumn("AÇÃO 1").setCellRenderer(new ButtonRenderer());
+        jTable1.getColumn("AÇÃO 1").setCellEditor(new ButtonEditor(new JCheckBox(), "Janela 1"));
+
+        jTable1.getColumn("AÇÃO 2").setCellRenderer(new ButtonRenderer());
+        jTable1.getColumn("AÇÃO 2").setCellEditor(new ButtonEditor(new JCheckBox(), "Janela 2"));
+
+        jTable1.getColumn("AÇÃO 3").setCellRenderer(new ButtonRenderer());
+        jTable1.getColumn("AÇÃO 3").setCellEditor(new ButtonEditor(new JCheckBox(), "Janela 3"));
+
+        // Adiciona a tabela no painel principal
+        add(new JScrollPane(jTable1), BorderLayout.CENTER);
         jTable1.setShowHorizontalLines(true);
-        jTable1.setTableHeader(null);
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
