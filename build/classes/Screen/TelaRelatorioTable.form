@@ -28,6 +28,9 @@
   <SubComponents>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="null"/>
+        </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
@@ -53,15 +56,27 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="4">
+              <Table columnCount="6" rowCount="4">
                 <Column editable="false" title="NOME DO RELAT&#xd3;RIO" type="java.lang.Object"/>
                 <Column editable="false" title="STATUS" type="java.lang.Object"/>
                 <Column editable="false" title="DATA DE CADASTRO" type="java.lang.Object"/>
-                <Column editable="false" title="A&#xc7;&#xd5;ES" type="java.lang.Object"/>
+                <Column editable="true" title="A&#xc7;&#xc3;O 1" type="java.lang.Object"/>
+                <Column editable="true" title="A&#xc7;&#xc3;O 3" type="java.lang.Object"/>
+                <Column editable="false" title="null" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
@@ -88,7 +103,7 @@
               <Color blue="73" green="73" red="73" type="rgb"/>
             </Property>
             <Property name="rowHeight" type="int" value="50"/>
-            <Property name="showHorizontalLines" type="boolean" value="true"/>
+            <Property name="showHorizontalLines" type="boolean" value="true" postCode="jTable1.getColumn(&quot;A&#xc7;&#xc3;O 1&quot;).setCellRenderer(new ButtonRenderer());&#xa;        jTable1.getColumn(&quot;A&#xc7;&#xc3;O 1&quot;).setCellEditor(new ButtonEditor(new JCheckBox(), &quot;Janela 1&quot;));&#xa;&#xa;        jTable1.getColumn(&quot;A&#xc7;&#xc3;O 3&quot;).setCellRenderer(new ButtonRenderer());&#xa;        jTable1.getColumn(&quot;A&#xc7;&#xc3;O 3&quot;).setCellEditor(new ButtonEditor(new JCheckBox(), &quot;Excluir&quot;));&#xa;&#xa;        // Adiciona a tabela no painel principal&#xa;        add(new JScrollPane(jTable1), BorderLayout.CENTER);&#xa;        ajustarLarguraColunas();"/>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="null" type="code"/>
             </Property>
@@ -123,20 +138,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="110" y="190" width="290" height="30"/>
-        </Constraint>
-      </Constraints>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel8">
-      <Properties>
-        <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/images/lupa-branca.png"/>
-        </Property>
-      </Properties>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="1110" y="230" width="33" height="33"/>
+          <AbsoluteConstraints x="110" y="190" width="310" height="30"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -167,38 +169,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="392" y="190" width="110" height="450"/>
-        </Constraint>
-      </Constraints>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel6">
-      <Properties>
-        <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/images/fechar.png"/>
-        </Property>
-      </Properties>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="1150" y="230" width="33" height="33"/>
-        </Constraint>
-      </Constraints>
-    </Component>
-    <Component class="javax.swing.JButton" name="jButton4">
-      <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="71" red="52" type="rgb"/>
-        </Property>
-        <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-          <Insets value="[8, 15, 8, 15]"/>
-        </Property>
-        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[50, 22]"/>
-        </Property>
-      </Properties>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="1110" y="230" width="33" height="33"/>
+          <AbsoluteConstraints x="422" y="190" width="80" height="450"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -218,21 +189,6 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
-      <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="36" green="41" red="ef" type="rgb"/>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
-      </Events>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="1150" y="230" width="33" height="33"/>
-        </Constraint>
-      </Constraints>
-    </Component>
     <Component class="javax.swing.JLabel" name="lblStatus">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -247,7 +203,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="400" y="190" width="270" height="30"/>
+          <AbsoluteConstraints x="430" y="190" width="300" height="30"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -263,7 +219,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="673" y="190" width="140" height="450"/>
+          <AbsoluteConstraints x="733" y="190" width="80" height="450"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -299,7 +255,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="680" y="190" width="270" height="30"/>
+          <AbsoluteConstraints x="740" y="190" width="210" height="30"/>
         </Constraint>
       </Constraints>
     </Component>

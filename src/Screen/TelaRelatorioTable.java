@@ -3,13 +3,26 @@ package Screen;
 import Data.CTCONTAB;
 import Data.Relatorio;
 import Data.Usuario;
+import java.awt.BorderLayout;
+import java.awt.Component;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.swing.DefaultCellEditor;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 public class TelaRelatorioTable extends javax.swing.JFrame {
 
@@ -67,7 +80,8 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
                 relatorio.getNomeRelatorio(),
                 relatorio.getStatusRelatorio(),
                 relatorio.getDataCadastro(),
-                ""
+                "1",
+                "3"
             };
             model.addRow(rowData);
         }
@@ -102,6 +116,125 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         atualizarTabela(relatoriosFiltrados);
     }
 
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+
+        public ButtonRenderer() {
+            setOpaque(false);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            setText("");
+            ImageIcon icon = new ImageIcon(getClass().getResource("/images/lupa-branca.png"));
+            ImageIcon icon3 = new ImageIcon(getClass().getResource("/images/fechar.png"));
+
+            if (column == 3) {
+                setIcon(icon);
+                setBackground(new java.awt.Color(82, 113, 255));
+            } else if (column == 4) {
+                setIcon(icon3);
+                setBackground(new java.awt.Color(239, 65, 54));
+            }
+
+            return this;
+        }
+    }
+
+    class ButtonEditor extends DefaultCellEditor {
+
+        private JButton button;
+        private String label;
+        private String actionType;
+        private int selectedRow;
+
+        public ButtonEditor(JCheckBox checkBox, String actionType) {
+            super(checkBox);
+            this.actionType = actionType;
+
+            button = new JButton();
+            button.setOpaque(true);
+
+            button.addActionListener(e -> {
+                if ("Excluir".equals(actionType)) {
+                    excluirRelatorio(selectedRow);
+                } else {
+                    openWindow(actionType);
+                }
+                fireEditingStopped();
+            });
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            label = value == null ? "" : value.toString();
+            selectedRow = row;
+
+            button.setText("");
+            ImageIcon icon = new ImageIcon(getClass().getResource("/images/lupa-branca.png"));
+            ImageIcon icon3 = new ImageIcon(getClass().getResource("/images/fechar.png"));
+            button.setIcon(icon);
+            button.setIcon(icon3);
+
+            if (column == 3) {
+                button.setBackground(new java.awt.Color(82, 113, 255));
+            } else if (column == 4) {
+                button.setBackground(new java.awt.Color(239, 65, 54));
+            }
+
+            return button;
+        }
+
+        @Override
+        public Object getCellEditorValue() {
+            return label;
+        }
+
+        private void openWindow(String actionType) {
+            JFrame newFrame = new JFrame(actionType);
+            newFrame.setSize(300, 200);
+            newFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+            JLabel label = new JLabel("Você abriu: " + actionType, SwingConstants.CENTER);
+            newFrame.add(label, BorderLayout.CENTER);
+
+            switch (actionType) {
+                case "Janela 1":
+                    newFrame.setTitle("Detalhes da Janela 1");
+                    label.setText("Conteúdo da Janela 1");
+                    break;
+            }
+
+            newFrame.setVisible(true);
+        }
+    }
+
+    private void excluirRelatorio(int row) {
+        try {
+            Relatorio relatorio = listarRelatorios.get(row);
+
+            CTCONTAB.excluirRegistro("relatorio", "ID", relatorio.getId());
+
+            listarRelatorios.remove(row);
+            atualizarTabela(listarRelatorios);
+
+            JOptionPane.showMessageDialog(null, "Tarefa excluída com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao excluir tarefa: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void ajustarLarguraColunas() {
+        jTable1.getColumnModel().getColumn(3).setMinWidth(62);
+        jTable1.getColumnModel().getColumn(3).setMaxWidth(62);
+        jTable1.getColumnModel().getColumn(3).setPreferredWidth(62);
+        jTable1.getColumnModel().getColumn(4).setMinWidth(62);
+        jTable1.getColumnModel().getColumn(4).setMaxWidth(62);
+        jTable1.getColumnModel().getColumn(4).setPreferredWidth(62);
+        jTable1.getColumnModel().getColumn(5).setMinWidth(70);
+        jTable1.getColumnModel().getColumn(5).setMaxWidth(70);
+        jTable1.getColumnModel().getColumn(5).setPreferredWidth(70);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -110,13 +243,9 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         btnNotificacoes = new javax.swing.JButton();
         lblNome1 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jSeparator8 = new javax.swing.JSeparator();
         jSeparator10 = new javax.swing.JSeparator();
-        jLabel6 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
         jSeparator9 = new javax.swing.JSeparator();
-        jButton2 = new javax.swing.JButton();
         lblStatus = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
         lblTipoDePessoa4 = new javax.swing.JLabel();
@@ -150,17 +279,17 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         jTable1.setForeground(new java.awt.Color(255, 255, 255));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "NOME DO RELATÓRIO", "STATUS", "DATA DE CADASTRO", "AÇÕES"
+                "NOME DO RELATÓRIO", "STATUS", "DATA DE CADASTRO", "AÇÃO 1", "AÇÃO 3", "null"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, true, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -170,6 +299,15 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         jTable1.setGridColor(new java.awt.Color(115, 115, 115));
         jTable1.setRowHeight(50);
         jTable1.setShowHorizontalLines(true);
+        jTable1.getColumn("AÇÃO 1").setCellRenderer(new ButtonRenderer());
+        jTable1.getColumn("AÇÃO 1").setCellEditor(new ButtonEditor(new JCheckBox(), "Janela 1"));
+
+        jTable1.getColumn("AÇÃO 3").setCellRenderer(new ButtonRenderer());
+        jTable1.getColumn("AÇÃO 3").setCellEditor(new ButtonEditor(new JCheckBox(), "Excluir"));
+
+        // Adiciona a tabela no painel principal
+        add(new JScrollPane(jTable1), BorderLayout.CENTER);
+        ajustarLarguraColunas();
         jTable1.setTableHeader(null);
         jScrollPane1.setViewportView(jTable1);
 
@@ -191,12 +329,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         lblNome1.setText("NOME DO RELATÓRIO");
         lblNome1.setToolTipText("");
         getContentPane().add(lblNome1);
-        lblNome1.setBounds(110, 190, 290, 30);
-
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lupa-branca.png"))); // NOI18N
-        getContentPane().add(jLabel8);
-        jLabel8.setBounds(1110, 230, 33, 33);
+        lblNome1.setBounds(110, 190, 310, 30);
 
         jSeparator8.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator8.setForeground(new java.awt.Color(115, 115, 115));
@@ -207,18 +340,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         jSeparator10.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator10.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator10);
-        jSeparator10.setBounds(392, 190, 110, 450);
-
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fechar.png"))); // NOI18N
-        getContentPane().add(jLabel6);
-        jLabel6.setBounds(1150, 230, 33, 33);
-
-        jButton4.setBackground(new java.awt.Color(82, 113, 255));
-        jButton4.setMargin(new java.awt.Insets(8, 15, 8, 15));
-        jButton4.setMaximumSize(new java.awt.Dimension(50, 22));
-        getContentPane().add(jButton4);
-        jButton4.setBounds(1110, 230, 33, 33);
+        jSeparator10.setBounds(422, 190, 80, 450);
 
         jSeparator9.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator9.setForeground(new java.awt.Color(115, 115, 115));
@@ -226,28 +348,19 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         getContentPane().add(jSeparator9);
         jSeparator9.setBounds(955, 190, 120, 450);
 
-        jButton2.setBackground(new java.awt.Color(239, 65, 54));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton2);
-        jButton2.setBounds(1150, 230, 33, 33);
-
         lblStatus.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblStatus.setForeground(new java.awt.Color(186, 186, 186));
         lblStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblStatus.setText("STATUS");
         lblStatus.setToolTipText("");
         getContentPane().add(lblStatus);
-        lblStatus.setBounds(400, 190, 270, 30);
+        lblStatus.setBounds(430, 190, 300, 30);
 
         jSeparator5.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator5.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator5);
-        jSeparator5.setBounds(673, 190, 140, 450);
+        jSeparator5.setBounds(733, 190, 80, 450);
 
         lblTipoDePessoa4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTipoDePessoa4.setForeground(new java.awt.Color(186, 186, 186));
@@ -263,7 +376,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         lblDataDeCadastro.setText("DATA DE CADASTRO");
         lblDataDeCadastro.setToolTipText("");
         getContentPane().add(lblDataDeCadastro);
-        lblDataDeCadastro.setBounds(680, 190, 270, 30);
+        lblDataDeCadastro.setBounds(740, 190, 210, 30);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255, 15));
         getContentPane().add(jPanel1);
@@ -447,10 +560,6 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnHomeActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
@@ -464,14 +573,10 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
     private javax.swing.JButton btnNotificacoes;
     private javax.swing.JButton btnRelatorios;
     private javax.swing.JButton btnTarefas;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator10;

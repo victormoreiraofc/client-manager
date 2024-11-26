@@ -2,14 +2,28 @@ package Screen;
 
 import Data.CTCONTAB;
 import Data.Funcionario;
+import Data.Tarefa;
 import Data.Usuario;
+import java.awt.BorderLayout;
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultCellEditor;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 public class TelaAdminTable extends javax.swing.JFrame {
 
@@ -85,8 +99,9 @@ public class TelaAdminTable extends javax.swing.JFrame {
                 funcionario.getEmail(),
                 funcionario.getPermissao(),
                 funcionario.getCreated_at(),
-                "",
-                ""
+                "1",
+                "2",
+                "3"
             };
             model.addRow(rowData);
         }
@@ -105,6 +120,140 @@ public class TelaAdminTable extends javax.swing.JFrame {
         atualizarTabela(funcionariosFiltrados);
     }
 
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+
+        public ButtonRenderer() {
+            setOpaque(false);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            setText("");
+            ImageIcon icon = new ImageIcon(getClass().getResource("/images/seta-cima.png"));
+            ImageIcon icon2 = new ImageIcon(getClass().getResource("/images/seta-baixo.png"));
+            ImageIcon icon3 = new ImageIcon(getClass().getResource("/images/delete-icon.png"));
+
+            if (column == 4) {
+                setIcon(icon);
+                setBackground(new java.awt.Color(0, 74, 173));
+            } else if (column == 5) {
+                setIcon(icon2);
+                setBackground(new java.awt.Color(255, 189, 89));
+            } else if (column == 6) {
+                setIcon(icon3);
+                setBackground(new java.awt.Color(239, 65, 54));
+            }
+
+            return this;
+        }
+    }
+
+    class ButtonEditor extends DefaultCellEditor {
+
+        private JButton button;
+        private String label;
+        private String actionType;
+        private int selectedRow;
+
+        public ButtonEditor(JCheckBox checkBox, String actionType) {
+            super(checkBox);
+            this.actionType = actionType;
+
+            button = new JButton();
+            button.setOpaque(true);
+
+            button.addActionListener(e -> {
+                if ("Excluir".equals(actionType)) {
+                    excluirFuncionario(selectedRow);
+                } else {
+                    openWindow(actionType);
+                }
+                fireEditingStopped();
+            });
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            label = value == null ? "" : value.toString();
+            selectedRow = row;
+
+            button.setText("");
+            ImageIcon icon = new ImageIcon(getClass().getResource("/images/seta-cima.png"));
+            ImageIcon icon2 = new ImageIcon(getClass().getResource("/images/seta-baixo.png"));
+            ImageIcon icon3 = new ImageIcon(getClass().getResource("/images/delete-icon.png"));
+            button.setIcon(icon);
+            button.setIcon(icon2);
+            button.setIcon(icon3);
+
+            if (column == 4) {
+                button.setBackground(new java.awt.Color(0, 74, 173));
+            } else if (column == 5) {
+                button.setBackground(new java.awt.Color(255, 189, 89));
+            } else if (column == 6) {
+                button.setBackground(new java.awt.Color(239, 65, 54));
+            }
+
+            return button;
+        }
+
+        @Override
+        public Object getCellEditorValue() {
+            return label;
+        }
+
+        private void openWindow(String actionType) {
+            JFrame newFrame = new JFrame(actionType);
+            newFrame.setSize(300, 200);
+            newFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+            JLabel label = new JLabel("Você abriu: " + actionType, SwingConstants.CENTER);
+            newFrame.add(label, BorderLayout.CENTER);
+
+            switch (actionType) {
+                case "Janela 1":
+                    newFrame.setTitle("Detalhes da Janela 1");
+                    label.setText("Conteúdo da Janela 1");
+                    break;
+                case "Janela 2":
+                    newFrame.setTitle("Detalhes da Janela 2");
+                    label.setText("Conteúdo da Janela 2");
+                    break;
+            }
+
+            newFrame.setVisible(true);
+        }
+    }
+
+    private void excluirFuncionario(int row) {
+        try {
+            Funcionario funcionario = listaFuncionarios.get(row);
+
+            CTCONTAB.excluirRegistro("usuarios", "id", funcionario.getId());
+
+            listaFuncionarios.remove(row);
+            atualizarTabela(listaFuncionarios);
+
+            JOptionPane.showMessageDialog(null, "Tarefa excluída com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao excluir tarefa: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void ajustarLarguraColunas() {
+        jTable1.getColumnModel().getColumn(4).setMinWidth(62);
+        jTable1.getColumnModel().getColumn(4).setMaxWidth(62);
+        jTable1.getColumnModel().getColumn(4).setPreferredWidth(62);
+        jTable1.getColumnModel().getColumn(5).setMinWidth(62);
+        jTable1.getColumnModel().getColumn(5).setMaxWidth(62);
+        jTable1.getColumnModel().getColumn(5).setPreferredWidth(62);
+        jTable1.getColumnModel().getColumn(6).setMinWidth(62);
+        jTable1.getColumnModel().getColumn(6).setMaxWidth(62);
+        jTable1.getColumnModel().getColumn(6).setPreferredWidth(62);
+        jTable1.getColumnModel().getColumn(7).setMinWidth(20);
+        jTable1.getColumnModel().getColumn(7).setMaxWidth(20);
+        jTable1.getColumnModel().getColumn(7).setPreferredWidth(20);
+    }
+
     public TelaAdminTable() {
         initComponents();
     }
@@ -115,14 +264,8 @@ public class TelaAdminTable extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel7 = new javax.swing.JLabel();
         btnNotificacoes = new javax.swing.JButton();
         lblUserIcon = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         lblNome = new javax.swing.JLabel();
         lblTipoDePessoa = new javax.swing.JLabel();
         lblStatus = new javax.swing.JLabel();
@@ -161,17 +304,17 @@ public class TelaAdminTable extends javax.swing.JFrame {
         jTable1.setForeground(new java.awt.Color(255, 255, 255));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "NOME", "EMAIL", "PERMISSÕES ", "DATA DE CRIAÇÃO", "AÇÕES "
+                "NOME", "EMAIL", "PERMISSÕES ", "DATA DE CRIAÇÃO", "AÇÃO 1", "AÇÃO 2", "AÇÃO 3", "null"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, true, true, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -180,6 +323,18 @@ public class TelaAdminTable extends javax.swing.JFrame {
         });
         jTable1.setGridColor(new java.awt.Color(115, 115, 115));
         jTable1.setRowHeight(50);
+        jTable1.getColumn("AÇÃO 1").setCellRenderer(new ButtonRenderer());
+        jTable1.getColumn("AÇÃO 1").setCellEditor(new ButtonEditor(new JCheckBox(), "Janela 1"));
+
+        jTable1.getColumn("AÇÃO 2").setCellRenderer(new ButtonRenderer());
+        jTable1.getColumn("AÇÃO 2").setCellEditor(new ButtonEditor(new JCheckBox(), "Janela 2"));
+
+        jTable1.getColumn("AÇÃO 3").setCellRenderer(new ButtonRenderer());
+        jTable1.getColumn("AÇÃO 3").setCellEditor(new ButtonEditor(new JCheckBox(), "Excluir"));
+
+        add(new JScrollPane(jTable1), BorderLayout.CENTER);
+
+        ajustarLarguraColunas();
         jTable1.setShowHorizontalLines(true);
         jTable1.setTableHeader(null);
         jScrollPane1.setViewportView(jTable1);
@@ -191,11 +346,6 @@ public class TelaAdminTable extends javax.swing.JFrame {
         jScrollPane1.setOpaque(false);
         jScrollPane1.getViewport().setOpaque(false);
 
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/seta-cima.png"))); // NOI18N
-        getContentPane().add(jLabel7);
-        jLabel7.setBounds(1090, 230, 33, 33);
-
         btnNotificacoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/alert-bell.png"))); // NOI18N
         btnNotificacoes.setContentAreaFilled(false);
         getContentPane().add(btnNotificacoes);
@@ -204,35 +354,6 @@ public class TelaAdminTable extends javax.swing.JFrame {
         lblUserIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/minhatura-de-perfil.png"))); // NOI18N
         getContentPane().add(lblUserIcon);
         lblUserIcon.setBounds(1210, 15, 50, 50);
-
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/seta-baixo.png"))); // NOI18N
-        getContentPane().add(jLabel6);
-        jLabel6.setBounds(1130, 230, 33, 33);
-
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete-icon.png"))); // NOI18N
-        getContentPane().add(jLabel5);
-        jLabel5.setBounds(1170, 230, 33, 33);
-
-        jButton1.setBackground(new java.awt.Color(239, 65, 54));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(1170, 230, 33, 33);
-
-        jButton2.setBackground(new java.awt.Color(255, 189, 89));
-        getContentPane().add(jButton2);
-        jButton2.setBounds(1130, 230, 33, 33);
-
-        jButton3.setBackground(new java.awt.Color(0, 74, 173));
-        jButton3.setMargin(new java.awt.Insets(8, 15, 8, 15));
-        jButton3.setMaximumSize(new java.awt.Dimension(50, 22));
-        getContentPane().add(jButton3);
-        jButton3.setBounds(1090, 230, 33, 33);
 
         lblNome.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblNome.setForeground(new java.awt.Color(186, 186, 186));
@@ -289,13 +410,13 @@ public class TelaAdminTable extends javax.swing.JFrame {
         jSeparator3.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator3);
-        jSeparator3.setBounds(561, 190, 20, 450);
+        jSeparator3.setBounds(571, 190, 10, 450);
 
         jSeparator5.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator5.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator5);
-        jSeparator5.setBounds(786, 190, 90, 450);
+        jSeparator5.setBounds(798, 190, 80, 450);
 
         jSeparator7.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator7.setForeground(new java.awt.Color(115, 115, 115));
@@ -481,11 +602,6 @@ public class TelaAdminTable extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnAdministracaoActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new TelaClienteTable(usuarioLogado).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -523,16 +639,10 @@ public class TelaAdminTable extends javax.swing.JFrame {
     private javax.swing.JButton btnNotificacoes;
     private javax.swing.JButton btnRelatorios;
     private javax.swing.JButton btnTarefas;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;

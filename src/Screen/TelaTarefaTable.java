@@ -69,9 +69,8 @@ public class TelaTarefaTable extends javax.swing.JFrame {
                 tarefa.getStatusTarefa(),
                 tarefa.getPrioridade(),
                 tarefa.getDataVencimento(),
-                "Abrir Janela 1",
-                "Abrir Janela 2",
-                "Abrir Janela 3"
+                "1",
+                "3"
             };
             model.addRow(rowData);
         }
@@ -109,12 +108,23 @@ public class TelaTarefaTable extends javax.swing.JFrame {
     class ButtonRenderer extends JButton implements TableCellRenderer {
 
         public ButtonRenderer() {
-            setOpaque(true);
+            setOpaque(false);
         }
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            setText(value == null ? "" : value.toString());
+            setText("");
+            ImageIcon icon = new ImageIcon(getClass().getResource("/images/lupa-branca.png"));
+            ImageIcon icon3 = new ImageIcon(getClass().getResource("/images/fechar.png"));
+
+            if (column == 5) {
+                setIcon(icon);
+                setBackground(new java.awt.Color(82, 113, 255));
+            } else if (column == 6) {
+                setIcon(icon3);
+                setBackground(new java.awt.Color(239, 65, 54));
+            }
+
             return this;
         }
     }
@@ -124,6 +134,7 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         private JButton button;
         private String label;
         private String actionType;
+        private int selectedRow;
 
         public ButtonEditor(JCheckBox checkBox, String actionType) {
             super(checkBox);
@@ -133,7 +144,11 @@ public class TelaTarefaTable extends javax.swing.JFrame {
             button.setOpaque(true);
 
             button.addActionListener(e -> {
-                openWindow(actionType);
+                if ("Excluir".equals(actionType)) {
+                    excluirTarefa(selectedRow);
+                } else {
+                    abrirJanela(actionType);
+                }
                 fireEditingStopped();
             });
         }
@@ -141,7 +156,20 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         @Override
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
             label = value == null ? "" : value.toString();
-            button.setText(label);
+            selectedRow = row;
+
+            button.setText("");
+            ImageIcon icon = new ImageIcon(getClass().getResource("/images/lupa-branca.png"));
+            ImageIcon icon3 = new ImageIcon(getClass().getResource("/images/fechar.png"));
+
+            if (column == 5) {
+                button.setIcon(icon);
+                button.setBackground(new java.awt.Color(82, 113, 255));
+            } else if (column == 6) {
+                button.setIcon(icon3);
+                button.setBackground(new java.awt.Color(239, 65, 54));
+            }
+
             return button;
         }
 
@@ -150,7 +178,7 @@ public class TelaTarefaTable extends javax.swing.JFrame {
             return label;
         }
 
-        private void openWindow(String actionType) {
+        private void abrirJanela(String actionType) {
             JFrame newFrame = new JFrame(actionType);
             newFrame.setSize(300, 200);
             newFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -163,18 +191,37 @@ public class TelaTarefaTable extends javax.swing.JFrame {
                     newFrame.setTitle("Detalhes da Janela 1");
                     label.setText("Conteúdo da Janela 1");
                     break;
-                case "Janela 2":
-                    newFrame.setTitle("Detalhes da Janela 2");
-                    label.setText("Conteúdo da Janela 2");
-                    break;
-                case "Janela 3":
-                    newFrame.setTitle("Detalhes da Janela 3");
-                    label.setText("Conteúdo da Janela 3");
-                    break;
             }
 
             newFrame.setVisible(true);
         }
+
+        private void excluirTarefa(int row) {
+            try {
+                Tarefa tarefa = tarefasFiltradas.get(row);
+
+                CTCONTAB.excluirRegistro("tarefa", "ID", tarefa.getId());
+
+                tarefasFiltradas.remove(row);
+                atualizarTabela(tarefasFiltradas);
+
+                JOptionPane.showMessageDialog(null, "Tarefa excluída com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao excluir tarefa: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void ajustarLarguraColunas() {
+        jTable1.getColumnModel().getColumn(5).setMinWidth(62);
+        jTable1.getColumnModel().getColumn(5).setMaxWidth(62);
+        jTable1.getColumnModel().getColumn(5).setPreferredWidth(62);
+        jTable1.getColumnModel().getColumn(6).setMinWidth(62);
+        jTable1.getColumnModel().getColumn(6).setMaxWidth(62);
+        jTable1.getColumnModel().getColumn(6).setPreferredWidth(62);
+        jTable1.getColumnModel().getColumn(7).setMinWidth(20);
+        jTable1.getColumnModel().getColumn(7).setMaxWidth(20);
+        jTable1.getColumnModel().getColumn(7).setPreferredWidth(20);
     }
 
     public TelaTarefaTable() {
@@ -188,12 +235,8 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btnNotificacoes = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
         jSeparator7 = new javax.swing.JSeparator();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         lblNome = new javax.swing.JLabel();
         lblTipoDePessoa = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
@@ -222,12 +265,8 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         lblUserIcon = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         Background = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jSeparator8 = new javax.swing.JSeparator();
         jSeparator9 = new javax.swing.JSeparator();
-        jButton2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         lblNome1 = new javax.swing.JLabel();
         lblTipoDePessoa1 = new javax.swing.JLabel();
         jSeparator10 = new javax.swing.JSeparator();
@@ -235,7 +274,9 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
+        jScrollPane1.setBorder(null);
         jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setViewportView(null);
 
         jTable1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jTable1.setForeground(new java.awt.Color(255, 255, 255));
@@ -247,11 +288,11 @@ public class TelaTarefaTable extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "NOME DA TAREFA", "RESPONSÁVEL", "STATUS", "PRIORIDADE", "DATA DE VENCIMENTO", "AÇÃO 1", "AÇÃO 2", "AÇÃO 3"
+                "NOME DA TAREFA", "RESPONSÁVEL", "STATUS", "PRIORIDADE", "DATA DE VENCIMENTO", "AÇÃO 1", "AÇÃO 3", "Title 8"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true, true, true
+                false, false, false, false, false, true, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -259,20 +300,20 @@ public class TelaTarefaTable extends javax.swing.JFrame {
             }
         });
         jTable1.setGridColor(new java.awt.Color(115, 115, 115));
-        jTable1.setRowHeight(50);
         // Adiciona renderizadores e editores para botões
         jTable1.getColumn("AÇÃO 1").setCellRenderer(new ButtonRenderer());
         jTable1.getColumn("AÇÃO 1").setCellEditor(new ButtonEditor(new JCheckBox(), "Janela 1"));
 
-        jTable1.getColumn("AÇÃO 2").setCellRenderer(new ButtonRenderer());
-        jTable1.getColumn("AÇÃO 2").setCellEditor(new ButtonEditor(new JCheckBox(), "Janela 2"));
-
         jTable1.getColumn("AÇÃO 3").setCellRenderer(new ButtonRenderer());
-        jTable1.getColumn("AÇÃO 3").setCellEditor(new ButtonEditor(new JCheckBox(), "Janela 3"));
+        jTable1.getColumn("AÇÃO 3").setCellEditor(new ButtonEditor(new JCheckBox(), "Excluir"));
 
         // Adiciona a tabela no painel principal
         add(new JScrollPane(jTable1), BorderLayout.CENTER);
+        ajustarLarguraColunas();
+        jTable1.setRowSelectionAllowed(false);
         jTable1.setShowHorizontalLines(true);
+        jTable1.setTableHeader(null);
+        jTable1.setRowHeight(50);
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
@@ -287,16 +328,6 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         getContentPane().add(btnNotificacoes);
         btnNotificacoes.setBounds(1160, 10, 60, 60);
 
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lupa-branca.png"))); // NOI18N
-        getContentPane().add(jLabel7);
-        jLabel7.setBounds(1110, 230, 33, 33);
-
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fechar.png"))); // NOI18N
-        getContentPane().add(jLabel5);
-        jLabel5.setBounds(1150, 230, 33, 33);
-
         jSeparator4.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator4.setForeground(new java.awt.Color(115, 115, 115));
         getContentPane().add(jSeparator4);
@@ -306,22 +337,7 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         jSeparator7.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator7.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator7);
-        jSeparator7.setBounds(1050, 190, 30, 450);
-
-        jButton1.setBackground(new java.awt.Color(239, 65, 54));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton1);
-        jButton1.setBounds(1150, 230, 33, 33);
-
-        jButton3.setBackground(new java.awt.Color(82, 113, 255));
-        jButton3.setMargin(new java.awt.Insets(8, 15, 8, 15));
-        jButton3.setMaximumSize(new java.awt.Dimension(50, 22));
-        getContentPane().add(jButton3);
-        jButton3.setBounds(1110, 230, 33, 33);
+        jSeparator7.setBounds(1070, 190, 10, 450);
 
         lblNome.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblNome.setForeground(new java.awt.Color(186, 186, 186));
@@ -329,7 +345,7 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         lblNome.setText("NOME DA TAREFA");
         lblNome.setToolTipText("");
         getContentPane().add(lblNome);
-        lblNome.setBounds(110, 190, 190, 30);
+        lblNome.setBounds(110, 190, 200, 30);
 
         lblTipoDePessoa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTipoDePessoa.setForeground(new java.awt.Color(186, 186, 186));
@@ -337,19 +353,19 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         lblTipoDePessoa.setText("RESPONSÁVEL");
         lblTipoDePessoa.setToolTipText("");
         getContentPane().add(lblTipoDePessoa);
-        lblTipoDePessoa.setBounds(300, 190, 190, 30);
+        lblTipoDePessoa.setBounds(310, 190, 190, 30);
 
         jSeparator2.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator2.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator2);
-        jSeparator2.setBounds(300, 190, 10, 450);
+        jSeparator2.setBounds(305, 190, 10, 450);
 
         jSeparator3.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator3.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator3);
-        jSeparator3.setBounds(487, 190, 20, 450);
+        jSeparator3.setBounds(500, 190, 20, 450);
 
         lblStatus.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblStatus.setForeground(new java.awt.Color(186, 186, 186));
@@ -357,7 +373,7 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         lblStatus.setText("STATUS");
         lblStatus.setToolTipText("");
         getContentPane().add(lblStatus);
-        lblStatus.setBounds(490, 190, 190, 30);
+        lblStatus.setBounds(500, 190, 190, 30);
 
         lblServico.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblServico.setForeground(new java.awt.Color(186, 186, 186));
@@ -365,13 +381,13 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         lblServico.setText("PRIORIDADE");
         lblServico.setToolTipText("");
         getContentPane().add(lblServico);
-        lblServico.setBounds(680, 190, 180, 30);
+        lblServico.setBounds(690, 190, 200, 30);
 
         jSeparator5.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator5.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator5);
-        jSeparator5.setBounds(675, 190, 90, 450);
+        jSeparator5.setBounds(693, 190, 80, 450);
 
         lblTipoDePessoa4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTipoDePessoa4.setForeground(new java.awt.Color(186, 186, 186));
@@ -379,7 +395,7 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         lblTipoDePessoa4.setText("AÇÕES");
         lblTipoDePessoa4.setToolTipText("");
         getContentPane().add(lblTipoDePessoa4);
-        lblTipoDePessoa4.setBounds(1050, 190, 190, 30);
+        lblTipoDePessoa4.setBounds(1070, 190, 170, 30);
 
         lblDataDeCadastro.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblDataDeCadastro.setForeground(new java.awt.Color(186, 186, 186));
@@ -387,13 +403,13 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         lblDataDeCadastro.setText("DATA DE VENCIMENTO");
         lblDataDeCadastro.setToolTipText("");
         getContentPane().add(lblDataDeCadastro);
-        lblDataDeCadastro.setBounds(860, 190, 190, 30);
+        lblDataDeCadastro.setBounds(890, 190, 180, 30);
 
         jSeparator6.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator6.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator6.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator6);
-        jSeparator6.setBounds(862, 190, 40, 450);
+        jSeparator6.setBounds(888, 190, 10, 450);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255, 15));
         getContentPane().add(jPanel1);
@@ -529,16 +545,6 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         getContentPane().add(Background);
         Background.setBounds(0, 0, 1280, 711);
 
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lupa-branca.png"))); // NOI18N
-        getContentPane().add(jLabel8);
-        jLabel8.setBounds(1110, 230, 33, 33);
-
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fechar.png"))); // NOI18N
-        getContentPane().add(jLabel6);
-        jLabel6.setBounds(1150, 230, 33, 33);
-
         jSeparator8.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator8.setForeground(new java.awt.Color(115, 115, 115));
         getContentPane().add(jSeparator8);
@@ -549,21 +555,6 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         jSeparator9.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator9);
         jSeparator9.setBounds(1040, 190, 30, 450);
-
-        jButton2.setBackground(new java.awt.Color(239, 65, 54));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton2);
-        jButton2.setBounds(1150, 230, 33, 33);
-
-        jButton4.setBackground(new java.awt.Color(82, 113, 255));
-        jButton4.setMargin(new java.awt.Insets(8, 15, 8, 15));
-        jButton4.setMaximumSize(new java.awt.Dimension(50, 22));
-        getContentPane().add(jButton4);
-        jButton4.setBounds(1110, 230, 33, 33);
 
         lblNome1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblNome1.setForeground(new java.awt.Color(186, 186, 186));
@@ -635,15 +626,6 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnHomeActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new TelaClienteTable(usuarioLogado).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -681,18 +663,10 @@ public class TelaTarefaTable extends javax.swing.JFrame {
     private javax.swing.JButton btnNotificacoes;
     private javax.swing.JButton btnRelatorios;
     private javax.swing.JButton btnTarefas;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator10;

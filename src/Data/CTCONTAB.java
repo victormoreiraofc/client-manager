@@ -280,4 +280,17 @@ public class CTCONTAB {
 
         return funcionarios;
     }
+
+    public static void excluirRegistro(String tabela, String campoIdentificador, int id) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        String sql = "DELETE FROM " + tabela + " WHERE " + campoIdentificador + " = ?";
+
+        try (PreparedStatement st = conectado.prepareStatement(sql)) {
+            st.setInt(1, id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new SQLException("Erro ao excluir registro: " + e.getMessage(), e);
+        }
+    }
 }
+
