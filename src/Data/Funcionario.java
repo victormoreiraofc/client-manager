@@ -6,17 +6,15 @@ public class Funcionario {
 
     private int id;
     private String usuario;
-    private String cargo;
     private String email;
     private String senha;
     private byte[] imagem;
     private String permissao;
     private Date created_at; 
 
-    public Funcionario(int id, String usuario, String cargo, String email, String senha, byte[] imagem, String permissao, Date created_at) {
+    public Funcionario(int id, String usuario, String email, String senha, byte[] imagem, String permissao, Date created_at) {
         this.id = id;
         this.usuario = usuario;
-        this.cargo = cargo;
         this.email = email;
         this.senha = senha;
         this.imagem = imagem;
@@ -38,14 +36,6 @@ public class Funcionario {
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
-    }
-
-    public String getCargo() {
-        return cargo;
-    }
-
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
     }
 
     public String getEmail() {

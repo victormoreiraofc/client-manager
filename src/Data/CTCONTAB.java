@@ -261,7 +261,7 @@ public class CTCONTAB {
    public static List<Funcionario> listarFuncionarios() throws ClassNotFoundException, SQLException {
         List<Funcionario> funcionarios = new ArrayList<>();
         conectado = conectar(); 
-        String query = "SELECT id, usuario, cargo, email, senha, Imagem, Permissao, created_at FROM usuarios";
+        String query = "SELECT id, usuario, email, senha, Imagem, Permissao, created_at FROM usuarios";
         PreparedStatement st = conectado.prepareStatement(query);
         ResultSet resultado = st.executeQuery();
         
@@ -269,7 +269,6 @@ public class CTCONTAB {
             Funcionario funcionario = new Funcionario(
                     resultado.getInt("id"),
                     resultado.getString("usuario"),
-                    resultado.getString("cargo"),
                     resultado.getString("email"),
                     resultado.getString("senha"),
                     resultado.getBytes("Imagem"), 
