@@ -9,8 +9,9 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Insets;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
@@ -19,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class TelaEventoTable extends javax.swing.JFrame {
 
-    private Usuario usuarioLogado;
+    private final Usuario usuarioLogado;
 
     public TelaEventoTable(Usuario usuario) {
         this.usuarioLogado = usuario;
@@ -28,44 +29,37 @@ public class TelaEventoTable extends javax.swing.JFrame {
         carregarEventosNoCalendario();
     }
 
-private void carregarEventosNoCalendario() {
-    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+    private void carregarEventosNoCalendario() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        Map<Integer, List<String>> eventosPorDia = agruparEventosPorDia();
 
-    for (int row = 0; row < model.getRowCount(); row++) {
-        for (int col = 0; col < model.getColumnCount(); col++) {
-            int dia = (row * 7) + col + 1;
-            try {
-                List<String> eventos = carregarEventosPorDia(dia);
-                if (eventos != null && !eventos.isEmpty()) {
-                    model.setValueAt(String.join("\n", eventos), row, col);
-                } else {
-                    model.setValueAt("", row, col);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+        for (int row = 0; row < model.getRowCount(); row++) {
+            for (int col = 0; col < model.getColumnCount(); col++) {
+                int dia = (row * 7) + col + 1;
+                String eventosTexto = eventosPorDia.getOrDefault(dia, List.of())
+                                                   .stream()
+                                                   .collect(Collectors.joining("\n"));
+                model.setValueAt(eventosTexto, row, col);
             }
         }
     }
-}
 
-    private List<String> carregarEventosPorDia(int dia) throws Exception {
-        List<String> eventos = new ArrayList<>();
-        List<Evento> todosEventos = CTCONTAB.listarEventos();
-
-        for (Evento evento : todosEventos) {
-            if (isEventoNoDia(evento.getDataInicio(), dia)) {
-                eventos.add(evento.getEvento());
-            }
+    private Map<Integer, List<String>> agruparEventosPorDia() {
+        try {
+            return CTCONTAB.listarEventos().stream()
+                           .collect(Collectors.groupingBy(
+                               evento -> extrairDiaDoEvento(evento.getDataInicio()),
+                               Collectors.mapping(Evento::getEvento, Collectors.toList())
+                           ));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Map.of(); // Retorna mapa vazio em caso de erro
         }
-
-        return eventos;
     }
 
-    private boolean isEventoNoDia(String dataInicio, int dia) {
+    private int extrairDiaDoEvento(String dataInicio) {
         String[] partes = dataInicio.split("-");
-        int diaEvento = Integer.parseInt(partes[2]);
-
-        return diaEvento == dia;
+        return Integer.parseInt(partes[2]);
     }
 
     private static class CalendarioCellRenderer extends DefaultTableCellRenderer {
@@ -239,7 +233,7 @@ private void carregarEventosNoCalendario() {
         lblDataDeCadastro38.setText("28");
         lblDataDeCadastro38.setToolTipText("");
         getContentPane().add(lblDataDeCadastro38);
-        lblDataDeCadastro38.setBounds(1200, 440, 30, 20);
+        lblDataDeCadastro38.setBounds(1205, 440, 30, 20);
 
         lblDataDeCadastro39.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblDataDeCadastro39.setForeground(new java.awt.Color(186, 186, 186));
@@ -247,7 +241,7 @@ private void carregarEventosNoCalendario() {
         lblDataDeCadastro39.setText("21");
         lblDataDeCadastro39.setToolTipText("");
         getContentPane().add(lblDataDeCadastro39);
-        lblDataDeCadastro39.setBounds(1200, 340, 30, 20);
+        lblDataDeCadastro39.setBounds(1205, 340, 30, 20);
 
         lblDataDeCadastro40.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblDataDeCadastro40.setForeground(new java.awt.Color(186, 186, 186));
@@ -255,7 +249,7 @@ private void carregarEventosNoCalendario() {
         lblDataDeCadastro40.setText("7");
         lblDataDeCadastro40.setToolTipText("");
         getContentPane().add(lblDataDeCadastro40);
-        lblDataDeCadastro40.setBounds(1200, 140, 30, 20);
+        lblDataDeCadastro40.setBounds(1205, 140, 30, 20);
 
         lblDataDeCadastro41.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblDataDeCadastro41.setForeground(new java.awt.Color(186, 186, 186));
@@ -263,7 +257,7 @@ private void carregarEventosNoCalendario() {
         lblDataDeCadastro41.setText("14");
         lblDataDeCadastro41.setToolTipText("");
         getContentPane().add(lblDataDeCadastro41);
-        lblDataDeCadastro41.setBounds(1200, 240, 30, 20);
+        lblDataDeCadastro41.setBounds(1205, 240, 30, 20);
 
         lblDataDeCadastro33.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblDataDeCadastro33.setForeground(new java.awt.Color(186, 186, 186));
@@ -447,7 +441,7 @@ private void carregarEventosNoCalendario() {
         lblDataDeCadastro11.setText("29");
         lblDataDeCadastro11.setToolTipText("");
         getContentPane().add(lblDataDeCadastro11);
-        lblDataDeCadastro11.setBounds(245, 540, 30, 20);
+        lblDataDeCadastro11.setBounds(240, 540, 30, 20);
 
         lblDataDeCadastro10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblDataDeCadastro10.setForeground(new java.awt.Color(186, 186, 186));
@@ -455,7 +449,7 @@ private void carregarEventosNoCalendario() {
         lblDataDeCadastro10.setText("22");
         lblDataDeCadastro10.setToolTipText("");
         getContentPane().add(lblDataDeCadastro10);
-        lblDataDeCadastro10.setBounds(245, 440, 30, 20);
+        lblDataDeCadastro10.setBounds(240, 440, 30, 20);
 
         lblDataDeCadastro9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblDataDeCadastro9.setForeground(new java.awt.Color(186, 186, 186));
@@ -463,7 +457,7 @@ private void carregarEventosNoCalendario() {
         lblDataDeCadastro9.setText("15");
         lblDataDeCadastro9.setToolTipText("");
         getContentPane().add(lblDataDeCadastro9);
-        lblDataDeCadastro9.setBounds(245, 340, 30, 20);
+        lblDataDeCadastro9.setBounds(240, 340, 30, 20);
 
         lblDataDeCadastro8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblDataDeCadastro8.setForeground(new java.awt.Color(186, 186, 186));
@@ -471,7 +465,7 @@ private void carregarEventosNoCalendario() {
         lblDataDeCadastro8.setText("8");
         lblDataDeCadastro8.setToolTipText("");
         getContentPane().add(lblDataDeCadastro8);
-        lblDataDeCadastro8.setBounds(245, 240, 30, 20);
+        lblDataDeCadastro8.setBounds(240, 240, 30, 20);
 
         lblDataDeCadastro7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblDataDeCadastro7.setForeground(new java.awt.Color(186, 186, 186));
@@ -479,7 +473,7 @@ private void carregarEventosNoCalendario() {
         lblDataDeCadastro7.setText("1");
         lblDataDeCadastro7.setToolTipText("");
         getContentPane().add(lblDataDeCadastro7);
-        lblDataDeCadastro7.setBounds(245, 140, 30, 20);
+        lblDataDeCadastro7.setBounds(240, 140, 30, 20);
 
         btnCadastrarEvento32.setBorderPainted(false);
         btnCadastrarEvento32.setContentAreaFilled(false);
@@ -489,7 +483,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(btnCadastrarEvento32);
-        btnCadastrarEvento32.setBounds(1075, 440, 30, 20);
+        btnCadastrarEvento32.setBounds(1080, 440, 30, 20);
 
         lblCadastrarEvento32.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblCadastrarEvento32.setForeground(new java.awt.Color(186, 186, 186));
@@ -502,7 +496,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(lblCadastrarEvento32);
-        lblCadastrarEvento32.setBounds(1075, 430, 30, 50);
+        lblCadastrarEvento32.setBounds(1080, 430, 30, 50);
 
         btnCadastrarEvento33.setBorderPainted(false);
         btnCadastrarEvento33.setContentAreaFilled(false);
@@ -512,7 +506,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(btnCadastrarEvento33);
-        btnCadastrarEvento33.setBounds(1075, 340, 30, 20);
+        btnCadastrarEvento33.setBounds(1080, 340, 30, 20);
 
         lblCadastrarEvento33.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblCadastrarEvento33.setForeground(new java.awt.Color(186, 186, 186));
@@ -525,7 +519,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(lblCadastrarEvento33);
-        lblCadastrarEvento33.setBounds(1075, 330, 30, 50);
+        lblCadastrarEvento33.setBounds(1080, 330, 30, 50);
 
         btnCadastrarEvento34.setBorderPainted(false);
         btnCadastrarEvento34.setContentAreaFilled(false);
@@ -535,7 +529,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(btnCadastrarEvento34);
-        btnCadastrarEvento34.setBounds(1075, 240, 30, 20);
+        btnCadastrarEvento34.setBounds(1080, 240, 30, 20);
 
         lblCadastrarEvento34.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblCadastrarEvento34.setForeground(new java.awt.Color(186, 186, 186));
@@ -548,7 +542,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(lblCadastrarEvento34);
-        lblCadastrarEvento34.setBounds(1075, 230, 30, 50);
+        lblCadastrarEvento34.setBounds(1080, 230, 30, 50);
 
         btnCadastrarEvento35.setBorderPainted(false);
         btnCadastrarEvento35.setContentAreaFilled(false);
@@ -558,7 +552,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(btnCadastrarEvento35);
-        btnCadastrarEvento35.setBounds(1075, 140, 30, 20);
+        btnCadastrarEvento35.setBounds(1080, 140, 30, 20);
 
         lblCadastrarEvento35.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblCadastrarEvento35.setForeground(new java.awt.Color(186, 186, 186));
@@ -571,7 +565,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(lblCadastrarEvento35);
-        lblCadastrarEvento35.setBounds(1075, 130, 30, 50);
+        lblCadastrarEvento35.setBounds(1080, 130, 30, 50);
 
         btnCadastrarEvento27.setBorderPainted(false);
         btnCadastrarEvento27.setContentAreaFilled(false);
@@ -972,7 +966,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(btnCadastrarEvento6);
-        btnCadastrarEvento6.setBounds(275, 540, 30, 20);
+        btnCadastrarEvento6.setBounds(270, 540, 30, 20);
 
         lblCadastrarEvento6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblCadastrarEvento6.setForeground(new java.awt.Color(186, 186, 186));
@@ -985,7 +979,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(lblCadastrarEvento6);
-        lblCadastrarEvento6.setBounds(275, 530, 30, 50);
+        lblCadastrarEvento6.setBounds(270, 530, 30, 50);
 
         lblCadastrarEvento16.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblCadastrarEvento16.setForeground(new java.awt.Color(186, 186, 186));
@@ -998,7 +992,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(lblCadastrarEvento16);
-        lblCadastrarEvento16.setBounds(275, 130, 30, 50);
+        lblCadastrarEvento16.setBounds(270, 130, 30, 50);
 
         btnCadastrarEvento16.setBorderPainted(false);
         btnCadastrarEvento16.setContentAreaFilled(false);
@@ -1008,7 +1002,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(btnCadastrarEvento16);
-        btnCadastrarEvento16.setBounds(275, 140, 30, 20);
+        btnCadastrarEvento16.setBounds(270, 140, 30, 20);
 
         lblCadastrarEvento21.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblCadastrarEvento21.setForeground(new java.awt.Color(186, 186, 186));
@@ -1021,7 +1015,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(lblCadastrarEvento21);
-        lblCadastrarEvento21.setBounds(275, 230, 30, 50);
+        lblCadastrarEvento21.setBounds(270, 230, 30, 50);
 
         btnCadastrarEvento21.setBorderPainted(false);
         btnCadastrarEvento21.setContentAreaFilled(false);
@@ -1031,7 +1025,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(btnCadastrarEvento21);
-        btnCadastrarEvento21.setBounds(275, 240, 30, 20);
+        btnCadastrarEvento21.setBounds(270, 240, 30, 20);
 
         lblCadastrarEvento26.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblCadastrarEvento26.setForeground(new java.awt.Color(186, 186, 186));
@@ -1044,7 +1038,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(lblCadastrarEvento26);
-        lblCadastrarEvento26.setBounds(275, 330, 30, 50);
+        lblCadastrarEvento26.setBounds(270, 330, 30, 50);
 
         btnCadastrarEvento26.setBorderPainted(false);
         btnCadastrarEvento26.setContentAreaFilled(false);
@@ -1054,7 +1048,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(btnCadastrarEvento26);
-        btnCadastrarEvento26.setBounds(275, 340, 30, 20);
+        btnCadastrarEvento26.setBounds(270, 340, 30, 20);
 
         lblCadastrarEvento31.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblCadastrarEvento31.setForeground(new java.awt.Color(186, 186, 186));
@@ -1067,7 +1061,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(lblCadastrarEvento31);
-        lblCadastrarEvento31.setBounds(275, 430, 30, 50);
+        lblCadastrarEvento31.setBounds(270, 430, 30, 50);
 
         btnCadastrarEvento31.setBorderPainted(false);
         btnCadastrarEvento31.setContentAreaFilled(false);
@@ -1077,7 +1071,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(btnCadastrarEvento31);
-        btnCadastrarEvento31.setBounds(275, 440, 30, 20);
+        btnCadastrarEvento31.setBounds(270, 440, 30, 20);
 
         btnCadastrarEvento7.setBorderPainted(false);
         btnCadastrarEvento7.setContentAreaFilled(false);
@@ -1127,7 +1121,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(btnCadastrarEvento5);
-        btnCadastrarEvento5.setBounds(115, 540, 30, 20);
+        btnCadastrarEvento5.setBounds(110, 540, 30, 20);
 
         lblCadastrarEvento5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblCadastrarEvento5.setForeground(new java.awt.Color(186, 186, 186));
@@ -1140,7 +1134,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(lblCadastrarEvento5);
-        lblCadastrarEvento5.setBounds(115, 530, 30, 50);
+        lblCadastrarEvento5.setBounds(110, 530, 30, 50);
 
         btnCadastrarEvento4.setBorderPainted(false);
         btnCadastrarEvento4.setContentAreaFilled(false);
@@ -1150,7 +1144,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(btnCadastrarEvento4);
-        btnCadastrarEvento4.setBounds(115, 440, 30, 20);
+        btnCadastrarEvento4.setBounds(110, 440, 30, 20);
 
         lblCadastrarEvento4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblCadastrarEvento4.setForeground(new java.awt.Color(186, 186, 186));
@@ -1163,7 +1157,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(lblCadastrarEvento4);
-        lblCadastrarEvento4.setBounds(115, 430, 30, 50);
+        lblCadastrarEvento4.setBounds(110, 430, 30, 50);
 
         btnCadastrarEvento3.setBorderPainted(false);
         btnCadastrarEvento3.setContentAreaFilled(false);
@@ -1173,7 +1167,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(btnCadastrarEvento3);
-        btnCadastrarEvento3.setBounds(115, 340, 30, 20);
+        btnCadastrarEvento3.setBounds(110, 340, 30, 20);
 
         lblCadastrarEvento3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblCadastrarEvento3.setForeground(new java.awt.Color(186, 186, 186));
@@ -1186,7 +1180,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(lblCadastrarEvento3);
-        lblCadastrarEvento3.setBounds(115, 330, 30, 50);
+        lblCadastrarEvento3.setBounds(110, 330, 30, 50);
 
         btnCadastrarEvento2.setBorderPainted(false);
         btnCadastrarEvento2.setContentAreaFilled(false);
@@ -1196,7 +1190,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(btnCadastrarEvento2);
-        btnCadastrarEvento2.setBounds(115, 240, 30, 20);
+        btnCadastrarEvento2.setBounds(110, 240, 30, 20);
 
         lblCadastrarEvento2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblCadastrarEvento2.setForeground(new java.awt.Color(186, 186, 186));
@@ -1209,7 +1203,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(lblCadastrarEvento2);
-        lblCadastrarEvento2.setBounds(115, 230, 30, 50);
+        lblCadastrarEvento2.setBounds(110, 230, 30, 50);
 
         btnCadastrarEvento.setBorderPainted(false);
         btnCadastrarEvento.setContentAreaFilled(false);
@@ -1219,7 +1213,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(btnCadastrarEvento);
-        btnCadastrarEvento.setBounds(115, 140, 30, 20);
+        btnCadastrarEvento.setBounds(110, 140, 30, 20);
 
         lblCadastrarEvento.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblCadastrarEvento.setForeground(new java.awt.Color(186, 186, 186));
@@ -1232,7 +1226,7 @@ private void carregarEventosNoCalendario() {
             }
         });
         getContentPane().add(lblCadastrarEvento);
-        lblCadastrarEvento.setBounds(115, 130, 30, 50);
+        lblCadastrarEvento.setBounds(110, 130, 30, 50);
 
         jScrollPane1.setBorder(null);
         jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
