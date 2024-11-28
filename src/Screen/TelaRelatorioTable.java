@@ -1,6 +1,7 @@
 package Screen;
 
 import Data.CTCONTAB;
+import Data.PermissaoUtil;
 import Data.Relatorio;
 import Data.Usuario;
 import java.awt.BorderLayout;
@@ -36,6 +37,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         exibirMensagemCarregando();
         carregarRelatoriosAssincrono();
         configurarBusca();
+        PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
     }
 
     private void exibirMensagemCarregando() {

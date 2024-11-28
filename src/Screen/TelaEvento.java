@@ -1,6 +1,7 @@
 package Screen;
 
 import Data.CTCONTAB;
+import Data.PermissaoUtil;
 import Data.Usuario;
 import javax.swing.JOptionPane;
 
@@ -11,10 +12,7 @@ public class TelaEvento extends javax.swing.JFrame {
     public TelaEvento(Usuario usuario) {
         this.usuarioLogado = usuario;
         initComponents();
-    }
-
-    public TelaEvento() {
-        initComponents();
+        PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
     }
 
     private void salvarEventoNoBanco() {
@@ -453,12 +451,6 @@ public class TelaEvento extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(TelaEvento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaEvento().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

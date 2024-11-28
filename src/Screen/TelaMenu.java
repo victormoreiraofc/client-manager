@@ -2,6 +2,7 @@ package Screen;
 
 import Data.CTCONTAB;
 import Data.Usuario;
+import Data.PermissaoUtil;
 import java.awt.Font;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -19,6 +20,7 @@ public class TelaMenu extends javax.swing.JFrame {
         salvarFonteOriginal();
         exibirMensagemCarregando();
         carregarDadosSimultaneamente();
+        PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
     }
 
     private void salvarFonteOriginal() {

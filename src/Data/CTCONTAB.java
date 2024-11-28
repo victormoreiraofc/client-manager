@@ -20,7 +20,7 @@ public class CTCONTAB {
 
     public static Usuario fazerLoginU(String u, String s) throws ClassNotFoundException, SQLException {
         conectado = conectar();
-        PreparedStatement st = conectado.prepareStatement("SELECT id, usuario, email FROM usuarios WHERE (usuario = ? OR email = ?) AND senha = ?");
+        PreparedStatement st = conectado.prepareStatement("SELECT id, usuario, email, Permissao FROM usuarios WHERE (usuario = ? OR email = ?) AND senha = ?");
         st.setString(1, u);
         st.setString(2, u);
         st.setString(3, s);
@@ -33,6 +33,7 @@ public class CTCONTAB {
             usuario.setId(resultado.getInt("id"));
             usuario.setUsuario(resultado.getString("usuario"));
             usuario.setEmail(resultado.getString("email"));
+            usuario.setPermissao(resultado.getString("Permissao"));
         }
 
         return usuario;
@@ -292,5 +293,36 @@ public class CTCONTAB {
             throw new SQLException("Erro ao excluir registro: " + e.getMessage(), e);
         }
     }
-}
 
+    public static void alterarPermissao(String tabela, String campoIdentificador, int id, String novaPermissao) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        String sql = "UPDATE " + tabela + " SET permissao = ? WHERE " + campoIdentificador + " = ?";
+
+        try (PreparedStatement st = conectado.prepareStatement(sql)) {
+            st.setString(1, novaPermissao);
+            st.setInt(2, id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new SQLException("Erro ao atualizar permissão: " + e.getMessage(), e);
+        }
+    }
+
+    public static List<Evento> listarEventos() throws ClassNotFoundException, SQLException {
+        List<Evento> eventos = new ArrayList<>();
+        conectado = conectar();
+
+        String query = "SELECT Evento, DataInicio FROM agenda";
+        PreparedStatement st = conectado.prepareStatement(query);
+        ResultSet resultado = st.executeQuery();
+
+        while (resultado.next()) {
+            Evento evento = new Evento(
+                    resultado.getString("Evento"),
+                    resultado.getString("DataInicio")
+            );
+            eventos.add(evento);
+        }
+
+        return eventos;
+    }
+}

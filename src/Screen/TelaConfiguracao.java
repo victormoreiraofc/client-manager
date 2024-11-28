@@ -1,6 +1,7 @@
 package Screen;
 
 import Data.CTCONTAB;
+import Data.PermissaoUtil;
 import Data.Usuario;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -12,10 +13,7 @@ public class TelaConfiguracao extends javax.swing.JFrame {
     public TelaConfiguracao(Usuario usuario) {
         this.usuarioLogado = usuario;
         initComponents();
-    }
-
-    public TelaConfiguracao() {
-        initComponents();
+        PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
     }
 
     @SuppressWarnings("unchecked")
@@ -359,11 +357,7 @@ public class TelaConfiguracao extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(TelaConfiguracao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaConfiguracao().setVisible(true);
-            }
-        });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

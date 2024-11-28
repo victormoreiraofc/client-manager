@@ -1,6 +1,7 @@
 package Screen;
 
 import Data.CTCONTAB;
+import Data.PermissaoUtil;
 import Data.Tarefa;
 import Data.Usuario;
 import javax.swing.*;
@@ -23,6 +24,7 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         exibirMensagemCarregando();
         carregarRelatoriosAssincrono();
         configurarBusca();
+        PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
     }
 
     private void exibirMensagemCarregando() {

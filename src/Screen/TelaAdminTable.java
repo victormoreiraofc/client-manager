@@ -2,7 +2,6 @@ package Screen;
 
 import Data.CTCONTAB;
 import Data.Funcionario;
-import Data.Tarefa;
 import Data.Usuario;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -12,12 +11,9 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -120,6 +116,21 @@ public class TelaAdminTable extends javax.swing.JFrame {
         atualizarTabela(funcionariosFiltrados);
     }
 
+    private void ajustarLarguraColunas() {
+        jTable1.getColumnModel().getColumn(4).setMinWidth(62);
+        jTable1.getColumnModel().getColumn(4).setMaxWidth(62);
+        jTable1.getColumnModel().getColumn(4).setPreferredWidth(62);
+        jTable1.getColumnModel().getColumn(5).setMinWidth(62);
+        jTable1.getColumnModel().getColumn(5).setMaxWidth(62);
+        jTable1.getColumnModel().getColumn(5).setPreferredWidth(62);
+        jTable1.getColumnModel().getColumn(6).setMinWidth(62);
+        jTable1.getColumnModel().getColumn(6).setMaxWidth(62);
+        jTable1.getColumnModel().getColumn(6).setPreferredWidth(62);
+        jTable1.getColumnModel().getColumn(7).setMinWidth(20);
+        jTable1.getColumnModel().getColumn(7).setMaxWidth(20);
+        jTable1.getColumnModel().getColumn(7).setPreferredWidth(20);
+    }
+
     class ButtonRenderer extends JButton implements TableCellRenderer {
 
         public ButtonRenderer() {
@@ -163,13 +174,17 @@ public class TelaAdminTable extends javax.swing.JFrame {
             button.setOpaque(true);
 
             button.addActionListener(e -> {
-                if ("Excluir".equals(actionType)) {
+                if ("AlterarPermissao".equals(actionType)) {
+                    alterarPermissaoFuncionario(selectedRow);
+                } else if ("ReverterPermissao".equals(actionType)) {
+                    reverterPermissaoFuncionario(selectedRow);
+                } else if ("Excluir".equals(actionType)) {
                     excluirFuncionario(selectedRow);
                 } else {
-                    openWindow(actionType);
                 }
                 fireEditingStopped();
             });
+
         }
 
         @Override
@@ -201,57 +216,55 @@ public class TelaAdminTable extends javax.swing.JFrame {
             return label;
         }
 
-        private void openWindow(String actionType) {
-            JFrame newFrame = new JFrame(actionType);
-            newFrame.setSize(300, 200);
-            newFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        private void alterarPermissaoFuncionario(int row) {
+            try {
+                Funcionario funcionario = listaFuncionarios.get(row);
 
-            JLabel label = new JLabel("Você abriu: " + actionType, SwingConstants.CENTER);
-            newFrame.add(label, BorderLayout.CENTER);
+                String novaPermissao = "ADM".equals(funcionario.getPermissao()) ? "NULL" : "ADM";
 
-            switch (actionType) {
-                case "Janela 1":
-                    newFrame.setTitle("Detalhes da Janela 1");
-                    label.setText("Conteúdo da Janela 1");
-                    break;
-                case "Janela 2":
-                    newFrame.setTitle("Detalhes da Janela 2");
-                    label.setText("Conteúdo da Janela 2");
-                    break;
+                CTCONTAB.alterarPermissao("usuarios", "id", funcionario.getId(), novaPermissao);
+
+                funcionario.setPermissao(novaPermissao);
+                atualizarTabela(listaFuncionarios);
+
+                JOptionPane.showMessageDialog(null, "Permissão alterada para: " + novaPermissao, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao alterar permissão: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
-
-            newFrame.setVisible(true);
         }
-    }
 
-    private void excluirFuncionario(int row) {
-        try {
-            Funcionario funcionario = listaFuncionarios.get(row);
+        private void reverterPermissaoFuncionario(int row) {
+            try {
+                Funcionario funcionario = listaFuncionarios.get(row);
 
-            CTCONTAB.excluirRegistro("usuarios", "id", funcionario.getId());
+                String novaPermissao = "NULL";
 
-            listaFuncionarios.remove(row);
-            atualizarTabela(listaFuncionarios);
+                CTCONTAB.alterarPermissao("usuarios", "id", funcionario.getId(), novaPermissao);
 
-            JOptionPane.showMessageDialog(null, "Tarefa excluída com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao excluir tarefa: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                funcionario.setPermissao(novaPermissao);
+                atualizarTabela(listaFuncionarios);
+
+                JOptionPane.showMessageDialog(null, "Permissão revertida para: " + novaPermissao, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao reverter permissão: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
         }
-    }
 
-    private void ajustarLarguraColunas() {
-        jTable1.getColumnModel().getColumn(4).setMinWidth(62);
-        jTable1.getColumnModel().getColumn(4).setMaxWidth(62);
-        jTable1.getColumnModel().getColumn(4).setPreferredWidth(62);
-        jTable1.getColumnModel().getColumn(5).setMinWidth(62);
-        jTable1.getColumnModel().getColumn(5).setMaxWidth(62);
-        jTable1.getColumnModel().getColumn(5).setPreferredWidth(62);
-        jTable1.getColumnModel().getColumn(6).setMinWidth(62);
-        jTable1.getColumnModel().getColumn(6).setMaxWidth(62);
-        jTable1.getColumnModel().getColumn(6).setPreferredWidth(62);
-        jTable1.getColumnModel().getColumn(7).setMinWidth(20);
-        jTable1.getColumnModel().getColumn(7).setMaxWidth(20);
-        jTable1.getColumnModel().getColumn(7).setPreferredWidth(20);
+        private void excluirFuncionario(int row) {
+            try {
+                Funcionario funcionario = listaFuncionarios.get(row);
+
+                CTCONTAB.excluirRegistro("usuarios", "id", funcionario.getId());
+
+                listaFuncionarios.remove(row);
+                atualizarTabela(listaFuncionarios);
+
+                JOptionPane.showMessageDialog(null, "Tarefa excluída com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao excluir tarefa: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
     }
 
     public TelaAdminTable() {
@@ -324,10 +337,10 @@ public class TelaAdminTable extends javax.swing.JFrame {
         jTable1.setGridColor(new java.awt.Color(115, 115, 115));
         jTable1.setRowHeight(50);
         jTable1.getColumn("AÇÃO 1").setCellRenderer(new ButtonRenderer());
-        jTable1.getColumn("AÇÃO 1").setCellEditor(new ButtonEditor(new JCheckBox(), "Janela 1"));
+        jTable1.getColumn("AÇÃO 1").setCellEditor(new ButtonEditor(new JCheckBox(), "AlterarPermissao"));
 
         jTable1.getColumn("AÇÃO 2").setCellRenderer(new ButtonRenderer());
-        jTable1.getColumn("AÇÃO 2").setCellEditor(new ButtonEditor(new JCheckBox(), "Janela 2"));
+        jTable1.getColumn("AÇÃO 2").setCellEditor(new ButtonEditor(new JCheckBox(), "ReverterPermissao"));
 
         jTable1.getColumn("AÇÃO 3").setCellRenderer(new ButtonRenderer());
         jTable1.getColumn("AÇÃO 3").setCellEditor(new ButtonEditor(new JCheckBox(), "Excluir"));

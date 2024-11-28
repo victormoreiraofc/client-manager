@@ -1,6 +1,7 @@
 package Screen;
 
 import Data.CTCONTAB;
+import Data.PermissaoUtil;
 import Data.Usuario;
 import javax.swing.JOptionPane;
 
@@ -11,10 +12,7 @@ public class TelaTarefa extends javax.swing.JFrame {
     public TelaTarefa(Usuario usuario) {
         this.usuarioLogado = usuario;
         initComponents();
-    }
-
-    public TelaTarefa() {
-        initComponents();
+        PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
     }
 
     private void salvarEventoNoBanco() {
@@ -442,11 +440,6 @@ public class TelaTarefa extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(TelaTarefa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaTarefa().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

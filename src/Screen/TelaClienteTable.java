@@ -2,6 +2,7 @@ package Screen;
 
 import Data.Cliente;
 import Data.CTCONTAB;
+import Data.PermissaoUtil;
 import Data.Usuario;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -35,6 +36,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         adicionarListenerDeBusca();
         exibirMensagemCarregando();
         carregarClientesAssincrono();
+        PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
     }
 
     private void adicionarListenerDeBusca() {

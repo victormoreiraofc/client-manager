@@ -1,6 +1,7 @@
 package Screen;
 
 import Data.CTCONTAB;
+import Data.PermissaoUtil;
 import Data.Usuario;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -14,6 +15,7 @@ public class TelaCliente extends javax.swing.JFrame {
     public TelaCliente(Usuario usuario) {
         this.usuarioLogado = usuario;
         initComponents();
+        PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
     }
 
     public TelaCliente() {

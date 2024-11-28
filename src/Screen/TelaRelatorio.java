@@ -1,6 +1,7 @@
 package Screen;
 
 import Data.CTCONTAB;
+import Data.PermissaoUtil;
 import Data.Usuario;
 import javax.swing.JOptionPane;
 
@@ -11,11 +12,9 @@ public class TelaRelatorio extends javax.swing.JFrame {
     public TelaRelatorio(Usuario usuario) {
         this.usuarioLogado = usuario;
         initComponents();
+        PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
     }
 
-    public TelaRelatorio() {
-        initComponents();
-    }
 
     private void salvarEventoNoBanco() {
         try {
@@ -416,11 +415,7 @@ public class TelaRelatorio extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(TelaRelatorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaRelatorio().setVisible(true);
-            }
-        });
+       
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

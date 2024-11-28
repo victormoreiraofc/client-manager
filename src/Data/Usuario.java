@@ -7,6 +7,7 @@ public class Usuario implements Serializable {
     private int id;
     private String usuario;
     private String email;
+    private String permissao;
 
     public Usuario() {
     }
@@ -33,6 +34,14 @@ public class Usuario implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPermissao() {
+        return permissao;
+    }
+
+    public void setPermissao(String permissao) {
+        this.permissao = permissao;
     }
 
 }
