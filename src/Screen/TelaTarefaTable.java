@@ -1,6 +1,7 @@
 package Screen;
 
 import Data.CTCONTAB;
+import Data.IconUtil;
 import Data.PermissaoUtil;
 import Data.Tarefa;
 import Data.Usuario;
@@ -25,6 +26,7 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         carregarRelatoriosAssincrono();
         configurarBusca();
         PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
+        IconUtil.setIcon(usuarioLogado, lblUserIcon);
     }
 
     private void exibirMensagemCarregando() {

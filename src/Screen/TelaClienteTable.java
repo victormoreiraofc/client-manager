@@ -2,6 +2,7 @@ package Screen;
 
 import Data.Cliente;
 import Data.CTCONTAB;
+import Data.IconUtil;
 import Data.PermissaoUtil;
 import Data.Usuario;
 import java.awt.BorderLayout;
@@ -37,6 +38,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         exibirMensagemCarregando();
         carregarClientesAssincrono();
         PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
+        IconUtil.setIcon(usuarioLogado, lblUserIcon);
     }
 
     private void adicionarListenerDeBusca() {
@@ -241,7 +243,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         }
     }
 
-private void ajustarLarguraColunas() {
+    private void ajustarLarguraColunas() {
         jTable1.getColumnModel().getColumn(5).setMinWidth(62);
         jTable1.getColumnModel().getColumn(5).setMaxWidth(62);
         jTable1.getColumnModel().getColumn(5).setPreferredWidth(62);

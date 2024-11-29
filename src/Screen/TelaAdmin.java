@@ -1,5 +1,6 @@
 package Screen;
 
+import Data.IconUtil;
 import Data.Usuario;
 
 public class TelaAdmin extends javax.swing.JFrame {
@@ -9,10 +10,7 @@ public class TelaAdmin extends javax.swing.JFrame {
     public TelaAdmin(Usuario usuario) {
         this.usuarioLogado = usuario;
         initComponents();
-    }
-
-    public TelaAdmin() {
-        initComponents();
+        IconUtil.setIcon(usuarioLogado, lblUserIcon);
     }
 
     @SuppressWarnings("unchecked")
@@ -244,11 +242,6 @@ public class TelaAdmin extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(TelaAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaAdmin().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

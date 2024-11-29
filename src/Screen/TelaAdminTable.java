@@ -2,6 +2,7 @@ package Screen;
 
 import Data.CTCONTAB;
 import Data.Funcionario;
+import Data.IconUtil;
 import Data.Usuario;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -32,6 +33,7 @@ public class TelaAdminTable extends javax.swing.JFrame {
         adicionarListenerDeBusca();
         exibirMensagemCarregando();
         carregarFuncionariosAssincrono();
+        IconUtil.setIcon(usuarioLogado, lblUserIcon);
     }
 
     private void adicionarListenerDeBusca() {
@@ -572,7 +574,7 @@ public class TelaAdminTable extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        new TelaAdmin().setVisible(true);
+        new TelaAdmin(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnLoginActionPerformed
 

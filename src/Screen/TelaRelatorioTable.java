@@ -1,6 +1,7 @@
 package Screen;
 
 import Data.CTCONTAB;
+import Data.IconUtil;
 import Data.PermissaoUtil;
 import Data.Relatorio;
 import Data.Usuario;
@@ -38,6 +39,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         carregarRelatoriosAssincrono();
         configurarBusca();
         PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
+        IconUtil.setIcon(usuarioLogado, lblUserIcon);
     }
 
     private void exibirMensagemCarregando() {

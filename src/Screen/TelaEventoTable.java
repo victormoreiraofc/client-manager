@@ -2,6 +2,7 @@ package Screen;
 
 import Data.CTCONTAB;
 import Data.Evento;
+import Data.IconUtil;
 import Data.PermissaoUtil;
 import Data.Usuario;
 import java.awt.Color;
@@ -27,6 +28,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
         initComponents();
         PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
         carregarEventosNoCalendario();
+        IconUtil.setIcon(usuarioLogado, lblUserIcon);
     }
 
     private void carregarEventosNoCalendario() {
@@ -37,8 +39,8 @@ public class TelaEventoTable extends javax.swing.JFrame {
             for (int col = 0; col < model.getColumnCount(); col++) {
                 int dia = (row * 7) + col + 1;
                 String eventosTexto = eventosPorDia.getOrDefault(dia, List.of())
-                                                   .stream()
-                                                   .collect(Collectors.joining("\n"));
+                        .stream()
+                        .collect(Collectors.joining("\n"));
                 model.setValueAt(eventosTexto, row, col);
             }
         }
@@ -47,10 +49,10 @@ public class TelaEventoTable extends javax.swing.JFrame {
     private Map<Integer, List<String>> agruparEventosPorDia() {
         try {
             return CTCONTAB.listarEventos().stream()
-                           .collect(Collectors.groupingBy(
-                               evento -> extrairDiaDoEvento(evento.getDataInicio()),
-                               Collectors.mapping(Evento::getEvento, Collectors.toList())
-                           ));
+                    .collect(Collectors.groupingBy(
+                            evento -> extrairDiaDoEvento(evento.getDataInicio()),
+                            Collectors.mapping(Evento::getEvento, Collectors.toList())
+                    ));
         } catch (Exception e) {
             e.printStackTrace();
             return Map.of(); // Retorna mapa vazio em caso de erro
@@ -66,7 +68,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-                boolean hasFocus, int row, int column) {        
+                boolean hasFocus, int row, int column) {
             JTextArea textArea = new JTextArea();
             textArea.setText(value != null ? value.toString() : "");
             textArea.setEditable(false);
@@ -79,7 +81,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
             textArea.setForeground(Color.WHITE);
             textArea.setFont(new Font("Arial", Font.BOLD, 12));
             textArea.setPreferredSize(new Dimension(40, 40));
-            
+
             textArea.setAlignmentY(Component.BOTTOM_ALIGNMENT);
             textArea.setMargin(new Insets(50, 10, 5, 10));
 

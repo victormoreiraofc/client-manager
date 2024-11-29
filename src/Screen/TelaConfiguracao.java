@@ -1,10 +1,17 @@
 package Screen;
 
+import Data.IconUtil;
 import Data.CTCONTAB;
 import Data.PermissaoUtil;
 import Data.Usuario;
+import java.awt.Image;
+import java.io.File;
+import java.io.FileInputStream;
 import java.sql.SQLException;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class TelaConfiguracao extends javax.swing.JFrame {
 
@@ -14,6 +21,8 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         this.usuarioLogado = usuario;
         initComponents();
         PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
+        carregarImagemUsuario(usuario);
+        IconUtil.setIcon(usuarioLogado, lblUserIcon);
     }
 
     @SuppressWarnings("unchecked")
@@ -32,6 +41,7 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        jButton1 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -41,7 +51,7 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         txtSeuEmail = new javax.swing.JTextField();
         txtNovoEmail = new javax.swing.JTextField();
         txtSenhaAtual = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
+        lblImagem = new javax.swing.JLabel();
         lblDataDeCadastro = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jlibLogo2 = new javax.swing.JLabel();
@@ -147,6 +157,15 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         jPanel1.add(jSeparator1);
         jSeparator1.setBounds(0, 60, 1140, 30);
 
+        jButton1.setBackground(new java.awt.Color(84, 84, 84, 0));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1);
+        jButton1.setBounds(970, 250, 140, 30);
+
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Seu E-mail");
@@ -235,17 +254,16 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         jPanel1.add(txtSenhaAtual);
         txtSenhaAtual.setBounds(220, 110, 190, 35);
 
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/perfil-de-usuario.png"))); // NOI18N
-        jPanel1.add(jLabel9);
-        jLabel9.setBounds(960, 80, 160, 170);
+        lblImagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/perfil-de-usuario.png"))); // NOI18N
+        jPanel1.add(lblImagem);
+        lblImagem.setBounds(960, 80, 160, 170);
 
-        lblDataDeCadastro.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         lblDataDeCadastro.setForeground(new java.awt.Color(186, 186, 186));
         lblDataDeCadastro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblDataDeCadastro.setText("Alterar imagem");
+        lblDataDeCadastro.setText("<html><u>Alterar imagem</u></html>");
         lblDataDeCadastro.setToolTipText("");
         jPanel1.add(lblDataDeCadastro);
-        lblDataDeCadastro.setBounds(960, 240, 160, 40);
+        lblDataDeCadastro.setBounds(960, 250, 160, 30);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(110, 100, 1140, 540);
@@ -339,6 +357,72 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnHomeActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JFileChooser jfile = new JFileChooser();
+        jfile.setCurrentDirectory(new File(System.getProperty("user.home")));
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Image files", "jpg", "png");
+        jfile.addChoosableFileFilter(filter);
+
+        int result = jfile.showOpenDialog(null);
+        File selectedFile = jfile.getSelectedFile();
+        String filename = selectedFile.getName();
+        if (filename.endsWith(".jpg") || filename.endsWith(".JPG") || filename.endsWith(".png") || filename.endsWith(".PNG")) {
+            if (result == JFileChooser.APPROVE_OPTION) {
+                try {
+                    String path = selectedFile.getAbsolutePath();
+                    ImageIcon myImage = new ImageIcon(path);
+                    Image img = myImage.getImage();
+                    Image newImage = img.getScaledInstance(lblImagem.getWidth(), lblImagem.getHeight(), Image.SCALE_SMOOTH);
+                    ImageIcon image = new ImageIcon(newImage);
+                    lblImagem.setIcon(image);
+                    FileInputStream fis = new FileInputStream(selectedFile);
+                    CTCONTAB.registrarImagemUsuario(fis, usuarioLogado);
+
+                    fis.close();
+                    JOptionPane.showMessageDialog(null, "Imagem salva com sucesso!");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Erro ao salvar imagem: " + e.getMessage());
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro, selecione o arquivo compatível (Png ou Jpg)");
+            }
+
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void carregarImagemUsuario(Usuario usuario) {
+        try {
+            byte[] imagemByte = CTCONTAB.getImagemUsuario(usuario.getId());
+
+            if (imagemByte != null && imagemByte.length > 0) {
+                ImageIcon imagemIcon = new ImageIcon(imagemByte);
+                Image img = imagemIcon.getImage();
+                Image newImage = img.getScaledInstance(lblImagem.getWidth(), lblImagem.getHeight(), Image.SCALE_SMOOTH);
+                lblImagem.setIcon(new ImageIcon(newImage));
+            } else {
+                carregarIconePadrao();
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+            carregarIconePadrao();
+        }
+    }
+
+    private void carregarIconePadrao() {
+        try {
+            ImageIcon icon = new ImageIcon(getClass().getResource("/images/perfil-de-usuario.png"));
+            Image img = icon.getImage();
+            Image newImage = img.getScaledInstance(lblImagem.getWidth(), lblImagem.getHeight(), Image.SCALE_SMOOTH);
+
+            lblImagem.setIcon(new ImageIcon(newImage));
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao carregar ícone padrão: " + e.getMessage());
+        }
+    }
+
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -357,7 +441,6 @@ public class TelaConfiguracao extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(TelaConfiguracao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
-        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -372,6 +455,7 @@ public class TelaConfiguracao extends javax.swing.JFrame {
     private javax.swing.JButton btnNotificacoes;
     private javax.swing.JButton btnRelatorios;
     private javax.swing.JButton btnTarefas;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -380,11 +464,11 @@ public class TelaConfiguracao extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel jlibLogo2;
     private javax.swing.JLabel lblDataDeCadastro;
+    private javax.swing.JLabel lblImagem;
     private javax.swing.JLabel lblUserIcon;
     private javax.swing.JTextField txtNovaSenha;
     private javax.swing.JTextField txtNovoEmail;

@@ -1,5 +1,6 @@
 package Data;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -20,7 +21,7 @@ public class CTCONTAB {
 
     public static Usuario fazerLoginU(String u, String s) throws ClassNotFoundException, SQLException {
         conectado = conectar();
-        PreparedStatement st = conectado.prepareStatement("SELECT id, usuario, email, Permissao FROM usuarios WHERE (usuario = ? OR email = ?) AND senha = ?");
+        PreparedStatement st = conectado.prepareStatement("SELECT id, usuario, email, Permissao, Imagem FROM usuarios WHERE (usuario = ? OR email = ?) AND senha = ?");
         st.setString(1, u);
         st.setString(2, u);
         st.setString(3, s);
@@ -34,6 +35,8 @@ public class CTCONTAB {
             usuario.setUsuario(resultado.getString("usuario"));
             usuario.setEmail(resultado.getString("email"));
             usuario.setPermissao(resultado.getString("Permissao"));
+            byte[] imagemBytes = resultado.getBytes("Imagem");
+            usuario.setImagem(imagemBytes);
         }
 
         return usuario;
@@ -325,4 +328,26 @@ public class CTCONTAB {
 
         return eventos;
     }
+
+    public static void registrarImagemUsuario(InputStream imagem, Usuario usuario) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement("UPDATE usuarios SET Imagem = ? WHERE id = ?");
+        st.setBinaryStream(1, imagem);
+        st.setInt(2, usuario.getId());
+        st.executeUpdate();
+    }
+
+    public static byte[] getImagemUsuario(int id) throws SQLException, ClassNotFoundException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement("SELECT Imagem FROM usuarios WHERE id = ?");
+        st.setInt(1, id);
+        ResultSet resultado = st.executeQuery();
+
+        byte[] imagem = null;
+        if (resultado.next()) {
+            imagem = resultado.getBytes("Imagem");
+        }
+        return imagem;
+    }
+
 }

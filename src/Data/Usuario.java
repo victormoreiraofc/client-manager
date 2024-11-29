@@ -8,6 +8,7 @@ public class Usuario implements Serializable {
     private String usuario;
     private String email;
     private String permissao;
+    private byte[] imagem;
 
     public Usuario() {
     }
@@ -42,6 +43,14 @@ public class Usuario implements Serializable {
 
     public void setPermissao(String permissao) {
         this.permissao = permissao;
+    }
+
+    public byte[] getImagem() {
+    return imagem;
+    }
+    
+    public void setImagem(byte[] imagem) {
+        this.imagem = imagem;
     }
 
 }

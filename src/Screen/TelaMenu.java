@@ -1,6 +1,7 @@
 package Screen;
 
 import Data.CTCONTAB;
+import Data.IconUtil;
 import Data.Usuario;
 import Data.PermissaoUtil;
 import java.awt.Font;
@@ -21,6 +22,7 @@ public class TelaMenu extends javax.swing.JFrame {
         exibirMensagemCarregando();
         carregarDadosSimultaneamente();
         PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
+        IconUtil.setIcon(usuarioLogado, lblUserIcon);
     }
 
     private void salvarFonteOriginal() {
@@ -38,7 +40,6 @@ public class TelaMenu extends javax.swing.JFrame {
     }
 
     private void restaurarFonteOriginal() {
-        // Restaura o tamanho original da fonte
         jlibVariavel1.setFont(fonteOriginal);
         jlibVariavel2.setFont(fonteOriginal);
         jlibVariavel3.setFont(fonteOriginal);

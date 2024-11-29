@@ -1,12 +1,20 @@
 package Screen;
 
 import Data.CTCONTAB;
+import Data.IconUtil;
 import Data.PermissaoUtil;
 import Data.Usuario;
+import java.awt.Image;
+import java.io.File;
+import java.io.FileInputStream;
+import java.sql.SQLException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class TelaCliente extends javax.swing.JFrame {
 
@@ -16,10 +24,25 @@ public class TelaCliente extends javax.swing.JFrame {
         this.usuarioLogado = usuario;
         initComponents();
         PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
+        exibirDadosUsuario(usuario);
+        carregarImagemUsuario(usuario);
+        IconUtil.setIcon(usuarioLogado, lblUserIcon);
     }
 
-    public TelaCliente() {
-        initComponents();
+    private void exibirDadosUsuario(Usuario usuario) {
+        if (usuario != null) {
+            int id = usuario.getId();
+            String nomeUsuario = usuario.getUsuario();
+
+            lblCodigo.setText(String.valueOf(id));
+            lblFuncCadastrante.setText(nomeUsuario);
+
+            ZonedDateTime agoraBrasilia = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            String dataFormatada = agoraBrasilia.format(formato);
+
+            lblData.setText(dataFormatada);
+        }
     }
 
     private void salvarEventoNoBanco() {
@@ -58,7 +81,7 @@ public class TelaCliente extends javax.swing.JFrame {
         txtSituacaoServico = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        lblImagem = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -75,6 +98,7 @@ public class TelaCliente extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         txtCelular = new javax.swing.JTextField();
+        btnAlterarImagem = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
         txtServico = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
@@ -82,10 +106,13 @@ public class TelaCliente extends javax.swing.JFrame {
         txtTelefone = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         lblDataDeCadastro = new javax.swing.JLabel();
-        lblDataDeCadastro1 = new javax.swing.JLabel();
+        txtTipoPessoa = new javax.swing.JComboBox<>();
+        lblData = new javax.swing.JLabel();
+        lblFuncCadastrante = new javax.swing.JLabel();
         lblDataDeCadastro2 = new javax.swing.JLabel();
         lblDataDeCadastro3 = new javax.swing.JLabel();
-        txtTipoPessoa = new javax.swing.JComboBox<>();
+        lblDataDeCadastro1 = new javax.swing.JLabel();
+        lblCodigo = new javax.swing.JLabel();
         btnHome = new javax.swing.JButton();
         btnCalendario = new javax.swing.JButton();
         btnClientes = new javax.swing.JButton();
@@ -129,9 +156,9 @@ public class TelaCliente extends javax.swing.JFrame {
         jPanel1.add(jLabel8);
         jLabel8.setBounds(1010, 10, 40, 40);
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/perfil-de-usuario.png"))); // NOI18N
-        jPanel1.add(jLabel7);
-        jLabel7.setBounds(20, 70, 160, 170);
+        lblImagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/perfil-de-usuario.png"))); // NOI18N
+        jPanel1.add(lblImagem);
+        lblImagem.setBounds(20, 70, 160, 170);
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fechar.png"))); // NOI18N
@@ -260,6 +287,15 @@ public class TelaCliente extends javax.swing.JFrame {
         jPanel1.add(txtCelular);
         txtCelular.setBounds(260, 490, 220, 35);
 
+        btnAlterarImagem.setBackground(new java.awt.Color(84, 84, 84, 0));
+        btnAlterarImagem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarImagemActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnAlterarImagem);
+        btnAlterarImagem.setBounds(20, 240, 160, 30);
+
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Situação do Serviço");
@@ -310,21 +346,33 @@ public class TelaCliente extends javax.swing.JFrame {
         jPanel1.add(jLabel17);
         jLabel17.setBounds(500, 320, 100, 30);
 
-        lblDataDeCadastro.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         lblDataDeCadastro.setForeground(new java.awt.Color(186, 186, 186));
         lblDataDeCadastro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblDataDeCadastro.setText("Alterar imagem");
+        lblDataDeCadastro.setText("<html><u>Alterar imagem</u></html>");
         lblDataDeCadastro.setToolTipText("");
         jPanel1.add(lblDataDeCadastro);
-        lblDataDeCadastro.setBounds(20, 230, 160, 40);
+        lblDataDeCadastro.setBounds(20, 240, 160, 30);
 
-        lblDataDeCadastro1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblDataDeCadastro1.setForeground(new java.awt.Color(255, 255, 255));
-        lblDataDeCadastro1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblDataDeCadastro1.setText("Funcionario Cadastrante: ");
-        lblDataDeCadastro1.setToolTipText("");
-        jPanel1.add(lblDataDeCadastro1);
-        lblDataDeCadastro1.setBounds(200, 170, 190, 30);
+        txtTipoPessoa.setBackground(new java.awt.Color(102, 102, 102));
+        txtTipoPessoa.setForeground(new java.awt.Color(255, 255, 255));
+        txtTipoPessoa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fisica", "Juridica", "NI" }));
+        txtTipoPessoa.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
+        jPanel1.add(txtTipoPessoa);
+        txtTipoPessoa.setBounds(20, 420, 220, 35);
+
+        lblData.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblData.setForeground(new java.awt.Color(255, 255, 255));
+        lblData.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblData.setToolTipText("");
+        jPanel1.add(lblData);
+        lblData.setBounds(325, 140, 130, 30);
+
+        lblFuncCadastrante.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblFuncCadastrante.setForeground(new java.awt.Color(255, 255, 255));
+        lblFuncCadastrante.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblFuncCadastrante.setToolTipText("");
+        jPanel1.add(lblFuncCadastrante);
+        lblFuncCadastrante.setBounds(375, 170, 190, 30);
 
         lblDataDeCadastro2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblDataDeCadastro2.setForeground(new java.awt.Color(255, 255, 255));
@@ -342,12 +390,20 @@ public class TelaCliente extends javax.swing.JFrame {
         jPanel1.add(lblDataDeCadastro3);
         lblDataDeCadastro3.setBounds(200, 140, 140, 30);
 
-        txtTipoPessoa.setBackground(new java.awt.Color(102, 102, 102));
-        txtTipoPessoa.setForeground(new java.awt.Color(255, 255, 255));
-        txtTipoPessoa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fisica", "Juridica", "NI" }));
-        txtTipoPessoa.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
-        jPanel1.add(txtTipoPessoa);
-        txtTipoPessoa.setBounds(20, 420, 220, 35);
+        lblDataDeCadastro1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblDataDeCadastro1.setForeground(new java.awt.Color(255, 255, 255));
+        lblDataDeCadastro1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblDataDeCadastro1.setText("Funcionario Cadastrante: ");
+        lblDataDeCadastro1.setToolTipText("");
+        jPanel1.add(lblDataDeCadastro1);
+        lblDataDeCadastro1.setBounds(200, 170, 190, 30);
+
+        lblCodigo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblCodigo.setForeground(new java.awt.Color(255, 255, 255));
+        lblCodigo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblCodigo.setToolTipText("");
+        jPanel1.add(lblCodigo);
+        lblCodigo.setBounds(255, 110, 60, 30);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(110, 100, 1140, 540);
@@ -522,11 +578,77 @@ public class TelaCliente extends javax.swing.JFrame {
         salvarEventoNoBanco();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void btnAlterarImagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarImagemActionPerformed
+        JFileChooser jfile = new JFileChooser();
+        jfile.setCurrentDirectory(new File(System.getProperty("user.home")));
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Image files", "jpg", "png");
+        jfile.addChoosableFileFilter(filter);
+
+        int result = jfile.showOpenDialog(null);
+        File selectedFile = jfile.getSelectedFile();
+        String filename = selectedFile.getName();
+        if (filename.endsWith(".jpg") || filename.endsWith(".JPG") || filename.endsWith(".png") || filename.endsWith(".PNG")) {
+            if (result == JFileChooser.APPROVE_OPTION) {
+                try {
+                    String path = selectedFile.getAbsolutePath();
+                    ImageIcon myImage = new ImageIcon(path);
+                    Image img = myImage.getImage();
+                    Image newImage = img.getScaledInstance(lblImagem.getWidth(), lblImagem.getHeight(), Image.SCALE_SMOOTH);
+                    ImageIcon image = new ImageIcon(newImage);
+                    lblImagem.setIcon(image);
+                    FileInputStream fis = new FileInputStream(selectedFile);
+                    CTCONTAB.registrarImagemUsuario(fis, usuarioLogado);
+
+                    fis.close();
+                    JOptionPane.showMessageDialog(null, "Imagem salva com sucesso!");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Erro ao salvar imagem: " + e.getMessage());
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro, selecione o arquivo compatível (Png ou Jpg)");
+            }
+
+    }//GEN-LAST:event_btnAlterarImagemActionPerformed
+    }
+
+    private void carregarImagemUsuario(Usuario usuario) {
+        try {
+            byte[] imagemByte = CTCONTAB.getImagemUsuario(usuario.getId());
+
+            if (imagemByte != null && imagemByte.length > 0) {
+                ImageIcon imagemIcon = new ImageIcon(imagemByte);
+                Image img = imagemIcon.getImage();
+                Image newImage = img.getScaledInstance(lblImagem.getWidth(), lblImagem.getHeight(), Image.SCALE_SMOOTH);
+                lblImagem.setIcon(new ImageIcon(newImage));
+            } else {
+                carregarIconePadrao();
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+            carregarIconePadrao();
+        }
+    }
+
+    private void carregarIconePadrao() {
+        try {
+            ImageIcon icon = new ImageIcon(getClass().getResource("/images/perfil-de-usuario.png"));
+            Image img = icon.getImage();
+            Image newImage = img.getScaledInstance(lblImagem.getWidth(), lblImagem.getHeight(), Image.SCALE_SMOOTH);
+
+            lblImagem.setIcon(new ImageIcon(newImage));
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao carregar ícone padrão: " + e.getMessage());
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
     private javax.swing.JPanel JPanelTelaAcesso;
     private javax.swing.JButton btnAdministracao;
+    private javax.swing.JButton btnAlterarImagem;
     private javax.swing.JButton btnCalendario;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnConfiguracoes;
@@ -551,17 +673,20 @@ public class TelaCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel jlibLogo2;
+    private javax.swing.JLabel lblCodigo;
+    private javax.swing.JLabel lblData;
     private javax.swing.JLabel lblDataDeCadastro;
     private javax.swing.JLabel lblDataDeCadastro1;
     private javax.swing.JLabel lblDataDeCadastro2;
     private javax.swing.JLabel lblDataDeCadastro3;
+    private javax.swing.JLabel lblFuncCadastrante;
+    private javax.swing.JLabel lblImagem;
     private javax.swing.JLabel lblUserIcon;
     private javax.swing.JTextField txtCelular;
     private javax.swing.JTextField txtEmail;

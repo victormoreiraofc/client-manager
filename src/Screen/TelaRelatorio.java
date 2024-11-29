@@ -1,6 +1,7 @@
 package Screen;
 
 import Data.CTCONTAB;
+import Data.IconUtil;
 import Data.PermissaoUtil;
 import Data.Usuario;
 import javax.swing.JOptionPane;
@@ -13,6 +14,7 @@ public class TelaRelatorio extends javax.swing.JFrame {
         this.usuarioLogado = usuario;
         initComponents();
         PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
+        IconUtil.setIcon(usuarioLogado, lblUserIcon);
     }
 
 
