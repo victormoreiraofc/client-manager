@@ -20,6 +20,9 @@ public class Tarefa {
         this.responsavel = responsavel;
     }
 
+    public Tarefa() {
+    }
+
     public int getId() {
         return id;
     }

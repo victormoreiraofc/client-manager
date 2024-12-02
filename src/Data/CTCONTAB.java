@@ -173,16 +173,19 @@ public class CTCONTAB {
         st.executeUpdate();
     }
 
-    public static void registrarTarefa(String nomeTarefa, String descricao, String statusTarefa, String dataVencimento, String prioridade) throws ClassNotFoundException, SQLException {
+    public static void registrarTarefa(Tarefa tarefa) throws ClassNotFoundException, SQLException {
+        String sql = "INSERT INTO tarefa (NomeTarefa, Descrição, StatusTarefa, DataVencimento, Prioridade, responsavel) "
+                + "VALUES (?, ?, ?, ?, ?, ?)";
+
         conectado = conectar();
-        PreparedStatement st = conectado.prepareStatement(
-                "INSERT INTO tarefa (NomeTarefa, Descrição, StatusTarefa, DataVencimento, Prioridade) VALUES (?, ?, ?, ?, ?)"
-        );
-        st.setString(1, nomeTarefa);
-        st.setString(2, descricao);
-        st.setString(3, statusTarefa);
-        st.setString(4, dataVencimento);
-        st.setString(5, prioridade);
+        PreparedStatement st = conectado.prepareStatement(sql);
+        st.setString(1, tarefa.getNomeTarefa());
+        st.setString(2, tarefa.getDescricao());
+        st.setString(3, tarefa.getStatusTarefa());
+        st.setString(4, tarefa.getDataVencimento());
+        st.setString(5, tarefa.getPrioridade());
+        st.setString(6, tarefa.getResponsavel());
+
         st.executeUpdate();
     }
 
@@ -392,6 +395,25 @@ public class CTCONTAB {
             st.setString(3, relatorio.getStatusRelatorio());
             st.setString(4, relatorio.getDataCadastro());
             st.setInt(5, relatorio.getId());
+
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new SQLException("Erro ao atualizar relatorio: " + e.getMessage(), e);
+        }
+    }
+
+    public static void atualizarTarefa(Tarefa tarefa) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+
+        String sql = "UPDATE tarefa SET NomeTarefa = ?, Descrição = ?, StatusTarefa = ?, DataVencimento = ?, Prioridade = ? WHERE ID = ?";
+
+        try (PreparedStatement st = conectado.prepareStatement(sql)) {
+            st.setString(1, tarefa.getNomeTarefa());
+            st.setString(2, tarefa.getDescricao());
+            st.setString(3, tarefa.getStatusTarefa());
+            st.setString(4, tarefa.getDataVencimento());
+            st.setString(5, tarefa.getPrioridade());
+            st.setInt(6, tarefa.getId());
 
             st.executeUpdate();
         } catch (SQLException e) {

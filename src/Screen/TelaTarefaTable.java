@@ -3,6 +3,7 @@ package Screen;
 import Data.CTCONTAB;
 import Data.IconUtil;
 import Data.PermissaoUtil;
+import Data.Relatorio;
 import Data.Tarefa;
 import Data.Usuario;
 import javax.swing.*;
@@ -18,6 +19,7 @@ public class TelaTarefaTable extends javax.swing.JFrame {
     private Usuario usuarioLogado;
     private List<Tarefa> listarTarefas;
     private List<Tarefa> tarefasFiltradas;
+    private Tarefa tarefa;
 
     public TelaTarefaTable(Usuario usuario) {
         this.usuarioLogado = usuario;
@@ -67,16 +69,15 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         model.setRowCount(0);
 
         for (Tarefa tarefa : tarefas) {
-            Object[] rowData = new Object[]{
+            model.addRow(new Object[]{
                 tarefa.getNomeTarefa(),
                 tarefa.getResponsavel(),
                 tarefa.getStatusTarefa(),
                 tarefa.getPrioridade(),
                 tarefa.getDataVencimento(),
-                "1",
-                "3"
-            };
-            model.addRow(rowData);
+                "Editar",
+                "Excluir"
+            });
         }
     }
 
@@ -150,8 +151,8 @@ public class TelaTarefaTable extends javax.swing.JFrame {
             button.addActionListener(e -> {
                 if ("Excluir".equals(actionType)) {
                     excluirTarefa(selectedRow);
-                } else {
-                    abrirJanela(actionType);
+                } else if ("Editar".equals(actionType)) {
+                    abrirTelaTarefa(selectedRow);
                 }
                 fireEditingStopped();
             });
@@ -182,22 +183,11 @@ public class TelaTarefaTable extends javax.swing.JFrame {
             return label;
         }
 
-        private void abrirJanela(String actionType) {
-            JFrame newFrame = new JFrame(actionType);
-            newFrame.setSize(300, 200);
-            newFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-            JLabel label = new JLabel("Você abriu: " + actionType, SwingConstants.CENTER);
-            newFrame.add(label, BorderLayout.CENTER);
-
-            switch (actionType) {
-                case "Janela 1":
-                    newFrame.setTitle("Detalhes da Janela 1");
-                    label.setText("Conteúdo da Janela 1");
-                    break;
-            }
-
-            newFrame.setVisible(true);
+        private void abrirTelaTarefa(int row) {
+            Tarefa tarefaSelecionado = listarTarefas.get(row);
+            TelaTarefa telaTarefa = new TelaTarefa(usuarioLogado, tarefaSelecionado);
+            telaTarefa.setVisible(true);
+            TelaTarefaTable.this.dispose();
         }
 
         private void excluirTarefa(int row) {
@@ -306,7 +296,7 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         jTable1.setGridColor(new java.awt.Color(115, 115, 115));
         // Adiciona renderizadores e editores para botões
         jTable1.getColumn("AÇÃO 1").setCellRenderer(new ButtonRenderer());
-        jTable1.getColumn("AÇÃO 1").setCellEditor(new ButtonEditor(new JCheckBox(), "Janela 1"));
+        jTable1.getColumn("AÇÃO 1").setCellEditor(new ButtonEditor(new JCheckBox(), "Editar"));
 
         jTable1.getColumn("AÇÃO 3").setCellRenderer(new ButtonRenderer());
         jTable1.getColumn("AÇÃO 3").setCellEditor(new ButtonEditor(new JCheckBox(), "Excluir"));
@@ -587,7 +577,7 @@ public class TelaTarefaTable extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        new TelaTarefa(usuarioLogado).setVisible(true);
+        new TelaTarefa(usuarioLogado, tarefa).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnLoginActionPerformed
 

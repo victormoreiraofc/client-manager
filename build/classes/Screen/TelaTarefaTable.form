@@ -28,6 +28,9 @@
   <SubComponents>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="null"/>
+        </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
@@ -114,7 +117,7 @@
             <Property name="gridColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="73" green="73" red="73" type="rgb"/>
             </Property>
-            <Property name="rowHeight" postCode="// Adiciona renderizadores e editores para bot&#xf5;es&#xa;      jTable1.getColumn(&quot;A&#xc7;&#xc3;O 1&quot;).setCellRenderer(new ButtonRenderer());&#xa;    jTable1.getColumn(&quot;A&#xc7;&#xc3;O 1&quot;).setCellEditor(new ButtonEditor(new JCheckBox(), &quot;Janela 1&quot;));&#xa;&#xa;    jTable1.getColumn(&quot;A&#xc7;&#xc3;O 3&quot;).setCellRenderer(new ButtonRenderer());&#xa;    jTable1.getColumn(&quot;A&#xc7;&#xc3;O 3&quot;).setCellEditor(new ButtonEditor(new JCheckBox(), &quot;Excluir&quot;));&#xa;&#xa;        // Adiciona a tabela no painel principal&#xa;        add(new JScrollPane(jTable1), BorderLayout.CENTER);&#xa;ajustarLarguraColunas();"/>
+            <Property name="rowHeight" postCode="// Adiciona renderizadores e editores para bot&#xf5;es&#xa;      jTable1.getColumn(&quot;A&#xc7;&#xc3;O 1&quot;).setCellRenderer(new ButtonRenderer());&#xa;    jTable1.getColumn(&quot;A&#xc7;&#xc3;O 1&quot;).setCellEditor(new ButtonEditor(new JCheckBox(), &quot;Editar&quot;));&#xa;&#xa;    jTable1.getColumn(&quot;A&#xc7;&#xc3;O 3&quot;).setCellRenderer(new ButtonRenderer());&#xa;    jTable1.getColumn(&quot;A&#xc7;&#xc3;O 3&quot;).setCellEditor(new ButtonEditor(new JCheckBox(), &quot;Excluir&quot;));&#xa;&#xa;        // Adiciona a tabela no painel principal&#xa;        add(new JScrollPane(jTable1), BorderLayout.CENTER);&#xa;ajustarLarguraColunas();"/>
             <Property name="rowSelectionAllowed" type="boolean" value="false"/>
             <Property name="showHorizontalLines" type="boolean" value="true"/>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">

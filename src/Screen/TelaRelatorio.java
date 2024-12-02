@@ -1,11 +1,13 @@
 package Screen;
 
 import Data.CTCONTAB;
+import static Data.CTCONTAB.excluirRegistro;
 import Data.IconUtil;
 import Data.PermissaoUtil;
 import Data.Relatorio;
 import Data.Usuario;
 import javax.swing.JOptionPane;
+import java.sql.SQLException;
 
 public class TelaRelatorio extends javax.swing.JFrame {
 
@@ -67,6 +69,31 @@ public class TelaRelatorio extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Erro ao salvar alterações: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
+        }
+    }
+
+    private void excluirRelatorio() {
+        try {
+            String codigoText = jLabel6.getText();
+            if (codigoText != null && !codigoText.trim().isEmpty() && !codigoText.equals("0")) {
+                int idRelatorio = Integer.parseInt(codigoText);
+
+                int resposta = JOptionPane.showConfirmDialog(this,
+                        "Tem certeza de que deseja excluir este relatório?",
+                        "Confirmar Exclusão", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+                if (resposta == JOptionPane.YES_OPTION) {
+                    excluirRegistro("relatorio", "id", idRelatorio);
+
+                    JOptionPane.showMessageDialog(this, "Relatório excluído com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                    new TelaRelatorioTable(usuarioLogado).setVisible(true);
+                    this.dispose();
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Nenhum relatório selecionado para exclusão!", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao excluir relatório: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -137,6 +164,11 @@ public class TelaRelatorio extends javax.swing.JFrame {
         jLabel5.setBounds(1090, 10, 40, 40);
 
         jButton3.setBackground(new java.awt.Color(84, 84, 84));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton3);
         jButton3.setBounds(1010, 10, 40, 40);
 
@@ -437,6 +469,10 @@ public class TelaRelatorio extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         jButton2.addActionListener(e -> salvarAlteracoes(relatorio));
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        excluirRelatorio();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     public static void main(String args[]) {
         try {

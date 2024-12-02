@@ -1,38 +1,105 @@
 package Screen;
 
 import Data.CTCONTAB;
+import static Data.CTCONTAB.excluirRegistro;
 import Data.IconUtil;
 import Data.PermissaoUtil;
+import Data.Tarefa;
 import Data.Usuario;
 import javax.swing.JOptionPane;
+import java.sql.SQLException;
 
 public class TelaTarefa extends javax.swing.JFrame {
 
     private Usuario usuarioLogado;
+    private Tarefa tarefa;
 
-    public TelaTarefa(Usuario usuario) {
+    public TelaTarefa(Usuario usuario, Tarefa tarefa) {
         this.usuarioLogado = usuario;
         initComponents();
         PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
         IconUtil.setIcon(usuarioLogado, lblUserIcon);
+
+        if (tarefa != null) {
+            this.tarefa = tarefa;
+            preencherCampos(tarefa);
+        } else {
+            this.tarefa = new Tarefa();
+            preencherCamposNovoTarefa();
+        }
     }
 
-    private void salvarEventoNoBanco() {
-        try {
-            String nomeTarefa = txtNomeTarefa.getText();
-            String descricao = txtDescricao.getText();
-            String statusTarefa = txtStatusTarefa.getSelectedItem().toString();
-            String dataVencimento = txtDataVencimento.getText();
-            String prioridade = txtPrioridade.getText();
+    private void preencherCamposNovoTarefa() {
+        txtNomeTarefa.setText("  Nome da Tarefa.");
+        txtDescricao.setText("  Descreva a Tarefa.");
+        txtStatusTarefa.setSelectedItem("Pendente");
+        txtDataVencimento.setText("  Data de Vencimento da Tarefa.");
+        txtPrioridade.setText("  Prioridade.");
+        jLabel6.setText("0");
+        jLabel7.setText(usuarioLogado.getUsuario());
+    }
 
-            if (usuarioLogado != null) {
-                CTCONTAB.registrarTarefa(nomeTarefa, descricao, statusTarefa, dataVencimento, prioridade);
-                JOptionPane.showMessageDialog(this, "Evento salvo com sucesso!");
+    private void preencherCampos(Tarefa tarefa) {
+        txtNomeTarefa.setText(tarefa.getNomeTarefa());
+        txtDescricao.setText(tarefa.getDescricao());
+        txtStatusTarefa.setSelectedItem(tarefa.getStatusTarefa());
+        txtDataVencimento.setText(tarefa.getDataVencimento());
+        txtPrioridade.setText(tarefa.getPrioridade());
+        jLabel6.setText(String.valueOf(tarefa.getId()));
+        jLabel7.setText(tarefa.getResponsavel());
+    }
+
+    private void salvarAlteracoes(Tarefa tarefa) {
+        try {
+            tarefa.setNomeTarefa(txtNomeTarefa.getText());
+            tarefa.setDescricao(txtDescricao.getText());
+            tarefa.setStatusTarefa(txtStatusTarefa.getSelectedItem().toString());
+            tarefa.setDataVencimento(txtDataVencimento.getText());
+            tarefa.setPrioridade(txtPrioridade.getText());
+            tarefa.setResponsavel(jLabel7.getText());
+
+            String codigoText = jLabel6.getText();
+            if (codigoText != null && !codigoText.trim().isEmpty() && !codigoText.equals("0")) {
+                tarefa.setId(Integer.parseInt(codigoText));
             } else {
-                JOptionPane.showMessageDialog(this, "Nenhum usuário logado. Não foi possível salvar o evento.");
+                tarefa.setId(0);
+            }
+
+            if (tarefa.getId() == 0) {
+                CTCONTAB.registrarTarefa(tarefa);
+                JOptionPane.showMessageDialog(this, "Nova tarefa cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                CTCONTAB.atualizarTarefa(tarefa);
+                JOptionPane.showMessageDialog(this, "Tarefa atualizada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao salvar evento: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Erro ao salvar alterações: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+
+    private void excluirTarefa() {
+        try {
+            String codigoText = jLabel6.getText();
+            if (codigoText != null && !codigoText.trim().isEmpty() && !codigoText.equals("0")) {
+                int idTarefa = Integer.parseInt(codigoText);
+
+                int resposta = JOptionPane.showConfirmDialog(this,
+                        "Tem certeza de que deseja excluir esta tarefa?",
+                        "Confirmar Exclusão", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+                if (resposta == JOptionPane.YES_OPTION) {
+                    excluirRegistro("tarefa", "id", idTarefa);
+
+                    JOptionPane.showMessageDialog(this, "Tarefa excluída com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                    new TelaTarefaTable(usuarioLogado).setVisible(true);
+                    this.dispose();
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Nenhuma tarefa selecionada para exclusão!", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao excluir tarefa: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -62,6 +129,8 @@ public class TelaTarefa extends javax.swing.JFrame {
         txtPrioridade = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         txtStatusTarefa = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         btnHome = new javax.swing.JButton();
         btnCalendario = new javax.swing.JButton();
         btnClientes = new javax.swing.JButton();
@@ -104,6 +173,11 @@ public class TelaTarefa extends javax.swing.JFrame {
         jLabel5.setBounds(1090, 10, 40, 40);
 
         jButton3.setBackground(new java.awt.Color(84, 84, 84));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton3);
         jButton3.setBounds(1010, 10, 40, 40);
 
@@ -250,6 +324,14 @@ public class TelaTarefa extends javax.swing.JFrame {
         jPanel1.add(txtStatusTarefa);
         txtStatusTarefa.setBounds(20, 240, 250, 35);
 
+        jLabel6.setVisible(false);
+        jPanel1.add(jLabel6);
+        jLabel6.setBounds(530, 280, 60, 40);
+
+        jLabel7.setVisible(false);
+        jPanel1.add(jLabel7);
+        jLabel7.setBounds(600, 120, 80, 70);
+
         getContentPane().add(jPanel1);
         jPanel1.setBounds(110, 100, 1140, 540);
 
@@ -393,7 +475,7 @@ public class TelaTarefa extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDataVencimentoActionPerformed
 
     private void btnLogin1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogin1ActionPerformed
-        salvarEventoNoBanco();
+        btnLogin1.addActionListener(e -> salvarAlteracoes(tarefa));
     }//GEN-LAST:event_btnLogin1ActionPerformed
 
     private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarioActionPerformed
@@ -421,8 +503,12 @@ public class TelaTarefa extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPrioridadeActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        salvarEventoNoBanco();
+        jButton2.addActionListener(e -> salvarAlteracoes(tarefa));
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        excluirTarefa();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     public static void main(String args[]) {
         try {
@@ -470,6 +556,8 @@ public class TelaTarefa extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
