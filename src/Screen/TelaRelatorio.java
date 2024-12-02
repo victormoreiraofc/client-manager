@@ -3,36 +3,70 @@ package Screen;
 import Data.CTCONTAB;
 import Data.IconUtil;
 import Data.PermissaoUtil;
+import Data.Relatorio;
 import Data.Usuario;
 import javax.swing.JOptionPane;
 
 public class TelaRelatorio extends javax.swing.JFrame {
 
     private Usuario usuarioLogado;
+    private Relatorio relatorio;
 
-    public TelaRelatorio(Usuario usuario) {
+    public TelaRelatorio(Usuario usuario, Relatorio relatorio) {
         this.usuarioLogado = usuario;
         initComponents();
         PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
         IconUtil.setIcon(usuarioLogado, lblUserIcon);
+
+        if (relatorio != null) {
+            this.relatorio = relatorio;
+            preencherCampos(relatorio);
+        } else {
+            this.relatorio = new Relatorio();
+            preencherCamposNovoRelatorio();
+        }
     }
 
+    private void preencherCamposNovoRelatorio() {
+        txtNomeRelatorio.setText("  Nome do Relatório.");
+        txtDescricao.setText("  Descreva o Relatório.");
+        txtStatusRelatorio.setSelectedItem("Pendente");
+        txtDataCadastro.setText(" Data de Cadastro.");
+        jLabel6.setText("0");
+    }
 
-    private void salvarEventoNoBanco() {
+    private void preencherCampos(Relatorio relatorio) {
+        txtNomeRelatorio.setText(relatorio.getNomeRelatorio());
+        txtDescricao.setText(relatorio.getDescricao());
+        txtStatusRelatorio.setSelectedItem(relatorio.getStatusRelatorio());
+        txtDataCadastro.setText(relatorio.getDataCadastro());
+        jLabel6.setText(String.valueOf(relatorio.getId()));
+    }
+
+    private void salvarAlteracoes(Relatorio relatorio) {
         try {
-            String nomeRelatorio = txtNomeRelatorio.getText();
-            String descricao = txtDescricao.getText();
-            String statusRelatorio = txtStatusRelatorio.getSelectedItem().toString();
-            String dataCadastro = txtDataCadastro.getText();
+            relatorio.setNomeRelatorio(txtNomeRelatorio.getText());
+            relatorio.setDescricao(txtDescricao.getText());
+            relatorio.setStatusRelatorio(txtStatusRelatorio.getSelectedItem().toString());
+            relatorio.setDataCadastro(txtDataCadastro.getText());
 
-            if (usuarioLogado != null) {
-                CTCONTAB.registrarRelatorio(nomeRelatorio, descricao, statusRelatorio, dataCadastro);
-                JOptionPane.showMessageDialog(this, "Evento salvo com sucesso!");
+            String codigoText = jLabel6.getText();
+            if (codigoText != null && !codigoText.trim().isEmpty() && !codigoText.equals("0")) {
+                relatorio.setId(Integer.parseInt(codigoText));
             } else {
-                JOptionPane.showMessageDialog(this, "Nenhum usuário logado. Não foi possível salvar o evento.");
+                relatorio.setId(0);
+            }
+
+            if (relatorio.getId() == 0) {
+                CTCONTAB.registrarRelatorio(relatorio);
+                JOptionPane.showMessageDialog(this, "Novo relatorio cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                CTCONTAB.atualizarRelatorio(relatorio);
+                JOptionPane.showMessageDialog(this, "Relatorio atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao salvar evento: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Erro ao salvar alterações: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
     }
 
@@ -60,6 +94,7 @@ public class TelaRelatorio extends javax.swing.JFrame {
         btnLogin1 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         txtStatusRelatorio = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
         btnHome = new javax.swing.JButton();
         btnCalendario = new javax.swing.JButton();
         btnClientes = new javax.swing.JButton();
@@ -229,6 +264,10 @@ public class TelaRelatorio extends javax.swing.JFrame {
         jPanel1.add(txtStatusRelatorio);
         txtStatusRelatorio.setBounds(20, 240, 250, 35);
 
+        jLabel6.setVisible(false);
+        jPanel1.add(jLabel6);
+        jLabel6.setBounds(390, 330, 70, 0);
+
         getContentPane().add(jPanel1);
         jPanel1.setBounds(110, 100, 1140, 540);
 
@@ -372,7 +411,7 @@ public class TelaRelatorio extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDataCadastroActionPerformed
 
     private void btnLogin1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogin1ActionPerformed
-        salvarEventoNoBanco();
+        btnLogin1.addActionListener(e -> salvarAlteracoes(relatorio));
     }//GEN-LAST:event_btnLogin1ActionPerformed
 
     private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarioActionPerformed
@@ -396,7 +435,7 @@ public class TelaRelatorio extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        salvarEventoNoBanco();
+        jButton2.addActionListener(e -> salvarAlteracoes(relatorio));
     }//GEN-LAST:event_jButton2ActionPerformed
 
     public static void main(String args[]) {
@@ -417,7 +456,6 @@ public class TelaRelatorio extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(TelaRelatorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
-       
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -445,6 +483,7 @@ public class TelaRelatorio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;

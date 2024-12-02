@@ -186,15 +186,17 @@ public class CTCONTAB {
         st.executeUpdate();
     }
 
-    public static void registrarRelatorio(String nomeRelatorio, String descricao, String statusRelatorio, String dataCadastro) throws ClassNotFoundException, SQLException {
+    public static void registrarRelatorio(Relatorio relatorio) throws ClassNotFoundException, SQLException {
+        String sql = "INSERT INTO relatorio (NomeRelatorio, Descrição, StatusRelatorio, DataCadastro) "
+                + "VALUES (?, ?, ?, ?)";
+
         conectado = conectar();
-        PreparedStatement st = conectado.prepareStatement(
-                "INSERT INTO relatorio (NomeRelatorio, Descrição, StatusRelatorio, DataCadastro) VALUES (?, ?, ?, ?)"
-        );
-        st.setString(1, nomeRelatorio);
-        st.setString(2, descricao);
-        st.setString(3, statusRelatorio);
-        st.setString(4, dataCadastro);
+        PreparedStatement st = conectado.prepareStatement(sql);
+        st.setString(1, relatorio.getNomeRelatorio());
+        st.setString(2, relatorio.getDescricao());
+        st.setString(3, relatorio.getStatusRelatorio());
+        st.setString(4, relatorio.getDataCadastro());
+
         st.executeUpdate();
     }
 
@@ -371,11 +373,29 @@ public class CTCONTAB {
             st.setString(6, cliente.getCelular());
             st.setString(7, cliente.getTelefone());
             st.setString(8, cliente.getObservacoes());
-            st.setInt(9, cliente.getId());  // Atualiza o cliente baseado no ID
+            st.setInt(9, cliente.getId());
 
-            st.executeUpdate();  // Executa a atualização no banco
+            st.executeUpdate();
         } catch (SQLException e) {
             throw new SQLException("Erro ao atualizar cliente: " + e.getMessage(), e);
+        }
+    }
+
+    public static void atualizarRelatorio(Relatorio relatorio) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+
+        String sql = "UPDATE relatorio SET NomeRelatorio = ?, Descrição = ?, StatusRelatorio = ?, DataCadastro = ? WHERE ID = ?";
+
+        try (PreparedStatement st = conectado.prepareStatement(sql)) {
+            st.setString(1, relatorio.getNomeRelatorio());
+            st.setString(2, relatorio.getDescricao());
+            st.setString(3, relatorio.getStatusRelatorio());
+            st.setString(4, relatorio.getDataCadastro());
+            st.setInt(5, relatorio.getId());
+
+            st.executeUpdate();
+        } catch (SQLException e) {
+            throw new SQLException("Erro ao atualizar relatorio: " + e.getMessage(), e);
         }
     }
 

@@ -13,12 +13,9 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -31,6 +28,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
     private Usuario usuarioLogado;
     private List<Relatorio> listarRelatorios;
     private List<Relatorio> relatoriosFiltrados;
+    private Relatorio relatorio;
 
     public TelaRelatorioTable(Usuario usuario) {
         this.usuarioLogado = usuario;
@@ -80,14 +78,13 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         model.setRowCount(0);
 
         for (Relatorio relatorio : relatorios) {
-            Object[] rowData = new Object[]{
+            model.addRow(new Object[]{
                 relatorio.getNomeRelatorio(),
                 relatorio.getStatusRelatorio(),
                 relatorio.getDataCadastro(),
-                "1",
-                "3"
-            };
-            model.addRow(rowData);
+                "Editar",
+                "Excluir"
+            });
         }
     }
 
@@ -161,8 +158,8 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
             button.addActionListener(e -> {
                 if ("Excluir".equals(actionType)) {
                     excluirRelatorio(selectedRow);
-                } else {
-                    openWindow(actionType);
+                } else if ("Editar".equals(actionType)) {
+                    abrirTelaRelatorio(selectedRow);
                 }
                 fireEditingStopped();
             });
@@ -193,22 +190,11 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
             return label;
         }
 
-        private void openWindow(String actionType) {
-            JFrame newFrame = new JFrame(actionType);
-            newFrame.setSize(300, 200);
-            newFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-            JLabel label = new JLabel("Você abriu: " + actionType, SwingConstants.CENTER);
-            newFrame.add(label, BorderLayout.CENTER);
-
-            switch (actionType) {
-                case "Janela 1":
-                    newFrame.setTitle("Detalhes da Janela 1");
-                    label.setText("Conteúdo da Janela 1");
-                    break;
-            }
-
-            newFrame.setVisible(true);
+        private void abrirTelaRelatorio(int row) {
+            Relatorio relatorioSelecionado = listarRelatorios.get(row);
+            TelaRelatorio telaRelatorio = new TelaRelatorio(usuarioLogado, relatorioSelecionado);
+            telaRelatorio.setVisible(true);
+            TelaRelatorioTable.this.dispose();
         }
     }
 
@@ -304,7 +290,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         jTable1.setRowHeight(50);
         jTable1.setShowHorizontalLines(true);
         jTable1.getColumn("AÇÃO 1").setCellRenderer(new ButtonRenderer());
-        jTable1.getColumn("AÇÃO 1").setCellEditor(new ButtonEditor(new JCheckBox(), "Janela 1"));
+        jTable1.getColumn("AÇÃO 1").setCellEditor(new ButtonEditor(new JCheckBox(), "Editar"));
 
         jTable1.getColumn("AÇÃO 3").setCellRenderer(new ButtonRenderer());
         jTable1.getColumn("AÇÃO 3").setCellEditor(new ButtonEditor(new JCheckBox(), "Excluir"));
@@ -521,7 +507,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        new TelaRelatorio(usuarioLogado).setVisible(true);
+        new TelaRelatorio(usuarioLogado, relatorio).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnLoginActionPerformed
 

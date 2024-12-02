@@ -16,6 +16,9 @@ public class Relatorio {
         this.dataCadastro = dataCadastro;
     }
 
+    public Relatorio() {
+    }
+
     public int getId() {
         return id;
     }
