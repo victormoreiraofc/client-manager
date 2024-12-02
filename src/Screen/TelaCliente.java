@@ -1,6 +1,7 @@
 package Screen;
 
 import Data.CTCONTAB;
+import Data.Cliente;
 import Data.IconUtil;
 import Data.PermissaoUtil;
 import Data.Usuario;
@@ -8,6 +9,8 @@ import java.awt.Image;
 import java.io.File;
 import java.io.FileInputStream;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -19,14 +22,97 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class TelaCliente extends javax.swing.JFrame {
 
     private Usuario usuarioLogado;
+    private Cliente cliente;
 
-    public TelaCliente(Usuario usuario) {
+    public TelaCliente(Usuario usuario, Cliente cliente) {
         this.usuarioLogado = usuario;
         initComponents();
         PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
         exibirDadosUsuario(usuario);
         carregarImagemUsuario(usuario);
         IconUtil.setIcon(usuarioLogado, lblUserIcon);
+
+        if (cliente != null) {
+            this.cliente = cliente;
+            preencherCampos(cliente);
+        } else {
+            this.cliente = new Cliente();
+            preencherCamposNovoCliente();
+        }
+    }
+
+    private void preencherCamposNovoCliente() {
+        lblNomeIndefinido.setText("Nome Indefinido");
+        txtNome.setText("  Nome e Sobrenome");
+        txtTipoPessoa.setSelectedItem("Fisica");
+        txtSituacaoServico.setSelectedItem("Pendente");
+        txtServico.setText("  Abertura de Empresa");
+        txtTelefone.setText("  (11) 23456789");
+        txtEmail.setText("  seuemail@gmail.com");
+        txtCelular.setText("  (11) 912345678");
+        txtObservacoes.setText("");
+        ZonedDateTime dataBrasilia = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        lblData.setText(dataBrasilia.format(formatter));
+        lblCodigo.setText("0");
+        lblFuncCadastrante.setText(usuarioLogado.getUsuario());
+    }
+
+    private void preencherCampos(Cliente cliente) {
+        lblNomeIndefinido.setText(cliente.getNome());
+        txtNome.setText(cliente.getNome());
+        txtTipoPessoa.setSelectedItem(cliente.getTipoPessoa());
+        txtSituacaoServico.setSelectedItem(cliente.getSituacaoServico());
+        txtServico.setText(cliente.getServico());
+        txtTelefone.setText(cliente.getTelefone());
+        txtEmail.setText(cliente.getEmail());
+        txtCelular.setText(cliente.getCelular());
+        txtObservacoes.setText(cliente.getObservacoes());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime dataCadastroComHora = LocalDateTime.parse(cliente.getDataCadastro(), formatter);
+        LocalDate dataCadastro = dataCadastroComHora.toLocalDate();
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        lblData.setText(dataCadastro.format(outputFormatter));
+
+        lblCodigo.setText(String.valueOf(cliente.getId()));
+        lblFuncCadastrante.setText(cliente.getUsuario());
+    }
+
+    private void salvarAlteracoes(Cliente cliente) {
+        try {
+            cliente.setNome(lblNomeIndefinido.getText());
+            cliente.setNome(txtNome.getText());
+            cliente.setTipoPessoa(txtTipoPessoa.getSelectedItem().toString());
+            cliente.setSituacaoServico(txtSituacaoServico.getSelectedItem().toString());
+            cliente.setServico(txtServico.getText());
+            cliente.setTelefone(txtTelefone.getText());
+            cliente.setEmail(txtEmail.getText());
+            cliente.setCelular(txtCelular.getText());
+            cliente.setObservacoes(txtObservacoes.getText());
+            ZonedDateTime dataBrasilia = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            cliente.setDataCadastro(dataBrasilia.format(formatter));
+            cliente.setId(Integer.parseInt(lblCodigo.getText()));
+            cliente.setUsuario(lblFuncCadastrante.getText());
+
+            String codigoText = lblCodigo.getText();
+            if (codigoText != null && !codigoText.trim().isEmpty() && !codigoText.equals("0")) {
+                cliente.setId(Integer.parseInt(codigoText));
+            } else {
+                cliente.setId(0);
+            }
+
+            if (cliente.getId() == 0) {
+                CTCONTAB.registrarCliente(cliente);
+                JOptionPane.showMessageDialog(this, "Novo cliente cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                CTCONTAB.atualizarCliente(cliente);
+                JOptionPane.showMessageDialog(this, "Cliente atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao salvar alterações: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
     }
 
     private void exibirDadosUsuario(Usuario usuario) {
@@ -42,33 +128,6 @@ public class TelaCliente extends javax.swing.JFrame {
             String dataFormatada = agoraBrasilia.format(formato);
 
             lblData.setText(dataFormatada);
-        }
-    }
-
-    private void salvarEventoNoBanco() {
-        try {
-            ZonedDateTime dataBrasilia = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            String dataCadastro = dataBrasilia.format(formatter);
-
-            String nome = txtNome.getText();
-            String tipoPessoa = txtTipoPessoa.getSelectedItem().toString();
-            String email = txtEmail.getText();
-            String servico = txtServico.getText();
-            String situacaoServico = txtSituacaoServico.getSelectedItem().toString();
-            String celular = txtCelular.getText();
-            String telefone = txtTelefone.getText();
-            String observacoes = txtObservacoes.getText();
-
-            if (usuarioLogado != null) {
-                String nomeUsuario = usuarioLogado.getUsuario();
-                CTCONTAB.registrarCliente(dataCadastro, nome, tipoPessoa, email, servico, situacaoServico, celular, telefone, observacoes, nomeUsuario);
-                JOptionPane.showMessageDialog(this, "Evento salvo com sucesso!");
-            } else {
-                JOptionPane.showMessageDialog(this, "Nenhum usuário logado. Não foi possível salvar o evento.");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao salvar evento: " + e.getMessage());
         }
     }
 
@@ -95,7 +154,7 @@ public class TelaCliente extends javax.swing.JFrame {
         txtEmail = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
-        jLabel6 = new javax.swing.JLabel();
+        lblNomeIndefinido = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         txtCelular = new javax.swing.JTextField();
         btnAlterarImagem = new javax.swing.JButton();
@@ -261,12 +320,12 @@ public class TelaCliente extends javax.swing.JFrame {
         jPanel1.add(jSeparator2);
         jSeparator2.setBounds(0, 270, 1140, 30);
 
-        jLabel6.setBackground(new java.awt.Color(153, 153, 0));
-        jLabel6.setFont(new java.awt.Font("Segoe UI Black", 1, 20)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(205, 168, 16));
-        jLabel6.setText("Nome Indefinido");
-        jPanel1.add(jLabel6);
-        jLabel6.setBounds(20, 10, 250, 40);
+        lblNomeIndefinido.setBackground(new java.awt.Color(153, 153, 0));
+        lblNomeIndefinido.setFont(new java.awt.Font("Segoe UI Black", 1, 20)); // NOI18N
+        lblNomeIndefinido.setForeground(new java.awt.Color(205, 168, 16));
+        lblNomeIndefinido.setText("Nome Indefinido");
+        jPanel1.add(lblNomeIndefinido);
+        lblNomeIndefinido.setBounds(20, 10, 250, 40);
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
@@ -365,7 +424,7 @@ public class TelaCliente extends javax.swing.JFrame {
         lblData.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblData.setToolTipText("");
         jPanel1.add(lblData);
-        lblData.setBounds(325, 140, 130, 30);
+        lblData.setBounds(325, 140, 90, 30);
 
         lblFuncCadastrante.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblFuncCadastrante.setForeground(new java.awt.Color(255, 255, 255));
@@ -575,7 +634,7 @@ public class TelaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTelefoneActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        salvarEventoNoBanco();
+        jButton2.addActionListener(e -> salvarAlteracoes(cliente));
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void btnAlterarImagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarImagemActionPerformed
@@ -672,7 +731,6 @@ public class TelaCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -687,6 +745,7 @@ public class TelaCliente extends javax.swing.JFrame {
     private javax.swing.JLabel lblDataDeCadastro3;
     private javax.swing.JLabel lblFuncCadastrante;
     private javax.swing.JLabel lblImagem;
+    private javax.swing.JLabel lblNomeIndefinido;
     private javax.swing.JLabel lblUserIcon;
     private javax.swing.JTextField txtCelular;
     private javax.swing.JTextField txtEmail;

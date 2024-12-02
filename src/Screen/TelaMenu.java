@@ -1,6 +1,7 @@
 package Screen;
 
 import Data.CTCONTAB;
+import Data.Cliente;
 import Data.IconUtil;
 import Data.Usuario;
 import Data.PermissaoUtil;
@@ -13,6 +14,7 @@ import javax.swing.SwingWorker;
 public class TelaMenu extends javax.swing.JFrame {
 
     private Usuario usuarioLogado;
+    private Cliente cliente;
     private Font fonteOriginal;
 
     public TelaMenu(Usuario usuario) {
@@ -455,7 +457,7 @@ public class TelaMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        new TelaCliente(usuarioLogado).setVisible(true);
+        new TelaCliente(usuarioLogado, cliente).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCadastrarActionPerformed
 

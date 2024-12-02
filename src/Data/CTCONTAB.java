@@ -153,21 +153,23 @@ public class CTCONTAB {
         st.executeUpdate();
     }
 
-    public static void registrarCliente(String dataCadastro, String nome, String tipoPessoa, String email, String servico, String situacaoServico, String celular, String telefone, String observacoes, String nomeUsuario) throws ClassNotFoundException, SQLException {
+    public static void registrarCliente(Cliente cliente) throws ClassNotFoundException, SQLException {
+        String sql = "INSERT INTO cliente (Nome, TipoPessoa, SituacaoServico, Servico, Telefone, Email, Celular, Observacoes, DataCadastro, Usuario) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
         conectado = conectar();
-        PreparedStatement st = conectado.prepareStatement(
-                "INSERT INTO cliente (DataCadastro, Nome, TipoPessoa, Email, Servico, SituacaoServico, Celular, Telefone, Observacoes, usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-        );
-        st.setString(1, dataCadastro);
-        st.setString(2, nome);
-        st.setString(3, tipoPessoa);
-        st.setString(4, email);
-        st.setString(5, servico);
-        st.setString(6, situacaoServico);
-        st.setString(7, celular);
-        st.setString(8, telefone);
-        st.setString(9, observacoes);
-        st.setString(10, nomeUsuario);
+        PreparedStatement st = conectado.prepareStatement(sql);
+        st.setString(1, cliente.getNome());
+        st.setString(2, cliente.getTipoPessoa());
+        st.setString(3, cliente.getSituacaoServico());
+        st.setString(4, cliente.getServico());
+        st.setString(5, cliente.getTelefone());
+        st.setString(6, cliente.getEmail());
+        st.setString(7, cliente.getCelular());
+        st.setString(8, cliente.getObservacoes());
+        st.setString(9, cliente.getDataCadastro());
+        st.setString(10, cliente.getUsuario());
+
         st.executeUpdate();
     }
 
@@ -199,7 +201,7 @@ public class CTCONTAB {
     public static List<Cliente> listarClientes() throws ClassNotFoundException, SQLException {
         List<Cliente> clientes = new ArrayList<>();
         conectado = conectar();
-        String query = "SELECT ID, Nome, TipoPessoa, SituacaoServico, Servico, DataCadastro FROM cliente";
+        String query = "SELECT ID, Nome, TipoPessoa, Email, Servico, SituacaoServico, Celular, Telefone, Observacoes, DataCadastro, Usuario FROM cliente";
         PreparedStatement st = conectado.prepareStatement(query);
         ResultSet resultado = st.executeQuery();
 
@@ -208,9 +210,14 @@ public class CTCONTAB {
                     resultado.getInt("ID"),
                     resultado.getString("Nome"),
                     resultado.getString("TipoPessoa"),
-                    resultado.getString("SituacaoServico"),
+                    resultado.getString("Email"),
                     resultado.getString("Servico"),
-                    resultado.getString("DataCadastro")
+                    resultado.getString("SituacaoServico"),
+                    resultado.getString("Celular"),
+                    resultado.getString("Telefone"),
+                    resultado.getString("Observacoes"),
+                    resultado.getString("DataCadastro"),
+                    resultado.getString("Usuario")
             );
             clientes.add(cliente);
         }
@@ -348,6 +355,28 @@ public class CTCONTAB {
             imagem = resultado.getBytes("Imagem");
         }
         return imagem;
+    }
+
+    public static void atualizarCliente(Cliente cliente) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+
+        String sql = "UPDATE cliente SET Nome = ?, TipoPessoa = ?, Email = ?, Servico = ?, SituacaoServico = ?, Celular = ?, Telefone = ?, Observacoes = ? WHERE ID = ?";
+
+        try (PreparedStatement st = conectado.prepareStatement(sql)) {
+            st.setString(1, cliente.getNome());
+            st.setString(2, cliente.getTipoPessoa());
+            st.setString(3, cliente.getEmail());
+            st.setString(4, cliente.getServico());
+            st.setString(5, cliente.getSituacaoServico());
+            st.setString(6, cliente.getCelular());
+            st.setString(7, cliente.getTelefone());
+            st.setString(8, cliente.getObservacoes());
+            st.setInt(9, cliente.getId());  // Atualiza o cliente baseado no ID
+
+            st.executeUpdate();  // Executa a atualização no banco
+        } catch (SQLException e) {
+            throw new SQLException("Erro ao atualizar cliente: " + e.getMessage(), e);
+        }
     }
 
 }

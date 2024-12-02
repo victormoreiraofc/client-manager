@@ -13,12 +13,9 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -30,6 +27,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
 
     private Usuario usuarioLogado;
     private List<Cliente> listaClientes;
+    private Cliente cliente;
 
     public TelaClienteTable(Usuario usuario) {
         this.usuarioLogado = usuario;
@@ -97,17 +95,16 @@ public class TelaClienteTable extends javax.swing.JFrame {
         model.setRowCount(0);
 
         for (Cliente cliente : clientes) {
-            Object[] rowData = new Object[]{
+            model.addRow(new Object[]{
                 cliente.getNome(),
                 cliente.getTipoPessoa(),
                 cliente.getSituacaoServico(),
                 cliente.getServico(),
                 cliente.getDataCadastro(),
-                "1",
-                "2",
-                "3"
-            };
-            model.addRow(rowData);
+                "Visualizar",
+                "Editar",
+                "Excluir"
+            });
         }
     }
 
@@ -152,6 +149,18 @@ public class TelaClienteTable extends javax.swing.JFrame {
         }
     }
 
+    private void ajustarLarguraColunas() {
+        jTable1.getColumnModel().getColumn(5).setMinWidth(62);
+        jTable1.getColumnModel().getColumn(5).setMaxWidth(62);
+        jTable1.getColumnModel().getColumn(5).setPreferredWidth(62);
+        jTable1.getColumnModel().getColumn(6).setMinWidth(62);
+        jTable1.getColumnModel().getColumn(6).setMaxWidth(62);
+        jTable1.getColumnModel().getColumn(6).setPreferredWidth(62);
+        jTable1.getColumnModel().getColumn(7).setMinWidth(62);
+        jTable1.getColumnModel().getColumn(7).setMaxWidth(62);
+        jTable1.getColumnModel().getColumn(7).setPreferredWidth(62);
+    }
+
     class ButtonEditor extends DefaultCellEditor {
 
         private JButton button;
@@ -169,11 +178,12 @@ public class TelaClienteTable extends javax.swing.JFrame {
             button.addActionListener(e -> {
                 if ("Excluir".equals(actionType)) {
                     excluirCliente(selectedRow);
-                } else {
-                    openWindow(actionType);
+                } else if ("Editar".equals(actionType)) {
+                    abrirTelaCliente(selectedRow);
                 }
                 fireEditingStopped();
             });
+
         }
 
         @Override
@@ -205,54 +215,27 @@ public class TelaClienteTable extends javax.swing.JFrame {
             return label;
         }
 
-        private void openWindow(String actionType) {
-            JFrame newFrame = new JFrame(actionType);
-            newFrame.setSize(300, 200);
-            newFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        private void abrirTelaCliente(int row) {
+            Cliente clienteSelecionado = listaClientes.get(row);
+            TelaCliente telaCliente = new TelaCliente(usuarioLogado, clienteSelecionado);
+            telaCliente.setVisible(true);
+            TelaClienteTable.this.dispose();
+        }
 
-            JLabel label = new JLabel("Você abriu: " + actionType, SwingConstants.CENTER);
-            newFrame.add(label, BorderLayout.CENTER);
+        private void excluirCliente(int row) {
+            try {
+                Cliente cliente = listaClientes.get(row);
 
-            switch (actionType) {
-                case "Janela 1":
-                    newFrame.setTitle("Detalhes da Janela 1");
-                    label.setText("Conteúdo da Janela 1");
-                    break;
-                case "Janela 2":
-                    newFrame.setTitle("Detalhes da Janela 2");
-                    label.setText("Conteúdo da Janela 2");
-                    break;
+                CTCONTAB.excluirRegistro("cliente", "ID", cliente.getId());
+
+                listaClientes.remove(row);
+                atualizarTabela(listaClientes);
+
+                JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao excluir cliente: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
-
-            newFrame.setVisible(true);
         }
-    }
-
-    private void excluirCliente(int row) {
-        try {
-            Cliente cliente = listaClientes.get(row);
-
-            CTCONTAB.excluirRegistro("cliente", "ID", cliente.getId());
-
-            listaClientes.remove(row);
-            atualizarTabela(listaClientes);
-
-            JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao excluir cliente: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private void ajustarLarguraColunas() {
-        jTable1.getColumnModel().getColumn(5).setMinWidth(62);
-        jTable1.getColumnModel().getColumn(5).setMaxWidth(62);
-        jTable1.getColumnModel().getColumn(5).setPreferredWidth(62);
-        jTable1.getColumnModel().getColumn(6).setMinWidth(62);
-        jTable1.getColumnModel().getColumn(6).setMaxWidth(62);
-        jTable1.getColumnModel().getColumn(6).setPreferredWidth(62);
-        jTable1.getColumnModel().getColumn(7).setMinWidth(62);
-        jTable1.getColumnModel().getColumn(7).setMaxWidth(62);
-        jTable1.getColumnModel().getColumn(7).setPreferredWidth(62);
     }
 
     @SuppressWarnings("unchecked")
@@ -328,10 +311,10 @@ public class TelaClienteTable extends javax.swing.JFrame {
         jTable1.setGridColor(new java.awt.Color(115, 115, 115));
         jTable1.setRowHeight(50);
         jTable1.getColumn("AÇÃO 1").setCellRenderer(new ButtonRenderer());
-        jTable1.getColumn("AÇÃO 1").setCellEditor(new ButtonEditor(new JCheckBox(), "Janela 1"));
+        jTable1.getColumn("AÇÃO 1").setCellEditor(new ButtonEditor(new JCheckBox(), "Editar"));
 
         jTable1.getColumn("AÇÃO 2").setCellRenderer(new ButtonRenderer());
-        jTable1.getColumn("AÇÃO 2").setCellEditor(new ButtonEditor(new JCheckBox(), "Janela 2"));
+        jTable1.getColumn("AÇÃO 2").setCellEditor(new ButtonEditor(new JCheckBox(), "Editar"));
 
         jTable1.getColumn("AÇÃO 3").setCellRenderer(new ButtonRenderer());
         jTable1.getColumn("AÇÃO 3").setCellEditor(new ButtonEditor(new JCheckBox(), "Excluir"));
@@ -573,7 +556,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        new TelaCliente(usuarioLogado).setVisible(true);
+        new TelaCliente(usuarioLogado, cliente).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnLoginActionPerformed
 

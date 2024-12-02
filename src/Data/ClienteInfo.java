@@ -1,6 +1,6 @@
 package Data;
 
-public class Cliente {
+public class ClienteInfo {
 
     private int id;
     private String nome;
@@ -14,7 +14,7 @@ public class Cliente {
     private String dataCadastro;
     private String usuario;
 
-    public Cliente(int id, String nome, String tipoPessoa, String email, String servico, String situacaoServico, String celular, String telefone, String observacoes, String dataCadastro, String usuario) {
+    public ClienteInfo(int id, String nome, String tipoPessoa, String email, String servico, String situacaoServico, String celular, String telefone, String observacoes, String dataCadastro, String usuario) {
         this.id = id;
         this.nome = nome;
         this.tipoPessoa = tipoPessoa;
@@ -26,9 +26,7 @@ public class Cliente {
         this.observacoes = observacoes;
         this.dataCadastro = dataCadastro;
         this.usuario = usuario;
-    }
 
-    public Cliente() {
     }
 
     public int getId() {
