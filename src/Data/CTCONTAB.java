@@ -421,4 +421,29 @@ public class CTCONTAB {
         }
     }
 
+    public static Usuario buscarUsuarioPorNome(String nomeUsuario) throws SQLException, ClassNotFoundException {
+        Usuario usuario = null;
+        String sql = "SELECT id, usuario, email, senha, Permissao, Imagem FROM usuarios WHERE usuario = ?";
+
+        conectado = conectar();
+
+        try (PreparedStatement stmt = conectado.prepareStatement(sql)) {
+            stmt.setString(1, nomeUsuario);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    usuario = new Usuario();
+                    usuario.setId(rs.getInt("id"));
+                    usuario.setUsuario(rs.getString("usuario"));
+                    usuario.setEmail(rs.getString("email"));
+                    usuario.setSenha(rs.getString("senha"));
+                    usuario.setPermissao(rs.getString("Permissao"));
+                    usuario.setImagem(rs.getBytes("Imagem"));
+                }
+            }
+        }
+
+        return usuario;
+    }
+
 }

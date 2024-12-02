@@ -30,7 +30,7 @@ public class TelaCliente extends javax.swing.JFrame {
         initComponents();
         PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
         exibirDadosUsuario(usuario);
-        carregarImagemUsuario(usuario);
+        abrirFormularioCliente(cliente, usuario);
         IconUtil.setIcon(usuarioLogado, lblUserIcon);
 
         if (cliente != null) {
@@ -706,21 +706,29 @@ public class TelaCliente extends javax.swing.JFrame {
         excluirCliente();
     }//GEN-LAST:event_btnLimparActionPerformed
 
-    private void carregarImagemUsuario(Usuario usuario) {
+    public void abrirFormularioCliente(Cliente cliente, Usuario usuarioLogado) {
         try {
-            byte[] imagemByte = CTCONTAB.getImagemUsuario(usuario.getId());
-
-            if (imagemByte != null && imagemByte.length > 0) {
-                ImageIcon imagemIcon = new ImageIcon(imagemByte);
-                Image img = imagemIcon.getImage();
-                Image newImage = img.getScaledInstance(lblImagem.getWidth(), lblImagem.getHeight(), Image.SCALE_SMOOTH);
-                lblImagem.setIcon(new ImageIcon(newImage));
+            if (cliente == null) {
+                byte[] imagemLogado = usuarioLogado.getImagem();
+                if (imagemLogado != null) {
+                    ImageIcon icon = new ImageIcon(imagemLogado);
+                    lblImagem.setIcon(new ImageIcon(icon.getImage().getScaledInstance(lblImagem.getWidth(), lblImagem.getHeight(), Image.SCALE_SMOOTH)));
+                } else {
+                    carregarIconePadrao();
+                }
             } else {
-                carregarIconePadrao();
+                Usuario usuarioCadastrante = CTCONTAB.buscarUsuarioPorNome(cliente.getUsuario());
+                if (usuarioCadastrante != null && usuarioCadastrante.getImagem() != null) {
+                    byte[] imagemCadastrante = usuarioCadastrante.getImagem();
+                    ImageIcon icon = new ImageIcon(imagemCadastrante);
+                    lblImagem.setIcon(new ImageIcon(icon.getImage().getScaledInstance(lblImagem.getWidth(), lblImagem.getHeight(), Image.SCALE_SMOOTH)));
+                } else {
+                    carregarIconePadrao();
+                }
             }
-        } catch (SQLException | ClassNotFoundException ex) {
-            ex.printStackTrace();
-            carregarIconePadrao();
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Erro ao carregar a imagem: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
