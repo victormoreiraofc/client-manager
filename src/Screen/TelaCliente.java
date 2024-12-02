@@ -1,6 +1,7 @@
 package Screen;
 
 import Data.CTCONTAB;
+import static Data.CTCONTAB.excluirRegistro;
 import Data.Cliente;
 import Data.IconUtil;
 import Data.PermissaoUtil;
@@ -131,6 +132,31 @@ public class TelaCliente extends javax.swing.JFrame {
         }
     }
 
+    private void excluirCliente() {
+        try {
+            String codigoText = lblCodigo.getText();
+            if (codigoText != null && !codigoText.trim().isEmpty() && !codigoText.equals("0")) {
+                int idCliente = Integer.parseInt(codigoText);
+
+                int resposta = JOptionPane.showConfirmDialog(this,
+                        "Tem certeza de que deseja excluir este cliente?",
+                        "Confirmar Exclusão", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+                if (resposta == JOptionPane.YES_OPTION) {
+                    excluirRegistro("cliente", "id", idCliente);
+
+                    JOptionPane.showMessageDialog(this, "Cliente excluído com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                    new TelaClienteTable(usuarioLogado).setVisible(true);
+                    this.dispose();
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Nenhum cliente selecionado para exclusão!", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao excluir cliente: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -142,7 +168,7 @@ public class TelaCliente extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         lblImagem = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        btnLimpar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -224,9 +250,14 @@ public class TelaCliente extends javax.swing.JFrame {
         jPanel1.add(jLabel5);
         jLabel5.setBounds(1090, 10, 40, 40);
 
-        jButton3.setBackground(new java.awt.Color(84, 84, 84));
-        jPanel1.add(jButton3);
-        jButton3.setBounds(1010, 10, 40, 40);
+        btnLimpar.setBackground(new java.awt.Color(84, 84, 84));
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnLimpar);
+        btnLimpar.setBounds(1010, 10, 40, 40);
 
         jButton2.setBackground(new java.awt.Color(126, 217, 87));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -671,6 +702,9 @@ public class TelaCliente extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnAlterarImagemActionPerformed
     }
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        excluirCliente();
+    }//GEN-LAST:event_btnLimparActionPerformed
 
     private void carregarImagemUsuario(Usuario usuario) {
         try {
@@ -712,12 +746,12 @@ public class TelaCliente extends javax.swing.JFrame {
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnConfiguracoes;
     private javax.swing.JButton btnHome;
+    private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnNotificacoes;
     private javax.swing.JButton btnRelatorios;
     private javax.swing.JButton btnTarefas;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
