@@ -1,4 +1,4 @@
-package Screen;
+package screen;
 
 import Data.CTCONTAB;
 import javax.swing.JOptionPane;
@@ -6,17 +6,29 @@ import java.sql.SQLException;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.awt.Color;
+import java.awt.Desktop;
+import java.awt.Toolkit;
+import java.net.URI;
 
 public class TelaRegistrar extends javax.swing.JFrame {
 
     public TelaRegistrar() {
         initComponents();
+        setIcon();
+    }
+
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/logo-icon.png")));
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblCTCONTAB = new javax.swing.JLabel();
+        lblContabilidade = new javax.swing.JLabel();
+        jlibLogo = new javax.swing.JLabel();
+        btnTermosServico = new javax.swing.JButton();
         jlibForcaSenha = new javax.swing.JLabel();
         jlibErroUsuario = new javax.swing.JLabel();
         jlibErroEmail = new javax.swing.JLabel();
@@ -25,7 +37,6 @@ public class TelaRegistrar extends javax.swing.JFrame {
         jilbCreditos = new javax.swing.JLabel();
         jilbCreditos2 = new javax.swing.JLabel();
         btnLogin = new javax.swing.JButton();
-        jlibLogo = new javax.swing.JLabel();
         jilbUsuario = new javax.swing.JLabel();
         jilbEmail = new javax.swing.JLabel();
         jilbSenha = new javax.swing.JLabel();
@@ -36,7 +47,34 @@ public class TelaRegistrar extends javax.swing.JFrame {
         Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Registrar - CT CONTAB");
         getContentPane().setLayout(null);
+
+        lblCTCONTAB.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblCTCONTAB.setForeground(new java.awt.Color(204, 204, 204));
+        lblCTCONTAB.setText("CT CONTAB");
+        getContentPane().add(lblCTCONTAB);
+        lblCTCONTAB.setBounds(410, 85, 190, 40);
+
+        lblContabilidade.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
+        lblContabilidade.setForeground(new java.awt.Color(153, 153, 0));
+        lblContabilidade.setText("Contabilidade & Consultoria");
+        getContentPane().add(lblContabilidade);
+        lblContabilidade.setBounds(410, 85, 205, 80);
+
+        jlibLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo.png"))); // NOI18N
+        getContentPane().add(jlibLogo);
+        jlibLogo.setBounds(340, 80, 60, 70);
+
+        btnTermosServico.setBackground(new java.awt.Color(30, 30, 30));
+        btnTermosServico.setContentAreaFilled(false);
+        btnTermosServico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTermosServicoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnTermosServico);
+        btnTermosServico.setBounds(370, 480, 190, 20);
 
         jlibForcaSenha.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jlibForcaSenha.setForeground(new java.awt.Color(115, 115, 115));
@@ -80,10 +118,24 @@ public class TelaRegistrar extends javax.swing.JFrame {
         getContentPane().add(jilbCreditos2);
         jilbCreditos2.setBounds(360, 440, 210, 40);
 
-        btnLogin.setBackground(new java.awt.Color(194, 166, 40));
+        btnLogin.setBackground(new java.awt.Color(184, 135, 11));
         btnLogin.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         btnLogin.setForeground(new java.awt.Color(255, 255, 255));
         btnLogin.setText("Registrar-se");
+        btnLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnLoginMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnLoginMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnLoginMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnLoginMouseReleased(evt);
+            }
+        });
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoginActionPerformed(evt);
@@ -91,10 +143,6 @@ public class TelaRegistrar extends javax.swing.JFrame {
         });
         getContentPane().add(btnLogin);
         btnLogin.setBounds(320, 390, 280, 40);
-
-        jlibLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo.png"))); // NOI18N
-        getContentPane().add(jlibLogo);
-        jlibLogo.setBounds(350, 90, 220, 50);
 
         jilbUsuario.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jilbUsuario.setForeground(new java.awt.Color(194, 166, 40));
@@ -215,6 +263,30 @@ public class TelaRegistrar extends javax.swing.JFrame {
         verificarForcaSenha();
     }//GEN-LAST:event_txtSenhaKeyReleased
 
+    private void btnTermosServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTermosServicoActionPerformed
+        try {
+            Desktop.getDesktop().browse(new URI("https://github.com/victormoreiraofc/client-manager/blob/main/CODE_OF_CONDUCT.md"));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnTermosServicoActionPerformed
+
+    private void btnLoginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseEntered
+        btnLogin.setBackground(new java.awt.Color(189, 135, 2));
+    }//GEN-LAST:event_btnLoginMouseEntered
+
+    private void btnLoginMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseExited
+        btnLogin.setBackground(new java.awt.Color(184, 135, 11));
+    }//GEN-LAST:event_btnLoginMouseExited
+
+    private void btnLoginMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMousePressed
+        btnLogin.setBackground(new java.awt.Color(139, 101, 8));
+    }//GEN-LAST:event_btnLoginMousePressed
+
+    private void btnLoginMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseReleased
+        btnLogin.setBackground(new java.awt.Color(189, 135, 2));
+    }//GEN-LAST:event_btnLoginMouseReleased
+
     private void verificarForcaSenha() {
         String senha = new String(txtSenha.getText());
         int forca = calcularForcaSenha(senha);
@@ -280,6 +352,7 @@ public class TelaRegistrar extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
     private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnTermosServico;
     private javax.swing.JProgressBar jProgressBar;
     private javax.swing.JLabel jilbCreditos;
     private javax.swing.JLabel jilbCreditos2;
@@ -292,6 +365,8 @@ public class TelaRegistrar extends javax.swing.JFrame {
     private javax.swing.JLabel jlibErroUsuario;
     private javax.swing.JLabel jlibForcaSenha;
     private javax.swing.JLabel jlibLogo;
+    private javax.swing.JLabel lblCTCONTAB;
+    private javax.swing.JLabel lblContabilidade;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtSenha;
     private javax.swing.JTextField txtUsuario;

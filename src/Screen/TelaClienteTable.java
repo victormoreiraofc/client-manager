@@ -1,4 +1,4 @@
-package Screen;
+package screen;
 
 import Data.Cliente;
 import Data.CTCONTAB;
@@ -7,7 +7,11 @@ import Data.PermissaoUtil;
 import Data.Usuario;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Toolkit;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
@@ -37,6 +41,11 @@ public class TelaClienteTable extends javax.swing.JFrame {
         carregarClientesAssincrono();
         PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
         IconUtil.setIcon(usuarioLogado, lblUserIcon);
+        setIcon();
+    }
+
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/logo-icon.png")));
     }
 
     private void adicionarListenerDeBusca() {
@@ -94,13 +103,25 @@ public class TelaClienteTable extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
 
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
+
         for (Cliente cliente : clientes) {
+            String dataFormatada = "Data Inválida";
+
+            try {
+                Date data = inputFormat.parse(cliente.getDataCadastro().toString());
+                dataFormatada = outputFormat.format(data);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
             model.addRow(new Object[]{
                 cliente.getNome(),
                 cliente.getTipoPessoa(),
                 cliente.getSituacaoServico(),
                 cliente.getServico(),
-                cliente.getDataCadastro(),
+                dataFormatada,
                 "Visualizar",
                 "Editar",
                 "Excluir"
@@ -242,6 +263,8 @@ public class TelaClienteTable extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblContabilidade = new javax.swing.JLabel();
+        lblCTCONTAB = new javax.swing.JLabel();
         btnNotificacoes = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -273,11 +296,23 @@ public class TelaClienteTable extends javax.swing.JFrame {
         jlibLogo2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         lblUserIcon = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Clientes - CT CONTAB");
         getContentPane().setLayout(null);
+
+        lblContabilidade.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
+        lblContabilidade.setForeground(new java.awt.Color(153, 153, 0));
+        lblContabilidade.setText("Contabilidade & Consultoria");
+        getContentPane().add(lblContabilidade);
+        lblContabilidade.setBounds(90, 7, 205, 80);
+
+        lblCTCONTAB.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblCTCONTAB.setForeground(new java.awt.Color(204, 204, 204));
+        lblCTCONTAB.setText("CT CONTAB");
+        getContentPane().add(lblCTCONTAB);
+        lblCTCONTAB.setBounds(90, 7, 190, 40);
 
         btnNotificacoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/alert-bell.png"))); // NOI18N
         btnNotificacoes.setContentAreaFilled(false);
@@ -543,10 +578,6 @@ public class TelaClienteTable extends javax.swing.JFrame {
         getContentPane().add(lblUserIcon);
         lblUserIcon.setBounds(1210, 15, 50, 50);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo-semfundo.png"))); // NOI18N
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(0, 0, 290, 70);
-
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/background-contabil.png"))); // NOI18N
         getContentPane().add(Background);
         Background.setBounds(0, 0, 1280, 711);
@@ -613,7 +644,6 @@ public class TelaClienteTable extends javax.swing.JFrame {
     private javax.swing.JButton btnTarefas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -625,6 +655,8 @@ public class TelaClienteTable extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel jlibLogo2;
+    private javax.swing.JLabel lblCTCONTAB;
+    private javax.swing.JLabel lblContabilidade;
     private javax.swing.JLabel lblDataDeCadastro;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblServico;

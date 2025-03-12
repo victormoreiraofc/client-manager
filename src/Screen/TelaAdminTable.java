@@ -1,4 +1,4 @@
-package Screen;
+package screen;
 
 import Data.CTCONTAB;
 import Data.Funcionario;
@@ -6,7 +6,10 @@ import Data.IconUtil;
 import Data.Usuario;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Toolkit;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
@@ -34,6 +37,11 @@ public class TelaAdminTable extends javax.swing.JFrame {
         exibirMensagemCarregando();
         carregarFuncionariosAssincrono();
         IconUtil.setIcon(usuarioLogado, lblUserIcon);
+        setIcon();
+    }
+
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/logo-icon.png")));
     }
 
     private void adicionarListenerDeBusca() {
@@ -91,12 +99,30 @@ public class TelaAdminTable extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
 
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
+
         for (Funcionario funcionario : funcionarios) {
+            String dataFormatada = "";
+
+            try {
+                Object createdAt = funcionario.getCreated_at();
+
+                if (createdAt instanceof Date) {
+                    dataFormatada = outputFormat.format((Date) createdAt);
+                } else if (createdAt instanceof String) {
+                    SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date data = inputFormat.parse((String) createdAt);
+                    dataFormatada = outputFormat.format(data);
+                }
+            } catch (Exception e) {
+                dataFormatada = "Data inválida";
+            }
+
             Object[] rowData = new Object[]{
                 funcionario.getUsuario(),
                 funcionario.getEmail(),
                 funcionario.getPermissao(),
-                funcionario.getCreated_at(),
+                dataFormatada,
                 "1",
                 "2",
                 "3"
@@ -277,6 +303,8 @@ public class TelaAdminTable extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblContabilidade = new javax.swing.JLabel();
+        lblCTCONTAB = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btnNotificacoes = new javax.swing.JButton();
@@ -306,11 +334,23 @@ public class TelaAdminTable extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jlibLogo2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Administração - CT CONTAB");
         getContentPane().setLayout(null);
+
+        lblContabilidade.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
+        lblContabilidade.setForeground(new java.awt.Color(153, 153, 0));
+        lblContabilidade.setText("Contabilidade & Consultoria");
+        getContentPane().add(lblContabilidade);
+        lblContabilidade.setBounds(90, 7, 205, 80);
+
+        lblCTCONTAB.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblCTCONTAB.setForeground(new java.awt.Color(204, 204, 204));
+        lblCTCONTAB.setText("CT CONTAB");
+        getContentPane().add(lblCTCONTAB);
+        lblCTCONTAB.setBounds(90, 7, 190, 40);
 
         jScrollPane1.setBorder(null);
         jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
@@ -561,10 +601,6 @@ public class TelaAdminTable extends javax.swing.JFrame {
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, -50, 80, 750);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo-semfundo.png"))); // NOI18N
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(0, 0, 290, 70);
-
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/background-contabil.png"))); // NOI18N
         getContentPane().add(Background);
         Background.setBounds(0, 0, 1280, 711);
@@ -656,7 +692,6 @@ public class TelaAdminTable extends javax.swing.JFrame {
     private javax.swing.JButton btnTarefas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -667,6 +702,8 @@ public class TelaAdminTable extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel jlibLogo2;
+    private javax.swing.JLabel lblCTCONTAB;
+    private javax.swing.JLabel lblContabilidade;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblServico;
     private javax.swing.JLabel lblStatus;

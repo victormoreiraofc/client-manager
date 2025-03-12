@@ -1,4 +1,4 @@
-package Screen;
+package screen;
 
 import Data.CTCONTAB;
 import static Data.CTCONTAB.excluirRegistro;
@@ -6,6 +6,7 @@ import Data.IconUtil;
 import Data.PermissaoUtil;
 import Data.Relatorio;
 import Data.Usuario;
+import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 import java.sql.SQLException;
 
@@ -27,6 +28,11 @@ public class TelaRelatorio extends javax.swing.JFrame {
             this.relatorio = new Relatorio();
             preencherCamposNovoRelatorio();
         }
+        setIcon();
+    }
+
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/logo-icon.png")));
     }
 
     private void preencherCamposNovoRelatorio() {
@@ -101,6 +107,8 @@ public class TelaRelatorio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblContabilidade = new javax.swing.JLabel();
+        lblCTCONTAB = new javax.swing.JLabel();
         btnNotificacoes = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
@@ -134,11 +142,23 @@ public class TelaRelatorio extends javax.swing.JFrame {
         jlibLogo2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         lblUserIcon = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Novo Relatório - CT CONTAB");
         getContentPane().setLayout(null);
+
+        lblContabilidade.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
+        lblContabilidade.setForeground(new java.awt.Color(153, 153, 0));
+        lblContabilidade.setText("Contabilidade & Consultoria");
+        getContentPane().add(lblContabilidade);
+        lblContabilidade.setBounds(90, 7, 205, 80);
+
+        lblCTCONTAB.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblCTCONTAB.setForeground(new java.awt.Color(204, 204, 204));
+        lblCTCONTAB.setText("CT CONTAB");
+        getContentPane().add(lblCTCONTAB);
+        lblCTCONTAB.setBounds(90, 7, 190, 40);
 
         btnNotificacoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/alert-bell.png"))); // NOI18N
         btnNotificacoes.setContentAreaFilled(false);
@@ -393,10 +413,6 @@ public class TelaRelatorio extends javax.swing.JFrame {
         getContentPane().add(lblUserIcon);
         lblUserIcon.setBounds(1210, 15, 50, 50);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo-semfundo.png"))); // NOI18N
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(0, 0, 290, 70);
-
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/background-contabil.png"))); // NOI18N
         getContentPane().add(Background);
         Background.setBounds(0, 0, 1280, 711);
@@ -516,7 +532,6 @@ public class TelaRelatorio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -525,6 +540,8 @@ public class TelaRelatorio extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel jlibLogo2;
+    private javax.swing.JLabel lblCTCONTAB;
+    private javax.swing.JLabel lblContabilidade;
     private javax.swing.JLabel lblUserIcon;
     private javax.swing.JTextField txtDataCadastro;
     private javax.swing.JTextField txtDescricao;

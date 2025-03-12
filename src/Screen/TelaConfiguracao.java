@@ -1,10 +1,11 @@
-package Screen;
+package screen;
 
 import Data.IconUtil;
 import Data.CTCONTAB;
 import Data.PermissaoUtil;
 import Data.Usuario;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileInputStream;
 import java.sql.SQLException;
@@ -23,12 +24,20 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
         carregarImagemUsuario(usuario);
         IconUtil.setIcon(usuarioLogado, lblUserIcon);
+        setIcon();
+    }
+
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/logo-icon.png")));
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblContabilidade = new javax.swing.JLabel();
+        lblCTCONTAB = new javax.swing.JLabel();
+        lblUserIcon = new javax.swing.JLabel();
         btnNotificacoes = new javax.swing.JButton();
         btnAdministracao = new javax.swing.JButton();
         btnConfiguracoes = new javax.swing.JButton();
@@ -56,12 +65,27 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jlibLogo2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        lblUserIcon = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Configurações - CT CONTAB");
         getContentPane().setLayout(null);
+
+        lblContabilidade.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
+        lblContabilidade.setForeground(new java.awt.Color(153, 153, 0));
+        lblContabilidade.setText("Contabilidade & Consultoria");
+        getContentPane().add(lblContabilidade);
+        lblContabilidade.setBounds(90, 7, 205, 80);
+
+        lblCTCONTAB.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblCTCONTAB.setForeground(new java.awt.Color(204, 204, 204));
+        lblCTCONTAB.setText("CT CONTAB");
+        getContentPane().add(lblCTCONTAB);
+        lblCTCONTAB.setBounds(90, 7, 190, 40);
+
+        lblUserIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/minhatura-de-perfil.png"))); // NOI18N
+        getContentPane().add(lblUserIcon);
+        lblUserIcon.setBounds(1210, 15, 50, 50);
 
         btnNotificacoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/alert-bell.png"))); // NOI18N
         btnNotificacoes.setContentAreaFilled(false);
@@ -280,14 +304,6 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         getContentPane().add(jLabel1);
         jLabel1.setBounds(0, -50, 80, 750);
 
-        lblUserIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/minhatura-de-perfil.png"))); // NOI18N
-        getContentPane().add(lblUserIcon);
-        lblUserIcon.setBounds(1210, 15, 50, 50);
-
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo-semfundo.png"))); // NOI18N
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(0, 0, 290, 70);
-
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/background-contabil.png"))); // NOI18N
         getContentPane().add(Background);
         Background.setBounds(0, 0, 1280, 711);
@@ -458,7 +474,6 @@ public class TelaConfiguracao extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -467,6 +482,8 @@ public class TelaConfiguracao extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel jlibLogo2;
+    private javax.swing.JLabel lblCTCONTAB;
+    private javax.swing.JLabel lblContabilidade;
     private javax.swing.JLabel lblDataDeCadastro;
     private javax.swing.JLabel lblImagem;
     private javax.swing.JLabel lblUserIcon;

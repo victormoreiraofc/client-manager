@@ -1,7 +1,8 @@
-package Screen;
+package screen;
 
 import Data.IconUtil;
 import Data.Usuario;
+import java.awt.Toolkit;
 
 public class TelaAdmin extends javax.swing.JFrame {
 
@@ -11,12 +12,19 @@ public class TelaAdmin extends javax.swing.JFrame {
         this.usuarioLogado = usuario;
         initComponents();
         IconUtil.setIcon(usuarioLogado, lblUserIcon);
+        setIcon();
+    }
+
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/logo-icon.png")));
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblContabilidade = new javax.swing.JLabel();
+        lblCTCONTAB = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         btnAdministracao = new javax.swing.JButton();
         btnConfiguracoes = new javax.swing.JButton();
@@ -34,11 +42,23 @@ public class TelaAdmin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         lblUserIcon = new javax.swing.JLabel();
         btnNotificacoes = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
         Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Auditoria - CT CONTAB");
         getContentPane().setLayout(null);
+
+        lblContabilidade.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
+        lblContabilidade.setForeground(new java.awt.Color(153, 153, 0));
+        lblContabilidade.setText("Contabilidade & Consultoria");
+        getContentPane().add(lblContabilidade);
+        lblContabilidade.setBounds(90, 7, 205, 80);
+
+        lblCTCONTAB.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblCTCONTAB.setForeground(new java.awt.Color(204, 204, 204));
+        lblCTCONTAB.setText("CT CONTAB");
+        getContentPane().add(lblCTCONTAB);
+        lblCTCONTAB.setBounds(90, 7, 190, 40);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255, 15));
         getContentPane().add(jPanel1);
@@ -168,10 +188,6 @@ public class TelaAdmin extends javax.swing.JFrame {
         getContentPane().add(btnNotificacoes);
         btnNotificacoes.setBounds(1160, 10, 60, 60);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo-semfundo.png"))); // NOI18N
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(0, 0, 290, 70);
-
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/background-contabil.png"))); // NOI18N
         getContentPane().add(Background);
         Background.setBounds(0, 0, 1280, 711);
@@ -258,10 +274,11 @@ public class TelaAdmin extends javax.swing.JFrame {
     private javax.swing.JButton btnTarefas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel jlibLogo2;
+    private javax.swing.JLabel lblCTCONTAB;
+    private javax.swing.JLabel lblContabilidade;
     private javax.swing.JLabel lblUserIcon;
     private javax.swing.JTextField txtLogin;
     // End of variables declaration//GEN-END:variables

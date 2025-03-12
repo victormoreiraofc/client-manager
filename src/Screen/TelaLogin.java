@@ -1,13 +1,17 @@
-package Screen;
+package screen;
 
 import Data.Usuario;
 import Data.CTCONTAB;
+import java.awt.Desktop;
+import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 import java.sql.SQLException;
 import java.util.Properties;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URI;
+import javax.swing.BorderFactory;
 
 public class TelaLogin extends javax.swing.JFrame {
 
@@ -18,6 +22,11 @@ public class TelaLogin extends javax.swing.JFrame {
         carregarCredenciais();
         jlibErroLogin.setVisible(false);
         jlibErroLoginIcon.setVisible(false);
+        setIcon();
+    }
+
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/logo-icon.png")));
     }
 
     private void salvarCredenciais(String usuario, String senha) {
@@ -52,6 +61,9 @@ public class TelaLogin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblCTCONTAB = new javax.swing.JLabel();
+        lblContabilidade = new javax.swing.JLabel();
+        btnTermosServico = new javax.swing.JButton();
         jlibErroLoginIcon = new javax.swing.JLabel();
         jlibErroLogin = new javax.swing.JLabel();
         jlibEsqueceuASenha = new javax.swing.JLabel();
@@ -74,14 +86,36 @@ public class TelaLogin extends javax.swing.JFrame {
         Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("CT CONTAB Contabilidade & Consultaria");
+        setTitle("Login - CT CONTAB");
         getContentPane().setLayout(null);
+
+        lblCTCONTAB.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblCTCONTAB.setForeground(new java.awt.Color(204, 204, 204));
+        lblCTCONTAB.setText("CT CONTAB");
+        getContentPane().add(lblCTCONTAB);
+        lblCTCONTAB.setBounds(410, 95, 190, 40);
+
+        lblContabilidade.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
+        lblContabilidade.setForeground(new java.awt.Color(153, 153, 0));
+        lblContabilidade.setText("Contabilidade & Consultoria");
+        getContentPane().add(lblContabilidade);
+        lblContabilidade.setBounds(410, 95, 205, 80);
+
+        btnTermosServico.setBackground(new java.awt.Color(30, 30, 30));
+        btnTermosServico.setContentAreaFilled(false);
+        btnTermosServico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTermosServicoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnTermosServico);
+        btnTermosServico.setBounds(370, 480, 190, 20);
 
         jlibErroLoginIcon.setFont(new java.awt.Font("Segoe UI", 2, 10)); // NOI18N
         jlibErroLoginIcon.setForeground(new java.awt.Color(255, 0, 0));
         jlibErroLoginIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/alert-icon.png"))); // NOI18N
         getContentPane().add(jlibErroLoginIcon);
-        jlibErroLoginIcon.setBounds(570, 210, 30, 20);
+        jlibErroLoginIcon.setBounds(565, 200, 50, 40);
 
         jlibErroLogin.setFont(new java.awt.Font("Segoe UI", 2, 10)); // NOI18N
         jlibErroLogin.setForeground(new java.awt.Color(255, 0, 0));
@@ -116,7 +150,7 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
         getContentPane().add(chbMostrarSenha);
-        chbMostrarSenha.setBounds(560, 270, 30, 40);
+        chbMostrarSenha.setBounds(565, 270, 30, 40);
 
         txtLogin.setBackground(new java.awt.Color(4, 21, 57));
         txtLogin.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
@@ -128,16 +162,42 @@ public class TelaLogin extends javax.swing.JFrame {
                 txtLoginActionPerformed(evt);
             }
         });
+        txtLogin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtLoginKeyPressed(evt);
+            }
+        });
         getContentPane().add(txtLogin);
         txtLogin.setBounds(320, 200, 280, 40);
 
-        btnLogin.setBackground(new java.awt.Color(194, 166, 40));
+        btnLogin.setBackground(new java.awt.Color(184, 135, 11));
         btnLogin.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         btnLogin.setForeground(new java.awt.Color(255, 255, 255));
         btnLogin.setText("Login");
+        btnLogin.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        btnLogin.setBorderPainted(false);
+        btnLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnLoginMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnLoginMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnLoginMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnLoginMouseReleased(evt);
+            }
+        });
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoginActionPerformed(evt);
+            }
+        });
+        btnLogin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnLoginKeyPressed(evt);
             }
         });
         getContentPane().add(btnLogin);
@@ -150,6 +210,11 @@ public class TelaLogin extends javax.swing.JFrame {
         txtSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSenhaActionPerformed(evt);
+            }
+        });
+        txtSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSenhaKeyPressed(evt);
             }
         });
         getContentPane().add(txtSenha);
@@ -167,7 +232,7 @@ public class TelaLogin extends javax.swing.JFrame {
         getContentPane().add(jilbSenha);
         jilbSenha.setBounds(320, 250, 170, 20);
 
-        chbLembre.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        chbLembre.setFont(new java.awt.Font("SansSerif", 1, 10)); // NOI18N
         chbLembre.setForeground(new java.awt.Color(194, 166, 40));
         chbLembre.setText("Lembre-me");
         chbLembre.addActionListener(new java.awt.event.ActionListener() {
@@ -176,7 +241,7 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
         getContentPane().add(chbLembre);
-        chbLembre.setBounds(320, 320, 100, 19);
+        chbLembre.setBounds(320, 320, 100, 20);
 
         jilbTermosDeServiço.setBackground(new java.awt.Color(255, 255, 255));
         jilbTermosDeServiço.setFont(new java.awt.Font("SansSerif", 1, 8)); // NOI18N
@@ -209,9 +274,10 @@ public class TelaLogin extends javax.swing.JFrame {
 
         jilbRegistreSe.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         jilbRegistreSe.setForeground(new java.awt.Color(194, 166, 40));
+        jilbRegistreSe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jilbRegistreSe.setText("  Registre-se");
         getContentPane().add(jilbRegistreSe);
-        jilbRegistreSe.setBounds(483, 400, 70, 20);
+        jilbRegistreSe.setBounds(470, 400, 90, 20);
 
         btnResgistrar.setBackground(new java.awt.Color(30, 30, 30));
         btnResgistrar.setContentAreaFilled(false);
@@ -221,11 +287,11 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnResgistrar);
-        btnResgistrar.setBounds(490, 400, 60, 20);
+        btnResgistrar.setBounds(480, 400, 70, 20);
 
         jlibLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo.png"))); // NOI18N
         getContentPane().add(jlibLogo);
-        jlibLogo.setBounds(350, 100, 220, 50);
+        jlibLogo.setBounds(340, 90, 60, 70);
 
         jlibBlueSquad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/retangulo-azul.png"))); // NOI18N
         getContentPane().add(jlibBlueSquad);
@@ -299,6 +365,48 @@ public class TelaLogin extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnEsqueceuSenhaActionPerformed
 
+    private void btnTermosServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTermosServicoActionPerformed
+        try {
+            Desktop.getDesktop().browse(new URI("https://github.com/victormoreiraofc/client-manager/blob/main/CODE_OF_CONDUCT.md"));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnTermosServicoActionPerformed
+
+    private void btnLoginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseEntered
+        btnLogin.setBackground(new java.awt.Color(189, 135, 2));
+    }//GEN-LAST:event_btnLoginMouseEntered
+
+    private void btnLoginMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseExited
+        btnLogin.setBackground(new java.awt.Color(184, 135, 11));
+    }//GEN-LAST:event_btnLoginMouseExited
+
+    private void btnLoginMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMousePressed
+        btnLogin.setBackground(new java.awt.Color(139, 101, 8));
+    }//GEN-LAST:event_btnLoginMousePressed
+
+    private void btnLoginMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseReleased
+        btnLogin.setBackground(new java.awt.Color(189, 135, 2));
+    }//GEN-LAST:event_btnLoginMouseReleased
+
+    private void btnLoginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnLoginKeyPressed
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            btnLogin.doClick();
+        }
+    }//GEN-LAST:event_btnLoginKeyPressed
+
+    private void txtSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSenhaKeyPressed
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            btnLogin.doClick();
+        }
+    }//GEN-LAST:event_txtSenhaKeyPressed
+
+    private void txtLoginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLoginKeyPressed
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            btnLogin.doClick();
+        }
+    }//GEN-LAST:event_txtLoginKeyPressed
+
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -337,6 +445,7 @@ public class TelaLogin extends javax.swing.JFrame {
     private javax.swing.JButton btnEsqueceuSenha;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnResgistrar;
+    private javax.swing.JButton btnTermosServico;
     private javax.swing.JCheckBox chbLembre;
     private javax.swing.JCheckBox chbMostrarSenha;
     private javax.swing.JLabel jilbAindaNaoTemConta;
@@ -351,6 +460,8 @@ public class TelaLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jlibErroLoginIcon;
     private javax.swing.JLabel jlibEsqueceuASenha;
     private javax.swing.JLabel jlibLogo;
+    private javax.swing.JLabel lblCTCONTAB;
+    private javax.swing.JLabel lblContabilidade;
     private javax.swing.JTextField txtLogin;
     private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables

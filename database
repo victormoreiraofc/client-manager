@@ -1,14 +1,15 @@
-CREATE DATABASE railway;
-USE railway;              
+CREATE DATABASE ctcontab;
+USE ctcontab;              
 
 CREATE TABLE usuarios (          
     id INT AUTO_INCREMENT PRIMARY KEY,
     usuario VARCHAR(50) NOT NULL UNIQUE,
-    cargo VARCHAR(50) NOT NULL,
+    cargo VARCHAR(50) NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
     Imagem BLOB,
-    Permissao ENUM ('NULL', 'ADM', 'SUPER_ADM') DEFAULT 'NULL',
+    Permissao ENUM ('NULL', 'ADM', 'SUPER_ADM') DEFAULT ('NULL'),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     CHECK (usuario REGEXP '^[a-zA-Z]+$'),
     CHECK (senha REGEXP '^[a-zA-Z0-9]+$'),
     CHECK (cargo REGEXP '^[a-zA-Z]+$')
@@ -58,5 +59,3 @@ CREATE TABLE agenda (
     usuario VARCHAR(255) NOT NULL,
     CONSTRAINT fk_usuario FOREIGN KEY (usuario) REFERENCES usuarios(usuario) ON UPDATE CASCADE
 );
-
-SHOW TABLES;
