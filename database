@@ -8,7 +8,7 @@ CREATE TABLE usuarios (
     email VARCHAR(100) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
     Imagem BLOB,
-    Permissao ENUM ('NULL', 'ADM', 'SUPER_ADM') DEFAULT ('NULL'),
+    Permissao ENUM ('NULL', 'ADM', 'SUPER_ADM') DEFAULT 'NULL',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     CHECK (usuario REGEXP '^[a-zA-Z]+$'),
     CHECK (senha REGEXP '^[a-zA-Z0-9]+$'),
