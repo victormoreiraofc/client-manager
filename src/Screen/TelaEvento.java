@@ -92,7 +92,7 @@ public class TelaEvento extends javax.swing.JFrame {
         try {
             String chatInput = "Crie o evento '" + titulo + "' no dia " + dataInicio + " até " + dataFinal + " das " + horarioInicial + " às " + horarioFinal + ", no local: " + local + ". Descrição: " + descricao;
 
-            String webhookUrl = "http://localhost:5678/webhook-test/5600d7f0-3454-47a7-aa65-d9d485472d2d";
+            String webhookUrl = "http://localhost:5678/webhook-test/d88a4e41-4393-4186-b3e2-4150dfec8c03";
 
             String jsonInputString = "{"
                     + "\"sessionId\": \"" + sessionId + "\","
