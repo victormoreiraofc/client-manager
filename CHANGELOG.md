@@ -1,22 +1,36 @@
-# Histórico de Atualizações
+# Changelog
 
-Este arquivo registra todas as atualizações e alterações significativas do projeto.
+Todas as mudanças notáveis deste projeto serão documentadas neste arquivo.
 
-## [Versão 1.0.1] - [11/03/2025]
+O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
+
+## [Não publicado]
 
 ### Adicionado
-
-* [Adicionado botão em Termos e Serviços que leva ao Codigo de Condulta.]
-* [Adicionado calendário com ia usando N8N.]
+- **Integração com IA:** Implementação de inteligência artificial para otimizar processos contábeis, geração de relatórios e comunicação interna.
+- **Interface de Usuário:** Nova interface gráfica desenvolvida para melhorar a experiência do usuário.
+- **Funcionalidade de Relatórios:** Geração automática de relatórios financeiros personalizados.
 
 ### Modificado
+- **Arquitetura do Sistema:** Refatoração da arquitetura para melhorar a escalabilidade e manutenção.
+- **Segurança:** Implementação de autenticação de dois fatores para acesso ao sistema.
 
-* [Logos da CT CONTAB editadas para maior resolução.]
-* [Ajuste de cor no botão de login para melhor visualização.]
-* [Alterado o icone de visualisar senha na tela de login.]
-* [Alterado formato de datas da tabela.]
+### Corrigido
+- **Erros de Login:** Correção de bugs que impediam alguns usuários de efetuar login.
+- **Performance:** Otimização de consultas ao banco de dados para melhorar a velocidade do sistema.
 
-### Removido
+## [1.0.0] - 2025-03-22
 
-* [Recurso/Funcionalidade removida]
-* [Outra remoção]
+### Adicionado
+- **Lançamento Inicial:** Versão inicial do sistema de gestão de clientes para CT Contab.
+- **Gerenciamento de Clientes:** Funcionalidades básicas para adicionar, editar e remover clientes.
+- **Banco de Dados:** Configuração inicial do banco de dados para armazenar informações de clientes.
+
+### Modificado
+- **Documentação:** Criação da documentação inicial do projeto, incluindo instruções de instalação e uso.
+
+### Corrigido
+- **N/A:** Versão inicial sem correções aplicadas.
+
+[Não publicado]: https://github.com/victormoreiraofc/client-manager/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/victormoreiraofc/client-manager/releases/tag/v1.0.0
