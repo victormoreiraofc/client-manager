@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="https://ctcontab.com.br/wp-content/uploads/2024/04/cropped-logo-ctcontabil.png" alt="Logo CT CONTAB" width=300>
+  <img src="https://ctcontab.com.br/wp-content/uploads/2024/04/cropped-logo-ctcontabil.png" alt="Logo CT CONTAB" width="300">
   <br>Sistema de Gestão de Clientes para CT CONTAB
 </h1>
 
@@ -11,7 +11,7 @@
 
 ---
 
-> * Official Developer Project
+> **Official Developer Project**
 
 <table>
   <tr>
@@ -66,6 +66,55 @@
   </tr>
 </table>
 
+---
+
+> * Funcionalidades
+
+- **Gerenciamento de Clientes:** Adicione, edite e remova informações de clientes de forma eficiente.
+- **Geração de Relatórios:** Crie relatórios financeiros personalizados automaticamente.
+- **Comunicação Interna:** Facilite a comunicação dentro da equipe contábil.
+- **Integração com IA:** Utilize inteligência artificial para otimizar processos e análises.
+
+---
+
+> * Tecnologias Utilizadas
+
+- **Linguagem:** Java
+- **IDE:** NetBeans
+- **Banco de Dados:** MySQL
+- **Bibliotecas e Frameworks:**
+  - [Apache POI](https://poi.apache.org/) para manipulação de documentos do Microsoft Office
+  - [Hibernate](https://hibernate.org/) para mapeamento objeto-relacional
+
+---
+
+> * Instalação e Configuração
+
+1. **Clone o Repositório:**
+   ```bash
+   git clone https://github.com/victormoreiraofc/client-manager.git
+
+2. **Abra o Projeto no NetBeans:**
+   - Abra o NetBeans IDE.
+   - Selecione "Abrir Projeto" e navegue até o diretório do repositório clonado.
+   - Abra o projeto no NetBeans.
+
+3. **Configuração do Banco de Dados:**
+   - Certifique-se de ter o MySQL instalado.
+   - Crie um banco de dados chamado `client_manager`.
+   - Importe o arquivo de estrutura do banco de dados (geralmente um `.sql` fornecido no repositório ou na documentação do projeto).
+   - Atualize as credenciais de conexão no arquivo de configuração do banco de dados.
+
+4. **Dependências:**
+   - O projeto utiliza Maven para gerenciamento de dependências. Certifique-se de que todas as dependências estão resolvidas.
+   - No NetBeans, clique com o botão direito no projeto e selecione "Construir" para baixar todas as dependências.
+
+5. **Configuração do Servidor de Aplicação (caso necessário):**
+   - O projeto pode requerer um servidor de aplicação (como Tomcat ou GlassFish) caso haja funcionalidades web envolvidas. Siga as instruções do projeto para configurar o servidor.
+
+6. **Executando o Projeto:**
+   - Após a configuração, execute o projeto diretamente no NetBeans.
+   - Caso o projeto inclua funcionalidades de servidor web, o NetBeans irá iniciar o servidor para você.
 
 ---
 
