@@ -4,6 +4,7 @@ import Data.CTCONTAB;
 import Data.IconUtil;
 import Data.PermissaoUtil;
 import Data.Usuario;
+import Screen.MensagemUtil;
 import java.awt.Toolkit;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -70,14 +71,17 @@ public class TelaEvento extends javax.swing.JFrame {
                 String dataFinalFormatada = formatarDataParaBanco(dataFinal);
 
                 CTCONTAB.registrarEvento(evento, dataInicioFormatada, dataFinalFormatada, horarioInicial, horarioFinal, nomeUsuario);
-                JOptionPane.showMessageDialog(this, "Evento salvo com sucesso!");
+                // JOptionPane.showMessageDialog(this, "Evento salvo com sucesso!");
+                MensagemUtil.exibirSucesso("Evento salvo com sucesso!");
 
                 enviarEventoParaN8N(evento, dataInicioFormatada, dataFinalFormatada, horarioInicial, horarioFinal, descricao, local);
             } else {
-                JOptionPane.showMessageDialog(this, "Nenhum usuário logado. Não foi possível salvar o evento.");
+               // JOptionPane.showMessageDialog(this, "Nenhum usuário logado. Não foi possível salvar o evento.");
+                MensagemUtil.exibirErro("Nenhum usuário logado. Não foi possível salvar o evento.");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao salvar evento: " + e.getMessage());
+            // JOptionPane.showMessageDialog(this, "Erro ao salvar evento: " + e.getMessage());
+            MensagemUtil.exibirErro("Erro ao salvar evento!");
         }
     }
 
@@ -92,7 +96,7 @@ public class TelaEvento extends javax.swing.JFrame {
         try {
             String chatInput = "Crie o evento '" + titulo + "' no dia " + dataInicio + " até " + dataFinal + " das " + horarioInicial + " às " + horarioFinal + ", no local: " + local + ". Descrição: " + descricao;
 
-            String webhookUrl = "http://localhost:5678/webhook-test/d88a4e41-4393-4186-b3e2-4150dfec8c03";
+            String webhookUrl = "http://localhost:5678/webhook-test/71b9c7a6-3252-49e9-a503-6f640d930498";
 
             String jsonInputString = "{"
                     + "\"sessionId\": \"" + sessionId + "\","

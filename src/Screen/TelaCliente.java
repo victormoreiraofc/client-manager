@@ -20,6 +20,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import Screen.MensagemUtil;
 
 public class TelaCliente extends javax.swing.JFrame {
 
@@ -111,13 +112,16 @@ public class TelaCliente extends javax.swing.JFrame {
 
             if (cliente.getId() == 0) {
                 CTCONTAB.registrarCliente(cliente);
-                JOptionPane.showMessageDialog(this, "Novo cliente cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                // JOptionPane.showMessageDialog(this, "Novo cliente cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                MensagemUtil.exibirSucesso("Cadastro realizado com sucesso!");
             } else {
                 CTCONTAB.atualizarCliente(cliente);
-                JOptionPane.showMessageDialog(this, "Cliente atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                // JOptionPane.showMessageDialog(this, "Cliente atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                MensagemUtil.exibirSucesso("Cliente atualizado com sucesso!");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao salvar alterações: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            // JOptionPane.showMessageDialog(this, "Erro ao salvar alterações: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            MensagemUtil.exibirErro("Erro ao salvar alterações!");
             e.printStackTrace();
         }
     }
@@ -151,15 +155,18 @@ public class TelaCliente extends javax.swing.JFrame {
                 if (resposta == JOptionPane.YES_OPTION) {
                     excluirRegistro("cliente", "id", idCliente);
 
-                    JOptionPane.showMessageDialog(this, "Cliente excluído com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                    // JOptionPane.showMessageDialog(this, "Cliente excluído com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                    MensagemUtil.exibirSucesso("Cliente excluído com sucesso!");
                     new TelaClienteTable(usuarioLogado).setVisible(true);
                     this.dispose();
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Nenhum cliente selecionado para exclusão!", "Erro", JOptionPane.ERROR_MESSAGE);
+                // JOptionPane.showMessageDialog(this, "Nenhum cliente selecionado para exclusão!", "Erro", JOptionPane.ERROR_MESSAGE);
+                MensagemUtil.exibirErro("Nenhum cliente selecionado para exclusão!");
             }
         } catch (SQLException | ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(this, "Erro ao excluir cliente: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            // JOptionPane.showMessageDialog(this, "Erro ao excluir cliente: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            MensagemUtil.exibirErro("Erro ao excluir cliente!");
         }
     }
 
@@ -706,14 +713,17 @@ public class TelaCliente extends javax.swing.JFrame {
                     CTCONTAB.registrarImagemUsuario(fis, usuarioLogado);
 
                     fis.close();
-                    JOptionPane.showMessageDialog(null, "Imagem salva com sucesso!");
+                    // JOptionPane.showMessageDialog(null, "Imagem salva com sucesso!");
+                    MensagemUtil.exibirSucesso("Imagem salva com sucesso!");
                 } catch (Exception e) {
                     e.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "Erro ao salvar imagem: " + e.getMessage());
+                    // JOptionPane.showMessageDialog(null, "Erro ao salvar imagem: " + e.getMessage());
+                    MensagemUtil.exibirErro("Erro ao salvar imagem!");
                 }
 
             } else {
-                JOptionPane.showMessageDialog(null, "Erro, selecione o arquivo compatível (Png ou Jpg)");
+                // JOptionPane.showMessageDialog(null, "Erro, selecione o arquivo compatível (Png ou Jpg)");
+                MensagemUtil.exibirErro("Erro, selecione o arquivo compatível (PNG ou JPG)");
             }
 
     }//GEN-LAST:event_btnAlterarImagemActionPerformed
@@ -744,7 +754,8 @@ public class TelaCliente extends javax.swing.JFrame {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Erro ao carregar a imagem: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            // JOptionPane.showMessageDialog(this, "Erro ao carregar a imagem: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            MensagemUtil.exibirErro("Erro ao carregar a imagem!");
         }
     }
 
@@ -757,7 +768,8 @@ public class TelaCliente extends javax.swing.JFrame {
             lblImagem.setIcon(new ImageIcon(newImage));
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Erro ao carregar ícone padrão: " + e.getMessage());
+            // JOptionPane.showMessageDialog(null, "Erro ao carregar ícone padrão: " + e.getMessage());
+            MensagemUtil.exibirErro("Erro ao carregar ícone padrão!");
         }
     }
 

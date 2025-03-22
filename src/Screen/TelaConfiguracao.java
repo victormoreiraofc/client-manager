@@ -4,6 +4,7 @@ import Data.IconUtil;
 import Data.CTCONTAB;
 import Data.PermissaoUtil;
 import Data.Usuario;
+import Screen.MensagemUtil;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.File;
@@ -315,10 +316,12 @@ public class TelaConfiguracao extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         try {
             CTCONTAB.editarDados(txtNovoEmail.getText(), txtNovaSenha.getText(), usuarioLogado);
-            JOptionPane.showMessageDialog(this, "Dados atualizados com sucesso!");
+            // JOptionPane.showMessageDialog(this, "Dados atualizados com sucesso!");
+            MensagemUtil.exibirSucesso("Dados atualizados com sucesso!");
 
         } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(this, "Erro ao atualizar dados: " + e.getMessage());
+            // JOptionPane.showMessageDialog(this, "Erro ao atualizar dados: " + e.getMessage());
+            MensagemUtil.exibirErro("Erro ao atualizar dados!");
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
@@ -395,14 +398,17 @@ public class TelaConfiguracao extends javax.swing.JFrame {
                     CTCONTAB.registrarImagemUsuario(fis, usuarioLogado);
 
                     fis.close();
-                    JOptionPane.showMessageDialog(null, "Imagem salva com sucesso!");
+                    // JOptionPane.showMessageDialog(null, "Imagem salva com sucesso!");
+                    MensagemUtil.exibirSucesso("Imagem salva com sucesso!");
                 } catch (Exception e) {
                     e.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "Erro ao salvar imagem: " + e.getMessage());
+                    // JOptionPane.showMessageDialog(null, "Erro ao salvar imagem: " + e.getMessage());
+                    MensagemUtil.exibirErro("Erro ao salvar imagem!");
                 }
 
             } else {
-                JOptionPane.showMessageDialog(null, "Erro, selecione o arquivo compatível (Png ou Jpg)");
+                // JOptionPane.showMessageDialog(null, "Erro, selecione o arquivo compatível (Png ou Jpg)");
+                MensagemUtil.exibirErro("Erro, selecione o arquivo compatível (PNG ou JPG)");
             }
 
         }
@@ -435,7 +441,8 @@ public class TelaConfiguracao extends javax.swing.JFrame {
             lblImagem.setIcon(new ImageIcon(newImage));
         } catch (Exception e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Erro ao carregar ícone padrão: " + e.getMessage());
+            // JOptionPane.showMessageDialog(null, "Erro ao carregar ícone padrão: " + e.getMessage());
+            MensagemUtil.exibirErro("Erro ao carregar ícone padrão!");
         }
     }
 

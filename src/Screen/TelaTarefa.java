@@ -6,6 +6,7 @@ import Data.IconUtil;
 import Data.PermissaoUtil;
 import Data.Tarefa;
 import Data.Usuario;
+import Screen.MensagemUtil;
 import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 import java.sql.SQLException;
@@ -73,13 +74,16 @@ public class TelaTarefa extends javax.swing.JFrame {
 
             if (tarefa.getId() == 0) {
                 CTCONTAB.registrarTarefa(tarefa);
-                JOptionPane.showMessageDialog(this, "Nova tarefa cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                // JOptionPane.showMessageDialog(this, "Nova tarefa cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                MensagemUtil.exibirSucesso("Nova tarefa cadastrado com sucesso!");
             } else {
                 CTCONTAB.atualizarTarefa(tarefa);
-                JOptionPane.showMessageDialog(this, "Tarefa atualizada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                // JOptionPane.showMessageDialog(this, "Tarefa atualizada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                MensagemUtil.exibirSucesso("Tarefa atualizada com sucesso!");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao salvar alterações: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(this, "Erro ao salvar alterações: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            MensagemUtil.exibirErro("Erro ao salvar alterações!");
             e.printStackTrace();
         }
     }
@@ -97,15 +101,18 @@ public class TelaTarefa extends javax.swing.JFrame {
                 if (resposta == JOptionPane.YES_OPTION) {
                     excluirRegistro("tarefa", "id", idTarefa);
 
-                    JOptionPane.showMessageDialog(this, "Tarefa excluída com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                   // JOptionPane.showMessageDialog(this, "Tarefa excluída com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                    MensagemUtil.exibirSucesso("Tarefa excluída com sucesso!");
                     new TelaTarefaTable(usuarioLogado).setVisible(true);
                     this.dispose();
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Nenhuma tarefa selecionada para exclusão!", "Erro", JOptionPane.ERROR_MESSAGE);
+               // JOptionPane.showMessageDialog(this, "Nenhuma tarefa selecionada para exclusão!", "Erro", JOptionPane.ERROR_MESSAGE);
+                MensagemUtil.exibirErro("Nenhuma tarefa selecionada para exclusão!");
             }
         } catch (SQLException | ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(this, "Erro ao excluir tarefa: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            // JOptionPane.showMessageDialog(this, "Erro ao excluir tarefa: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            MensagemUtil.exibirErro("Erro ao excluir tarefa: " + e.getMessage());
         }
     }
 

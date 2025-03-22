@@ -25,7 +25,7 @@ public class GoogleCalendarAuth {
     private static final List<String> SCOPES = Collections.singletonList(CalendarScopes.CALENDAR_READONLY);
 
     public static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
-        InputStream in = GoogleCalendarAuth.class.getResourceAsStream("/screen/credentials.json");
+        InputStream in = GoogleCalendarAuth.class.getResourceAsStream("/Screen/credentials.json");
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(

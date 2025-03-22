@@ -6,6 +6,7 @@ import Data.PermissaoUtil;
 import Data.Relatorio;
 import Data.Tarefa;
 import Data.Usuario;
+import Screen.MensagemUtil;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -217,9 +218,11 @@ public class TelaTarefaTable extends javax.swing.JFrame {
                 tarefasFiltradas.remove(row);
                 atualizarTabela(tarefasFiltradas);
 
-                JOptionPane.showMessageDialog(null, "Tarefa excluída com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                //JOptionPane.showMessageDialog(null, "Tarefa excluída com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                MensagemUtil.exibirSucesso("Tarefa excluída com sucesso!");
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro ao excluir tarefa: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                // JOptionPane.showMessageDialog(null, "Erro ao excluir tarefa: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                MensagemUtil.exibirErro("Erro ao excluir tarefa!");
             }
         }
     }

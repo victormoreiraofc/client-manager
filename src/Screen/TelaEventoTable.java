@@ -251,89 +251,175 @@ public class TelaEventoTable extends javax.swing.JFrame {
     }
 
     private void exibirDetalhesEvento(Event event) {
-        JDialog dialog = new JDialog(this, "Detalhes do Evento", true);
+        JPanel overlayPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.setColor(new Color(0, 0, 0, 150));
+                g.fillRect(0, 0, getWidth(), getHeight());
+            }
+        };
+        overlayPanel.setOpaque(false);
+        overlayPanel.setLayout(null);
+        getLayeredPane().add(overlayPanel, JLayeredPane.POPUP_LAYER);
+
+        SwingUtilities.invokeLater(() -> {
+            overlayPanel.setBounds(0, 0, getWidth(), getHeight());
+            overlayPanel.setVisible(true);
+        });
+
+        JDialog dialog = new JDialog(this, true);
+        dialog.setUndecorated(true);
         dialog.setLayout(new BorderLayout());
-        dialog.getContentPane().setBackground(new Color(5, 27, 74));
+        dialog.setBackground(new Color(0, 0, 0, 0));
 
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.setBackground(new Color(5, 27, 74));
+        JPanel mainPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2d = (Graphics2D) g.create();
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2d.setColor(new Color(5, 27, 74));
+                g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
+                g2d.dispose();
+            }
+        };
+        mainPanel.setOpaque(false);
+        mainPanel.setLayout(new BorderLayout());
+        mainPanel.setPreferredSize(new Dimension(500, 160));
 
-        ImageIcon logoIcon = new ImageIcon(getClass().getResource("/images/logo.png"));
-        JLabel logoLabel = new JLabel(logoIcon);
-        logoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        mainPanel.add(logoLabel);
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.setOpaque(false);
+        topPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 0, 0));
 
-        JLabel eventTitleLabel = new JLabel(event.getSummary(), SwingConstants.CENTER);
-        eventTitleLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        eventTitleLabel.setForeground(new Color(255, 196, 0));
-        eventTitleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        mainPanel.add(eventTitleLabel);
+        JLabel titleLabel = new JLabel(event.getSummary(), SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        titleLabel.setForeground(Color.WHITE);
 
-        JPanel detailsPanel = new JPanel();
-        detailsPanel.setLayout(new BoxLayout(detailsPanel, BoxLayout.Y_AXIS));
-        detailsPanel.setBackground(new Color(5, 27, 74));
+        JButton closeXButton = new JButton("X");
+        closeXButton.setFont(new Font("Arial", Font.BOLD, 14));
+        closeXButton.setForeground(Color.GRAY);
+        closeXButton.setContentAreaFilled(false);
+        closeXButton.setBorderPainted(false);
+        closeXButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        closeXButton.addActionListener(e -> {
+            dialog.dispose();
+            overlayPanel.setVisible(false);
+        });
 
-        Font detailFont = new Font("Arial", Font.PLAIN, 14);
-        Color detailColor = new Color(200, 200, 200);
+        topPanel.add(titleLabel, BorderLayout.CENTER);
+        topPanel.add(closeXButton, BorderLayout.EAST);
 
         String descricao = event.getDescription() != null ? event.getDescription() : "Não especificado";
-        String descricaoFormatada = "<html><div style='width: 290px; text-align: center;'>Descrição: " + descricao.replace("\n", "<br>") + "</div></html>";
+        String local = event.getLocation() != null ? event.getLocation() : "Não especificado";
+        String data = event.getStart().getDateTime() != null
+                ? DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm").format(
+                        Instant.ofEpochMilli(event.getStart().getDateTime().getValue()).atZone(ZoneId.systemDefault()))
+                : "Não especificado";
 
-        JLabel descriptionLabel = new JLabel(descricaoFormatada, SwingConstants.CENTER);
-        descriptionLabel.setFont(detailFont);
-        descriptionLabel.setForeground(detailColor);
-        descriptionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel detailsLabel = new JLabel("<html>" + descricao + " | " + local + " | " + data + "</html>");
+        detailsLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        detailsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        detailsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        detailsLabel.setForeground(Color.LIGHT_GRAY);
+        detailsLabel.setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 20));
 
-        detailsPanel.add(descriptionLabel);
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
+        buttonPanel.setOpaque(false);
 
-        JLabel locationLabel = new JLabel("Localização: " + (event.getLocation() != null ? event.getLocation() : "Não especificado"));
-        locationLabel.setFont(detailFont);
-        locationLabel.setForeground(detailColor);
-        locationLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        detailsPanel.add(locationLabel);
+        JButton deleteButton = new JButton("Deletar") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        String horario = "";
-        if (event.getStart().getDateTime() != null && event.getEnd().getDateTime() != null) {
-            Instant startInstant = Instant.ofEpochMilli(event.getStart().getDateTime().getValue());
-            Instant endInstant = Instant.ofEpochMilli(event.getEnd().getDateTime().getValue());
+                g2.setColor(new Color(201, 53, 42));
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
 
-            String startTime = DateTimeFormatter.ofPattern("HH:mm").format(startInstant.atZone(ZoneId.systemDefault()).toLocalTime());
-            String endTime = DateTimeFormatter.ofPattern("HH:mm").format(endInstant.atZone(ZoneId.systemDefault()).toLocalTime());
+                super.paintComponent(g2);
+                g2.dispose();
+            }
 
-            horario = startTime + " às " + endTime;
-        }
-        JLabel timeLabel = new JLabel("Horário: " + (horario.isEmpty() ? "Não especificado" : horario));
-        timeLabel.setFont(detailFont);
-        timeLabel.setForeground(detailColor);
-        timeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        detailsPanel.add(timeLabel);
+            @Override
+            protected void paintBorder(Graphics g) {
+            }
+        };
+        deleteButton.setFont(new Font("Arial", Font.BOLD, 12));
+        deleteButton.setForeground(Color.WHITE);
+        deleteButton.setFocusPainted(false);
+        deleteButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        deleteButton.setContentAreaFilled(false);
+        deleteButton.setOpaque(false);
+        deleteButton.setBorder(BorderFactory.createEmptyBorder(10, 40, 10, 40));
 
-        mainPanel.add(detailsPanel);
+        deleteButton.addActionListener(e -> {
+            dialog.dispose();
+            overlayPanel.setVisible(false);
+            getLayeredPane().remove(overlayPanel);
+            repaint();
+        });
 
-        JButton closeButton = new JButton("Fechar");
-        closeButton.setFont(new Font("Arial", Font.BOLD, 14));
-        closeButton.setBackground(new Color(155, 0, 0));
+        JButton closeButton = new JButton("Fechar") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                g2.setColor(new Color(80, 80, 80));
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
+
+                super.paintComponent(g2);
+                g2.dispose();
+            }
+
+            @Override
+            protected void paintBorder(Graphics g) {
+            }
+        };
+        closeButton.setFont(new Font("Arial", Font.BOLD, 12));
         closeButton.setForeground(Color.WHITE);
-        closeButton.setBorder(BorderFactory.createEmptyBorder(10, 50, 10, 50));
         closeButton.setFocusPainted(false);
-        closeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        closeButton.addActionListener(e -> dialog.dispose());
+        closeButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        closeButton.setContentAreaFilled(false);
+        closeButton.setOpaque(false);
+        closeButton.setBorder(BorderFactory.createEmptyBorder(10, 40, 10, 40));
 
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setBackground(new Color(5, 27, 74));
+        closeButton.addActionListener(e -> {
+            dialog.dispose();
+            overlayPanel.setVisible(false);
+            getLayeredPane().remove(overlayPanel);
+            repaint();
+        });
+
+        buttonPanel.add(deleteButton);
         buttonPanel.add(closeButton);
 
-        dialog.add(mainPanel, BorderLayout.CENTER);
-        dialog.add(buttonPanel, BorderLayout.SOUTH);
+        SwingUtilities.invokeLater(() -> {
+            dialog.pack();
 
-        int linhas = (descricao.length() / 50) + 1;
-        int alturaDescricao = Math.max(linhas * 18, 30);
-        int alturaTotal = 200 + alturaDescricao;
+            int preferredHeight = detailsLabel.getPreferredSize().height;
 
-        dialog.setSize(400, Math.max(alturaTotal, 250));
+            int newHeight = Math.max(160, preferredHeight + 100);
+            dialog.setSize(new Dimension(500, newHeight));
+
+            Point parentLocation = this.getLocationOnScreen();
+            Dimension parentSize = this.getSize();
+            Dimension dialogSize = dialog.getSize();
+
+            int newX = parentLocation.x + (parentSize.width - dialogSize.width) / 2;
+            int newY = parentLocation.y + (parentSize.height - dialogSize.height) / 2 - 0;
+
+            dialog.setLocation(newX, newY);
+        });
+
+        mainPanel.add(topPanel, BorderLayout.NORTH);
+        mainPanel.add(detailsLabel, BorderLayout.CENTER);
+        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+        dialog.add(mainPanel);
+        dialog.pack();
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
+
     }
 
     private void atualizarLabelDataCalendario(LocalDate data) {
@@ -347,8 +433,8 @@ public class TelaEventoTable extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblContabilidade = new javax.swing.JLabel();
         lblCTCONTAB = new javax.swing.JLabel();
+        lblContabilidade = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jPanel3 = new javax.swing.JPanel();
@@ -383,27 +469,28 @@ public class TelaEventoTable extends javax.swing.JFrame {
         setTitle("Calendário - CT CONTAB");
         getContentPane().setLayout(null);
 
+        lblCTCONTAB.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblCTCONTAB.setForeground(new java.awt.Color(200, 200, 200));
+        lblCTCONTAB.setText("CT CONTAB");
+        getContentPane().add(lblCTCONTAB);
+        lblCTCONTAB.setBounds(90, 7, 190, 40);
+
+        lblContabilidade.setBackground(new java.awt.Color(204, 204, 204));
         lblContabilidade.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
         lblContabilidade.setForeground(new java.awt.Color(153, 153, 0));
         lblContabilidade.setText("Contabilidade & Consultoria");
         getContentPane().add(lblContabilidade);
         lblContabilidade.setBounds(90, 7, 205, 80);
 
-        lblCTCONTAB.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblCTCONTAB.setForeground(new java.awt.Color(204, 204, 204));
-        lblCTCONTAB.setText("CT CONTAB");
-        getContentPane().add(lblCTCONTAB);
-        lblCTCONTAB.setBounds(90, 7, 190, 40);
-
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        jSeparator3.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.lightGray, 3));
         getContentPane().add(jSeparator3);
         jSeparator3.setBounds(1236, 205, 2, 432);
 
+        jSeparator2.setBackground(new java.awt.Color(204, 204, 204));
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        jSeparator2.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.lightGray, 3));
+        jSeparator2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         getContentPane().add(jSeparator2);
-        jSeparator2.setBounds(311, 205, 2, 432);
+        jSeparator2.setBounds(311, 205, 3, 432);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255, 12));
         getContentPane().add(jPanel3);
@@ -437,10 +524,15 @@ public class TelaEventoTable extends javax.swing.JFrame {
         jPanel2.setBounds(90, 205, 200, 260);
 
         btnCriarEvento.setBackground(new java.awt.Color(51, 51, 51));
-        btnCriarEvento.setFont(new java.awt.Font("SansSerif", 1, 13)); // NOI18N
+        btnCriarEvento.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
         btnCriarEvento.setForeground(new java.awt.Color(255, 255, 255));
         btnCriarEvento.setText("+ Novo Evento");
-        btnCriarEvento.setBorder(null);
+        btnCriarEvento.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 51, 51), 1, true));
+        btnCriarEvento.setBorderPainted(false);
+        btnCriarEvento.setContentAreaFilled(false);
+        btnCriarEvento.setFocusPainted(false);
+        btnCriarEvento.setOpaque(true);
+        btnCriarEvento.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnCriarEvento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCriarEventoActionPerformed(evt);

@@ -5,6 +5,7 @@ import Data.IconUtil;
 import Data.PermissaoUtil;
 import Data.Relatorio;
 import Data.Usuario;
+import Screen.MensagemUtil;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Toolkit;
@@ -226,9 +227,11 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
             listarRelatorios.remove(row);
             atualizarTabela(listarRelatorios);
 
-            JOptionPane.showMessageDialog(null, "Tarefa excluída com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            // JOptionPane.showMessageDialog(null, "Tarefa excluída com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            MensagemUtil.exibirSucesso("Relatório excluído com sucesso!");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao excluir tarefa: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            // JOptionPane.showMessageDialog(null, "Erro ao excluir tarefa: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            MensagemUtil.exibirErro("Erro ao excluir relatório!");
         }
     }
 
@@ -290,7 +293,6 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         lblContabilidade.setBounds(90, 7, 205, 80);
 
         lblCTCONTAB.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblCTCONTAB.setForeground(new java.awt.Color(204, 204, 204));
         lblCTCONTAB.setText("CT CONTAB");
         getContentPane().add(lblCTCONTAB);
         lblCTCONTAB.setBounds(90, 7, 190, 40);
@@ -324,11 +326,8 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         jTable1.setShowHorizontalLines(true);
         jTable1.getColumn("AÇÃO 1").setCellRenderer(new ButtonRenderer());
         jTable1.getColumn("AÇÃO 1").setCellEditor(new ButtonEditor(new JCheckBox(), "Editar"));
-
         jTable1.getColumn("AÇÃO 3").setCellRenderer(new ButtonRenderer());
         jTable1.getColumn("AÇÃO 3").setCellEditor(new ButtonEditor(new JCheckBox(), "Excluir"));
-
-        // Adiciona a tabela no painel principal
         add(new JScrollPane(jTable1), BorderLayout.CENTER);
         ajustarLarguraColunas();
         jTable1.setTableHeader(null);

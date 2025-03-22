@@ -2,8 +2,12 @@ package screen;
 
 import Data.Usuario;
 import Data.CTCONTAB;
+import Screen.MensagemUtil;
+import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import javax.swing.JOptionPane;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -61,6 +65,10 @@ public class TelaLogin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnCopiar2 = new javax.swing.JButton();
+        btnCopiar = new javax.swing.JButton();
+        lblCopy = new javax.swing.JLabel();
+        lblCopy2 = new javax.swing.JLabel();
         lblCTCONTAB = new javax.swing.JLabel();
         lblContabilidade = new javax.swing.JLabel();
         btnTermosServico = new javax.swing.JButton();
@@ -89,6 +97,39 @@ public class TelaLogin extends javax.swing.JFrame {
         setTitle("Login - CT CONTAB");
         getContentPane().setLayout(null);
 
+        btnCopiar2.setBackground(new java.awt.Color(30, 30, 30));
+        btnCopiar2.setContentAreaFilled(false);
+        btnCopiar2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCopiar2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCopiar2);
+        btnCopiar2.setBounds(570, 270, 30, 40);
+
+        btnCopiar.setBackground(new java.awt.Color(30, 30, 30));
+        btnCopiar.setContentAreaFilled(false);
+        btnCopiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCopiarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCopiar);
+        btnCopiar.setBounds(570, 200, 30, 40);
+
+        lblCopy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/copy-file.png"))); // NOI18N
+        lblCopy.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                lblCopyKeyPressed(evt);
+            }
+        });
+        getContentPane().add(lblCopy);
+        lblCopy.setBounds(570, 200, 30, 40);
+
+        lblCopy2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/copy-file.png"))); // NOI18N
+        getContentPane().add(lblCopy2);
+        lblCopy2.setBounds(570, 270, 30, 40);
+
         lblCTCONTAB.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lblCTCONTAB.setForeground(new java.awt.Color(204, 204, 204));
         lblCTCONTAB.setText("CT CONTAB");
@@ -113,15 +154,16 @@ public class TelaLogin extends javax.swing.JFrame {
 
         jlibErroLoginIcon.setFont(new java.awt.Font("Segoe UI", 2, 10)); // NOI18N
         jlibErroLoginIcon.setForeground(new java.awt.Color(255, 0, 0));
-        jlibErroLoginIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/alert-icon.png"))); // NOI18N
+        jlibErroLoginIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/red-alert.png"))); // NOI18N
         getContentPane().add(jlibErroLoginIcon);
-        jlibErroLoginIcon.setBounds(565, 200, 50, 40);
+        jlibErroLoginIcon.setBounds(543, 200, 50, 40);
 
         jlibErroLogin.setFont(new java.awt.Font("Segoe UI", 2, 10)); // NOI18N
         jlibErroLogin.setForeground(new java.awt.Color(255, 0, 0));
+        jlibErroLogin.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jlibErroLogin.setText("Usuário ou senha estão errados!");
         getContentPane().add(jlibErroLogin);
-        jlibErroLogin.setBounds(456, 310, 144, 40);
+        jlibErroLogin.setBounds(416, 310, 180, 40);
 
         jlibEsqueceuASenha.setFont(new java.awt.Font("SansSerif", 0, 10)); // NOI18N
         jlibEsqueceuASenha.setForeground(new java.awt.Color(194, 166, 40));
@@ -150,7 +192,7 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
         getContentPane().add(chbMostrarSenha);
-        chbMostrarSenha.setBounds(565, 270, 30, 40);
+        chbMostrarSenha.setBounds(540, 270, 30, 40);
 
         txtLogin.setBackground(new java.awt.Color(4, 21, 57));
         txtLogin.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
@@ -324,15 +366,36 @@ public class TelaLogin extends javax.swing.JFrame {
             }
 
         } catch (ClassNotFoundException x) {
-            JOptionPane.showMessageDialog(null, "Driver JDBC não encontrado " + x.getMessage());
+            // JOptionPane.showMessageDialog(null, "Driver JDBC não encontrado " + x.getMessage());
+            MensagemUtil.exibirErro("Driver JDBC não encontrado!");
         } catch (SQLException x) {
-            JOptionPane.showMessageDialog(null, "Erro na conexão com o banco de dados " + x.getMessage());
+            // JOptionPane.showMessageDialog(null, "Erro na conexão com o banco de dados " + x.getMessage());
+            MensagemUtil.exibirErro("Erro na conexão com o banco de dados!");
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void mostrarMensagemErro() {
         jlibErroLoginIcon.setVisible(true);
         jlibErroLogin.setText("Usuário ou senha estão errados!");
+        jlibErroLogin.setForeground(Color.RED);
+        jlibErroLogin.setVisible(true);
+    }
+
+    private void mostrarMensagemCopiaComSucesso() {
+        jlibErroLogin.setText("Cópia do login feita com sucesso!");
+        jlibErroLogin.setForeground(Color.GREEN);
+        jlibErroLogin.setVisible(true);
+    }
+
+    private void mostrarMensagemCopia2ComSucesso() {
+        jlibErroLogin.setText("Cópia da senha feita com sucesso!");
+        jlibErroLogin.setForeground(Color.GREEN);
+        jlibErroLogin.setVisible(true);
+    }
+
+    private void mostrarMensagemErroNaCopia() {
+        jlibErroLogin.setText("Erro na cópia, Tente Novamente!");
+        jlibErroLogin.setForeground(Color.RED);
         jlibErroLogin.setVisible(true);
     }
 
@@ -407,6 +470,36 @@ public class TelaLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtLoginKeyPressed
 
+    private void lblCopyKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lblCopyKeyPressed
+
+    }//GEN-LAST:event_lblCopyKeyPressed
+
+    private void btnCopiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCopiarActionPerformed
+        String texto = txtLogin.getText();
+        StringSelection stringSelection = new StringSelection(texto);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+
+        if (clipboard != null) {
+            clipboard.setContents(stringSelection, null);
+            mostrarMensagemCopiaComSucesso();
+        } else {
+            mostrarMensagemErroNaCopia();
+        }
+    }//GEN-LAST:event_btnCopiarActionPerformed
+
+    private void btnCopiar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCopiar2ActionPerformed
+        String senha = txtSenha.getText();
+        StringSelection stringSelection = new StringSelection(senha);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+
+        if (clipboard != null) {
+            clipboard.setContents(stringSelection, null);
+            mostrarMensagemCopia2ComSucesso();
+        } else {
+            mostrarMensagemErroNaCopia();
+        }
+    }//GEN-LAST:event_btnCopiar2ActionPerformed
+
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -442,6 +535,8 @@ public class TelaLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
+    private javax.swing.JButton btnCopiar;
+    private javax.swing.JButton btnCopiar2;
     private javax.swing.JButton btnEsqueceuSenha;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnResgistrar;
@@ -462,6 +557,8 @@ public class TelaLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jlibLogo;
     private javax.swing.JLabel lblCTCONTAB;
     private javax.swing.JLabel lblContabilidade;
+    private javax.swing.JLabel lblCopy;
+    private javax.swing.JLabel lblCopy2;
     private javax.swing.JTextField txtLogin;
     private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables

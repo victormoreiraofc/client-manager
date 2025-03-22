@@ -1,0 +1,14 @@
+screen.TelaConfiguracao$1
+screen.TelaConfiguracao$13
+screen.TelaConfiguracao$2
+screen.TelaConfiguracao$12
+screen.TelaConfiguracao$3
+screen.TelaConfiguracao$11
+screen.TelaConfiguracao$4
+screen.TelaConfiguracao$10
+screen.TelaConfiguracao$9
+screen.TelaConfiguracao$5
+screen.TelaConfiguracao$6
+screen.TelaConfiguracao
+screen.TelaConfiguracao$7
+screen.TelaConfiguracao$8

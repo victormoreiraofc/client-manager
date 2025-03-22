@@ -5,6 +5,7 @@ import Data.CTCONTAB;
 import Data.IconUtil;
 import Data.PermissaoUtil;
 import Data.Usuario;
+import Screen.MensagemUtil;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Toolkit;
@@ -252,9 +253,11 @@ public class TelaClienteTable extends javax.swing.JFrame {
                 listaClientes.remove(row);
                 atualizarTabela(listaClientes);
 
-                JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                // JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                MensagemUtil.exibirSucesso("Cliente excluído com sucesso!");
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro ao excluir cliente: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                // JOptionPane.showMessageDialog(null, "Erro ao excluir cliente: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                MensagemUtil.exibirErro("Erro ao excluir cliente!");
             }
         }
     }

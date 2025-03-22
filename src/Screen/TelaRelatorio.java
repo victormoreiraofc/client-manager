@@ -6,6 +6,7 @@ import Data.IconUtil;
 import Data.PermissaoUtil;
 import Data.Relatorio;
 import Data.Usuario;
+import Screen.MensagemUtil;
 import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 import java.sql.SQLException;
@@ -67,13 +68,16 @@ public class TelaRelatorio extends javax.swing.JFrame {
 
             if (relatorio.getId() == 0) {
                 CTCONTAB.registrarRelatorio(relatorio);
-                JOptionPane.showMessageDialog(this, "Novo relatorio cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                // JOptionPane.showMessageDialog(this, "Novo relatorio cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                MensagemUtil.exibirSucesso("Novo relatório cadastrado com sucesso!");
             } else {
                 CTCONTAB.atualizarRelatorio(relatorio);
-                JOptionPane.showMessageDialog(this, "Relatorio atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                // JOptionPane.showMessageDialog(this, "Relatorio atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                MensagemUtil.exibirSucesso("Relatorio atualizado com sucesso!");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Erro ao salvar alterações: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            // JOptionPane.showMessageDialog(this, "Erro ao salvar alterações: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            MensagemUtil.exibirErro("Erro ao salvar alterações!");
             e.printStackTrace();
         }
     }
@@ -91,15 +95,18 @@ public class TelaRelatorio extends javax.swing.JFrame {
                 if (resposta == JOptionPane.YES_OPTION) {
                     excluirRegistro("relatorio", "id", idRelatorio);
 
-                    JOptionPane.showMessageDialog(this, "Relatório excluído com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                    //JOptionPane.showMessageDialog(this, "Relatório excluído com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                    MensagemUtil.exibirSucesso("Relatório excluído com sucesso!");
                     new TelaRelatorioTable(usuarioLogado).setVisible(true);
                     this.dispose();
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Nenhum relatório selecionado para exclusão!", "Erro", JOptionPane.ERROR_MESSAGE);
+                // JOptionPane.showMessageDialog(this, "Nenhum relatório selecionado para exclusão!", "Erro", JOptionPane.ERROR_MESSAGE);
+                MensagemUtil.exibirErro("Nenhum relatório selecionado para exclusão!");
             }
         } catch (SQLException | ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(this, "Erro ao excluir relatório: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            // JOptionPane.showMessageDialog(this, "Erro ao excluir relatório: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            MensagemUtil.exibirErro("Erro ao excluir relatório!");
         }
     }
 

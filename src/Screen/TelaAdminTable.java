@@ -4,6 +4,7 @@ import Data.CTCONTAB;
 import Data.Funcionario;
 import Data.IconUtil;
 import Data.Usuario;
+import Screen.MensagemUtil;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Toolkit;
@@ -255,9 +256,11 @@ public class TelaAdminTable extends javax.swing.JFrame {
                 funcionario.setPermissao(novaPermissao);
                 atualizarTabela(listaFuncionarios);
 
-                JOptionPane.showMessageDialog(null, "Permissão alterada para: " + novaPermissao, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                // JOptionPane.showMessageDialog(null, "Permissão alterada para: " + novaPermissao, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                MensagemUtil.exibirSucesso("Permissão alterada para: " + novaPermissao);
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro ao alterar permissão: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                // JOptionPane.showMessageDialog(null, "Erro ao alterar permissão: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                MensagemUtil.exibirErro("Erro ao alterar permissão!");
             }
         }
 
@@ -272,9 +275,11 @@ public class TelaAdminTable extends javax.swing.JFrame {
                 funcionario.setPermissao(novaPermissao);
                 atualizarTabela(listaFuncionarios);
 
-                JOptionPane.showMessageDialog(null, "Permissão revertida para: " + novaPermissao, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                // JOptionPane.showMessageDialog(null, "Permissão revertida para: " + novaPermissao, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                MensagemUtil.exibirSucesso("Permissão revertida para: " + novaPermissao);
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro ao reverter permissão: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                // JOptionPane.showMessageDialog(null, "Erro ao reverter permissão: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                MensagemUtil.exibirErro("Erro ao reverter permissão!");
             }
         }
 
@@ -287,9 +292,11 @@ public class TelaAdminTable extends javax.swing.JFrame {
                 listaFuncionarios.remove(row);
                 atualizarTabela(listaFuncionarios);
 
-                JOptionPane.showMessageDialog(null, "Tarefa excluída com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                // JOptionPane.showMessageDialog(null, "Tarefa excluída com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                MensagemUtil.exibirSucesso("Usuário excluído com sucesso!");
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro ao excluir tarefa: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                // JOptionPane.showMessageDialog(null, "Erro ao excluir tarefa: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                MensagemUtil.exibirErro("Erro ao excluir usuário!");
             }
         }
 

@@ -1,0 +1,15 @@
+screen.TelaMenu$14
+screen.TelaMenu$5
+screen.TelaMenu$6
+screen.TelaMenu$7
+screen.TelaMenu$8
+screen.TelaMenu$9
+screen.TelaMenu$12
+screen.TelaMenu$13
+screen.TelaMenu$10
+screen.TelaMenu$11
+screen.TelaMenu$1
+screen.TelaMenu$2
+screen.TelaMenu$3
+screen.TelaMenu$4
+screen.TelaMenu
