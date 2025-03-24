@@ -12,3 +12,7 @@ screen.TelaConfiguracao$6
 screen.TelaConfiguracao
 screen.TelaConfiguracao$7
 screen.TelaConfiguracao$8
+screen.TelaConfiguracao$17
+screen.TelaConfiguracao$16
+screen.TelaConfiguracao$15
+screen.TelaConfiguracao$14

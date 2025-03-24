@@ -192,12 +192,12 @@ public class TelaMenu extends javax.swing.JFrame {
         btnNotificacoes = new javax.swing.JButton();
         btnHome = new javax.swing.JButton();
         btnCalendario = new javax.swing.JButton();
-        JPanelTelaAcesso = new javax.swing.JPanel();
         btnClientes = new javax.swing.JButton();
         btnRelatorios = new javax.swing.JButton();
         btnTarefas = new javax.swing.JButton();
         btnConfiguracoes = new javax.swing.JButton();
         btnAdministracao = new javax.swing.JButton();
+        JPanelTelaAcesso = new javax.swing.JPanel();
         jlibCadastrarNovo = new javax.swing.JLabel();
         jlibSeta = new javax.swing.JLabel();
         btnCadastrar = new javax.swing.JButton();
@@ -223,6 +223,12 @@ public class TelaMenu extends javax.swing.JFrame {
         jPanelBackground4 = new javax.swing.JPanel();
         jPanelBackground5 = new javax.swing.JPanel();
         Background = new javax.swing.JLabel();
+        JPanelTelaAcesso1 = new javax.swing.JPanel();
+        JPanelTelaAcesso2 = new javax.swing.JPanel();
+        JPanelTelaAcesso3 = new javax.swing.JPanel();
+        JPanelTelaAcesso4 = new javax.swing.JPanel();
+        JPanelTelaAcesso6 = new javax.swing.JPanel();
+        JPanelTelaAcesso5 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Home - CT CONTAB");
@@ -235,7 +241,7 @@ public class TelaMenu extends javax.swing.JFrame {
         lblContabilidade.setBounds(90, 7, 205, 80);
 
         lblCTCONTAB.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblCTCONTAB.setForeground(new java.awt.Color(204, 204, 204));
+        lblCTCONTAB.setForeground(new java.awt.Color(200, 200, 200));
         lblCTCONTAB.setText("CT CONTAB");
         getContentPane().add(lblCTCONTAB);
         lblCTCONTAB.setBounds(90, 7, 190, 40);
@@ -249,7 +255,7 @@ public class TelaMenu extends javax.swing.JFrame {
         getContentPane().add(btnNotificacoes);
         btnNotificacoes.setBounds(1160, 10, 60, 60);
 
-        btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/home-icon.png"))); // NOI18N
+        btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/home-menu.png"))); // NOI18N
         btnHome.setContentAreaFilled(false);
         btnHome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -257,9 +263,9 @@ public class TelaMenu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnHome);
-        btnHome.setBounds(0, 100, 80, 50);
+        btnHome.setBounds(0, 120, 80, 50);
 
-        btnCalendario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/event-icon.png"))); // NOI18N
+        btnCalendario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/calendar-menu.png"))); // NOI18N
         btnCalendario.setContentAreaFilled(false);
         btnCalendario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -267,13 +273,9 @@ public class TelaMenu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnCalendario);
-        btnCalendario.setBounds(5, 184, 70, 50);
+        btnCalendario.setBounds(0, 190, 80, 50);
 
-        JPanelTelaAcesso.setBackground(new java.awt.Color(194, 166, 40));
-        getContentPane().add(JPanelTelaAcesso);
-        JPanelTelaAcesso.setBounds(0, 90, 80, 70);
-
-        btnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/client-icon.png"))); // NOI18N
+        btnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/client-menu.png"))); // NOI18N
         btnClientes.setContentAreaFilled(false);
         btnClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -283,7 +285,7 @@ public class TelaMenu extends javax.swing.JFrame {
         getContentPane().add(btnClientes);
         btnClientes.setBounds(5, 260, 70, 50);
 
-        btnRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/relatory-icon.png"))); // NOI18N
+        btnRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/relatory-menu.png"))); // NOI18N
         btnRelatorios.setContentAreaFilled(false);
         btnRelatorios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -291,9 +293,9 @@ public class TelaMenu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnRelatorios);
-        btnRelatorios.setBounds(5, 340, 70, 50);
+        btnRelatorios.setBounds(0, 330, 80, 50);
 
-        btnTarefas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/task-icon.png"))); // NOI18N
+        btnTarefas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/task-menu.png"))); // NOI18N
         btnTarefas.setContentAreaFilled(false);
         btnTarefas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -301,9 +303,9 @@ public class TelaMenu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnTarefas);
-        btnTarefas.setBounds(0, 420, 80, 50);
+        btnTarefas.setBounds(0, 400, 80, 50);
 
-        btnConfiguracoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/config-icon.png"))); // NOI18N
+        btnConfiguracoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/configuration-menu.png"))); // NOI18N
         btnConfiguracoes.setContentAreaFilled(false);
         btnConfiguracoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -311,9 +313,9 @@ public class TelaMenu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnConfiguracoes);
-        btnConfiguracoes.setBounds(0, 500, 80, 50);
+        btnConfiguracoes.setBounds(0, 470, 80, 50);
 
-        btnAdministracao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/admin-icon.png"))); // NOI18N
+        btnAdministracao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/admin-menu.png"))); // NOI18N
         btnAdministracao.setContentAreaFilled(false);
         btnAdministracao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -321,7 +323,11 @@ public class TelaMenu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnAdministracao);
-        btnAdministracao.setBounds(0, 570, 80, 60);
+        btnAdministracao.setBounds(2, 530, 80, 70);
+
+        JPanelTelaAcesso.setBackground(new java.awt.Color(194, 166, 40));
+        getContentPane().add(JPanelTelaAcesso);
+        JPanelTelaAcesso.setBounds(0, 110, 80, 70);
 
         jlibCadastrarNovo.setFont(new java.awt.Font("Segoe UI", 1, 23)); // NOI18N
         jlibCadastrarNovo.setForeground(new java.awt.Color(205, 168, 16));
@@ -468,6 +474,30 @@ public class TelaMenu extends javax.swing.JFrame {
         getContentPane().add(Background);
         Background.setBounds(0, 0, 1280, 711);
 
+        JPanelTelaAcesso1.setBackground(new java.awt.Color(194, 166, 40));
+        getContentPane().add(JPanelTelaAcesso1);
+        JPanelTelaAcesso1.setBounds(0, 180, 80, 70);
+
+        JPanelTelaAcesso2.setBackground(new java.awt.Color(194, 166, 40));
+        getContentPane().add(JPanelTelaAcesso2);
+        JPanelTelaAcesso2.setBounds(0, 320, 80, 70);
+
+        JPanelTelaAcesso3.setBackground(new java.awt.Color(194, 166, 40));
+        getContentPane().add(JPanelTelaAcesso3);
+        JPanelTelaAcesso3.setBounds(0, 460, 80, 70);
+
+        JPanelTelaAcesso4.setBackground(new java.awt.Color(194, 166, 40));
+        getContentPane().add(JPanelTelaAcesso4);
+        JPanelTelaAcesso4.setBounds(0, 250, 80, 70);
+
+        JPanelTelaAcesso6.setBackground(new java.awt.Color(194, 166, 40));
+        getContentPane().add(JPanelTelaAcesso6);
+        JPanelTelaAcesso6.setBounds(0, 530, 80, 70);
+
+        JPanelTelaAcesso5.setBackground(new java.awt.Color(194, 166, 40));
+        getContentPane().add(JPanelTelaAcesso5);
+        JPanelTelaAcesso5.setBounds(0, 390, 80, 70);
+
         setSize(new java.awt.Dimension(1294, 708));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -516,6 +546,12 @@ public class TelaMenu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
     private javax.swing.JPanel JPanelTelaAcesso;
+    private javax.swing.JPanel JPanelTelaAcesso1;
+    private javax.swing.JPanel JPanelTelaAcesso2;
+    private javax.swing.JPanel JPanelTelaAcesso3;
+    private javax.swing.JPanel JPanelTelaAcesso4;
+    private javax.swing.JPanel JPanelTelaAcesso5;
+    private javax.swing.JPanel JPanelTelaAcesso6;
     private javax.swing.JButton btnAdministracao;
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnCalendario;

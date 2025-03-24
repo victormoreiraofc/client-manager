@@ -7,9 +7,13 @@ import Data.PermissaoUtil;
 import Data.Relatorio;
 import Data.Usuario;
 import Screen.MensagemUtil;
+import java.awt.Color;
 import java.awt.Toolkit;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import javax.swing.JOptionPane;
 import java.sql.SQLException;
+import javax.swing.JTextField;
 
 public class TelaRelatorio extends javax.swing.JFrame {
 
@@ -37,10 +41,7 @@ public class TelaRelatorio extends javax.swing.JFrame {
     }
 
     private void preencherCamposNovoRelatorio() {
-        txtNomeRelatorio.setText("  Nome do Relatório.");
-        txtDescricao.setText("  Descreva o Relatório.");
         txtStatusRelatorio.setSelectedItem("Pendente");
-        txtDataCadastro.setText(" Data de Cadastro.");
         jLabel6.setText("0");
     }
 
@@ -109,11 +110,42 @@ public class TelaRelatorio extends javax.swing.JFrame {
             MensagemUtil.exibirErro("Erro ao excluir relatório!");
         }
     }
+        
+    private void addPlaceholder(JTextField field, String placeholder) {
+        field.setText(placeholder);
+        field.setForeground(Color.GRAY);
+
+        field.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (field.getText().equals(placeholder)) {
+                    field.setText("");
+                    field.setForeground(Color.WHITE);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (field.getText().isEmpty()) {
+                    field.setText(placeholder);
+                    field.setForeground(Color.GRAY);
+                }
+            }
+        });
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnHome = new javax.swing.JButton();
+        btnCalendario = new javax.swing.JButton();
+        btnClientes = new javax.swing.JButton();
+        btnRelatorios = new javax.swing.JButton();
+        btnTarefas = new javax.swing.JButton();
+        btnConfiguracoes = new javax.swing.JButton();
+        btnAdministracao = new javax.swing.JButton();
+        JPanelTelaAcesso2 = new javax.swing.JPanel();
         lblContabilidade = new javax.swing.JLabel();
         lblCTCONTAB = new javax.swing.JLabel();
         btnNotificacoes = new javax.swing.JButton();
@@ -126,10 +158,6 @@ public class TelaRelatorio extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         btnLogin = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         txtNomeRelatorio = new javax.swing.JTextField();
         txtDescricao = new javax.swing.JTextField();
         txtDataCadastro = new javax.swing.JTextField();
@@ -137,14 +165,14 @@ public class TelaRelatorio extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         txtStatusRelatorio = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        btnHome = new javax.swing.JButton();
-        btnCalendario = new javax.swing.JButton();
-        btnClientes = new javax.swing.JButton();
-        btnRelatorios = new javax.swing.JButton();
-        btnTarefas = new javax.swing.JButton();
-        btnConfiguracoes = new javax.swing.JButton();
-        btnAdministracao = new javax.swing.JButton();
-        JPanelTelaAcesso = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jlibLogo2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -155,6 +183,80 @@ public class TelaRelatorio extends javax.swing.JFrame {
         setTitle("Novo Relatório - CT CONTAB");
         getContentPane().setLayout(null);
 
+        btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/home-menu.png"))); // NOI18N
+        btnHome.setContentAreaFilled(false);
+        btnHome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHomeActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnHome);
+        btnHome.setBounds(0, 120, 80, 50);
+
+        btnCalendario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/calendar-menu.png"))); // NOI18N
+        btnCalendario.setContentAreaFilled(false);
+        btnCalendario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalendarioActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCalendario);
+        btnCalendario.setBounds(0, 190, 80, 50);
+
+        btnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/client-menu.png"))); // NOI18N
+        btnClientes.setContentAreaFilled(false);
+        btnClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClientesActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnClientes);
+        btnClientes.setBounds(5, 260, 70, 50);
+
+        btnRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/relatory-menu.png"))); // NOI18N
+        btnRelatorios.setContentAreaFilled(false);
+        btnRelatorios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRelatoriosActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnRelatorios);
+        btnRelatorios.setBounds(0, 330, 80, 50);
+
+        btnTarefas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/task-menu.png"))); // NOI18N
+        btnTarefas.setContentAreaFilled(false);
+        btnTarefas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTarefasActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnTarefas);
+        btnTarefas.setBounds(0, 400, 80, 50);
+
+        btnConfiguracoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/configuration-menu.png"))); // NOI18N
+        btnConfiguracoes.setContentAreaFilled(false);
+        btnConfiguracoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfiguracoesActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnConfiguracoes);
+        btnConfiguracoes.setBounds(0, 470, 80, 50);
+
+        btnAdministracao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/admin-menu.png"))); // NOI18N
+        btnAdministracao.setContentAreaFilled(false);
+        btnAdministracao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdministracaoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnAdministracao);
+        btnAdministracao.setBounds(2, 530, 80, 70);
+
+        JPanelTelaAcesso2.setBackground(new java.awt.Color(194, 166, 40));
+        getContentPane().add(JPanelTelaAcesso2);
+        JPanelTelaAcesso2.setBounds(0, 320, 80, 70);
+
         lblContabilidade.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
         lblContabilidade.setForeground(new java.awt.Color(153, 153, 0));
         lblContabilidade.setText("Contabilidade & Consultoria");
@@ -162,7 +264,7 @@ public class TelaRelatorio extends javax.swing.JFrame {
         lblContabilidade.setBounds(90, 7, 205, 80);
 
         lblCTCONTAB.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblCTCONTAB.setForeground(new java.awt.Color(204, 204, 204));
+        lblCTCONTAB.setForeground(new java.awt.Color(200, 200, 200));
         lblCTCONTAB.setText("CT CONTAB");
         getContentPane().add(lblCTCONTAB);
         lblCTCONTAB.setBounds(90, 7, 190, 40);
@@ -232,34 +334,9 @@ public class TelaRelatorio extends javax.swing.JFrame {
         jPanel1.add(btnLogin);
         btnLogin.setBounds(780, 490, 170, 40);
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Nome do Relatório");
-        jPanel1.add(jLabel9);
-        jLabel9.setBounds(20, 70, 140, 30);
-
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Descrição");
-        jPanel1.add(jLabel10);
-        jLabel10.setBounds(20, 140, 100, 30);
-
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Status");
-        jPanel1.add(jLabel11);
-        jLabel11.setBounds(20, 210, 100, 30);
-
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Data de Cadastro");
-        jPanel1.add(jLabel12);
-        jLabel12.setBounds(20, 280, 120, 30);
-
         txtNomeRelatorio.setBackground(new java.awt.Color(4, 21, 57));
         txtNomeRelatorio.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         txtNomeRelatorio.setForeground(new java.awt.Color(115, 115, 115));
-        txtNomeRelatorio.setText("  Nome do Relatório.");
         txtNomeRelatorio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
         txtNomeRelatorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -267,12 +344,14 @@ public class TelaRelatorio extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtNomeRelatorio);
-        txtNomeRelatorio.setBounds(20, 100, 250, 40);
+        txtNomeRelatorio.setBounds(20, 120, 510, 40);
+        addPlaceholder(txtNomeRelatorio, "  Digite o nome do relatório");
+        addPlaceholder(txtDescricao, "  Digite sobre o relatório");
+        addPlaceholder(txtDataCadastro, "  Digite o Ano-Mês-Dia");
 
         txtDescricao.setBackground(new java.awt.Color(4, 21, 57));
         txtDescricao.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         txtDescricao.setForeground(new java.awt.Color(115, 115, 115));
-        txtDescricao.setText("  Descreva o Relatório.");
         txtDescricao.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
         txtDescricao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -280,12 +359,11 @@ public class TelaRelatorio extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtDescricao);
-        txtDescricao.setBounds(20, 170, 430, 40);
+        txtDescricao.setBounds(20, 220, 510, 40);
 
         txtDataCadastro.setBackground(new java.awt.Color(4, 21, 57));
         txtDataCadastro.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         txtDataCadastro.setForeground(new java.awt.Color(115, 115, 115));
-        txtDataCadastro.setText(" Data de Cadastro.");
         txtDataCadastro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
         txtDataCadastro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -293,7 +371,7 @@ public class TelaRelatorio extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtDataCadastro);
-        txtDataCadastro.setBounds(20, 310, 250, 40);
+        txtDataCadastro.setBounds(20, 420, 510, 40);
 
         btnLogin1.setBackground(new java.awt.Color(194, 166, 40));
         btnLogin1.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
@@ -321,88 +399,58 @@ public class TelaRelatorio extends javax.swing.JFrame {
         txtStatusRelatorio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendente", "Em andamento", "Concluido" }));
         txtStatusRelatorio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
         jPanel1.add(txtStatusRelatorio);
-        txtStatusRelatorio.setBounds(20, 240, 250, 35);
+        txtStatusRelatorio.setBounds(20, 320, 510, 35);
 
         jLabel6.setVisible(false);
         jPanel1.add(jLabel6);
         jLabel6.setBounds(390, 330, 70, 0);
 
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("Nome do Relatório");
+        jPanel1.add(jLabel14);
+        jLabel14.setBounds(20, 70, 140, 30);
+
+        jLabel28.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel28.setText("Digite o título do relatório, sendo claro e conciso sobre o conteúdo.");
+        jPanel1.add(jLabel28);
+        jLabel28.setBounds(20, 100, 730, 16);
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Descrição");
+        jPanel1.add(jLabel15);
+        jLabel15.setBounds(20, 170, 140, 30);
+
+        jLabel29.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel29.setText("Adicione uma descrição detalhada do relatório, incluindo o propósito, os dados e as conclusões.");
+        jPanel1.add(jLabel29);
+        jLabel29.setBounds(20, 200, 730, 16);
+
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setText("Status");
+        jPanel1.add(jLabel16);
+        jLabel16.setBounds(20, 270, 140, 30);
+
+        jLabel30.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel30.setText("Indique o status atual do relatório (por exemplo, pendente, em andamento, concluída).");
+        jPanel1.add(jLabel30);
+        jLabel30.setBounds(20, 300, 730, 16);
+
+        jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setText("Data de Cadastro");
+        jPanel1.add(jLabel17);
+        jLabel17.setBounds(20, 370, 140, 30);
+
+        jLabel31.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel31.setText("Exibe a data de registro do relatório no sistema.");
+        jPanel1.add(jLabel31);
+        jLabel31.setBounds(20, 400, 730, 16);
+
         getContentPane().add(jPanel1);
         jPanel1.setBounds(110, 100, 1140, 540);
-
-        btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/home-icon.png"))); // NOI18N
-        btnHome.setContentAreaFilled(false);
-        btnHome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHomeActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnHome);
-        btnHome.setBounds(0, 100, 80, 50);
-
-        btnCalendario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/event-icon.png"))); // NOI18N
-        btnCalendario.setContentAreaFilled(false);
-        btnCalendario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCalendarioActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnCalendario);
-        btnCalendario.setBounds(5, 184, 70, 50);
-
-        btnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/client-icon.png"))); // NOI18N
-        btnClientes.setContentAreaFilled(false);
-        btnClientes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClientesActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnClientes);
-        btnClientes.setBounds(5, 260, 70, 50);
-
-        btnRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/relatory-icon.png"))); // NOI18N
-        btnRelatorios.setContentAreaFilled(false);
-        btnRelatorios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRelatoriosActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnRelatorios);
-        btnRelatorios.setBounds(5, 340, 70, 50);
-
-        btnTarefas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/task-icon.png"))); // NOI18N
-        btnTarefas.setContentAreaFilled(false);
-        btnTarefas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTarefasActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnTarefas);
-        btnTarefas.setBounds(0, 420, 80, 50);
-
-        btnConfiguracoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/config-icon.png"))); // NOI18N
-        btnConfiguracoes.setContentAreaFilled(false);
-        btnConfiguracoes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConfiguracoesActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnConfiguracoes);
-        btnConfiguracoes.setBounds(0, 500, 80, 50);
-
-        btnAdministracao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/admin-icon.png"))); // NOI18N
-        btnAdministracao.setContentAreaFilled(false);
-        btnAdministracao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdministracaoActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnAdministracao);
-        btnAdministracao.setBounds(0, 570, 80, 60);
-
-        JPanelTelaAcesso.setBackground(new java.awt.Color(194, 166, 40));
-        getContentPane().add(JPanelTelaAcesso);
-        JPanelTelaAcesso.setBounds(0, 330, 80, 70);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/azul.png"))); // NOI18N
         getContentPane().add(jLabel2);
@@ -428,26 +476,6 @@ public class TelaRelatorio extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
-        new TelaMenu(usuarioLogado).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnHomeActionPerformed
-
-    private void btnConfiguracoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracoesActionPerformed
-        new TelaConfiguracao(usuarioLogado).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnConfiguracoesActionPerformed
-
-    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-        new TelaClienteTable(usuarioLogado).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnClientesActionPerformed
-
-    private void btnAdministracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracaoActionPerformed
-        new TelaAdminTable(usuarioLogado).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnAdministracaoActionPerformed
-
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         new TelaRelatorioTable(usuarioLogado).setVisible(true);
         this.dispose();
@@ -469,21 +497,6 @@ public class TelaRelatorio extends javax.swing.JFrame {
         btnLogin1.addActionListener(e -> salvarAlteracoes(relatorio));
     }//GEN-LAST:event_btnLogin1ActionPerformed
 
-    private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarioActionPerformed
-        new TelaEventoTable(usuarioLogado).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnCalendarioActionPerformed
-
-    private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
-        new TelaRelatorioTable(usuarioLogado).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnRelatoriosActionPerformed
-
-    private void btnTarefasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTarefasActionPerformed
-        new TelaTarefaTable(usuarioLogado).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnTarefasActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         new TelaRelatorioTable(usuarioLogado).setVisible(true);
         this.dispose();
@@ -496,6 +509,41 @@ public class TelaRelatorio extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         excluirRelatorio();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
+        new TelaMenu(usuarioLogado).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnHomeActionPerformed
+
+    private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarioActionPerformed
+        new TelaEventoTable(usuarioLogado).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCalendarioActionPerformed
+
+    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
+        new TelaClienteTable(usuarioLogado).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnClientesActionPerformed
+
+    private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
+        new TelaRelatorioTable(usuarioLogado).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnRelatoriosActionPerformed
+
+    private void btnTarefasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTarefasActionPerformed
+        new TelaTarefaTable(usuarioLogado).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnTarefasActionPerformed
+
+    private void btnConfiguracoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracoesActionPerformed
+        new TelaConfiguracao(usuarioLogado).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnConfiguracoesActionPerformed
+
+    private void btnAdministracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracaoActionPerformed
+        new TelaAdminTable(usuarioLogado).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAdministracaoActionPerformed
 
     public static void main(String args[]) {
         try {
@@ -519,7 +567,7 @@ public class TelaRelatorio extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
-    private javax.swing.JPanel JPanelTelaAcesso;
+    private javax.swing.JPanel JPanelTelaAcesso2;
     private javax.swing.JButton btnAdministracao;
     private javax.swing.JButton btnCalendario;
     private javax.swing.JButton btnClientes;
@@ -534,16 +582,20 @@ public class TelaRelatorio extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel jlibLogo2;

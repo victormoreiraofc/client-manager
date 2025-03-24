@@ -15,7 +15,7 @@ public class CTCONTAB {
 
     private static Connection conectar() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        conectado = DriverManager.getConnection("jdbc:mysql://localhost:3306/ctcontab", "root", "");
+        conectado = DriverManager.getConnection("jdbc:mysql://localhost:3306/ctcontab", "root", "vmtvictor");
         return conectado;
     }
 
@@ -444,6 +444,69 @@ public class CTCONTAB {
         }
 
         return usuario;
+    }
+
+    public static void atualizarEmailUsuario(String emailAtual, String emailNovo) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+
+        String checkSql = "SELECT COUNT(*) FROM usuarios WHERE email = ?";
+        try (PreparedStatement checkSt = conectado.prepareStatement(checkSql)) {
+            checkSt.setString(1, emailNovo);
+            ResultSet rs = checkSt.executeQuery();
+            if (rs.next() && rs.getInt(1) > 0) {
+                throw new SQLException("O e-mail já está sendo usado por outro usuário.");
+            }
+        }
+
+        String sql = "UPDATE usuarios SET email = ? WHERE email = ?";
+        try (PreparedStatement st = conectado.prepareStatement(sql)) {
+            st.setString(1, emailNovo);
+            st.setString(2, emailAtual);
+            int rowsUpdated = st.executeUpdate();
+
+            if (rowsUpdated == 0) {
+                throw new SQLException("Nenhum usuário encontrado com esse e-mail.");
+            }
+        }
+    }
+
+    public static void atualizarNomeUsuario(String nomeAtual, String nomeNovo) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+
+        String checkSql = "SELECT COUNT(*) FROM usuarios WHERE usuario = ?";
+        try (PreparedStatement checkSt = conectado.prepareStatement(checkSql)) {
+            checkSt.setString(1, nomeNovo);
+            ResultSet rs = checkSt.executeQuery();
+            if (rs.next() && rs.getInt(1) > 0) {
+                throw new SQLException("O nome de usuário já está em uso.");
+            }
+        }
+
+        String sql = "UPDATE usuarios SET usuario = ? WHERE usuario = ?";
+        try (PreparedStatement st = conectado.prepareStatement(sql)) {
+            st.setString(1, nomeNovo);
+            st.setString(2, nomeAtual);
+            int rowsUpdated = st.executeUpdate();
+
+            if (rowsUpdated == 0) {
+                throw new SQLException("Nenhum usuário encontrado com esse nome.");
+            }
+        }
+    }
+
+    public static void atualizarSenhaUsuario(String email, String senhaNova) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+
+        String sql = "UPDATE usuarios SET senha = ? WHERE email = ?";
+        try (PreparedStatement st = conectado.prepareStatement(sql)) {
+            st.setString(1, senhaNova);
+            st.setString(2, email);
+            int rowsUpdated = st.executeUpdate();
+
+            if (rowsUpdated == 0) {
+                throw new SQLException("Nenhum usuário encontrado com esse e-mail.");
+            }
+        }
     }
 
 }

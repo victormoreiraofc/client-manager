@@ -21,6 +21,10 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import Screen.MensagemUtil;
+import java.awt.Color;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import javax.swing.JTextField;
 
 public class TelaCliente extends javax.swing.JFrame {
 
@@ -51,13 +55,9 @@ public class TelaCliente extends javax.swing.JFrame {
 
     private void preencherCamposNovoCliente() {
         lblNomeIndefinido.setText("Nome Indefinido");
-        txtNome.setText("  Nome e Sobrenome");
         txtTipoPessoa.setSelectedItem("Fisica");
         txtSituacaoServico.setSelectedItem("Pendente");
-        txtServico.setText("  Abertura de Empresa");
-        txtTelefone.setText("  (11) 23456789");
-        txtEmail.setText("  seuemail@gmail.com");
-        txtCelular.setText("  (11) 912345678");
+
         txtObservacoes.setText("");
         ZonedDateTime dataBrasilia = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -169,11 +169,42 @@ public class TelaCliente extends javax.swing.JFrame {
             MensagemUtil.exibirErro("Erro ao excluir cliente!");
         }
     }
+ 
+    private void addPlaceholder(JTextField field, String placeholder) {
+        field.setText(placeholder);
+        field.setForeground(Color.GRAY);
+
+        field.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (field.getText().equals(placeholder)) {
+                    field.setText("");
+                    field.setForeground(Color.WHITE);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (field.getText().isEmpty()) {
+                    field.setText(placeholder);
+                    field.setForeground(Color.GRAY);
+                }
+            }
+        });
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnHome = new javax.swing.JButton();
+        btnCalendario = new javax.swing.JButton();
+        btnClientes = new javax.swing.JButton();
+        btnRelatorios = new javax.swing.JButton();
+        btnTarefas = new javax.swing.JButton();
+        btnConfiguracoes = new javax.swing.JButton();
+        btnAdministracao = new javax.swing.JButton();
+        JPanelTelaAcesso4 = new javax.swing.JPanel();
         lblContabilidade = new javax.swing.JLabel();
         lblCTCONTAB = new javax.swing.JLabel();
         btnNotificacoes = new javax.swing.JButton();
@@ -213,14 +244,6 @@ public class TelaCliente extends javax.swing.JFrame {
         lblDataDeCadastro3 = new javax.swing.JLabel();
         lblDataDeCadastro1 = new javax.swing.JLabel();
         lblCodigo = new javax.swing.JLabel();
-        btnHome = new javax.swing.JButton();
-        btnCalendario = new javax.swing.JButton();
-        btnClientes = new javax.swing.JButton();
-        btnRelatorios = new javax.swing.JButton();
-        btnTarefas = new javax.swing.JButton();
-        btnConfiguracoes = new javax.swing.JButton();
-        btnAdministracao = new javax.swing.JButton();
-        JPanelTelaAcesso = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jlibLogo2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -231,6 +254,80 @@ public class TelaCliente extends javax.swing.JFrame {
         setTitle("Novo Cliente - CT CONTAB");
         getContentPane().setLayout(null);
 
+        btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/home-menu.png"))); // NOI18N
+        btnHome.setContentAreaFilled(false);
+        btnHome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHomeActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnHome);
+        btnHome.setBounds(0, 120, 80, 50);
+
+        btnCalendario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/calendar-menu.png"))); // NOI18N
+        btnCalendario.setContentAreaFilled(false);
+        btnCalendario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalendarioActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCalendario);
+        btnCalendario.setBounds(0, 190, 80, 50);
+
+        btnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/client-menu.png"))); // NOI18N
+        btnClientes.setContentAreaFilled(false);
+        btnClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClientesActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnClientes);
+        btnClientes.setBounds(5, 260, 70, 50);
+
+        btnRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/relatory-menu.png"))); // NOI18N
+        btnRelatorios.setContentAreaFilled(false);
+        btnRelatorios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRelatoriosActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnRelatorios);
+        btnRelatorios.setBounds(0, 330, 80, 50);
+
+        btnTarefas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/task-menu.png"))); // NOI18N
+        btnTarefas.setContentAreaFilled(false);
+        btnTarefas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTarefasActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnTarefas);
+        btnTarefas.setBounds(0, 400, 80, 50);
+
+        btnConfiguracoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/configuration-menu.png"))); // NOI18N
+        btnConfiguracoes.setContentAreaFilled(false);
+        btnConfiguracoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfiguracoesActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnConfiguracoes);
+        btnConfiguracoes.setBounds(0, 470, 80, 50);
+
+        btnAdministracao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/admin-menu.png"))); // NOI18N
+        btnAdministracao.setContentAreaFilled(false);
+        btnAdministracao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdministracaoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnAdministracao);
+        btnAdministracao.setBounds(2, 530, 80, 70);
+
+        JPanelTelaAcesso4.setBackground(new java.awt.Color(194, 166, 40));
+        getContentPane().add(JPanelTelaAcesso4);
+        JPanelTelaAcesso4.setBounds(0, 250, 80, 70);
+
         lblContabilidade.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
         lblContabilidade.setForeground(new java.awt.Color(153, 153, 0));
         lblContabilidade.setText("Contabilidade & Consultoria");
@@ -238,7 +335,7 @@ public class TelaCliente extends javax.swing.JFrame {
         lblContabilidade.setBounds(90, 7, 205, 80);
 
         lblCTCONTAB.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblCTCONTAB.setForeground(new java.awt.Color(204, 204, 204));
+        lblCTCONTAB.setForeground(new java.awt.Color(200, 200, 200));
         lblCTCONTAB.setText("CT CONTAB");
         getContentPane().add(lblCTCONTAB);
         lblCTCONTAB.setBounds(90, 7, 190, 40);
@@ -341,7 +438,6 @@ public class TelaCliente extends javax.swing.JFrame {
         txtNome.setBackground(new java.awt.Color(4, 21, 57));
         txtNome.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         txtNome.setForeground(new java.awt.Color(115, 115, 115));
-        txtNome.setText("  Nome e Sobrenome");
         txtNome.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
         txtNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -350,11 +446,15 @@ public class TelaCliente extends javax.swing.JFrame {
         });
         jPanel1.add(txtNome);
         txtNome.setBounds(20, 350, 220, 35);
+        addPlaceholder(txtNome, "  Digite o nome e sobrenome");
+        addPlaceholder(txtEmail, "  Digite um e-mail");
+        addPlaceholder(txtServico, "  Digite o serviço prestado");
+        addPlaceholder(txtCelular, "  Digite o (DD) 9XXXXXXXX");
+        addPlaceholder(txtTelefone, "  Digite o (DD) XXXXXXXX");
 
         txtEmail.setBackground(new java.awt.Color(4, 21, 57));
         txtEmail.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         txtEmail.setForeground(new java.awt.Color(115, 115, 115));
-        txtEmail.setText("  seuemail@gmail.com");
         txtEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
         txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -394,7 +494,6 @@ public class TelaCliente extends javax.swing.JFrame {
         txtCelular.setBackground(new java.awt.Color(4, 21, 57));
         txtCelular.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         txtCelular.setForeground(new java.awt.Color(115, 115, 115));
-        txtCelular.setText("  (11) 912345678");
         txtCelular.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
         txtCelular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -422,7 +521,6 @@ public class TelaCliente extends javax.swing.JFrame {
         txtServico.setBackground(new java.awt.Color(4, 21, 57));
         txtServico.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         txtServico.setForeground(new java.awt.Color(115, 115, 115));
-        txtServico.setText("  Abertura de Empresa");
         txtServico.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
         txtServico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -447,7 +545,6 @@ public class TelaCliente extends javax.swing.JFrame {
         txtTelefone.setBackground(new java.awt.Color(4, 21, 57));
         txtTelefone.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         txtTelefone.setForeground(new java.awt.Color(115, 115, 115));
-        txtTelefone.setText("  (11) 23456789");
         txtTelefone.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
         txtTelefone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -525,80 +622,6 @@ public class TelaCliente extends javax.swing.JFrame {
         getContentPane().add(jPanel1);
         jPanel1.setBounds(110, 100, 1140, 540);
 
-        btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/home-icon.png"))); // NOI18N
-        btnHome.setContentAreaFilled(false);
-        btnHome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHomeActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnHome);
-        btnHome.setBounds(0, 100, 80, 50);
-
-        btnCalendario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/event-icon.png"))); // NOI18N
-        btnCalendario.setContentAreaFilled(false);
-        btnCalendario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCalendarioActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnCalendario);
-        btnCalendario.setBounds(5, 184, 70, 50);
-
-        btnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/client-icon.png"))); // NOI18N
-        btnClientes.setContentAreaFilled(false);
-        btnClientes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClientesActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnClientes);
-        btnClientes.setBounds(5, 260, 70, 50);
-
-        btnRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/relatory-icon.png"))); // NOI18N
-        btnRelatorios.setContentAreaFilled(false);
-        btnRelatorios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRelatoriosActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnRelatorios);
-        btnRelatorios.setBounds(5, 340, 70, 50);
-
-        btnTarefas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/task-icon.png"))); // NOI18N
-        btnTarefas.setContentAreaFilled(false);
-        btnTarefas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTarefasActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnTarefas);
-        btnTarefas.setBounds(0, 420, 80, 50);
-
-        btnConfiguracoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/config-icon.png"))); // NOI18N
-        btnConfiguracoes.setContentAreaFilled(false);
-        btnConfiguracoes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConfiguracoesActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnConfiguracoes);
-        btnConfiguracoes.setBounds(0, 500, 80, 50);
-
-        btnAdministracao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/admin-icon.png"))); // NOI18N
-        btnAdministracao.setContentAreaFilled(false);
-        btnAdministracao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdministracaoActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnAdministracao);
-        btnAdministracao.setBounds(0, 570, 80, 60);
-
-        JPanelTelaAcesso.setBackground(new java.awt.Color(194, 166, 40));
-        getContentPane().add(JPanelTelaAcesso);
-        JPanelTelaAcesso.setBounds(0, 250, 80, 70);
-
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/azul.png"))); // NOI18N
         getContentPane().add(jLabel2);
         jLabel2.setBounds(0, 640, 80, 60);
@@ -623,26 +646,6 @@ public class TelaCliente extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
-        new TelaMenu(usuarioLogado).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnHomeActionPerformed
-
-    private void btnConfiguracoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracoesActionPerformed
-        new TelaConfiguracao(usuarioLogado).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnConfiguracoesActionPerformed
-
-    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-        new TelaClienteTable(usuarioLogado).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnClientesActionPerformed
-
-    private void btnAdministracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracaoActionPerformed
-        new TelaAdminTable(usuarioLogado).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnAdministracaoActionPerformed
-
     private void txtObservacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtObservacoesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtObservacoesActionPerformed
@@ -654,21 +657,6 @@ public class TelaCliente extends javax.swing.JFrame {
     private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmailActionPerformed
-
-    private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarioActionPerformed
-        new TelaEventoTable(usuarioLogado).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnCalendarioActionPerformed
-
-    private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
-        new TelaRelatorioTable(usuarioLogado).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnRelatoriosActionPerformed
-
-    private void btnTarefasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTarefasActionPerformed
-        new TelaTarefaTable(usuarioLogado).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnTarefasActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         new TelaClienteTable(usuarioLogado).setVisible(true);
@@ -732,6 +720,41 @@ public class TelaCliente extends javax.swing.JFrame {
         excluirCliente();
     }//GEN-LAST:event_btnLimparActionPerformed
 
+    private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
+        new TelaMenu(usuarioLogado).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnHomeActionPerformed
+
+    private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarioActionPerformed
+        new TelaEventoTable(usuarioLogado).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCalendarioActionPerformed
+
+    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
+        new TelaClienteTable(usuarioLogado).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnClientesActionPerformed
+
+    private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
+        new TelaRelatorioTable(usuarioLogado).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnRelatoriosActionPerformed
+
+    private void btnTarefasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTarefasActionPerformed
+        new TelaTarefaTable(usuarioLogado).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnTarefasActionPerformed
+
+    private void btnConfiguracoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracoesActionPerformed
+        new TelaConfiguracao(usuarioLogado).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnConfiguracoesActionPerformed
+
+    private void btnAdministracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracaoActionPerformed
+        new TelaAdminTable(usuarioLogado).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAdministracaoActionPerformed
+
     public void abrirFormularioCliente(Cliente cliente, Usuario usuarioLogado) {
         try {
             if (cliente == null) {
@@ -775,7 +798,7 @@ public class TelaCliente extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
-    private javax.swing.JPanel JPanelTelaAcesso;
+    private javax.swing.JPanel JPanelTelaAcesso4;
     private javax.swing.JButton btnAdministracao;
     private javax.swing.JButton btnAlterarImagem;
     private javax.swing.JButton btnCalendario;

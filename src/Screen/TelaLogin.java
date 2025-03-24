@@ -8,7 +8,9 @@ import java.awt.Desktop;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import javax.swing.JOptionPane;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.io.File;
 import java.sql.SQLException;
 import java.util.Properties;
 import java.io.FileOutputStream;
@@ -16,10 +18,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URI;
 import javax.swing.BorderFactory;
+import javax.swing.JTextField;
 
 public class TelaLogin extends javax.swing.JFrame {
-
-    private static final String FILE_NAME = "login.properties";
 
     public TelaLogin() {
         initComponents();
@@ -34,8 +35,13 @@ public class TelaLogin extends javax.swing.JFrame {
     }
 
     private void salvarCredenciais(String usuario, String senha) {
+        if (usuario == null || usuario.isEmpty()) {
+            return;
+        }
+
+        String fileName = "login_" + usuario + ".properties";
         Properties props = new Properties();
-        try (FileOutputStream out = new FileOutputStream(FILE_NAME)) {
+        try (FileOutputStream out = new FileOutputStream(fileName)) {
             props.setProperty("usuario", usuario);
             props.setProperty("senha", senha);
             props.store(out, null);
@@ -45,20 +51,51 @@ public class TelaLogin extends javax.swing.JFrame {
     }
 
     private void carregarCredenciais() {
-        Properties props = new Properties();
-        try (FileInputStream in = new FileInputStream(FILE_NAME)) {
-            props.load(in);
-            String usuario = props.getProperty("usuario");
-            String senha = props.getProperty("senha");
+        File dir = new File(".");
+        File[] files = dir.listFiles((d, name) -> name.startsWith("login_") && name.endsWith(".properties"));
 
-            if (usuario != null && senha != null) {
-                txtLogin.setText(usuario);
-                txtSenha.setText(senha);
-                chbLembre.setSelected(true);
+        if (files != null && files.length > 0) {
+            for (File file : files) {
+                Properties props = new Properties();
+                try (FileInputStream in = new FileInputStream(file)) {
+                    props.load(in);
+                    String usuario = props.getProperty("usuario");
+                    String senha = props.getProperty("senha");
+
+                    if (usuario != null && senha != null) {
+                        txtLogin.setText(usuario);
+                        txtSenha.setText(senha);
+                        chbLembre.setSelected(true);
+                        break;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (IOException e) {
-
         }
+    }
+    
+    private void addPlaceholder(JTextField field, String placeholder) {
+        field.setText(placeholder);
+        field.setForeground(Color.GRAY);
+
+        field.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (field.getText().equals(placeholder)) {
+                    field.setText("");
+                    field.setForeground(Color.WHITE);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (field.getText().isEmpty()) {
+                    field.setText(placeholder);
+                    field.setForeground(Color.GRAY);
+                }
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -131,7 +168,7 @@ public class TelaLogin extends javax.swing.JFrame {
         lblCopy2.setBounds(570, 270, 30, 40);
 
         lblCTCONTAB.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblCTCONTAB.setForeground(new java.awt.Color(204, 204, 204));
+        lblCTCONTAB.setForeground(new java.awt.Color(200, 200, 200));
         lblCTCONTAB.setText("CT CONTAB");
         getContentPane().add(lblCTCONTAB);
         lblCTCONTAB.setBounds(410, 95, 190, 40);
@@ -197,7 +234,6 @@ public class TelaLogin extends javax.swing.JFrame {
         txtLogin.setBackground(new java.awt.Color(4, 21, 57));
         txtLogin.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         txtLogin.setForeground(new java.awt.Color(115, 115, 115));
-        txtLogin.setText("  seuemail@gmail.com");
         txtLogin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
         txtLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -211,6 +247,7 @@ public class TelaLogin extends javax.swing.JFrame {
         });
         getContentPane().add(txtLogin);
         txtLogin.setBounds(320, 200, 280, 40);
+        addPlaceholder(txtLogin, "  seuemail@gmail.com");
 
         btnLogin.setBackground(new java.awt.Color(184, 135, 11));
         btnLogin.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
@@ -355,8 +392,6 @@ public class TelaLogin extends javax.swing.JFrame {
             if (usuarioLogado != null) {
                 if (chbLembre.isSelected()) {
                     salvarCredenciais(txtLogin.getText(), new String(txtSenha.getPassword()));
-                } else {
-                    salvarCredenciais("", "");
                 }
 
                 dispose();
@@ -365,11 +400,7 @@ public class TelaLogin extends javax.swing.JFrame {
                 mostrarMensagemErro();
             }
 
-        } catch (ClassNotFoundException x) {
-            // JOptionPane.showMessageDialog(null, "Driver JDBC não encontrado " + x.getMessage());
-            MensagemUtil.exibirErro("Driver JDBC não encontrado!");
-        } catch (SQLException x) {
-            // JOptionPane.showMessageDialog(null, "Erro na conexão com o banco de dados " + x.getMessage());
+        } catch (ClassNotFoundException | SQLException x) {
             MensagemUtil.exibirErro("Erro na conexão com o banco de dados!");
         }
     }//GEN-LAST:event_btnLoginActionPerformed

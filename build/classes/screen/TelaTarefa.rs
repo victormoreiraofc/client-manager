@@ -6,6 +6,7 @@ screen.TelaTarefa$15
 screen.TelaTarefa$2
 screen.TelaTarefa$16
 screen.TelaTarefa$1
+screen.TelaTarefa$17
 screen.TelaTarefa$8
 screen.TelaTarefa$10
 screen.TelaTarefa$7

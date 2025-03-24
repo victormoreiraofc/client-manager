@@ -80,11 +80,12 @@
 > * Tecnologias Utilizadas
 
 - **Linguagem:** Java
-- **IDE:** NetBeans
+- **IDE:** NetBeans 25.0
 - **Banco de Dados:** MySQL
 - **Bibliotecas e Frameworks:**
-  - [Apache POI](https://poi.apache.org/) para manipulação de documentos do Microsoft Office
-  - [Hibernate](https://hibernate.org/) para mapeamento objeto-relacional
+  - [N8N](https://n8n.io/) para manipulação de agentes de IA
+  - [Ngrok](https://ngrok.com/) para colocar o n8n online
+  - [NodeJS](https://nodejs.org/pt) para manipular o n8n
 
 ---
 

@@ -7,9 +7,13 @@ import Data.PermissaoUtil;
 import Data.Tarefa;
 import Data.Usuario;
 import Screen.MensagemUtil;
+import java.awt.Color;
 import java.awt.Toolkit;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import javax.swing.JOptionPane;
 import java.sql.SQLException;
+import javax.swing.JTextField;
 
 public class TelaTarefa extends javax.swing.JFrame {
 
@@ -37,11 +41,7 @@ public class TelaTarefa extends javax.swing.JFrame {
     }
 
     private void preencherCamposNovoTarefa() {
-        txtNomeTarefa.setText("  Nome da Tarefa.");
-        txtDescricao.setText("  Descreva a Tarefa.");
         txtStatusTarefa.setSelectedItem("Pendente");
-        txtDataVencimento.setText("  Data de Vencimento da Tarefa.");
-        txtPrioridade.setText("  Prioridade.");
         jLabel6.setText("0");
         jLabel7.setText(usuarioLogado.getUsuario());
     }
@@ -116,10 +116,41 @@ public class TelaTarefa extends javax.swing.JFrame {
         }
     }
 
+    private void addPlaceholder(JTextField field, String placeholder) {
+        field.setText(placeholder);
+        field.setForeground(Color.GRAY);
+
+        field.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (field.getText().equals(placeholder)) {
+                    field.setText("");
+                    field.setForeground(Color.WHITE);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (field.getText().isEmpty()) {
+                    field.setText(placeholder);
+                    field.setForeground(Color.GRAY);
+                }
+            }
+        });
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnHome = new javax.swing.JButton();
+        btnCalendario = new javax.swing.JButton();
+        btnClientes = new javax.swing.JButton();
+        btnRelatorios = new javax.swing.JButton();
+        btnTarefas = new javax.swing.JButton();
+        btnConfiguracoes = new javax.swing.JButton();
+        btnAdministracao = new javax.swing.JButton();
+        JPanelTelaAcesso5 = new javax.swing.JPanel();
         lblContabilidade = new javax.swing.JLabel();
         lblCTCONTAB = new javax.swing.JLabel();
         btnNotificacoes = new javax.swing.JButton();
@@ -133,27 +164,24 @@ public class TelaTarefa extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         btnLogin = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         txtNomeTarefa = new javax.swing.JTextField();
         txtDescricao = new javax.swing.JTextField();
         txtDataVencimento = new javax.swing.JTextField();
         btnLogin1 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         txtPrioridade = new javax.swing.JTextField();
-        jLabel13 = new javax.swing.JLabel();
         txtStatusTarefa = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        btnHome = new javax.swing.JButton();
-        btnCalendario = new javax.swing.JButton();
-        btnClientes = new javax.swing.JButton();
-        btnRelatorios = new javax.swing.JButton();
-        btnTarefas = new javax.swing.JButton();
-        btnConfiguracoes = new javax.swing.JButton();
-        btnAdministracao = new javax.swing.JButton();
-        JPanelTelaAcesso = new javax.swing.JPanel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jlibLogo2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -164,6 +192,80 @@ public class TelaTarefa extends javax.swing.JFrame {
         setTitle("Nova Tarefa - CT CONTAB");
         getContentPane().setLayout(null);
 
+        btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/home-menu.png"))); // NOI18N
+        btnHome.setContentAreaFilled(false);
+        btnHome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHomeActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnHome);
+        btnHome.setBounds(0, 120, 80, 50);
+
+        btnCalendario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/calendar-menu.png"))); // NOI18N
+        btnCalendario.setContentAreaFilled(false);
+        btnCalendario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalendarioActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCalendario);
+        btnCalendario.setBounds(0, 190, 80, 50);
+
+        btnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/client-menu.png"))); // NOI18N
+        btnClientes.setContentAreaFilled(false);
+        btnClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClientesActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnClientes);
+        btnClientes.setBounds(5, 260, 70, 50);
+
+        btnRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/relatory-menu.png"))); // NOI18N
+        btnRelatorios.setContentAreaFilled(false);
+        btnRelatorios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRelatoriosActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnRelatorios);
+        btnRelatorios.setBounds(0, 330, 80, 50);
+
+        btnTarefas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/task-menu.png"))); // NOI18N
+        btnTarefas.setContentAreaFilled(false);
+        btnTarefas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTarefasActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnTarefas);
+        btnTarefas.setBounds(0, 400, 80, 50);
+
+        btnConfiguracoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/configuration-menu.png"))); // NOI18N
+        btnConfiguracoes.setContentAreaFilled(false);
+        btnConfiguracoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfiguracoesActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnConfiguracoes);
+        btnConfiguracoes.setBounds(0, 470, 80, 50);
+
+        btnAdministracao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/admin-menu.png"))); // NOI18N
+        btnAdministracao.setContentAreaFilled(false);
+        btnAdministracao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdministracaoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnAdministracao);
+        btnAdministracao.setBounds(2, 530, 80, 70);
+
+        JPanelTelaAcesso5.setBackground(new java.awt.Color(194, 166, 40));
+        getContentPane().add(JPanelTelaAcesso5);
+        JPanelTelaAcesso5.setBounds(0, 390, 80, 70);
+
         lblContabilidade.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
         lblContabilidade.setForeground(new java.awt.Color(153, 153, 0));
         lblContabilidade.setText("Contabilidade & Consultoria");
@@ -171,7 +273,7 @@ public class TelaTarefa extends javax.swing.JFrame {
         lblContabilidade.setBounds(90, 7, 205, 80);
 
         lblCTCONTAB.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblCTCONTAB.setForeground(new java.awt.Color(204, 204, 204));
+        lblCTCONTAB.setForeground(new java.awt.Color(200, 200, 200));
         lblCTCONTAB.setText("CT CONTAB");
         getContentPane().add(lblCTCONTAB);
         lblCTCONTAB.setBounds(90, 7, 190, 40);
@@ -247,28 +349,9 @@ public class TelaTarefa extends javax.swing.JFrame {
         jPanel1.add(jLabel9);
         jLabel9.setBounds(20, 70, 140, 30);
 
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Descrição");
-        jPanel1.add(jLabel10);
-        jLabel10.setBounds(20, 140, 100, 30);
-
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Status");
-        jPanel1.add(jLabel11);
-        jLabel11.setBounds(20, 210, 100, 30);
-
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Data de Vencimento");
-        jPanel1.add(jLabel12);
-        jLabel12.setBounds(20, 280, 160, 30);
-
         txtNomeTarefa.setBackground(new java.awt.Color(4, 21, 57));
         txtNomeTarefa.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         txtNomeTarefa.setForeground(new java.awt.Color(115, 115, 115));
-        txtNomeTarefa.setText("  Nome da Tarefa.");
         txtNomeTarefa.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
         txtNomeTarefa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -276,12 +359,15 @@ public class TelaTarefa extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtNomeTarefa);
-        txtNomeTarefa.setBounds(20, 100, 250, 40);
+        txtNomeTarefa.setBounds(20, 120, 510, 40);
+        addPlaceholder(txtNomeTarefa, "  Digite o nome da tarefa");
+        addPlaceholder(txtDescricao, "  Digite sobre a tarefa");
+        addPlaceholder(txtDataVencimento, "  Digite o Ano-Mês-Dia");
+        addPlaceholder(txtPrioridade, "  Digite qual o nível da prioridade");
 
         txtDescricao.setBackground(new java.awt.Color(4, 21, 57));
         txtDescricao.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         txtDescricao.setForeground(new java.awt.Color(115, 115, 115));
-        txtDescricao.setText("  Descreva a Tarefa.");
         txtDescricao.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
         txtDescricao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -289,12 +375,11 @@ public class TelaTarefa extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtDescricao);
-        txtDescricao.setBounds(20, 170, 430, 40);
+        txtDescricao.setBounds(20, 220, 510, 40);
 
         txtDataVencimento.setBackground(new java.awt.Color(4, 21, 57));
         txtDataVencimento.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         txtDataVencimento.setForeground(new java.awt.Color(115, 115, 115));
-        txtDataVencimento.setText("  Data de Vencimento da Tarefa.");
         txtDataVencimento.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
         txtDataVencimento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -302,7 +387,7 @@ public class TelaTarefa extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtDataVencimento);
-        txtDataVencimento.setBounds(20, 310, 250, 40);
+        txtDataVencimento.setBounds(20, 420, 510, 40);
 
         btnLogin1.setBackground(new java.awt.Color(194, 166, 40));
         btnLogin1.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
@@ -328,7 +413,6 @@ public class TelaTarefa extends javax.swing.JFrame {
         txtPrioridade.setBackground(new java.awt.Color(4, 21, 57));
         txtPrioridade.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         txtPrioridade.setForeground(new java.awt.Color(115, 115, 115));
-        txtPrioridade.setText("  Prioridade.");
         txtPrioridade.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
         txtPrioridade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -336,20 +420,19 @@ public class TelaTarefa extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtPrioridade);
-        txtPrioridade.setBounds(20, 380, 250, 40);
-
-        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Prioridade");
-        jPanel1.add(jLabel13);
-        jLabel13.setBounds(20, 350, 160, 30);
+        txtPrioridade.setBounds(580, 120, 530, 40);
 
         txtStatusTarefa.setBackground(new java.awt.Color(102, 102, 102));
         txtStatusTarefa.setForeground(new java.awt.Color(255, 255, 255));
         txtStatusTarefa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendente", "Em andamento", "Concluido" }));
         txtStatusTarefa.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
+        txtStatusTarefa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtStatusTarefaActionPerformed(evt);
+            }
+        });
         jPanel1.add(txtStatusTarefa);
-        txtStatusTarefa.setBounds(20, 240, 250, 35);
+        txtStatusTarefa.setBounds(20, 320, 510, 35);
 
         jLabel6.setVisible(false);
         jPanel1.add(jLabel6);
@@ -359,82 +442,57 @@ public class TelaTarefa extends javax.swing.JFrame {
         jPanel1.add(jLabel7);
         jLabel7.setBounds(600, 120, 80, 70);
 
+        jLabel28.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel28.setText("De um titulo para tarefa que deseja que seja feita, seja breve e objetivo.");
+        jPanel1.add(jLabel28);
+        jLabel28.setBounds(20, 100, 730, 16);
+
+        jLabel29.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel29.setText("Forneça detalhes sobre a tarefa, incluindo o objetivo, as etapas necessárias e quaisquer informações relevantes.");
+        jPanel1.add(jLabel29);
+        jLabel29.setBounds(20, 200, 730, 16);
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Descrição");
+        jPanel1.add(jLabel15);
+        jLabel15.setBounds(20, 170, 140, 30);
+
+        jLabel30.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel30.setText("Selecione o status apropriado da tarefa para acompanhar o progresso.");
+        jPanel1.add(jLabel30);
+        jLabel30.setBounds(20, 300, 730, 16);
+
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setText("Status");
+        jPanel1.add(jLabel16);
+        jLabel16.setBounds(20, 270, 140, 30);
+
+        jLabel31.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel31.setText("Escolha a data de vencimento da tarefa para garantir que ela seja concluída dentro do prazo.");
+        jPanel1.add(jLabel31);
+        jLabel31.setBounds(20, 400, 730, 16);
+
+        jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setText("Data de Vencimento");
+        jPanel1.add(jLabel17);
+        jLabel17.setBounds(20, 370, 140, 30);
+
+        jLabel32.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel32.setText("Atribua um nível de prioridade à tarefa (por exemplo, alta, média, baixa).");
+        jPanel1.add(jLabel32);
+        jLabel32.setBounds(580, 100, 730, 16);
+
+        jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setText("Prioridade");
+        jPanel1.add(jLabel18);
+        jLabel18.setBounds(580, 70, 140, 30);
+
         getContentPane().add(jPanel1);
         jPanel1.setBounds(110, 100, 1140, 540);
-
-        btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/home-icon.png"))); // NOI18N
-        btnHome.setContentAreaFilled(false);
-        btnHome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHomeActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnHome);
-        btnHome.setBounds(0, 100, 80, 50);
-
-        btnCalendario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/event-icon.png"))); // NOI18N
-        btnCalendario.setContentAreaFilled(false);
-        btnCalendario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCalendarioActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnCalendario);
-        btnCalendario.setBounds(5, 184, 70, 50);
-
-        btnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/client-icon.png"))); // NOI18N
-        btnClientes.setContentAreaFilled(false);
-        btnClientes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClientesActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnClientes);
-        btnClientes.setBounds(5, 260, 70, 50);
-
-        btnRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/relatory-icon.png"))); // NOI18N
-        btnRelatorios.setContentAreaFilled(false);
-        btnRelatorios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRelatoriosActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnRelatorios);
-        btnRelatorios.setBounds(5, 340, 70, 50);
-
-        btnTarefas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/task-icon.png"))); // NOI18N
-        btnTarefas.setContentAreaFilled(false);
-        btnTarefas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTarefasActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnTarefas);
-        btnTarefas.setBounds(0, 420, 80, 50);
-
-        btnConfiguracoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/config-icon.png"))); // NOI18N
-        btnConfiguracoes.setContentAreaFilled(false);
-        btnConfiguracoes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConfiguracoesActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnConfiguracoes);
-        btnConfiguracoes.setBounds(0, 500, 80, 50);
-
-        btnAdministracao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/admin-icon.png"))); // NOI18N
-        btnAdministracao.setContentAreaFilled(false);
-        btnAdministracao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdministracaoActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnAdministracao);
-        btnAdministracao.setBounds(0, 570, 80, 60);
-
-        JPanelTelaAcesso.setBackground(new java.awt.Color(194, 166, 40));
-        getContentPane().add(JPanelTelaAcesso);
-        JPanelTelaAcesso.setBounds(0, 410, 80, 70);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/azul.png"))); // NOI18N
         getContentPane().add(jLabel2);
@@ -460,26 +518,6 @@ public class TelaTarefa extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
-        new TelaMenu(usuarioLogado).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnHomeActionPerformed
-
-    private void btnConfiguracoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracoesActionPerformed
-        new TelaConfiguracao(usuarioLogado).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnConfiguracoesActionPerformed
-
-    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-        new TelaClienteTable(usuarioLogado).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnClientesActionPerformed
-
-    private void btnAdministracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracaoActionPerformed
-        new TelaAdminTable(usuarioLogado).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnAdministracaoActionPerformed
-
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         new TelaTarefaTable(usuarioLogado).setVisible(true);
         this.dispose();
@@ -501,21 +539,6 @@ public class TelaTarefa extends javax.swing.JFrame {
         btnLogin1.addActionListener(e -> salvarAlteracoes(tarefa));
     }//GEN-LAST:event_btnLogin1ActionPerformed
 
-    private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarioActionPerformed
-        new TelaEventoTable(usuarioLogado).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnCalendarioActionPerformed
-
-    private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
-        new TelaRelatorioTable(usuarioLogado).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnRelatoriosActionPerformed
-
-    private void btnTarefasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTarefasActionPerformed
-        new TelaTarefaTable(usuarioLogado).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnTarefasActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         new TelaTarefaTable(usuarioLogado).setVisible(true);
         this.dispose();
@@ -532,6 +555,45 @@ public class TelaTarefa extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         excluirTarefa();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
+        new TelaMenu(usuarioLogado).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnHomeActionPerformed
+
+    private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarioActionPerformed
+        new TelaEventoTable(usuarioLogado).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCalendarioActionPerformed
+
+    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
+        new TelaClienteTable(usuarioLogado).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnClientesActionPerformed
+
+    private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
+        new TelaRelatorioTable(usuarioLogado).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnRelatoriosActionPerformed
+
+    private void btnTarefasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTarefasActionPerformed
+        new TelaTarefaTable(usuarioLogado).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnTarefasActionPerformed
+
+    private void btnConfiguracoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracoesActionPerformed
+        new TelaConfiguracao(usuarioLogado).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnConfiguracoesActionPerformed
+
+    private void btnAdministracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracaoActionPerformed
+        new TelaAdminTable(usuarioLogado).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAdministracaoActionPerformed
+
+    private void txtStatusTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStatusTarefaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtStatusTarefaActionPerformed
 
     public static void main(String args[]) {
         try {
@@ -555,7 +617,7 @@ public class TelaTarefa extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
-    private javax.swing.JPanel JPanelTelaAcesso;
+    private javax.swing.JPanel JPanelTelaAcesso5;
     private javax.swing.JButton btnAdministracao;
     private javax.swing.JButton btnCalendario;
     private javax.swing.JButton btnClientes;
@@ -570,12 +632,17 @@ public class TelaTarefa extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

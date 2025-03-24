@@ -310,6 +310,14 @@ public class TelaAdminTable extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnHome = new javax.swing.JButton();
+        btnCalendario = new javax.swing.JButton();
+        btnClientes = new javax.swing.JButton();
+        btnRelatorios = new javax.swing.JButton();
+        btnTarefas = new javax.swing.JButton();
+        btnConfiguracoes = new javax.swing.JButton();
+        btnAdministracao = new javax.swing.JButton();
+        JPanelTelaAcesso6 = new javax.swing.JPanel();
         lblContabilidade = new javax.swing.JLabel();
         lblCTCONTAB = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -327,14 +335,6 @@ public class TelaAdminTable extends javax.swing.JFrame {
         jSeparator5 = new javax.swing.JSeparator();
         jSeparator7 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
-        btnHome = new javax.swing.JButton();
-        btnCalendario = new javax.swing.JButton();
-        btnClientes = new javax.swing.JButton();
-        btnRelatorios = new javax.swing.JButton();
-        btnTarefas = new javax.swing.JButton();
-        btnConfiguracoes = new javax.swing.JButton();
-        btnAdministracao = new javax.swing.JButton();
-        JPanelTelaAcesso = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         txtLogin = new javax.swing.JTextField();
         btnLogin = new javax.swing.JButton();
@@ -347,6 +347,80 @@ public class TelaAdminTable extends javax.swing.JFrame {
         setTitle("Administração - CT CONTAB");
         getContentPane().setLayout(null);
 
+        btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/home-menu.png"))); // NOI18N
+        btnHome.setContentAreaFilled(false);
+        btnHome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHomeActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnHome);
+        btnHome.setBounds(0, 120, 80, 50);
+
+        btnCalendario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/calendar-menu.png"))); // NOI18N
+        btnCalendario.setContentAreaFilled(false);
+        btnCalendario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalendarioActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCalendario);
+        btnCalendario.setBounds(0, 190, 80, 50);
+
+        btnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/client-menu.png"))); // NOI18N
+        btnClientes.setContentAreaFilled(false);
+        btnClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClientesActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnClientes);
+        btnClientes.setBounds(5, 260, 70, 50);
+
+        btnRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/relatory-menu.png"))); // NOI18N
+        btnRelatorios.setContentAreaFilled(false);
+        btnRelatorios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRelatoriosActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnRelatorios);
+        btnRelatorios.setBounds(0, 330, 80, 50);
+
+        btnTarefas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/task-menu.png"))); // NOI18N
+        btnTarefas.setContentAreaFilled(false);
+        btnTarefas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTarefasActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnTarefas);
+        btnTarefas.setBounds(0, 400, 80, 50);
+
+        btnConfiguracoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/configuration-menu.png"))); // NOI18N
+        btnConfiguracoes.setContentAreaFilled(false);
+        btnConfiguracoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfiguracoesActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnConfiguracoes);
+        btnConfiguracoes.setBounds(0, 470, 80, 50);
+
+        btnAdministracao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/admin-menu.png"))); // NOI18N
+        btnAdministracao.setContentAreaFilled(false);
+        btnAdministracao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdministracaoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnAdministracao);
+        btnAdministracao.setBounds(2, 530, 80, 70);
+
+        JPanelTelaAcesso6.setBackground(new java.awt.Color(194, 166, 40));
+        getContentPane().add(JPanelTelaAcesso6);
+        JPanelTelaAcesso6.setBounds(0, 530, 80, 70);
+
         lblContabilidade.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
         lblContabilidade.setForeground(new java.awt.Color(153, 153, 0));
         lblContabilidade.setText("Contabilidade & Consultoria");
@@ -354,7 +428,7 @@ public class TelaAdminTable extends javax.swing.JFrame {
         lblContabilidade.setBounds(90, 7, 205, 80);
 
         lblCTCONTAB.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblCTCONTAB.setForeground(new java.awt.Color(204, 204, 204));
+        lblCTCONTAB.setForeground(new java.awt.Color(200, 200, 200));
         lblCTCONTAB.setText("CT CONTAB");
         getContentPane().add(lblCTCONTAB);
         lblCTCONTAB.setBounds(90, 7, 190, 40);
@@ -490,80 +564,6 @@ public class TelaAdminTable extends javax.swing.JFrame {
         getContentPane().add(jPanel1);
         jPanel1.setBounds(110, 190, 1130, 450);
 
-        btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/home-icon.png"))); // NOI18N
-        btnHome.setContentAreaFilled(false);
-        btnHome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHomeActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnHome);
-        btnHome.setBounds(0, 100, 80, 50);
-
-        btnCalendario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/event-icon.png"))); // NOI18N
-        btnCalendario.setContentAreaFilled(false);
-        btnCalendario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCalendarioActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnCalendario);
-        btnCalendario.setBounds(5, 184, 70, 50);
-
-        btnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/client-icon.png"))); // NOI18N
-        btnClientes.setContentAreaFilled(false);
-        btnClientes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClientesActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnClientes);
-        btnClientes.setBounds(5, 260, 70, 50);
-
-        btnRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/relatory-icon.png"))); // NOI18N
-        btnRelatorios.setContentAreaFilled(false);
-        btnRelatorios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRelatoriosActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnRelatorios);
-        btnRelatorios.setBounds(5, 340, 70, 50);
-
-        btnTarefas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/task-icon.png"))); // NOI18N
-        btnTarefas.setContentAreaFilled(false);
-        btnTarefas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTarefasActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnTarefas);
-        btnTarefas.setBounds(0, 420, 80, 50);
-
-        btnConfiguracoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/config-icon.png"))); // NOI18N
-        btnConfiguracoes.setContentAreaFilled(false);
-        btnConfiguracoes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConfiguracoesActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnConfiguracoes);
-        btnConfiguracoes.setBounds(0, 500, 80, 50);
-
-        btnAdministracao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/admin-icon.png"))); // NOI18N
-        btnAdministracao.setContentAreaFilled(false);
-        btnAdministracao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdministracaoActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnAdministracao);
-        btnAdministracao.setBounds(0, 570, 80, 60);
-
-        JPanelTelaAcesso.setBackground(new java.awt.Color(194, 166, 40));
-        getContentPane().add(JPanelTelaAcesso);
-        JPanelTelaAcesso.setBounds(0, 565, 80, 70);
-
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lupa.png"))); // NOI18N
         getContentPane().add(jLabel4);
         jLabel4.setBounds(120, 100, 20, 80);
@@ -687,7 +687,7 @@ public class TelaAdminTable extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
-    private javax.swing.JPanel JPanelTelaAcesso;
+    private javax.swing.JPanel JPanelTelaAcesso6;
     private javax.swing.JButton btnAdministracao;
     private javax.swing.JButton btnCalendario;
     private javax.swing.JButton btnClientes;
