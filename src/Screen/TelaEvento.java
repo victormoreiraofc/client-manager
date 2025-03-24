@@ -20,8 +20,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 import javax.swing.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 public class TelaEvento extends javax.swing.JFrame {
+
+    private static final Logger logger = LoggerFactory.getLogger(TelaEvento.class);
 
     private Usuario usuarioLogado;
     private String sessionId;
@@ -58,6 +63,8 @@ public class TelaEvento extends javax.swing.JFrame {
     }
 
     private void salvarEventoNoBanco() {
+        MDC.put("usuario", usuarioLogado.getUsuario());
+
         try {
             String evento = txtTitulo.getText();
             String dataInicio = txtDataInicial.getText();
@@ -74,16 +81,13 @@ public class TelaEvento extends javax.swing.JFrame {
                 String dataFinalFormatada = formatarDataParaBanco(dataFinal);
 
                 CTCONTAB.registrarEvento(evento, dataInicioFormatada, dataFinalFormatada, horarioInicial, horarioFinal, nomeUsuario);
-                // JOptionPane.showMessageDialog(this, "Evento salvo com sucesso!");
                 MensagemUtil.exibirSucesso("Evento salvo com sucesso!");
-
+                logger.info("criou um novo evento");
                 enviarEventoParaN8N(evento, dataInicioFormatada, dataFinalFormatada, horarioInicial, horarioFinal, descricao, local);
             } else {
-               // JOptionPane.showMessageDialog(this, "Nenhum usuário logado. Não foi possível salvar o evento.");
                 MensagemUtil.exibirErro("Nenhum usuário logado. Não foi possível salvar o evento.");
             }
         } catch (Exception e) {
-            // JOptionPane.showMessageDialog(this, "Erro ao salvar evento: " + e.getMessage());
             MensagemUtil.exibirErro("Erro ao salvar evento!");
         }
     }
@@ -131,7 +135,7 @@ public class TelaEvento extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-        
+
     private void addPlaceholder(JTextField field, String placeholder) {
         field.setText(placeholder);
         field.setForeground(Color.GRAY);

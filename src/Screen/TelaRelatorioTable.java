@@ -17,7 +17,6 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingWorker;
@@ -26,8 +25,13 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 public class TelaRelatorioTable extends javax.swing.JFrame {
+
+    private static final Logger logger = LoggerFactory.getLogger(TelaRelatorioTable.class);
 
     private Usuario usuarioLogado;
     private List<Relatorio> listarRelatorios;
@@ -219,6 +223,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
     }
 
     private void excluirRelatorio(int row) {
+        MDC.put("usuario", usuarioLogado.getUsuario());
         try {
             Relatorio relatorio = listarRelatorios.get(row);
 
@@ -227,10 +232,9 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
             listarRelatorios.remove(row);
             atualizarTabela(listarRelatorios);
 
-            // JOptionPane.showMessageDialog(null, "Tarefa excluída com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             MensagemUtil.exibirSucesso("Relatório excluído com sucesso!");
+            logger.info("excluiu um relatório");
         } catch (Exception e) {
-            // JOptionPane.showMessageDialog(null, "Erro ao excluir tarefa: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             MensagemUtil.exibirErro("Erro ao excluir relatório!");
         }
     }

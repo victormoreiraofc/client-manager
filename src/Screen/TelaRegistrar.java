@@ -2,7 +2,6 @@ package screen;
 
 import Data.CTCONTAB;
 import Screen.MensagemUtil;
-import javax.swing.JOptionPane;
 import java.sql.SQLException;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -10,8 +9,12 @@ import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Toolkit;
 import java.net.URI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TelaRegistrar extends javax.swing.JFrame {
+
+    private static final Logger logger = LoggerFactory.getLogger(TelaRegistrar.class);
 
     public TelaRegistrar() {
         initComponents();
@@ -223,19 +226,16 @@ public class TelaRegistrar extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         try {
             CTCONTAB.registrarUsuario(txtUsuario.getText(), txtEmail.getText(), txtSenha.getText());
-            // JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso");
             MensagemUtil.exibirSucesso("Usuário cadastrado com sucesso");
+            logger.info("[{}] criou uma nova conta", txtUsuario.getText());
             dispose();
             new TelaLogin().setVisible(true);
         } catch (ClassNotFoundException x) {
-            // JOptionPane.showMessageDialog(null, "Driver JDBC não encontrado " + x.getMessage());
             MensagemUtil.exibirErro("Driver JDBC não encontrado!");
         } catch (SQLException x) {
             if (x.getMessage().contains("Duplicate entry")) {
-                // JOptionPane.showMessageDialog(null, "Este CPF já está cadastrado ");
                 MensagemUtil.exibirErro("Este CPF já está cadastrado");
             } else {
-                // JOptionPane.showMessageDialog(null, "Erro na conexão com o banco de dados " + x.getMessage());
                 MensagemUtil.exibirErro("Erro na conexão com o banco de dados!");
             }
         }

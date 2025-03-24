@@ -14,8 +14,13 @@ import java.awt.event.FocusEvent;
 import javax.swing.JOptionPane;
 import java.sql.SQLException;
 import javax.swing.JTextField;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 public class TelaRelatorio extends javax.swing.JFrame {
+
+    private static final Logger logger = LoggerFactory.getLogger(TelaRelatorio.class);
 
     private Usuario usuarioLogado;
     private Relatorio relatorio;
@@ -54,6 +59,7 @@ public class TelaRelatorio extends javax.swing.JFrame {
     }
 
     private void salvarAlteracoes(Relatorio relatorio) {
+        MDC.put("usuario", usuarioLogado.getUsuario());
         try {
             relatorio.setNomeRelatorio(txtNomeRelatorio.getText());
             relatorio.setDescricao(txtDescricao.getText());
@@ -69,21 +75,21 @@ public class TelaRelatorio extends javax.swing.JFrame {
 
             if (relatorio.getId() == 0) {
                 CTCONTAB.registrarRelatorio(relatorio);
-                // JOptionPane.showMessageDialog(this, "Novo relatorio cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 MensagemUtil.exibirSucesso("Novo relatório cadastrado com sucesso!");
+                logger.info("registrou um novo relatório");
             } else {
                 CTCONTAB.atualizarRelatorio(relatorio);
-                // JOptionPane.showMessageDialog(this, "Relatorio atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 MensagemUtil.exibirSucesso("Relatorio atualizado com sucesso!");
+                logger.info("atualizou um relatório");
             }
         } catch (Exception e) {
-            // JOptionPane.showMessageDialog(this, "Erro ao salvar alterações: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             MensagemUtil.exibirErro("Erro ao salvar alterações!");
             e.printStackTrace();
         }
     }
 
     private void excluirRelatorio() {
+        MDC.put("usuario", usuarioLogado.getUsuario());
         try {
             String codigoText = jLabel6.getText();
             if (codigoText != null && !codigoText.trim().isEmpty() && !codigoText.equals("0")) {
@@ -95,22 +101,19 @@ public class TelaRelatorio extends javax.swing.JFrame {
 
                 if (resposta == JOptionPane.YES_OPTION) {
                     excluirRegistro("relatorio", "id", idRelatorio);
-
-                    //JOptionPane.showMessageDialog(this, "Relatório excluído com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                     MensagemUtil.exibirSucesso("Relatório excluído com sucesso!");
+                    logger.info("excluiu um relatório");
                     new TelaRelatorioTable(usuarioLogado).setVisible(true);
                     this.dispose();
                 }
             } else {
-                // JOptionPane.showMessageDialog(this, "Nenhum relatório selecionado para exclusão!", "Erro", JOptionPane.ERROR_MESSAGE);
                 MensagemUtil.exibirErro("Nenhum relatório selecionado para exclusão!");
             }
         } catch (SQLException | ClassNotFoundException e) {
-            // JOptionPane.showMessageDialog(this, "Erro ao excluir relatório: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             MensagemUtil.exibirErro("Erro ao excluir relatório!");
         }
     }
-        
+
     private void addPlaceholder(JTextField field, String placeholder) {
         field.setText(placeholder);
         field.setForeground(Color.GRAY);

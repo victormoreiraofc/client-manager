@@ -25,9 +25,13 @@ import java.awt.Color;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.JTextField;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 public class TelaCliente extends javax.swing.JFrame {
 
+    private static final Logger logger = LoggerFactory.getLogger(TelaCliente.class);
     private Usuario usuarioLogado;
     private Cliente cliente;
 
@@ -87,6 +91,8 @@ public class TelaCliente extends javax.swing.JFrame {
     }
 
     private void salvarAlteracoes(Cliente cliente) {
+        MDC.put("usuario", usuarioLogado.getUsuario());
+        
         try {
             cliente.setNome(lblNomeIndefinido.getText());
             cliente.setNome(txtNome.getText());
@@ -112,15 +118,14 @@ public class TelaCliente extends javax.swing.JFrame {
 
             if (cliente.getId() == 0) {
                 CTCONTAB.registrarCliente(cliente);
-                // JOptionPane.showMessageDialog(this, "Novo cliente cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 MensagemUtil.exibirSucesso("Cadastro realizado com sucesso!");
+                logger.info("adicionou o cliente [{}]", cliente.getNome());
             } else {
                 CTCONTAB.atualizarCliente(cliente);
-                // JOptionPane.showMessageDialog(this, "Cliente atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 MensagemUtil.exibirSucesso("Cliente atualizado com sucesso!");
+                logger.info("atualizou o cliente [{}]", cliente.getNome());
             }
         } catch (Exception e) {
-            // JOptionPane.showMessageDialog(this, "Erro ao salvar alterações: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             MensagemUtil.exibirErro("Erro ao salvar alterações!");
             e.printStackTrace();
         }
@@ -155,17 +160,15 @@ public class TelaCliente extends javax.swing.JFrame {
                 if (resposta == JOptionPane.YES_OPTION) {
                     excluirRegistro("cliente", "id", idCliente);
 
-                    // JOptionPane.showMessageDialog(this, "Cliente excluído com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                     MensagemUtil.exibirSucesso("Cliente excluído com sucesso!");
+                    logger.info("excluiu o cliente [{}]", cliente.getNome());
                     new TelaClienteTable(usuarioLogado).setVisible(true);
                     this.dispose();
                 }
             } else {
-                // JOptionPane.showMessageDialog(this, "Nenhum cliente selecionado para exclusão!", "Erro", JOptionPane.ERROR_MESSAGE);
                 MensagemUtil.exibirErro("Nenhum cliente selecionado para exclusão!");
             }
         } catch (SQLException | ClassNotFoundException e) {
-            // JOptionPane.showMessageDialog(this, "Erro ao excluir cliente: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             MensagemUtil.exibirErro("Erro ao excluir cliente!");
         }
     }

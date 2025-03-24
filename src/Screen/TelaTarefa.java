@@ -14,8 +14,13 @@ import java.awt.event.FocusEvent;
 import javax.swing.JOptionPane;
 import java.sql.SQLException;
 import javax.swing.JTextField;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 public class TelaTarefa extends javax.swing.JFrame {
+
+    private static final Logger logger = LoggerFactory.getLogger(TelaTarefa.class);
 
     private Usuario usuarioLogado;
     private Tarefa tarefa;
@@ -57,6 +62,7 @@ public class TelaTarefa extends javax.swing.JFrame {
     }
 
     private void salvarAlteracoes(Tarefa tarefa) {
+        MDC.put("usuario", usuarioLogado.getUsuario());
         try {
             tarefa.setNomeTarefa(txtNomeTarefa.getText());
             tarefa.setDescricao(txtDescricao.getText());
@@ -74,21 +80,21 @@ public class TelaTarefa extends javax.swing.JFrame {
 
             if (tarefa.getId() == 0) {
                 CTCONTAB.registrarTarefa(tarefa);
-                // JOptionPane.showMessageDialog(this, "Nova tarefa cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 MensagemUtil.exibirSucesso("Nova tarefa cadastrado com sucesso!");
+                logger.info("cadastrou uma nova tarefa");
             } else {
                 CTCONTAB.atualizarTarefa(tarefa);
-                // JOptionPane.showMessageDialog(this, "Tarefa atualizada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 MensagemUtil.exibirSucesso("Tarefa atualizada com sucesso!");
+                logger.info("atualizou uma tarefa");
             }
         } catch (Exception e) {
-            //JOptionPane.showMessageDialog(this, "Erro ao salvar alterações: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             MensagemUtil.exibirErro("Erro ao salvar alterações!");
             e.printStackTrace();
         }
     }
 
     private void excluirTarefa() {
+        MDC.put("usuario", usuarioLogado.getUsuario());
         try {
             String codigoText = jLabel6.getText();
             if (codigoText != null && !codigoText.trim().isEmpty() && !codigoText.equals("0")) {
@@ -101,17 +107,15 @@ public class TelaTarefa extends javax.swing.JFrame {
                 if (resposta == JOptionPane.YES_OPTION) {
                     excluirRegistro("tarefa", "id", idTarefa);
 
-                   // JOptionPane.showMessageDialog(this, "Tarefa excluída com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                     MensagemUtil.exibirSucesso("Tarefa excluída com sucesso!");
+                    logger.info("excluiu uma tarefa");
                     new TelaTarefaTable(usuarioLogado).setVisible(true);
                     this.dispose();
                 }
             } else {
-               // JOptionPane.showMessageDialog(this, "Nenhuma tarefa selecionada para exclusão!", "Erro", JOptionPane.ERROR_MESSAGE);
                 MensagemUtil.exibirErro("Nenhuma tarefa selecionada para exclusão!");
             }
         } catch (SQLException | ClassNotFoundException e) {
-            // JOptionPane.showMessageDialog(this, "Erro ao excluir tarefa: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             MensagemUtil.exibirErro("Erro ao excluir tarefa: " + e.getMessage());
         }
     }

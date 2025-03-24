@@ -74,7 +74,7 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         }
     }
-    
+
     private void addPlaceholder(JTextField field, String placeholder) {
         field.setText(placeholder);
         field.setForeground(Color.GRAY);

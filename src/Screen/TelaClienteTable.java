@@ -18,7 +18,6 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingWorker;
@@ -27,8 +26,13 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 public class TelaClienteTable extends javax.swing.JFrame {
+
+    private static final Logger logger = LoggerFactory.getLogger(TelaClienteTable.class);
 
     private Usuario usuarioLogado;
     private List<Cliente> listaClientes;
@@ -245,6 +249,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         }
 
         private void excluirCliente(int row) {
+            MDC.put("usuario", usuarioLogado.getUsuario());
             try {
                 Cliente cliente = listaClientes.get(row);
 
@@ -253,10 +258,9 @@ public class TelaClienteTable extends javax.swing.JFrame {
                 listaClientes.remove(row);
                 atualizarTabela(listaClientes);
 
-                // JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 MensagemUtil.exibirSucesso("Cliente excluído com sucesso!");
+                logger.info("excluiu o cliente [{}]", cliente.getNome());
             } catch (Exception e) {
-                // JOptionPane.showMessageDialog(null, "Erro ao excluir cliente: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 MensagemUtil.exibirErro("Erro ao excluir cliente!");
             }
         }

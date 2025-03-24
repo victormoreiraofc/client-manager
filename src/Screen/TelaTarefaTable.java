@@ -3,7 +3,6 @@ package screen;
 import Data.CTCONTAB;
 import Data.IconUtil;
 import Data.PermissaoUtil;
-import Data.Relatorio;
 import Data.Tarefa;
 import Data.Usuario;
 import Screen.MensagemUtil;
@@ -16,8 +15,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.table.DefaultTableCellRenderer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 public class TelaTarefaTable extends javax.swing.JFrame {
+
+    private static final Logger logger = LoggerFactory.getLogger(TelaTarefaTable.class);
 
     private Usuario usuarioLogado;
     private List<Tarefa> listarTarefas;
@@ -76,16 +80,16 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
 
-        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd"); // Formato vindo do banco
-        SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy"); // Formato desejado na tabela
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
 
         for (Tarefa tarefa : tarefas) {
             String dataFormatada = "";
             try {
-                Date data = inputFormat.parse(tarefa.getDataVencimento()); // Converte String para Date
-                dataFormatada = outputFormat.format(data); // Converte Date para String no formato desejado
+                Date data = inputFormat.parse(tarefa.getDataVencimento());
+                dataFormatada = outputFormat.format(data);
             } catch (Exception e) {
-                dataFormatada = "Data inválida"; // Caso ocorra erro na conversão
+                dataFormatada = "Data inválida";
             }
 
             model.addRow(new Object[]{
@@ -93,7 +97,7 @@ public class TelaTarefaTable extends javax.swing.JFrame {
                 tarefa.getResponsavel(),
                 tarefa.getStatusTarefa(),
                 tarefa.getPrioridade(),
-                dataFormatada, // Exibir data formatada corretamente
+                dataFormatada,
                 "Editar",
                 "Excluir"
             });
@@ -210,6 +214,7 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         }
 
         private void excluirTarefa(int row) {
+            MDC.put("usuario", usuarioLogado.getUsuario());
             try {
                 Tarefa tarefa = tarefasFiltradas.get(row);
 
@@ -218,10 +223,9 @@ public class TelaTarefaTable extends javax.swing.JFrame {
                 tarefasFiltradas.remove(row);
                 atualizarTabela(tarefasFiltradas);
 
-                //JOptionPane.showMessageDialog(null, "Tarefa excluída com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 MensagemUtil.exibirSucesso("Tarefa excluída com sucesso!");
+                logger.info("excluiu uma tarefa");
             } catch (Exception e) {
-                // JOptionPane.showMessageDialog(null, "Erro ao excluir tarefa: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 MensagemUtil.exibirErro("Erro ao excluir tarefa!");
             }
         }

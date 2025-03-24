@@ -15,11 +15,15 @@ import java.io.FileInputStream;
 import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 public class TelaConfiguracao extends javax.swing.JFrame {
+
+    private static final Logger logger = LoggerFactory.getLogger(TelaConfiguracao.class);
 
     private Usuario usuarioLogado;
 
@@ -439,6 +443,8 @@ public class TelaConfiguracao extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {
+        MDC.put("usuario", usuarioLogado.getUsuario());
+
         String emailAtual = txtSeuEmail.getText().trim();
         String emailNovo = txtNovoEmail.getText().trim();
         String senhaNova = txtNovaSenha.getText().trim();
@@ -471,6 +477,7 @@ public class TelaConfiguracao extends javax.swing.JFrame {
 
             if (alterouAlgo) {
                 MensagemUtil.exibirSucesso("Dados atualizados com sucesso!");
+                logger.info("editou suas configurações pessoais");
             } else {
                 MensagemUtil.exibirErro("Nenhum dado foi alterado!");
             }
@@ -526,16 +533,13 @@ public class TelaConfiguracao extends javax.swing.JFrame {
                     CTCONTAB.registrarImagemUsuario(fis, usuarioLogado);
 
                     fis.close();
-                    // JOptionPane.showMessageDialog(null, "Imagem salva com sucesso!");
                     MensagemUtil.exibirSucesso("Imagem salva com sucesso!");
                 } catch (Exception e) {
                     e.printStackTrace();
-                    // JOptionPane.showMessageDialog(null, "Erro ao salvar imagem: " + e.getMessage());
                     MensagemUtil.exibirErro("Erro ao salvar imagem!");
                 }
 
             } else {
-                // JOptionPane.showMessageDialog(null, "Erro, selecione o arquivo compatível (Png ou Jpg)");
                 MensagemUtil.exibirErro("Erro, selecione o arquivo compatível (PNG ou JPG)");
             }
 
@@ -617,7 +621,6 @@ public class TelaConfiguracao extends javax.swing.JFrame {
             lblImagem.setIcon(new ImageIcon(newImage));
         } catch (Exception e) {
             e.printStackTrace();
-            // JOptionPane.showMessageDialog(null, "Erro ao carregar ícone padrão: " + e.getMessage());
             MensagemUtil.exibirErro("Erro ao carregar ícone padrão!");
         }
     }

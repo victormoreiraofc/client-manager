@@ -2,7 +2,14 @@ package screen;
 
 import Data.IconUtil;
 import Data.Usuario;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Toolkit;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.border.EmptyBorder;
 
 public class TelaAdmin extends javax.swing.JFrame {
 
@@ -13,16 +20,34 @@ public class TelaAdmin extends javax.swing.JFrame {
         initComponents();
         IconUtil.setIcon(usuarioLogado, lblUserIcon);
         setIcon();
+        carregarLogs();
     }
 
     private void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/logo-icon.png")));
     }
 
+    private void carregarLogs() {
+        File logFile = new File("logs/aplicacao.log");
+        StringBuilder logContent = new StringBuilder();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(logFile))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                logContent.append(line).append("\n");
+            }
+            jTextArea1.setText(logContent.toString());
+        } catch (IOException e) {
+            jTextArea1.setText("Erro ao carregar logs: " + e.getMessage());
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         btnHome3 = new javax.swing.JButton();
         btnCalendario = new javax.swing.JButton();
         btnClientes = new javax.swing.JButton();
@@ -33,7 +58,6 @@ public class TelaAdmin extends javax.swing.JFrame {
         JPanelTelaAcesso6 = new javax.swing.JPanel();
         lblContabilidade = new javax.swing.JLabel();
         lblCTCONTAB = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         txtLogin = new javax.swing.JTextField();
         btnLogin = new javax.swing.JButton();
@@ -43,10 +67,41 @@ public class TelaAdmin extends javax.swing.JFrame {
         lblUserIcon = new javax.swing.JLabel();
         btnNotificacoes = new javax.swing.JButton();
         Background = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Auditoria - CT CONTAB");
         getContentPane().setLayout(null);
+
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255, 15));
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setForeground(new java.awt.Color(255, 255, 255, 15));
+        jScrollPane1.setDoubleBuffered(true);
+
+        jTextArea1.setBackground(new java.awt.Color(255, 255, 255, 15));
+        jTextArea1.setBorder(null);
+        jTextArea1.setColumns(20);
+        jTextArea1.setForeground(new java.awt.Color(255, 255, 255, 15));
+        jTextArea1.setRows(5);
+        jTextArea1.setBorder(null);
+        jTextArea1.setCaretColor(new java.awt.Color(255, 255, 255, 15));
+        jTextArea1.setOpaque(false);
+        jScrollPane1.setViewportView(jTextArea1);
+        jTextArea1.setEditable(false);
+        jTextArea1.setLineWrap(true);
+        jTextArea1.setWrapStyleWord(true);
+        jTextArea1.setFont(new Font("Arial", Font.PLAIN, 12));
+        jTextArea1.setForeground(Color.WHITE);
+        jTextArea1.setOpaque(false);
+
+        EmptyBorder border = new EmptyBorder(10, 10, 10, 10);
+        jTextArea1.setBorder(border);
+
+        jScrollPane1.setOpaque(false);
+        jScrollPane1.getViewport().setOpaque(false);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(108, 190, 1130, 450);
 
         btnHome3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/home-menu.png"))); // NOI18N
         btnHome3.setContentAreaFilled(false);
@@ -134,10 +189,6 @@ public class TelaAdmin extends javax.swing.JFrame {
         getContentPane().add(lblCTCONTAB);
         lblCTCONTAB.setBounds(90, 7, 190, 40);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255, 15));
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(110, 190, 1130, 450);
-
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lupa.png"))); // NOI18N
         getContentPane().add(jLabel4);
         jLabel4.setBounds(120, 100, 20, 80);
@@ -191,6 +242,10 @@ public class TelaAdmin extends javax.swing.JFrame {
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/background-contabil.png"))); // NOI18N
         getContentPane().add(Background);
         Background.setBounds(0, 0, 1280, 711);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255, 15));
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(110, 190, 1130, 450);
 
         setSize(new java.awt.Dimension(1294, 708));
         setLocationRelativeTo(null);
@@ -267,9 +322,6 @@ public class TelaAdmin extends javax.swing.JFrame {
     private javax.swing.JButton btnCalendario;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnConfiguracoes;
-    private javax.swing.JButton btnHome;
-    private javax.swing.JButton btnHome1;
-    private javax.swing.JButton btnHome2;
     private javax.swing.JButton btnHome3;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnNotificacoes;
@@ -279,6 +331,8 @@ public class TelaAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel jlibLogo2;
     private javax.swing.JLabel lblCTCONTAB;
     private javax.swing.JLabel lblContabilidade;

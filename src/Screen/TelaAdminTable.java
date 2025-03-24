@@ -16,7 +16,6 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingWorker;
@@ -25,11 +24,15 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 public class TelaAdminTable extends javax.swing.JFrame {
 
     private Usuario usuarioLogado;
     private List<Funcionario> listaFuncionarios;
+    private static final Logger logger = LoggerFactory.getLogger(TelaAdminTable.class);
 
     public TelaAdminTable(Usuario usuario) {
         this.usuarioLogado = usuario;
@@ -246,6 +249,7 @@ public class TelaAdminTable extends javax.swing.JFrame {
         }
 
         private void alterarPermissaoFuncionario(int row) {
+            MDC.put("usuario", usuarioLogado.getUsuario());
             try {
                 Funcionario funcionario = listaFuncionarios.get(row);
 
@@ -256,15 +260,15 @@ public class TelaAdminTable extends javax.swing.JFrame {
                 funcionario.setPermissao(novaPermissao);
                 atualizarTabela(listaFuncionarios);
 
-                // JOptionPane.showMessageDialog(null, "Permissão alterada para: " + novaPermissao, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 MensagemUtil.exibirSucesso("Permissão alterada para: " + novaPermissao);
+                logger.info("promoveu o usuário [{}]", funcionario.getUsuario());
             } catch (Exception e) {
-                // JOptionPane.showMessageDialog(null, "Erro ao alterar permissão: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 MensagemUtil.exibirErro("Erro ao alterar permissão!");
             }
         }
 
         private void reverterPermissaoFuncionario(int row) {
+            MDC.put("usuario", usuarioLogado.getUsuario());
             try {
                 Funcionario funcionario = listaFuncionarios.get(row);
 
@@ -275,15 +279,15 @@ public class TelaAdminTable extends javax.swing.JFrame {
                 funcionario.setPermissao(novaPermissao);
                 atualizarTabela(listaFuncionarios);
 
-                // JOptionPane.showMessageDialog(null, "Permissão revertida para: " + novaPermissao, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 MensagemUtil.exibirSucesso("Permissão revertida para: " + novaPermissao);
+                logger.info("rebaixou o usuário [{}]", funcionario.getUsuario());
             } catch (Exception e) {
-                // JOptionPane.showMessageDialog(null, "Erro ao reverter permissão: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 MensagemUtil.exibirErro("Erro ao reverter permissão!");
             }
         }
 
         private void excluirFuncionario(int row) {
+            MDC.put("usuario", usuarioLogado.getUsuario());
             try {
                 Funcionario funcionario = listaFuncionarios.get(row);
 
@@ -292,10 +296,9 @@ public class TelaAdminTable extends javax.swing.JFrame {
                 listaFuncionarios.remove(row);
                 atualizarTabela(listaFuncionarios);
 
-                // JOptionPane.showMessageDialog(null, "Tarefa excluída com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 MensagemUtil.exibirSucesso("Usuário excluído com sucesso!");
+                logger.info("excluiu o usuário [{}]", funcionario.getUsuario());
             } catch (Exception e) {
-                // JOptionPane.showMessageDialog(null, "Erro ao excluir tarefa: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 MensagemUtil.exibirErro("Erro ao excluir usuário!");
             }
         }
