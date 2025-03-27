@@ -22,6 +22,13 @@
           <b>Victor Moreira</b>
         </sub>
       </a>
+      <br />
+        <a href="https://github.com/victormoreiraofc/client-manager/" title="Project Management">📆</a>
+        <a href="https://github.com/victormoreiraofc/client-manager/commits/main/" title="Code">💻</a>
+        <a href="https://github.com/victormoreiraofc/client-manager/blob/main/README.md" title="Documentation">📖</a>
+        <a href="https://github.com/victormoreiraofc/client-manager/tree/main/src/images" title="Design">🎨</a>
+        <a href="https://github.com/victormoreiraofc/client-manager/" title="Ideas & Planning">🤔</a>
+        <a href="https://github.com/victormoreiraofc/client-manager/" title="Testing">⚠</a>
     </td>
     <td align="center">
       <a href="https://github.com/Mateus-Ebenezer">
@@ -30,6 +37,8 @@
           <b>Mateus Ebenezer</b>
         </sub>
       </a>
+      <br />
+        <a href="https://github.com/victormoreiraofc/client-manager/commits/main/" title="Code">💻</a>
     </td>
     <td align="center">
       <a href="https://github.com/GiovaneRocca03">
@@ -38,6 +47,8 @@
           <b>Giovane Rocca</b>
         </sub>
       </a>
+      <br />
+        <a href="https://github.com/victormoreiraofc/client-manager/commits/main/" title="Code">💻</a>
     </td>
     <td align="center">
       <a href="https://github.com/RuanAlvesz">
@@ -46,6 +57,8 @@
           <b>Ruan Alves</b>
         </sub>
       </a>
+      <br />
+        <a href="https://github.com/victormoreiraofc/client-manager/commits/main/" title="Code">💻</a>
     </td>
     <td align="center">
       <a href="https://github.com/PamellaCorrea">
@@ -54,6 +67,10 @@
           <b>Pamella Correa</b>
         </sub>
       </a>
+      <br />
+        <a href="https://github.com/victormoreiraofc/client-manager/commits/main/" title="Code">💻</a>
+        <a href="https://github.com/victormoreiraofc/client-manager/blob/main/README.md" title="Documentation">📖</a>
+      <a href="https://github.com/victormoreiraofc/client-manager/" title="Testing">⚠</a>
     </td>
     <td align="center">
       <a href="https://github.com/Ingenzin">
@@ -62,13 +79,15 @@
           <b>Lucas Santos</b>
         </sub>
       </a>
+      <br />
+        <a href="https://github.com/victormoreiraofc/client-manager/commits/main/" title="Code">💻</a>
     </td>
   </tr>
 </table>
 
 ---
 
-> * Funcionalidades
+> **Funcionalidades**
 
 - **Gerenciamento de Clientes:** Adicione, edite e remova informações de clientes de forma eficiente.
 - **Geração de Relatórios:** Crie relatórios financeiros personalizados automaticamente.
@@ -77,7 +96,7 @@
 
 ---
 
-> * Tecnologias Utilizadas
+> **Tecnologias Utilizadas**
 
 - **Linguagem:** Java
 - **IDE:** NetBeans 25.0
@@ -89,7 +108,7 @@
 
 ---
 
-> * Instalação e Configuração
+> **Instalação e Configuração**
 
 1. **Clone o Repositório:**
    ```bash
@@ -119,7 +138,7 @@
 
 ---
 
-> * Contributing
+> **Contributing**
 
 1. [Fork the repository](https://github.com/victormoreiraofc/client-manager/fork)
 2. Clone your fork: `git clone https://github.com/victormoreiraofc/client-manager`
