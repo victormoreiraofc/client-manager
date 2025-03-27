@@ -29,6 +29,9 @@ public class TelaRegistrar extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnResgistrar = new javax.swing.JButton();
+        jilbAindaNaoTemConta = new javax.swing.JLabel();
+        jilbRegistreSe = new javax.swing.JLabel();
         lblCTCONTAB = new javax.swing.JLabel();
         lblContabilidade = new javax.swing.JLabel();
         jlibLogo = new javax.swing.JLabel();
@@ -54,8 +57,32 @@ public class TelaRegistrar extends javax.swing.JFrame {
         setTitle("Registrar - CT CONTAB");
         getContentPane().setLayout(null);
 
+        btnResgistrar.setBackground(new java.awt.Color(30, 30, 30));
+        btnResgistrar.setContentAreaFilled(false);
+        btnResgistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResgistrarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnResgistrar);
+        btnResgistrar.setBounds(470, 420, 60, 20);
+
+        jilbAindaNaoTemConta.setBackground(new java.awt.Color(255, 255, 255));
+        jilbAindaNaoTemConta.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        jilbAindaNaoTemConta.setForeground(new java.awt.Color(115, 115, 115));
+        jilbAindaNaoTemConta.setText("Você já tem conta?");
+        getContentPane().add(jilbAindaNaoTemConta);
+        jilbAindaNaoTemConta.setBounds(380, 420, 130, 20);
+
+        jilbRegistreSe.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        jilbRegistreSe.setForeground(new java.awt.Color(194, 166, 40));
+        jilbRegistreSe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jilbRegistreSe.setText("   Logar-me");
+        getContentPane().add(jilbRegistreSe);
+        jilbRegistreSe.setBounds(450, 420, 90, 20);
+
         lblCTCONTAB.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblCTCONTAB.setForeground(new java.awt.Color(204, 204, 204));
+        lblCTCONTAB.setForeground(new java.awt.Color(200, 200, 200));
         lblCTCONTAB.setText("CT CONTAB");
         getContentPane().add(lblCTCONTAB);
         lblCTCONTAB.setBounds(410, 85, 190, 40);
@@ -84,21 +111,21 @@ public class TelaRegistrar extends javax.swing.JFrame {
         jlibForcaSenha.setForeground(new java.awt.Color(115, 115, 115));
         jlibForcaSenha.setText("Força da Senha:");
         getContentPane().add(jlibForcaSenha);
-        jlibForcaSenha.setBounds(490, 360, 110, 14);
+        jlibForcaSenha.setBounds(490, 350, 110, 14);
 
         jlibErroUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/error-icon.png"))); // NOI18N
         getContentPane().add(jlibErroUsuario);
-        jlibErroUsuario.setBounds(585, 230, 15, 20);
+        jlibErroUsuario.setBounds(590, 220, 15, 20);
 
         jlibErroEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/error-icon.png"))); // NOI18N
         getContentPane().add(jlibErroEmail);
-        jlibErroEmail.setBounds(585, 160, 15, 20);
+        jlibErroEmail.setBounds(590, 150, 15, 20);
 
         jProgressBar.setBackground(new java.awt.Color(115, 115, 115));
         jProgressBar.setForeground(new java.awt.Color(115, 115, 115));
         jProgressBar.setBorder(null);
         getContentPane().add(jProgressBar);
-        jProgressBar.setBounds(320, 364, 110, 10);
+        jProgressBar.setBounds(320, 360, 110, 10);
 
         jilbTermosDeServiço.setBackground(new java.awt.Color(255, 255, 255));
         jilbTermosDeServiço.setFont(new java.awt.Font("SansSerif", 1, 8)); // NOI18N
@@ -113,14 +140,14 @@ public class TelaRegistrar extends javax.swing.JFrame {
         jilbCreditos.setForeground(new java.awt.Color(115, 115, 115));
         jilbCreditos.setText("© 2024 Uninove. CT CONTAB é um projeto desenvolvido pela Turma");
         getContentPane().add(jilbCreditos);
-        jilbCreditos.setBounds(330, 440, 270, 20);
+        jilbCreditos.setBounds(330, 450, 270, 20);
 
         jilbCreditos2.setBackground(new java.awt.Color(255, 255, 255));
         jilbCreditos2.setFont(new java.awt.Font("SansSerif", 1, 8)); // NOI18N
         jilbCreditos2.setForeground(new java.awt.Color(115, 115, 115));
         jilbCreditos2.setText("18 do curso de Ciência da Computação da Uninove.");
         getContentPane().add(jilbCreditos2);
-        jilbCreditos2.setBounds(360, 440, 210, 40);
+        jilbCreditos2.setBounds(360, 450, 210, 40);
 
         btnLogin.setBackground(new java.awt.Color(184, 135, 11));
         btnLogin.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
@@ -146,25 +173,25 @@ public class TelaRegistrar extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnLogin);
-        btnLogin.setBounds(320, 390, 280, 40);
+        btnLogin.setBounds(320, 380, 280, 40);
 
         jilbUsuario.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jilbUsuario.setForeground(new java.awt.Color(194, 166, 40));
         jilbUsuario.setText("Usuário:");
         getContentPane().add(jilbUsuario);
-        jilbUsuario.setBounds(320, 230, 190, 16);
+        jilbUsuario.setBounds(320, 220, 190, 16);
 
         jilbEmail.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jilbEmail.setForeground(new java.awt.Color(194, 166, 40));
         jilbEmail.setText("Email:");
         getContentPane().add(jilbEmail);
-        jilbEmail.setBounds(320, 160, 190, 16);
+        jilbEmail.setBounds(320, 150, 190, 16);
 
         jilbSenha.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jilbSenha.setForeground(new java.awt.Color(194, 166, 40));
         jilbSenha.setText("Senha:");
         getContentPane().add(jilbSenha);
-        jilbSenha.setBounds(320, 300, 170, 20);
+        jilbSenha.setBounds(320, 290, 170, 20);
 
         txtEmail.setBackground(new java.awt.Color(4, 21, 57));
         txtEmail.setForeground(new java.awt.Color(115, 115, 115));
@@ -181,7 +208,7 @@ public class TelaRegistrar extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txtEmail);
-        txtEmail.setBounds(320, 180, 280, 40);
+        txtEmail.setBounds(320, 170, 280, 40);
 
         txtUsuario.setBackground(new java.awt.Color(4, 21, 57));
         txtUsuario.setForeground(new java.awt.Color(115, 115, 115));
@@ -193,7 +220,7 @@ public class TelaRegistrar extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txtUsuario);
-        txtUsuario.setBounds(320, 250, 280, 40);
+        txtUsuario.setBounds(320, 240, 280, 40);
 
         txtSenha.setBackground(new java.awt.Color(4, 21, 57));
         txtSenha.setForeground(new java.awt.Color(115, 115, 115));
@@ -204,7 +231,7 @@ public class TelaRegistrar extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txtSenha);
-        txtSenha.setBounds(320, 320, 280, 40);
+        txtSenha.setBounds(320, 310, 280, 40);
 
         jlibBlueSquad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/retangulo-azul.png"))); // NOI18N
         getContentPane().add(jlibBlueSquad);
@@ -292,6 +319,11 @@ public class TelaRegistrar extends javax.swing.JFrame {
         btnLogin.setBackground(new java.awt.Color(189, 135, 2));
     }//GEN-LAST:event_btnLoginMouseReleased
 
+    private void btnResgistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResgistrarActionPerformed
+        dispose();
+        new TelaLogin().setVisible(true);
+    }//GEN-LAST:event_btnResgistrarActionPerformed
+
     private void verificarForcaSenha() {
         String senha = new String(txtSenha.getText());
         int forca = calcularForcaSenha(senha);
@@ -357,11 +389,14 @@ public class TelaRegistrar extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
     private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnResgistrar;
     private javax.swing.JButton btnTermosServico;
     private javax.swing.JProgressBar jProgressBar;
+    private javax.swing.JLabel jilbAindaNaoTemConta;
     private javax.swing.JLabel jilbCreditos;
     private javax.swing.JLabel jilbCreditos2;
     private javax.swing.JLabel jilbEmail;
+    private javax.swing.JLabel jilbRegistreSe;
     private javax.swing.JLabel jilbSenha;
     private javax.swing.JLabel jilbTermosDeServiço;
     private javax.swing.JLabel jilbUsuario;

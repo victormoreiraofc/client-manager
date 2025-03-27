@@ -187,6 +187,9 @@
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="null"/>
+        </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
@@ -539,14 +542,16 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="73" green="73" red="73" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Escreva o nome da tarefa que deseja buscar."/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="javax.swing.BorderFactory.createCompoundBorder(&#xd;&#xa;    javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3), &#xd;&#xa;    javax.swing.BorderFactory.createEmptyBorder(0, 30, 0, 0)&#xd;&#xa;)" type="code"/>
+          <Connection code="javax.swing.BorderFactory.createCompoundBorder(&#xa;    javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3), &#xa;    javax.swing.BorderFactory.createEmptyBorder(0, 30, 0, 0)&#xa;)" type="code"/>
         </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtLoginActionPerformed"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="addPlaceholder(txtLogin, &quot;Escreva o nome da tarefa que deseja buscar.&quot;);"/>
+      </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="110" y="120" width="950" height="40"/>

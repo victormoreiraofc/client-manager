@@ -815,7 +815,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="2"/>
-            <Property name="text" type="java.lang.String" value="Codigo:"/>
+            <Property name="text" type="java.lang.String" value="C&#xf3;digo:"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <Constraints>
@@ -851,7 +851,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="2"/>
-            <Property name="text" type="java.lang.String" value="Funcionario Cadastrante: "/>
+            <Property name="text" type="java.lang.String" value="Funcion&#xe1;rio Cadastrante: "/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <Constraints>

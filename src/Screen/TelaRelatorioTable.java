@@ -7,8 +7,11 @@ import Data.Relatorio;
 import Data.Usuario;
 import Screen.MensagemUtil;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Toolkit;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +22,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingWorker;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -249,6 +253,29 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         jTable1.getColumnModel().getColumn(5).setMinWidth(70);
         jTable1.getColumnModel().getColumn(5).setMaxWidth(70);
         jTable1.getColumnModel().getColumn(5).setPreferredWidth(70);
+    }
+    
+            private void addPlaceholder(JTextField field, String placeholder) {
+        field.setText(placeholder);
+        field.setForeground(Color.GRAY);
+
+        field.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (field.getText().equals(placeholder)) {
+                    field.setText("");
+                    field.setForeground(Color.WHITE);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (field.getText().isEmpty()) {
+                    field.setText(placeholder);
+                    field.setForeground(Color.GRAY);
+                }
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -490,9 +517,8 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         txtLogin.setBackground(new java.awt.Color(4, 21, 57));
         txtLogin.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         txtLogin.setForeground(new java.awt.Color(115, 115, 115));
-        txtLogin.setText("Escreva o nome do relatório que deseja buscar.");
         txtLogin.setBorder(javax.swing.BorderFactory.createCompoundBorder(
-            javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3), 
+            javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3),
             javax.swing.BorderFactory.createEmptyBorder(0, 30, 0, 0)
         ));
         txtLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -502,6 +528,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         });
         getContentPane().add(txtLogin);
         txtLogin.setBounds(110, 120, 950, 40);
+        addPlaceholder(txtLogin, "Escreva o nome do relatório que deseja buscar.");
 
         btnLogin.setBackground(new java.awt.Color(194, 166, 40));
         btnLogin.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N

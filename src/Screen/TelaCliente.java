@@ -594,7 +594,7 @@ public class TelaCliente extends javax.swing.JFrame {
         lblDataDeCadastro2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblDataDeCadastro2.setForeground(new java.awt.Color(255, 255, 255));
         lblDataDeCadastro2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblDataDeCadastro2.setText("Codigo:");
+        lblDataDeCadastro2.setText("Código:");
         lblDataDeCadastro2.setToolTipText("");
         jPanel1.add(lblDataDeCadastro2);
         lblDataDeCadastro2.setBounds(200, 110, 70, 30);
@@ -610,7 +610,7 @@ public class TelaCliente extends javax.swing.JFrame {
         lblDataDeCadastro1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblDataDeCadastro1.setForeground(new java.awt.Color(255, 255, 255));
         lblDataDeCadastro1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblDataDeCadastro1.setText("Funcionario Cadastrante: ");
+        lblDataDeCadastro1.setText("Funcionário Cadastrante: ");
         lblDataDeCadastro1.setToolTipText("");
         jPanel1.add(lblDataDeCadastro1);
         lblDataDeCadastro1.setBounds(200, 170, 190, 30);
