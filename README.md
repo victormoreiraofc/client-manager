@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="https://ctcontab.com.br/wp-content/uploads/2024/04/cropped-logo-ctcontabil.png" alt="Logo CT CONTAB" width="300">
+  <img src="https://github.com/victormoreiraofc/client-manager/blob/main/src/images/ctcontab.png" alt="Logo CT CONTAB" width="300">
   <br>Sistema de Gestão de Clientes para CT CONTAB
 </h1>
 
