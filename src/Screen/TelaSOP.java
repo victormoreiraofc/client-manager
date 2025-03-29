@@ -1,19 +1,9 @@
 package screen;
 
 import Data.IconUtil;
-import Data.CTCONTAB;
 import Data.PermissaoUtil;
 import Data.Usuario;
-import Screen.MensagemUtil;
-import java.awt.Image;
 import java.awt.Toolkit;
-import java.io.File;
-import java.io.FileInputStream;
-import java.sql.SQLException;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class TelaSOP extends javax.swing.JFrame {
 
@@ -25,6 +15,7 @@ public class TelaSOP extends javax.swing.JFrame {
         PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
         IconUtil.setIcon(usuarioLogado, lblUserIcon);
         setIcon();
+        setResizable(false);
     }
 
     private void setIcon() {

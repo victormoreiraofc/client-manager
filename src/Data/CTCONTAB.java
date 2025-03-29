@@ -19,6 +19,10 @@ public class CTCONTAB {
         return conectado;
     }
 
+    public static String sanitizeInput(String input) {
+        return input.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    }
+
     public static Usuario fazerLoginU(String u, String s) throws ClassNotFoundException, SQLException {
         conectado = conectar();
         PreparedStatement st = conectado.prepareStatement("SELECT id, usuario, email, Permissao, Imagem FROM usuarios WHERE (usuario = ? OR email = ?) AND senha = ?");

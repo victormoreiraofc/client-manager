@@ -39,6 +39,7 @@ public class TelaTarefa extends javax.swing.JFrame {
             preencherCamposNovoTarefa();
         }
         setIcon();
+        setResizable(false);
     }
 
     private void setIcon() {

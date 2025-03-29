@@ -35,6 +35,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
         atualizarLabelDataCalendario(LocalDate.now());
         configurarBotoes();
         setIcon();
+        setResizable(false);
     }
 
     private void setIcon() {

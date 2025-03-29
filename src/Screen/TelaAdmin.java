@@ -21,6 +21,7 @@ public class TelaAdmin extends javax.swing.JFrame {
         IconUtil.setIcon(usuarioLogado, lblUserIcon);
         setIcon();
         carregarLogs();
+        setResizable(false);
     }
 
     private void setIcon() {

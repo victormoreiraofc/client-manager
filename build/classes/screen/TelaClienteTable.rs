@@ -3,6 +3,7 @@ screen.TelaClienteTable$8
 screen.TelaClienteTable$9
 screen.TelaClienteTable
 screen.TelaClienteTable$ButtonRenderer
+screen.TelaClienteTable$13
 screen.TelaClienteTable$11
 screen.TelaClienteTable$12
 screen.TelaClienteTable$1

@@ -51,6 +51,7 @@ public class TelaCliente extends javax.swing.JFrame {
             preencherCamposNovoCliente();
         }
         setIcon();
+        setResizable(false);
     }
 
     private void setIcon() {

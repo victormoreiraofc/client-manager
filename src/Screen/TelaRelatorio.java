@@ -39,6 +39,7 @@ public class TelaRelatorio extends javax.swing.JFrame {
             preencherCamposNovoRelatorio();
         }
         setIcon();
+        setResizable(false);
     }
 
     private void setIcon() {

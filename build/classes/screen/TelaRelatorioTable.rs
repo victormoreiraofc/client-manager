@@ -1,6 +1,7 @@
 screen.TelaRelatorioTable$1
 screen.TelaRelatorioTable$2
 screen.TelaRelatorioTable$ButtonRenderer
+screen.TelaRelatorioTable$13
 screen.TelaRelatorioTable$12
 screen.TelaRelatorioTable
 screen.TelaRelatorioTable$11

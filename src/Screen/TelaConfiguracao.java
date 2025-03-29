@@ -34,6 +34,7 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         carregarImagemUsuario(usuario);
         IconUtil.setIcon(usuarioLogado, lblUserIcon);
         setIcon();
+        setResizable(false);
     }
 
     private void setIcon() {

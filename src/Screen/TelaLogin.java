@@ -28,6 +28,7 @@ public class TelaLogin extends javax.swing.JFrame {
         jlibErroLogin.setVisible(false);
         jlibErroLoginIcon.setVisible(false);
         setIcon();
+        setResizable(false);
     }
 
     private void setIcon() {

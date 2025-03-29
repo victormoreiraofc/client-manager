@@ -16,3 +16,4 @@ screen.TelaTarefa$12
 screen.TelaTarefa$5
 screen.TelaTarefa$13
 screen.TelaTarefa$9
+screen.TelaTarefa$18

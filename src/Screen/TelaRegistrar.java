@@ -8,7 +8,10 @@ import java.util.regex.Matcher;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Toolkit;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.net.URI;
+import javax.swing.JTextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,10 +22,34 @@ public class TelaRegistrar extends javax.swing.JFrame {
     public TelaRegistrar() {
         initComponents();
         setIcon();
+        setResizable(false);
     }
 
     private void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/logo-icon.png")));
+    }
+
+    private void addPlaceholder(JTextField field, String placeholder) {
+        field.setText(placeholder);
+        field.setForeground(Color.GRAY);
+
+        field.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (field.getText().equals(placeholder)) {
+                    field.setText("");
+                    field.setForeground(Color.WHITE);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (field.getText().isEmpty()) {
+                    field.setText(placeholder);
+                    field.setForeground(Color.GRAY);
+                }
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -195,7 +222,6 @@ public class TelaRegistrar extends javax.swing.JFrame {
 
         txtEmail.setBackground(new java.awt.Color(4, 21, 57));
         txtEmail.setForeground(new java.awt.Color(115, 115, 115));
-        txtEmail.setText("  seuemail@gmail.com");
         txtEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
         txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -209,10 +235,12 @@ public class TelaRegistrar extends javax.swing.JFrame {
         });
         getContentPane().add(txtEmail);
         txtEmail.setBounds(320, 170, 280, 40);
+        addPlaceholder(txtEmail, "  seuemail@gmail.com");
+        addPlaceholder(txtUsuario, "  Digite um nome de usuário");
+        addPlaceholder(txtSenha, "  Digite sua senha");
 
         txtUsuario.setBackground(new java.awt.Color(4, 21, 57));
         txtUsuario.setForeground(new java.awt.Color(115, 115, 115));
-        txtUsuario.setText("  desenvolvedoradmin123");
         txtUsuario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
         txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {

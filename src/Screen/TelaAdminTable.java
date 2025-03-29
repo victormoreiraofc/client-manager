@@ -46,6 +46,7 @@ public class TelaAdminTable extends javax.swing.JFrame {
         carregarFuncionariosAssincrono();
         IconUtil.setIcon(usuarioLogado, lblUserIcon);
         setIcon();
+        setResizable(false);
     }
 
     private void setIcon() {
@@ -312,7 +313,7 @@ public class TelaAdminTable extends javax.swing.JFrame {
     public TelaAdminTable() {
         initComponents();
     }
-    
+
     private void addPlaceholder(JTextField field, String placeholder) {
         field.setText(placeholder);
         field.setForeground(Color.GRAY);

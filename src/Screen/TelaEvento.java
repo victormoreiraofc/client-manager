@@ -38,6 +38,7 @@ public class TelaEvento extends javax.swing.JFrame {
         PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
         IconUtil.setIcon(usuarioLogado, lblUserIcon);
         setIcon();
+        setResizable(false);
     }
 
     private void setIcon() {
