@@ -55,7 +55,7 @@
 
 <br>
 <p align="left">
-  <img alt="n8n imagem" height="500" src="src/images/n8n.png"/>
+  <img alt="n8n imagem" height="400" src="src/images/n8n.png"/>
   <br>
 </p>
 
