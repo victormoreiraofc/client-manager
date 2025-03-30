@@ -9,10 +9,65 @@
 ![Bitbucket open issues](https://img.shields.io/bitbucket/issues/victormoreiraofc/client-manager?style=for-the-badge)
 ![Bitbucket open pull requests](https://img.shields.io/bitbucket/pr-raw/victormoreiraofc/client-manager?style=for-the-badge)
 
+<!-- 
 ---
 
-> **Official Developer Project**
+<br>
+<p align="left">
+  <video height="500" controls>
+    <source src="src/videos/meu-video.mp4" type="video/mp4">
+    Seu navegador não suporta o elemento de vídeo.
+  </video>
+  <br>
+</p> -->
 
+---
+
+> **Installation and Configuration 💻**
+
+1. ***Clone the Repository:***
+   ```bash
+   git clone https://github.com/victormoreiraofc/client-manager.git
+
+2. ***Open the Project in NetBeans:***
+   - Open [NetBeans IDE](https://netbeans.apache.org/front/main/download/nb25/).
+   - Select "Open Project" and navigate to the cloned repository directory.
+   - Open the project in NetBeans.
+
+3. ***Database Configuration:***
+   - Make sure you have [MySQL Workbanch 8.0](https://dev.mysql.com/downloads/workbench/) installed.
+   - Copy the code from the [#database](https://github.com/victormoreiraofc/client-manager/blob/main/database) file and paste it into the query and click on the lightning bolt to execute it.
+   - Update and the database will be implemented.
+
+4. ***Dependencies:***
+   - Access [Google Cloud](https://console.cloud.google.com/) to create the necessary credentials and APIs.
+
+5. ***Running the Project:***
+   - After configuration, run the project directly in NetBeans by clicking on the blue arrow.
+   
+> [!WARNING]
+> You will need to create your N8N application to register new events in the calendar.
+
+---
+
+> [!TIP]
+> Follow the N8N workflow model to make event registration work.
+
+<br>
+<p align="left">
+  <img alt="n8n imagem" height="500" src="src/images/n8n.png"/>
+  <br>
+</p>
+
+---
+
+> **Official Developer Team ✨**
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
 <table>
   <tr>
     <td align="center">
@@ -39,6 +94,7 @@
       </a>
       <br />
         <a href="https://github.com/victormoreiraofc/client-manager/commits/main/" title="Code">💻</a>
+        <a href="https://github.com/victormoreiraofc/client-manager/" title="Video">📹</a>
     </td>
     <td align="center">
       <a href="https://github.com/GiovaneRocca03">
@@ -49,6 +105,7 @@
       </a>
       <br />
         <a href="https://github.com/victormoreiraofc/client-manager/commits/main/" title="Code">💻</a>
+        <a href="https://github.com/victormoreiraofc/client-manager/" title="Video">📹</a>
     </td>
     <td align="center">
       <a href="https://github.com/RuanAlvesz">
@@ -59,6 +116,7 @@
       </a>
       <br />
         <a href="https://github.com/victormoreiraofc/client-manager/commits/main/" title="Code">💻</a>
+        <a href="https://github.com/victormoreiraofc/client-manager/" title="Video">📹</a>
     </td>
     <td align="center">
       <a href="https://github.com/PamellaCorrea">
@@ -81,69 +139,14 @@
       </a>
       <br />
         <a href="https://github.com/victormoreiraofc/client-manager/commits/main/" title="Code">💻</a>
+        <a href="https://github.com/victormoreiraofc/client-manager/" title="Video">📹</a>
     </td>
   </tr>
 </table>
 
----
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
 
-> **Funcionalidades**
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
-- **Gerenciamento de Clientes:** Adicione, edite e remova informações de clientes de forma eficiente.
-- **Geração de Relatórios:** Crie relatórios financeiros personalizados automaticamente.
-- **Comunicação Interna:** Facilite a comunicação dentro da equipe contábil.
-- **Integração com IA:** Utilize inteligência artificial para otimizar processos e análises.
-
----
-
-> **Tecnologias Utilizadas**
-
-- **Linguagem:** Java
-- **IDE:** NetBeans 25.0
-- **Banco de Dados:** MySQL
-- **Bibliotecas e Frameworks:**
-  - [N8N](https://n8n.io/) para manipulação de agentes de IA
-  - [Ngrok](https://ngrok.com/) para colocar o n8n online
-  - [NodeJS](https://nodejs.org/pt) para manipular o n8n
-
----
-
-> **Instalação e Configuração**
-
-1. **Clone o Repositório:**
-   ```bash
-   git clone https://github.com/victormoreiraofc/client-manager.git
-
-2. **Abra o Projeto no NetBeans:**
-   - Abra o NetBeans IDE.
-   - Selecione "Abrir Projeto" e navegue até o diretório do repositório clonado.
-   - Abra o projeto no NetBeans.
-
-3. **Configuração do Banco de Dados:**
-   - Certifique-se de ter o MySQL instalado.
-   - Crie um banco de dados chamado `client_manager`.
-   - Importe o arquivo de estrutura do banco de dados (geralmente um `.sql` fornecido no repositório ou na documentação do projeto).
-   - Atualize as credenciais de conexão no arquivo de configuração do banco de dados.
-
-4. **Dependências:**
-   - O projeto utiliza Maven para gerenciamento de dependências. Certifique-se de que todas as dependências estão resolvidas.
-   - No NetBeans, clique com o botão direito no projeto e selecione "Construir" para baixar todas as dependências.
-
-5. **Configuração do Servidor de Aplicação (caso necessário):**
-   - O projeto pode requerer um servidor de aplicação (como Tomcat ou GlassFish) caso haja funcionalidades web envolvidas. Siga as instruções do projeto para configurar o servidor.
-
-6. **Executando o Projeto:**
-   - Após a configuração, execute o projeto diretamente no NetBeans.
-   - Caso o projeto inclua funcionalidades de servidor web, o NetBeans irá iniciar o servidor para você.
-
----
-
-> **Contributing**
-
-1. [Fork the repository](https://github.com/victormoreiraofc/client-manager/fork)
-2. Clone your fork: `git clone https://github.com/victormoreiraofc/client-manager`
-3. Create your feature branch: `git checkout -b my-new-feature`
-4. Stage changes `git add .`
-5. Commit your changes: `cz` OR `npm run commit` do not use `git commit`
-6. Push to the branch: `git push origin my-new-feature`
-7. Submit a pull request
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
