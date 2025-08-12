@@ -105,7 +105,6 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       </a>
       <br />
         <a href="https://github.com/victormoreiraofc/client-manager/commits/main/" title="Code">💻</a>
-        <a href="https://github.com/victormoreiraofc/client-manager/" title="Video">📹</a>
     </td>
     <td align="center">
       <a href="https://github.com/RuanAlvesz">
@@ -139,7 +138,6 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       </a>
       <br />
         <a href="https://github.com/victormoreiraofc/client-manager/commits/main/" title="Code">💻</a>
-        <a href="https://github.com/victormoreiraofc/client-manager/" title="Video">📹</a>
     </td>
   </tr>
 </table>
