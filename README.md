@@ -1,52 +1,40 @@
-<h1 align="center"><img src="https://github.com/victormoreiraofc/client-manager/blob/main/src/images/ctcontab.png" alt="Logo CT CONTAB" width="300"><br>Sistema de Gestão de Clientes para CT CONTAB</h1>
-
 ![GitHub repo size](https://img.shields.io/github/repo-size/victormoreiraofc/client-manager?style=for-the-badge)
 ![GitHub language count](https://img.shields.io/github/languages/count/victormoreiraofc/client-manager?style=for-the-badge)
 ![GitHub forks](https://img.shields.io/github/forks/victormoreiraofc/client-manager?style=for-the-badge)
-![Bitbucket open issues](https://img.shields.io/bitbucket/issues/victormoreiraofc/client-manager?style=for-the-badge)
-![Bitbucket open pull requests](https://img.shields.io/bitbucket/pr-raw/victormoreiraofc/client-manager?style=for-the-badge)
+![Github open issues](https://img.shields.io/github/issues/victormoreiraofc/client-manager?style=for-the-badge)
+![Github open pull requests](https://img.shields.io/bitbucket/pr-raw/victormoreiraofc/client-manager?style=for-the-badge)
 
----
+# Sistema de Gestão de Clientes para Contabilidade
+Este repositório contém um projeto acadêmico desenvolvido ao longo de 1 ano e meio, cujo objetivo principal é criar uma aplicação de gerenciamento de clientes voltada para empresas de contabilidade.
 
-Este repositório é referente a um projeto academico que tem como intuito desenvolver uma aplicação de gerenciamento de clientes para empresas de contabilidade, durante a produção desse sistema que durou 1 ano e meio utilizamos como linguagem matriz o JAVA.
+O sistema foi construído utilizando Java como linguagem principal, empregando boas práticas de programação orientada a objetos e organização modular. Durante o desenvolvimento, foram aplicados conceitos de engenharia de software, banco de dados, interface gráfica e integração de funcionalidades voltadas ao uso corporativo.
 
-> **Installation and Configuration 💻**
+O projeto busca oferecer uma solução prática para o gerenciamento de informações de clientes, facilitando o acesso, edição e organização de dados em um ambiente seguro e intuitivo. Além do aspecto acadêmico, a aplicação foi estruturada de forma a se aproximar de um produto real, visando agregar valor ao aprendizado e à experiência prática no desenvolvimento de sistemas.
 
-1. ***Clone the Repository:***
-   ```bash
-   git clone https://github.com/victormoreiraofc/client-manager.git
+<h1 align="center"><img src="https://github.com/victormoreiraofc/client-manager/blob/main/src/images/ctcontab.png" alt="Logo CT CONTAB" width="500"></h1>
 
-2. ***Open the Project in NetBeans:***
-   - Open [NetBeans IDE](https://netbeans.apache.org/front/main/download/nb25/).
-   - Select "Open Project" and navigate to the cloned repository directory.
-   - Open the project in NetBeans.
+## ⚙️ Funcionalidades Principais
 
-3. ***Database Configuration:***
-   - Make sure you have [MySQL Workbanch 8.0](https://dev.mysql.com/downloads/workbench/) installed.
-   - Copy the code from the [#database](https://github.com/victormoreiraofc/client-manager/blob/main/database) file and paste it into the query and click on the lightning bolt to execute it.
-   - Update and the database will be implemented.
+- Gestão completa de clientes: cadastro, atualização, exclusão e busca.  
+- Controle de acesso com diferentes permissões de usuário.  
+- Interface gráfica (GUI) amigável para facilitar uso corporativo.  
+- Upload de imagens de perfil de cliente.  
+- Integração de calendário via **n8n**, para criação e gerenciamento de eventos.  
+- Integração com APIs de IA (ex: Google Gemini, Mistral AI) para auxiliar em relatórios ou automações internas.  
+- Geração de relatórios (financeiros, de clientes, de eventos) para suporte à tomada de decisão.  
+- Sistema de autenticação seguro.  
+- Logs e persistência de dados via banco MySQL.
 
-4. ***Dependencies:***
-   - Access [Google Cloud](https://console.cloud.google.com/) to create the necessary credentials and APIs.
+## 🔧 Tecnologias & Infraestrutura
 
-5. ***Running the Project:***
-   - After configuration, run the project directly in NetBeans by clicking on the blue arrow.
-   
-> [!WARNING]
-> You will need to create your N8N application to register new events in the calendar.
-
----
-
-> [!TIP]
-> Follow the N8N workflow model to make event registration work.
-
-<br>
-<p align="left">
-  <img alt="n8n imagem" height="400" src="src/images/n8n.png"/>
-  <br>
-</p>
-
----
+| Componente | Utilizado para... |
+|------------|----------------------|
+| **Java** | Lógica principal do aplicativo, GUI, regras de negócio |
+| **MySQL** | Armazenamento de dados persistentes (clientes, eventos, usuários) |
+| **NetBeans** | IDE para desenvolvimento, compilação e execução do sistema |
+| **n8n** | Automação de fluxo de trabalho, especialmente com calendário |
+| **Google Cloud / Gemini API / Mistral AI** | Integrações de IA para geração de insights, relatórios ou automações inteligentes |
+| **Scripts SQL** | Criação do schema, tabelas, inicialização do BD |
 
 ## ✨ Contributors
 
@@ -77,3 +65,6 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
+## License
+[MIT](LICENSE) (c) 2025 public-apis
