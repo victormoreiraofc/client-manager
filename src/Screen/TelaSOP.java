@@ -72,7 +72,7 @@ public class TelaSOP extends javax.swing.JFrame {
         Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Configurações - CT CONTAB");
+        setTitle("CT Contab Manager");
         getContentPane().setLayout(null);
 
         btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/home-menu.png"))); // NOI18N
@@ -345,7 +345,7 @@ public class TelaSOP extends javax.swing.JFrame {
         getContentPane().add(Background);
         Background.setBounds(0, 0, 1280, 711);
 
-        setSize(new java.awt.Dimension(1294, 708));
+        setSize(new java.awt.Dimension(1450, 750));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

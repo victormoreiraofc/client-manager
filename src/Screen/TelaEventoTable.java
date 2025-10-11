@@ -467,7 +467,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
         btnSetaEsquerda = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Calendário - CT CONTAB");
+        setTitle("CT Contab Manager");
         getContentPane().setLayout(null);
 
         btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/home-menu.png"))); // NOI18N
@@ -669,7 +669,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
         getContentPane().add(btnSetaEsquerda);
         btnSetaEsquerda.setBounds(390, 10, 70, 70);
 
-        setSize(new java.awt.Dimension(1294, 708));
+        setSize(new java.awt.Dimension(1450, 750));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

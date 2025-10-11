@@ -81,7 +81,7 @@ public class TelaRegistrar extends javax.swing.JFrame {
         Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Registrar - CT CONTAB");
+        setTitle("CT Contab Manager");
         getContentPane().setLayout(null);
 
         btnResgistrar.setBackground(new java.awt.Color(30, 30, 30));
@@ -270,7 +270,7 @@ public class TelaRegistrar extends javax.swing.JFrame {
         getContentPane().add(Background);
         Background.setBounds(0, -10, 930, 660);
 
-        setSize(new java.awt.Dimension(919, 622));
+        setSize(new java.awt.Dimension(1450, 750));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

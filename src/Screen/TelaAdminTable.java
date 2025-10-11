@@ -375,7 +375,7 @@ public class TelaAdminTable extends javax.swing.JFrame {
         Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Administração - CT CONTAB");
+        setTitle("CT Contab Manager");
         getContentPane().setLayout(null);
 
         btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/home-menu.png"))); // NOI18N
@@ -464,7 +464,6 @@ public class TelaAdminTable extends javax.swing.JFrame {
         getContentPane().add(lblCTCONTAB);
         lblCTCONTAB.setBounds(90, 7, 190, 40);
 
-        jScrollPane1.setBorder(null);
         jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
 
         jTable1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -643,7 +642,7 @@ public class TelaAdminTable extends javax.swing.JFrame {
         getContentPane().add(Background);
         Background.setBounds(0, 0, 1280, 711);
 
-        setSize(new java.awt.Dimension(1294, 708));
+        setSize(new java.awt.Dimension(1450, 750));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

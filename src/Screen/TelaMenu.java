@@ -232,7 +232,7 @@ public class TelaMenu extends javax.swing.JFrame {
         JPanelTelaAcesso5 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Home - CT CONTAB");
+        setTitle("CT Contab Manager");
         getContentPane().setLayout(null);
 
         lblContabilidade.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
@@ -499,7 +499,7 @@ public class TelaMenu extends javax.swing.JFrame {
         getContentPane().add(JPanelTelaAcesso5);
         JPanelTelaAcesso5.setBounds(0, 390, 80, 70);
 
-        setSize(new java.awt.Dimension(1294, 708));
+        setSize(new java.awt.Dimension(1450, 750));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

@@ -208,7 +208,7 @@ public class TelaEvento extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Novo Evento - CT CONTAB");
+        setTitle("CT Contab Manager");
         getContentPane().setLayout(null);
 
         btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/home-menu.png"))); // NOI18N
@@ -545,7 +545,7 @@ public class TelaEvento extends javax.swing.JFrame {
         getContentPane().add(jLabel15);
         jLabel15.setBounds(430, 330, 100, 30);
 
-        setSize(new java.awt.Dimension(1294, 708));
+        setSize(new java.awt.Dimension(1450, 750));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

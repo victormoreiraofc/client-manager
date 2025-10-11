@@ -318,7 +318,7 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         jSeparator10 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Tarefas - CT CONTAB");
+        setTitle("CT Contab Manager");
         getContentPane().setLayout(null);
 
         btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/home-menu.png"))); // NOI18N
@@ -407,7 +407,6 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         getContentPane().add(lblCTCONTAB);
         lblCTCONTAB.setBounds(90, 7, 190, 40);
 
-        jScrollPane1.setBorder(null);
         jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(null);
 
@@ -633,7 +632,7 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         getContentPane().add(jSeparator10);
         jSeparator10.setBounds(290, 190, 10, 450);
 
-        setSize(new java.awt.Dimension(1294, 708));
+        setSize(new java.awt.Dimension(1450, 750));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

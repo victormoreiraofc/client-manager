@@ -27,14 +27,18 @@ public class IconUtil {
 
     private static void setIconPadrao(JLabel label) {
         try {
-            java.net.URL recurso = IconUtil.class.getResource("/images/minhatura-de-perfil.png");
+            java.net.URL recurso = IconUtil.class.getResource("/images/Jonh Doe Icon.png");
             if (recurso == null) {
-                System.out.println("Recurso não encontrado: /images/minhatura-de-perfil.png");
+                System.out.println("Recurso não encontrado: /images/Jonh Doe Icon.png");
                 label.setIcon(null);
             } else {
                 ImageIcon icon = new ImageIcon(recurso);
                 Image img = icon.getImage();
-                Image imagemRedimensionada = img.getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH);
+
+                int larguraDesejada = 40;
+                int alturaDesejada = 40;
+
+                Image imagemRedimensionada = img.getScaledInstance(larguraDesejada, alturaDesejada, Image.SCALE_SMOOTH);
 
                 label.setIcon(new ImageIcon(imagemRedimensionada));
             }
