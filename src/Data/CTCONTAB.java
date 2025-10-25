@@ -15,7 +15,7 @@ public class CTCONTAB {
 
     private static Connection conectar() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        conectado = DriverManager.getConnection("jdbc:mysql://localhost:3306/ctcontab", "root", "Senha do MySql");
+        conectado = DriverManager.getConnection("jdbc:mysql://localhost:3306/ctcontab", "root", "Senha do MySQL");
         return conectado;
     }
 

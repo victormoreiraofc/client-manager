@@ -289,7 +289,7 @@ public class TelaRegistrar extends javax.swing.JFrame {
             MensagemUtil.exibirErro("Driver JDBC não encontrado!");
         } catch (SQLException x) {
             if (x.getMessage().contains("Duplicate entry")) {
-                MensagemUtil.exibirErro("Este CPF já está cadastrado");
+                MensagemUtil.exibirErro("Este Usuário já está cadastrado");
             } else {
                 MensagemUtil.exibirErro("Erro na conexão com o banco de dados!");
             }

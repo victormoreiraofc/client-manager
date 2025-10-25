@@ -10,8 +10,8 @@ CREATE TABLE usuarios (
     Imagem BLOB,
     Permissao ENUM('NULL', 'ADM', 'SUPER_ADM') NOT NULL DEFAULT 'NULL',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    CHECK (usuario REGEXP '^[a-zA-Z]+$'),
-    CHECK (senha REGEXP '^[a-zA-Z0-9]+$'),
+    CHECK (usuario REGEXP '^[a-zA-Z0-9]+$'),
+    CHECK (senha REGEXP '^[^[:space:]]+$'),
     CHECK (cargo REGEXP '^[a-zA-Z]+$')
 );
 
