@@ -16,6 +16,7 @@ public class TelaLoadingOverview extends JFrame {
     private JLabel didYouKnow;
     private JTextPane loadingText;
     private RotatingLogo rotatingLogo;
+    
 
     public TelaLoadingOverview() {
         // ----- WINDOW CONFIG -----
@@ -34,9 +35,10 @@ public class TelaLoadingOverview extends JFrame {
         // ----- COMPONENTS -----
         rotatingLogo = new RotatingLogo("/images/Logo Icon.png");
         didYouKnow = new JLabel("VOCÊ SABIA QUE");
+        didYouKnow.setFont(FonteUtils.carregarSofiaSansBlack(10f));
         loadingText = new JTextPane();
 
-        setupFontAndColors();
+       setupFontAndColors();
         setupLoadingText();
 
         // ----- LAYOUT (center vertically + horizontally) -----
@@ -71,45 +73,35 @@ public class TelaLoadingOverview extends JFrame {
     }
 
     private void setupFontAndColors() {
-        try {
-            // Load custom font
-            InputStream is = getClass().getResourceAsStream("/resources/fonts/SofiaSans.ttf");
-            Font baseFont = (is != null)
-                    ? Font.createFont(Font.TRUETYPE_FONT, is)
-                    : new Font("SansSerif", Font.PLAIN, 14);
+    try {
+        // Configura JLabel
+        didYouKnow.setForeground(Color.decode("#AB8D10"));
 
-            // Derive two styles
-            Font titleFont = baseFont.deriveFont(Font.BOLD, 20f);
-            Font textFont = baseFont.deriveFont(Font.BOLD, 18f);
+        // Configura JTextPane
+        loadingText.setOpaque(false);
+        loadingText.setBorder(null);
+        loadingText.setEditable(false);
 
-            // ---- JLabel setup ----
-            didYouKnow.setFont(titleFont);
-            didYouKnow.setForeground(Color.decode("#AB8D10"));
+        // Define a fonte desejada
+        Font customFont = FonteUtils.carregarSofiaSansBold(12f);
+        loadingText.setFont(customFont);
 
-            // ---- JTextPane setup ----
-            loadingText.setFont(textFont);
-            loadingText.setOpaque(false);
-            loadingText.setBorder(null);
-            loadingText.setEditable(false);
+        // Agora define os estilos corretamente
+        StyledDocument doc = loadingText.getStyledDocument();
+        SimpleAttributeSet attrs = new SimpleAttributeSet();
+        StyleConstants.setFontFamily(attrs, customFont.getFamily());
+        StyleConstants.setFontSize(attrs, customFont.getSize());
+        StyleConstants.setForeground(attrs, Color.decode("#AB8D10"));
+        StyleConstants.setAlignment(attrs, StyleConstants.ALIGN_CENTER);
+        StyleConstants.setBold(attrs, true);
+        doc.setParagraphAttributes(0, doc.getLength(), attrs, false);
+        doc.setCharacterAttributes(0, doc.getLength(), attrs, false);
 
-            // Force apply color and font through the document
-            StyledDocument doc = loadingText.getStyledDocument();
-            SimpleAttributeSet attrs = new SimpleAttributeSet();
-            StyleConstants.setFontFamily(attrs, textFont.getFamily());
-            StyleConstants.setFontSize(attrs, textFont.getSize());
-            StyleConstants.setForeground(attrs, Color.decode("#AB8D10"));
-            StyleConstants.setAlignment(attrs, StyleConstants.ALIGN_CENTER);
-            StyleConstants.setBold(attrs, true);  
-            doc.setParagraphAttributes(0, doc.getLength(), attrs, true);
-            doc.setCharacterAttributes(0, doc.getLength(), attrs, true);
-
-            loadingText.setStyledDocument(doc); // force refresh
-            loadingText.repaint();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+}
+
 
     private void setupLoadingText() {
         loadingText.setText("Clicando no banner na página principal você\nconsegue adicionar novos clientes.");
@@ -120,6 +112,7 @@ public class TelaLoadingOverview extends JFrame {
         loadingText.setFocusable(false);
         loadingText.setMaximumSize(new Dimension(600, 80)); // limit width for centering
         setupFontAndColors();
+
     }
 
     // -------------------- ROTATING LOGO --------------------
@@ -146,7 +139,7 @@ public class TelaLoadingOverview extends JFrame {
             });
             timer.start();
 
-            setPreferredSize(new Dimension(100, 100)); // adjust as needed
+            setPreferredSize(new Dimension(70, 70)); // adjust as needed
         }
 
         @Override
