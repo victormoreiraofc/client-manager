@@ -3,6 +3,7 @@ package screen;
 import Data.Usuario;
 import Data.CTCONTAB;
 import Screen.MensagemUtil;
+import Screen.TelaLoadingOverview;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Toolkit;
@@ -558,10 +559,18 @@ public class TelaLogin extends javax.swing.JFrame {
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaLogin().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            TelaLoadingOverview splash = new TelaLoadingOverview();
+            splash.setVisible(true);
+
+            // Create timer
+            javax.swing.Timer timer = new javax.swing.Timer(3000, e -> {
+                splash.dispose(); // Close splash screen
+                new TelaLogin().setVisible(true); // Open login
+            });
+
+            timer.setRepeats(false); // Run only once
+            timer.start(); // ✅ Start the timer
         });
     }
 

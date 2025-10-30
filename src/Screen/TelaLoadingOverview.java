@@ -1,167 +1,152 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Screen;
 
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.io.InputStream;
-import javax.swing.text.StyledDocument;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.*;
+import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.IOException;
+import java.io.InputStream;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
-/**
- *
- * @author mateu
- */
-public class TelaLoadingOverview extends javax.swing.JFrame {
+public class TelaLoadingOverview extends JFrame {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaLoadingOverview.class.getName());
+    private JPanel backgroundColor;
+    private JLabel didYouKnow;
+    private JTextPane loadingText;
+    private RotatingLogo rotatingLogo;
 
-    /**
-     * Creates new form TelaLoginOverview
-     */
     public TelaLoadingOverview() {
-        initComponents();
-        //chama o método que ajusta o tamanho do png da logo junto com o label 
-        resizeLogoToLabel();
-        //chama o método da fonte 
-        applyCustomFont();
+        // ----- WINDOW CONFIG -----
+        setTitle("Loading");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setUndecorated(true);
+        setSize(1450, 750);
+        setLocationRelativeTo(null);
 
-        addRotatingLogo();
+        // ----- MAIN PANEL -----
+        backgroundColor = new JPanel();
+        backgroundColor.setBackground(new Color(11, 26, 53));
+        backgroundColor.setLayout(new GridBagLayout()); // center all contents
+        getContentPane().add(backgroundColor);
+
+        // ----- COMPONENTS -----
+        rotatingLogo = new RotatingLogo("/images/Logo Icon.png");
+        didYouKnow = new JLabel("VOCÊ SABIA QUE");
+        loadingText = new JTextPane();
+
+        setupFontAndColors();
+        setupLoadingText();
+
+        // ----- LAYOUT (center vertically + horizontally) -----
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.insets = new Insets(10, 0, 10, 0); // vertical spacing between elements
+
+        // A wrapper panel allows vertical stacking centered
+        JPanel contentPanel = new JPanel();
+        contentPanel.setOpaque(false);
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        contentPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Add components to the vertical stack
+        rotatingLogo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        didYouKnow.setAlignmentX(Component.CENTER_ALIGNMENT);
+        loadingText.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        contentPanel.add(Box.createVerticalGlue());
+        contentPanel.add(rotatingLogo);
+        contentPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        contentPanel.add(didYouKnow);
+        contentPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+        contentPanel.add(loadingText);
+        contentPanel.add(Box.createVerticalGlue());
+
+        backgroundColor.add(contentPanel, gbc);
+
+        setVisible(true);
     }
 
-    //método que ajusta o tamanho do png
-    private void resizeLogoToLabel() {
+    private void setupFontAndColors() {
         try {
-            // Load original image 
-            BufferedImage originalImage = ImageIO.read(getClass().getResource("/images/Logo Icon.png"));
-            // Get label dimensions
-            int labelWidth = Logo.getWidth();
-            int labelHeight = Logo.getHeight();
-            // If the label hasn't been laid out yet, try later
-            if (labelWidth == 0 || labelHeight == 0) {
-                SwingUtilities.invokeLater(this::resizeLogoToLabel);
-                return;
-            }
+            // Load custom font
+            InputStream is = getClass().getResourceAsStream("/resources/fonts/SofiaSans.ttf");
+            Font baseFont = (is != null)
+                    ? Font.createFont(Font.TRUETYPE_FONT, is)
+                    : new Font("SansSerif", Font.PLAIN, 14);
 
-            // Calculate scaling while keeping aspect ratio
-            double widthRatio = (double) labelWidth / originalImage.getWidth();
-            double heightRatio = (double) labelHeight / originalImage.getHeight();
-            double scale = Math.min(widthRatio, heightRatio); // fit inside the label
+            // Derive two styles
+            Font titleFont = baseFont.deriveFont(Font.BOLD, 20f);
+            Font textFont = baseFont.deriveFont(Font.BOLD, 18f);
 
-            int newWidth = (int) (originalImage.getWidth() * scale);
-            int newHeight = (int) (originalImage.getHeight() * scale);
+            // ---- JLabel setup ----
+            didYouKnow.setFont(titleFont);
+            didYouKnow.setForeground(Color.decode("#AB8D10"));
 
-            // Scale the image
-            Image scaledImage = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+            // ---- JTextPane setup ----
+            loadingText.setFont(textFont);
+            loadingText.setOpaque(false);
+            loadingText.setBorder(null);
+            loadingText.setEditable(false);
 
-            // Set the scaled icon
-            Logo.setIcon(new ImageIcon(scaledImage));
+            // Force apply color and font through the document
+            StyledDocument doc = loadingText.getStyledDocument();
+            SimpleAttributeSet attrs = new SimpleAttributeSet();
+            StyleConstants.setFontFamily(attrs, textFont.getFamily());
+            StyleConstants.setFontSize(attrs, textFont.getSize());
+            StyleConstants.setForeground(attrs, Color.decode("#AB8D10"));
+            StyleConstants.setAlignment(attrs, StyleConstants.ALIGN_CENTER);
+            StyleConstants.setBold(attrs, true);  
+            doc.setParagraphAttributes(0, doc.getLength(), attrs, true);
+            doc.setCharacterAttributes(0, doc.getLength(), attrs, true);
 
-            //Center the image in the label
-            Logo.setHorizontalAlignment(SwingConstants.CENTER);
-            Logo.setVerticalAlignment(SwingConstants.CENTER);
-        } catch (IOException ex) {
-            logger.log(java.util.logging.Level.SEVERE, "Failed to load or resize logo image.", ex);
+            loadingText.setStyledDocument(doc); // force refresh
+            loadingText.repaint();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    //método da fonte nova (SofiaSans)
-    private void applyCustomFont() {
-        SwingUtilities.invokeLater(() -> {
-            try {
-                // Load custom font
-                InputStream is = getClass().getResourceAsStream("/resources/fonts/SofiaSans.ttf");
-                if (is == null) {
-                    throw new IOException("Font file not found!");
-                }
-
-                Font baseFont = Font.createFont(Font.TRUETYPE_FONT, is);
-                // Different sizes for each component
-                Font labelFont = baseFont.deriveFont(Font.BOLD, 12f); // JLabel font size
-                Font textPaneFont = baseFont.deriveFont(Font.PLAIN, 16f); // JTextPane font size
-
-                // Apply to label
-                didYouKnow.setFont(labelFont);
-                didYouKnow.setForeground(Color.decode("#AB8D10"));
-
-                // Apply to text pane
-                loadingText.setFont(textPaneFont);
-                loadingText.setForeground(Color.decode("#AB8D10"));
-                loadingText.setOpaque(false);
-                loadingText.setBorder(null);
-                loadingText.setEditable(false);
-
-                //Override the NetBeans GUI shit (this took me 4 hours alone)
-                StyledDocument doc = loadingText.getStyledDocument();
-                SimpleAttributeSet attrs = new SimpleAttributeSet();
-                StyleConstants.setFontFamily(attrs, baseFont.getFamily());
-                StyleConstants.setFontSize(attrs, 20);
-                StyleConstants.setAlignment(attrs, StyleConstants.ALIGN_CENTER);
-                doc.setParagraphAttributes(0, doc.getLength(), attrs, false);
-
-            } catch (FontFormatException | IOException e) {
-                e.printStackTrace();
-            }
-        });
+    private void setupLoadingText() {
+        loadingText.setText("Clicando no banner na página principal você\nconsegue adicionar novos clientes.");
+        loadingText.setOpaque(false);
+        loadingText.setBackground(new Color(0, 0, 0, 0));
+        loadingText.setBorder(null);
+        loadingText.setEditable(false);
+        loadingText.setFocusable(false);
+        loadingText.setMaximumSize(new Dimension(600, 80)); // limit width for centering
+        setupFontAndColors();
     }
 
     // -------------------- ROTATING LOGO --------------------
-    private void addRotatingLogo() {
-        RotatingLogo rotatingLogo = new RotatingLogo("/images/Logo Icon.png");
-
-        // Original image size
-        int imgWidth = 60;
-        int imgHeight = 60;
-        
-        // Diagonal of the image (maximum extent during rotation)
-        int diagonal = (int) Math.sqrt(Math.pow(imgWidth, 2) + Math.pow(imgHeight, 2));
-
-        // Add extra padding to avoid clipping
-        int padding = 10;
-        int panelSize = diagonal + padding;
-
-         // Center the rotating panel inside backgroundColor
-        int panelX = (backgroundColor.getWidth() - panelSize) / 2;
-        int panelY = (backgroundColor.getHeight() - panelSize) / 2;
-
-        rotatingLogo.setBounds(panelX, panelY, panelSize, panelSize);
-        backgroundColor.add(rotatingLogo);
-        backgroundColor.repaint();
-
-        // Hide original JLabel
-        Logo.setVisible(false);
-    }
-
-    public class RotatingLogo extends JPanel {
+    private static class RotatingLogo extends JPanel {
 
         private BufferedImage image;
-        private double angle = 0; // rotation in radians
+        private double angle = 0;
 
         public RotatingLogo(String resourcePath) {
-            setOpaque(false); // transparent background
+            setOpaque(false);
             try {
                 image = ImageIO.read(getClass().getResource(resourcePath));
-            } catch (IOException ex) {
-                ex.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
 
-            // Timer to rotate the image
+            // Start rotation
             Timer timer = new Timer(10, e -> {
-                angle += 0.03; // rotation speed
+                angle += 0.03;
                 if (angle >= 2 * Math.PI) {
                     angle = 0;
                 }
                 repaint();
             });
             timer.start();
+
+            setPreferredSize(new Dimension(100, 100)); // adjust as needed
         }
 
         @Override
@@ -178,7 +163,6 @@ public class TelaLoadingOverview extends javax.swing.JFrame {
             int cx = getWidth() / 2;
             int cy = getHeight() / 2;
 
-            // Scale image to fit inside panel with padding
             double scale = Math.min((double) (getWidth() - 20) / image.getWidth(),
                     (double) (getHeight() - 20) / image.getHeight());
             int iw = (int) (image.getWidth() * scale);
@@ -187,96 +171,12 @@ public class TelaLoadingOverview extends javax.swing.JFrame {
             g2d.translate(cx, cy);
             g2d.rotate(angle);
             g2d.drawImage(image, -iw / 2, -ih / 2, iw, ih, null);
-
             g2d.dispose();
         }
     }
-    //---------------------------------------------------
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
-        backgroundColor = new javax.swing.JPanel();
-        Logo = new javax.swing.JLabel();
-        didYouKnow = new javax.swing.JLabel();
-        loadingTextScroll = new javax.swing.JScrollPane();
-        loadingText = new javax.swing.JTextPane();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(null);
-
-        backgroundColor.setBackground(new java.awt.Color(11, 26, 53));
-        backgroundColor.setForeground(new java.awt.Color(11, 26, 53));
-        backgroundColor.setMaximumSize(new java.awt.Dimension(1450, 750));
-        backgroundColor.setLayout(null);
-
-        Logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Logo Icon.png"))); // NOI18N
-        backgroundColor.add(Logo);
-        Logo.setBounds(670, 320, 100, 100);
-
-        didYouKnow.setText("VOCÊ SABIA QUE");
-        backgroundColor.add(didYouKnow);
-        didYouKnow.setBounds(715, 440, 120, 40);
-
-        loadingTextScroll.setBorder(null);
-        loadingTextScroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        loadingTextScroll.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-
-        loadingText.setEditable(false);
-        loadingText.setBackground(new java.awt.Color(11, 26, 53));
-        loadingText.setForeground(new java.awt.Color(255, 255, 255));
-        loadingText.setText("Clicando no banner na página principal você consegue adicionar novos clientes.");
-        loadingText.setAutoscrolls(false);
-        loadingText.setFocusable(false);
-        loadingText.setOpaque(false);
-        loadingTextScroll.setViewportView(loadingText);
-
-        backgroundColor.add(loadingTextScroll);
-        loadingTextScroll.setBounds(560, 480, 390, 70);
-
-        getContentPane().add(backgroundColor);
-        backgroundColor.setBounds(-20, -20, 1530, 780);
-
-        setSize(new java.awt.Dimension(1450, 750));
-        setLocationRelativeTo(null);
-    }// </editor-fold>//GEN-END:initComponents
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new TelaLoadingOverview().setVisible(true));
+    // -------------------- MAIN --------------------
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(TelaLoadingOverview::new);
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Logo;
-    private javax.swing.JPanel backgroundColor;
-    private javax.swing.JLabel didYouKnow;
-    private javax.swing.JTextPane loadingText;
-    private javax.swing.JScrollPane loadingTextScroll;
-    // End of variables declaration//GEN-END:variables
 }
