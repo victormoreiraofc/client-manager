@@ -3,6 +3,7 @@ package screen;
 import Data.Usuario;
 import Data.CTCONTAB;
 import Screen.MensagemUtil;
+import Screen.TelaUpdateLoadingOverview;
 import Screen.TelaLoadingOverview;
 import java.awt.Color;
 import java.awt.Desktop;
@@ -560,17 +561,25 @@ public class TelaLogin extends javax.swing.JFrame {
         }
 
         java.awt.EventQueue.invokeLater(() -> {
-            TelaLoadingOverview splash = new TelaLoadingOverview();
-            splash.setVisible(true);
+            TelaUpdateLoadingOverview splashUpdate = new TelaUpdateLoadingOverview();
+            splashUpdate.setVisible(true);
 
-            // Create timer
+            // Create timer for the update screen (3 seconds, if you want to change its here).  
             javax.swing.Timer timer = new javax.swing.Timer(3000, e -> {
-                splash.dispose(); // Close splash screen
-                new TelaLogin().setVisible(true); // Open login
+                splashUpdate.dispose(); // Close splashUpdate screen
+                TelaLoadingOverview splashLoading = new TelaLoadingOverview();
+                splashLoading.setVisible(true);
+                
+            // Create a second timer for the loading screen (3.5 seconds, if you want to change its here).       
+                javax.swing.Timer timer2 = new javax.swing.Timer(3500, e2 -> {
+                    splashLoading.dispose();
+                    new TelaLogin().setVisible(true);
+                });
+                timer2.setRepeats(false);  // Run only once
+                timer2.start(); // Start the timer
             });
-
             timer.setRepeats(false); // Run only once
-            timer.start(); // ✅ Start the timer
+            timer.start(); // Start the timer
         });
     }
 
