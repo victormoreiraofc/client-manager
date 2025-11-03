@@ -14,15 +14,61 @@ import java.net.URI;
 import javax.swing.JTextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javax.swing.BorderFactory;
+import javax.swing.JTextField;
+import java.awt.image.BufferedImage;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import javax.swing.ImageIcon;
+import java.awt.Font;
+import javax.swing.UIManager;
+import javax.swing.BorderFactory;
+import java.awt.Color;
 
 public class TelaRegistrar extends javax.swing.JFrame {
-
+    
     private static final Logger logger = LoggerFactory.getLogger(TelaRegistrar.class);
 
+    private javax.swing.border.Border bordaPadrao;
+    private javax.swing.border.Border bordaErro;
+    
     public TelaRegistrar() {
         initComponents();
+        estilizarComboLinguagem();
         setIcon();
         setResizable(false);
+        
+        bordaPadrao = javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 1, true);
+        bordaErro = javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0), 1, true);
+
+        txtUsuario.setBorder(bordaPadrao);
+        txtEmail.setBorder(bordaPadrao);
+        txtSenha.setBorder(bordaPadrao);
+        txtSenha2.setBorder(bordaPadrao);
+        
+        Color corCampo = new Color(0, 0, 0, 0);
+        txtUsuario.setBackground(corCampo);
+        txtUsuario.setOpaque(false);
+        txtUsuario.setCaretColor(Color.WHITE);
+        txtUsuario.setForeground(Color.WHITE);
+
+        txtEmail.setBackground(corCampo);
+        txtEmail.setOpaque(false);
+        txtEmail.setCaretColor(Color.WHITE);
+        
+        txtSenha.setBackground(corCampo);
+        txtSenha.setOpaque(false);
+        txtSenha.setCaretColor(Color.WHITE);
+        txtSenha.setForeground(Color.WHITE);
+        
+        txtSenha2.setBackground(corCampo);
+        txtSenha2.setOpaque(false);
+        txtSenha2.setCaretColor(Color.WHITE);
+        txtSenha2.setForeground(Color.WHITE);
+        
+        addPlaceholder(txtEmail, "  email@exemplo.com");
+        
+        jlibErroRegistro.setVisible(false);
     }
 
     private void setIcon() {
@@ -59,24 +105,29 @@ public class TelaRegistrar extends javax.swing.JFrame {
         btnResgistrar = new javax.swing.JButton();
         jilbAindaNaoTemConta = new javax.swing.JLabel();
         jilbRegistreSe = new javax.swing.JLabel();
-        lblCTCONTAB = new javax.swing.JLabel();
-        lblContabilidade = new javax.swing.JLabel();
-        jlibLogo = new javax.swing.JLabel();
         btnTermosServico = new javax.swing.JButton();
-        jlibForcaSenha = new javax.swing.JLabel();
-        jlibErroUsuario = new javax.swing.JLabel();
-        jlibErroEmail = new javax.swing.JLabel();
-        jProgressBar = new javax.swing.JProgressBar();
-        jilbTermosDeServiço = new javax.swing.JLabel();
-        jilbCreditos = new javax.swing.JLabel();
-        jilbCreditos2 = new javax.swing.JLabel();
         btnLogin = new javax.swing.JButton();
         jilbUsuario = new javax.swing.JLabel();
         jilbEmail = new javax.swing.JLabel();
         jilbSenha = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
         txtUsuario = new javax.swing.JTextField();
-        txtSenha = new javax.swing.JTextField();
+        jilbLogo = new javax.swing.JLabel();
+        jlibLogo1 = new javax.swing.JLabel();
+        jlibLogo2 = new javax.swing.JLabel();
+        jilRegistre = new javax.swing.JLabel();
+        jilbLinha = new javax.swing.JLabel();
+        jilbTexto = new javax.swing.JLabel();
+        jilbTexto2 = new javax.swing.JLabel();
+        jilbSenha2 = new javax.swing.JLabel();
+        jilbCreditos1 = new javax.swing.JLabel();
+        chbLembre = new javax.swing.JCheckBox();
+        jlibErroRegistro = new javax.swing.JLabel();
+        chbMostrarSenha = new javax.swing.JCheckBox();
+        txtSenha2 = new javax.swing.JPasswordField();
+        txtSenha = new javax.swing.JPasswordField();
+        jilbGlobo = new javax.swing.JLabel();
+        cmbLinguagens = new javax.swing.JComboBox<>();
         jlibBlueSquad = new javax.swing.JLabel();
         Background = new javax.swing.JLabel();
 
@@ -85,6 +136,8 @@ public class TelaRegistrar extends javax.swing.JFrame {
         getContentPane().setLayout(null);
 
         btnResgistrar.setBackground(new java.awt.Color(30, 30, 30));
+        btnResgistrar.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        btnResgistrar.setForeground(new java.awt.Color(16, 165, 103));
         btnResgistrar.setContentAreaFilled(false);
         btnResgistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -92,37 +145,21 @@ public class TelaRegistrar extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnResgistrar);
-        btnResgistrar.setBounds(470, 420, 60, 20);
+        btnResgistrar.setBounds(140, 580, 50, 20);
 
         jilbAindaNaoTemConta.setBackground(new java.awt.Color(255, 255, 255));
-        jilbAindaNaoTemConta.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
-        jilbAindaNaoTemConta.setForeground(new java.awt.Color(115, 115, 115));
+        jilbAindaNaoTemConta.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        jilbAindaNaoTemConta.setForeground(new java.awt.Color(255, 255, 255));
         jilbAindaNaoTemConta.setText("Você já tem conta?");
         getContentPane().add(jilbAindaNaoTemConta);
-        jilbAindaNaoTemConta.setBounds(380, 420, 130, 20);
+        jilbAindaNaoTemConta.setBounds(40, 580, 130, 20);
 
-        jilbRegistreSe.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
-        jilbRegistreSe.setForeground(new java.awt.Color(194, 166, 40));
+        jilbRegistreSe.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        jilbRegistreSe.setForeground(new java.awt.Color(16, 165, 103));
         jilbRegistreSe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jilbRegistreSe.setText("   Logar-me");
+        jilbRegistreSe.setText("Login");
         getContentPane().add(jilbRegistreSe);
-        jilbRegistreSe.setBounds(450, 420, 90, 20);
-
-        lblCTCONTAB.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblCTCONTAB.setForeground(new java.awt.Color(200, 200, 200));
-        lblCTCONTAB.setText("CT CONTAB");
-        getContentPane().add(lblCTCONTAB);
-        lblCTCONTAB.setBounds(410, 85, 190, 40);
-
-        lblContabilidade.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
-        lblContabilidade.setForeground(new java.awt.Color(153, 153, 0));
-        lblContabilidade.setText("Contabilidade & Consultoria");
-        getContentPane().add(lblContabilidade);
-        lblContabilidade.setBounds(410, 85, 205, 80);
-
-        jlibLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo.png"))); // NOI18N
-        getContentPane().add(jlibLogo);
-        jlibLogo.setBounds(340, 80, 60, 70);
+        jilbRegistreSe.setBounds(130, 580, 70, 20);
 
         btnTermosServico.setBackground(new java.awt.Color(30, 30, 30));
         btnTermosServico.setContentAreaFilled(false);
@@ -132,55 +169,16 @@ public class TelaRegistrar extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnTermosServico);
-        btnTermosServico.setBounds(370, 480, 190, 20);
+        btnTermosServico.setBounds(120, 680, 190, 20);
 
-        jlibForcaSenha.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        jlibForcaSenha.setForeground(new java.awt.Color(115, 115, 115));
-        jlibForcaSenha.setText("Força da Senha:");
-        getContentPane().add(jlibForcaSenha);
-        jlibForcaSenha.setBounds(490, 350, 110, 14);
-
-        jlibErroUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/error-icon.png"))); // NOI18N
-        getContentPane().add(jlibErroUsuario);
-        jlibErroUsuario.setBounds(590, 220, 15, 20);
-
-        jlibErroEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/error-icon.png"))); // NOI18N
-        getContentPane().add(jlibErroEmail);
-        jlibErroEmail.setBounds(590, 150, 15, 20);
-
-        jProgressBar.setBackground(new java.awt.Color(115, 115, 115));
-        jProgressBar.setForeground(new java.awt.Color(115, 115, 115));
-        jProgressBar.setBorder(null);
-        getContentPane().add(jProgressBar);
-        jProgressBar.setBounds(320, 360, 110, 10);
-
-        jilbTermosDeServiço.setBackground(new java.awt.Color(255, 255, 255));
-        jilbTermosDeServiço.setFont(new java.awt.Font("SansSerif", 1, 8)); // NOI18N
-        jilbTermosDeServiço.setForeground(new java.awt.Color(115, 115, 115));
-        jilbTermosDeServiço.setText("<html><u>Termos de Serviço | Politica de Privacidade</u></html>");
-        jilbTermosDeServiço.setToolTipText("");
-        getContentPane().add(jilbTermosDeServiço);
-        jilbTermosDeServiço.setBounds(380, 480, 180, 20);
-
-        jilbCreditos.setBackground(new java.awt.Color(255, 255, 255));
-        jilbCreditos.setFont(new java.awt.Font("SansSerif", 1, 8)); // NOI18N
-        jilbCreditos.setForeground(new java.awt.Color(115, 115, 115));
-        jilbCreditos.setText("© 2024 Uninove. CT CONTAB é um projeto desenvolvido pela Turma");
-        getContentPane().add(jilbCreditos);
-        jilbCreditos.setBounds(330, 450, 270, 20);
-
-        jilbCreditos2.setBackground(new java.awt.Color(255, 255, 255));
-        jilbCreditos2.setFont(new java.awt.Font("SansSerif", 1, 8)); // NOI18N
-        jilbCreditos2.setForeground(new java.awt.Color(115, 115, 115));
-        jilbCreditos2.setText("18 do curso de Ciência da Computação da Uninove.");
-        getContentPane().add(jilbCreditos2);
-        jilbCreditos2.setBounds(360, 450, 210, 40);
-
-        btnLogin.setBackground(new java.awt.Color(184, 135, 11));
+        btnLogin.setBackground(new java.awt.Color(17, 168, 100));
         btnLogin.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         btnLogin.setForeground(new java.awt.Color(255, 255, 255));
-        btnLogin.setText("Registrar-se");
+        btnLogin.setText("Registrar");
         btnLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnLoginMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnLoginMouseEntered(evt);
             }
@@ -200,29 +198,29 @@ public class TelaRegistrar extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnLogin);
-        btnLogin.setBounds(320, 380, 280, 40);
+        btnLogin.setBounds(40, 540, 370, 40);
 
-        jilbUsuario.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        jilbUsuario.setForeground(new java.awt.Color(194, 166, 40));
-        jilbUsuario.setText("Usuário:");
+        jilbUsuario.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        jilbUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        jilbUsuario.setText("Usuário");
         getContentPane().add(jilbUsuario);
-        jilbUsuario.setBounds(320, 220, 190, 16);
+        jilbUsuario.setBounds(40, 220, 190, 16);
 
-        jilbEmail.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        jilbEmail.setForeground(new java.awt.Color(194, 166, 40));
-        jilbEmail.setText("Email:");
+        jilbEmail.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        jilbEmail.setForeground(new java.awt.Color(255, 255, 255));
+        jilbEmail.setText("Email");
         getContentPane().add(jilbEmail);
-        jilbEmail.setBounds(320, 150, 190, 16);
+        jilbEmail.setBounds(40, 290, 190, 16);
 
-        jilbSenha.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        jilbSenha.setForeground(new java.awt.Color(194, 166, 40));
-        jilbSenha.setText("Senha:");
+        jilbSenha.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        jilbSenha.setForeground(new java.awt.Color(255, 255, 255));
+        jilbSenha.setText("Senha");
         getContentPane().add(jilbSenha);
-        jilbSenha.setBounds(320, 290, 170, 20);
+        jilbSenha.setBounds(40, 360, 170, 20);
 
         txtEmail.setBackground(new java.awt.Color(4, 21, 57));
         txtEmail.setForeground(new java.awt.Color(115, 115, 115));
-        txtEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
+        txtEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84)));
         txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEmailActionPerformed(evt);
@@ -234,41 +232,147 @@ public class TelaRegistrar extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txtEmail);
-        txtEmail.setBounds(320, 170, 280, 40);
-        addPlaceholder(txtEmail, "  seuemail@gmail.com");
-        addPlaceholder(txtUsuario, "  Digite um nome de usuário");
-        addPlaceholder(txtSenha, "  Digite sua senha");
+        txtEmail.setBounds(40, 310, 370, 40);
+        addPlaceholder(txtEmail, "  email@exemplo.com");
 
         txtUsuario.setBackground(new java.awt.Color(4, 21, 57));
-        txtUsuario.setForeground(new java.awt.Color(115, 115, 115));
-        txtUsuario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
+        txtUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        txtUsuario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84)));
+        txtUsuario.setCaretColor(new java.awt.Color(255, 255, 255));
         txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtUsuarioKeyReleased(evt);
             }
         });
         getContentPane().add(txtUsuario);
-        txtUsuario.setBounds(320, 240, 280, 40);
+        txtUsuario.setBounds(40, 240, 370, 40);
+
+        jilbLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Logo Icon_1.png"))); // NOI18N
+        jilbLogo.setText("jLabel2");
+        getContentPane().add(jilbLogo);
+        jilbLogo.setBounds(20, 10, 40, 50);
+
+        jlibLogo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Logo Text Icon.png"))); // NOI18N
+        jlibLogo1.setPreferredSize(new java.awt.Dimension(40, 59));
+        getContentPane().add(jlibLogo1);
+        jlibLogo1.setBounds(60, 10, 180, 60);
+
+        jlibLogo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Logo Text Icon.png"))); // NOI18N
+        jlibLogo2.setPreferredSize(new java.awt.Dimension(40, 59));
+        getContentPane().add(jlibLogo2);
+        jlibLogo2.setBounds(60, 10, 180, 60);
+
+        jilRegistre.setFont(new java.awt.Font("Segoe UI", 0, 32)); // NOI18N
+        jilRegistre.setForeground(new java.awt.Color(255, 255, 255));
+        jilRegistre.setText("Registre-se");
+        jilRegistre.setPreferredSize(new java.awt.Dimension(100, 100));
+        getContentPane().add(jilRegistre);
+        jilRegistre.setBounds(40, 100, 170, 50);
+
+        jilbLinha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Line 1.png"))); // NOI18N
+        jilbLinha.setText("jLabel1");
+        getContentPane().add(jilbLinha);
+        jilbLinha.setBounds(0, 0, 450, 160);
+
+        jilbTexto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jilbTexto.setForeground(new java.awt.Color(255, 255, 255));
+        jilbTexto.setText("Toda a organização da sua contabilidade em um só lugar,");
+        getContentPane().add(jilbTexto);
+        jilbTexto.setBounds(40, 150, 360, 30);
+
+        jilbTexto2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jilbTexto2.setForeground(new java.awt.Color(255, 255, 255));
+        jilbTexto2.setText("totalmente digital.");
+        getContentPane().add(jilbTexto2);
+        jilbTexto2.setBounds(40, 170, 120, 30);
+
+        jilbSenha2.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        jilbSenha2.setForeground(new java.awt.Color(255, 255, 255));
+        jilbSenha2.setText("Confirme a Senha");
+        getContentPane().add(jilbSenha2);
+        jilbSenha2.setBounds(40, 430, 170, 20);
+
+        jilbCreditos1.setBackground(new java.awt.Color(255, 255, 255));
+        jilbCreditos1.setForeground(new java.awt.Color(255, 255, 255));
+        jilbCreditos1.setText("© 2025 CT Contab. Todos os direitos reservados.");
+        getContentPane().add(jilbCreditos1);
+        jilbCreditos1.setBounds(20, 680, 350, 20);
+
+        chbLembre.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        chbLembre.setForeground(new java.awt.Color(255, 255, 255));
+        chbLembre.setText("Lembre me?");
+        chbLembre.setIcon(createCheckboxIcon(false));
+        chbLembre.setSelectedIcon(createCheckboxIcon(true));
+        chbLembre.setRolloverIcon(createCheckboxIcon(false));
+        chbLembre.setRolloverSelectedIcon(createCheckboxIcon(true));
+        chbLembre.setContentAreaFilled(false);
+        chbLembre.setBorderPainted(false);
+        chbLembre.setFocusPainted(false);
+        chbLembre.setOpaque(false);
+        getContentPane().add(chbLembre);
+        chbLembre.setBounds(40, 490, 110, 30);
+
+        jlibErroRegistro.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        jlibErroRegistro.setForeground(new java.awt.Color(255, 0, 0));
+        jlibErroRegistro.setText("Seu e-mail, senha ou usuário estão incorretos.");
+        getContentPane().add(jlibErroRegistro);
+        jlibErroRegistro.setBounds(150, 490, 260, 30);
+
+        chbMostrarSenha.setContentAreaFilled(false);
+        chbMostrarSenha.setFocusPainted(false);
+        chbMostrarSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/olho-aberto.png"))); // NOI18N
+        chbMostrarSenha.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/images/olho-fechado.png"))); // NOI18N
+        chbMostrarSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chbMostrarSenhaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(chbMostrarSenha);
+        chbMostrarSenha.setBounds(370, 380, 30, 40);
+
+        txtSenha2.setBackground(new java.awt.Color(4, 21, 57));
+        txtSenha2.setForeground(new java.awt.Color(115, 115, 115));
+        txtSenha2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84)));
+        getContentPane().add(txtSenha2);
+        txtSenha2.setBounds(40, 450, 370, 40);
 
         txtSenha.setBackground(new java.awt.Color(4, 21, 57));
-        txtSenha.setForeground(new java.awt.Color(115, 115, 115));
-        txtSenha.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
-        txtSenha.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtSenhaKeyReleased(evt);
+        txtSenha.setForeground(new java.awt.Color(255, 255, 255));
+        txtSenha.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84)));
+        txtSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSenhaActionPerformed(evt);
             }
         });
         getContentPane().add(txtSenha);
-        txtSenha.setBounds(320, 310, 280, 40);
+        txtSenha.setBounds(40, 380, 370, 40);
 
-        jlibBlueSquad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/retangulo-azul.png"))); // NOI18N
+        jilbGlobo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Globo.png"))); // NOI18N
+        getContentPane().add(jilbGlobo);
+        jilbGlobo.setBounds(310, 20, 30, 40);
+
+        cmbLinguagens.setBackground(new java.awt.Color(10, 25, 47));
+        cmbLinguagens.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        cmbLinguagens.setForeground(new java.awt.Color(255, 255, 255));
+        cmbLinguagens.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "  Português" }));
+        cmbLinguagens.setBorder(null);
+        cmbLinguagens.setOpaque(false);
+        cmbLinguagens.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbLinguagensActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cmbLinguagens);
+        cmbLinguagens.setBounds(310, 20, 120, 40);
+
+        jlibBlueSquad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Dashboard Overlay.png"))); // NOI18N
         getContentPane().add(jlibBlueSquad);
-        jlibBlueSquad.setBounds(300, 70, 320, 440);
+        jlibBlueSquad.setBounds(0, 0, 450, 750);
 
-        Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/background-contabil.png"))); // NOI18N
+        Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Background Login.png"))); // NOI18N
         Background.setText("jLabel3");
         getContentPane().add(Background);
-        Background.setBounds(0, -10, 930, 660);
+        Background.setBounds(20, 0, 1420, 750);
 
         setSize(new java.awt.Dimension(1450, 750));
         setLocationRelativeTo(null);
@@ -279,6 +383,23 @@ public class TelaRegistrar extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEmailActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+      
+        String usuario = txtUsuario.getText().trim();
+        String email = txtEmail.getText().trim();
+        String senha = txtSenha.getText().trim();
+        String confirmarSenha = txtSenha2.getText().trim();
+
+        String emailRegex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+        boolean emailValido = email.matches(emailRegex);
+
+        boolean usuarioValido = usuario.length() >= 5;
+
+        boolean senhasIguais = senha.equals(confirmarSenha);
+
+        if (!emailValido || !usuarioValido || !senhasIguais) {
+            mostrarMensagemErro();
+            return; 
+    }        
         try {
             CTCONTAB.registrarUsuario(txtUsuario.getText(), txtEmail.getText(), txtSenha.getText());
             MensagemUtil.exibirSucesso("Usuário cadastrado com sucesso");
@@ -295,33 +416,123 @@ public class TelaRegistrar extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnLoginActionPerformed
+    
+    private ImageIcon createCheckboxIcon(boolean checked) {
+        int size = 18;
+        BufferedImage img = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = img.createGraphics();
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-    private void txtEmailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyReleased
-        String email = txtEmail.getText();
-        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
-        Pattern pattern = Pattern.compile(emailRegex);
-        Matcher matcher = pattern.matcher(email);
-
-        if (matcher.matches()) {
-            jlibErroEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/correct-icon.png")));
+        if (checked) {
+            g.setColor(new java.awt.Color(16, 165, 103));
+            g.fillRoundRect(0, 0, size, size, 4, 4);
+            g.setColor(java.awt.Color.WHITE);
+            g.setFont(new Font("SansSerif", Font.BOLD, 14));
+            g.drawString("✓", 3, size - 4);
         } else {
-            jlibErroEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/error-icon.png")));
+            g.setColor(new java.awt.Color(84, 84, 84));
+            g.drawRoundRect(0, 0, size - 1, size - 1, 4, 4);
         }
+
+        g.dispose();
+        return new ImageIcon(img);
+}
+
+    
+    private void mostrarMensagemErro() {
+        jlibErroRegistro.setText("Seu e-mail, senha ou usuário estão incorretos.");
+        jlibErroRegistro.setForeground(Color.RED);
+        jlibErroRegistro.setVisible(true);
+
+        txtUsuario.setBorder(bordaErro);
+        txtEmail.setBorder(bordaErro);
+        txtSenha.setBorder(bordaErro);
+        txtSenha2.setBorder(bordaErro);
+
+        new Thread(() -> {
+            try {
+                Thread.sleep(2000);
+
+                for (int i = 0; i <= 20; i++) {
+                    int r = 255 - (int) ((255 - 84) * (i / 20.0));
+                    int g = 0 + (int) ((84 - 0) * (i / 20.0));
+                    int b = 0 + (int) ((84 - 0) * (i / 20.0));
+                    Color corSuave = new Color(r, g, b);
+
+                    javax.swing.SwingUtilities.invokeLater(() -> {
+                        txtUsuario.setBorder(BorderFactory.createLineBorder(corSuave, 1, true));
+                        txtEmail.setBorder(BorderFactory.createLineBorder(corSuave, 1, true));
+                        txtSenha.setBorder(BorderFactory.createLineBorder(corSuave, 1, true));
+                        txtSenha2.setBorder(BorderFactory.createLineBorder(corSuave, 1, true));
+                    });
+
+                    Thread.sleep(30);
+                }
+
+                javax.swing.SwingUtilities.invokeLater(() -> {
+                    txtUsuario.setBorder(bordaPadrao);
+                    txtEmail.setBorder(bordaPadrao);
+                    txtSenha.setBorder(bordaPadrao);
+                    txtSenha2.setBorder(bordaPadrao);            
+                });
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+    private void estilizarComboLinguagem() {
+ 
+        UIManager.put("ComboBox.background", new Color(10, 25, 47));
+        UIManager.put("ComboBox.foreground", Color.WHITE);
+        UIManager.put("ComboBox.selectionBackground", new Color(30, 50, 80));
+        UIManager.put("ComboBox.selectionForeground", Color.WHITE);
+        UIManager.put("ComboBox.buttonBackground", new Color(10, 25, 47));
+        UIManager.put("ComboBox.border", BorderFactory.createEmptyBorder());
+
+        cmbLinguagens.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        cmbLinguagens.setForeground(Color.WHITE);
+        cmbLinguagens.setBackground(new Color(10, 25, 47));
+        cmbLinguagens.setOpaque(false);
+        cmbLinguagens.setBorder(null);
+        cmbLinguagens.setFocusable(false);
+
+        cmbLinguagens.setRenderer(new javax.swing.DefaultListCellRenderer() {
+            @Override
+            public java.awt.Component getListCellRendererComponent(javax.swing.JList<?> list, Object value, int index,
+                                                                   boolean isSelected, boolean cellHasFocus) {
+                java.awt.Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                setBackground(isSelected ? new Color(30, 50, 80) : new Color(10, 25, 47));
+                setForeground(Color.WHITE);
+                setFont(new Font("Segoe UI", Font.PLAIN, 16));
+                setBorder(BorderFactory.createEmptyBorder(2, 10, 2, 10));
+                return c;
+            }
+        });
+
+        cmbLinguagens.setUI(new javax.swing.plaf.basic.BasicComboBoxUI() {
+        @Override
+        protected javax.swing.JButton createArrowButton() {
+            javax.swing.JButton button = new javax.swing.JButton("▼");
+            button.setBorder(BorderFactory.createEmptyBorder());
+            button.setForeground(Color.WHITE);
+            button.setBackground(new Color(10, 25, 47));
+            button.setFocusable(false);
+            button.setContentAreaFilled(false);
+            button.setOpaque(false);
+            return button;
+        }
+    });
+   }
+    
+    
+    private void txtEmailKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyReleased
+        
     }//GEN-LAST:event_txtEmailKeyReleased
 
     private void txtUsuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyReleased
-        String usuario = txtUsuario.getText();
-
-        if (usuario.length() >= 5) {
-            jlibErroUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/correct-icon.png")));
-        } else {
-            jlibErroUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/error-icon.png")));
-        }
+        
     }//GEN-LAST:event_txtUsuarioKeyReleased
-
-    private void txtSenhaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSenhaKeyReleased
-        verificarForcaSenha();
-    }//GEN-LAST:event_txtSenhaKeyReleased
 
     private void btnTermosServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTermosServicoActionPerformed
         try {
@@ -332,19 +543,19 @@ public class TelaRegistrar extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTermosServicoActionPerformed
 
     private void btnLoginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseEntered
-        btnLogin.setBackground(new java.awt.Color(189, 135, 2));
+        btnLogin.setBackground(new java.awt.Color(20, 190, 115));
     }//GEN-LAST:event_btnLoginMouseEntered
 
     private void btnLoginMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseExited
-        btnLogin.setBackground(new java.awt.Color(184, 135, 11));
+        btnLogin.setBackground(new java.awt.Color(17, 168, 100));
     }//GEN-LAST:event_btnLoginMouseExited
 
     private void btnLoginMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMousePressed
-        btnLogin.setBackground(new java.awt.Color(139, 101, 8));
+        btnLogin.setBackground(new java.awt.Color(14, 140, 85));
     }//GEN-LAST:event_btnLoginMousePressed
 
     private void btnLoginMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseReleased
-        btnLogin.setBackground(new java.awt.Color(189, 135, 2));
+        btnLogin.setBackground(new java.awt.Color(17, 168, 100));
     }//GEN-LAST:event_btnLoginMouseReleased
 
     private void btnResgistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResgistrarActionPerformed
@@ -352,42 +563,28 @@ public class TelaRegistrar extends javax.swing.JFrame {
         new TelaLogin().setVisible(true);
     }//GEN-LAST:event_btnResgistrarActionPerformed
 
-    private void verificarForcaSenha() {
-        String senha = new String(txtSenha.getText());
-        int forca = calcularForcaSenha(senha);
-        jProgressBar.setValue(forca);
-        if (forca < 40) {
-            jlibForcaSenha.setText("Força da Senha: Fraca");
-            jlibForcaSenha.setForeground(Color.RED);
-        } else if (forca < 70) {
-            jlibForcaSenha.setText("Força da Senha: Média");
-            jlibForcaSenha.setForeground(Color.ORANGE);
-        } else {
-            jlibForcaSenha.setText("Força da Senha: Forte");
-            jlibForcaSenha.setForeground(Color.GREEN);
-        }
+    private void btnLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLoginMouseClicked
+
+    private void txtSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSenhaActionPerformed
+
+    private void chbMostrarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbMostrarSenhaActionPerformed
+        if (chbMostrarSenha.isSelected()) {
+        txtSenha.setEchoChar((char) 0);
+        txtSenha2.setEchoChar((char) 0);
+    } else {
+        txtSenha.setEchoChar('•');
+        txtSenha2.setEchoChar('•');
     }
 
-    private int calcularForcaSenha(String senha) {
-        int forca = 0;
+    }//GEN-LAST:event_chbMostrarSenhaActionPerformed
 
-        if (senha.length() >= 8) {
-            forca += 20;
-        }
-        if (senha.matches(".*[0-9].*")) {
-            forca += 20;
-        }
-        if (senha.matches(".*[a-z].*")) {
-            forca += 20;
-        }
-        if (senha.matches(".*[A-Z].*")) {
-            forca += 20;
-        }
-        if (senha.matches(".*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?].*")) {
-            forca += 20;
-        }
-        return forca;
-    }
+    private void cmbLinguagensActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbLinguagensActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbLinguagensActionPerformed
 
     public static void main(String args[]) {
         try {
@@ -419,24 +616,29 @@ public class TelaRegistrar extends javax.swing.JFrame {
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnResgistrar;
     private javax.swing.JButton btnTermosServico;
-    private javax.swing.JProgressBar jProgressBar;
+    private javax.swing.JCheckBox chbLembre;
+    private javax.swing.JCheckBox chbMostrarSenha;
+    private javax.swing.JComboBox<String> cmbLinguagens;
+    private javax.swing.JLabel jilRegistre;
     private javax.swing.JLabel jilbAindaNaoTemConta;
-    private javax.swing.JLabel jilbCreditos;
-    private javax.swing.JLabel jilbCreditos2;
+    private javax.swing.JLabel jilbCreditos1;
     private javax.swing.JLabel jilbEmail;
+    private javax.swing.JLabel jilbGlobo;
+    private javax.swing.JLabel jilbLinha;
+    private javax.swing.JLabel jilbLogo;
     private javax.swing.JLabel jilbRegistreSe;
     private javax.swing.JLabel jilbSenha;
-    private javax.swing.JLabel jilbTermosDeServiço;
+    private javax.swing.JLabel jilbSenha2;
+    private javax.swing.JLabel jilbTexto;
+    private javax.swing.JLabel jilbTexto2;
     private javax.swing.JLabel jilbUsuario;
     private javax.swing.JLabel jlibBlueSquad;
-    private javax.swing.JLabel jlibErroEmail;
-    private javax.swing.JLabel jlibErroUsuario;
-    private javax.swing.JLabel jlibForcaSenha;
-    private javax.swing.JLabel jlibLogo;
-    private javax.swing.JLabel lblCTCONTAB;
-    private javax.swing.JLabel lblContabilidade;
+    private javax.swing.JLabel jlibErroRegistro;
+    private javax.swing.JLabel jlibLogo1;
+    private javax.swing.JLabel jlibLogo2;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtSenha;
+    private javax.swing.JPasswordField txtSenha;
+    private javax.swing.JPasswordField txtSenha2;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }
