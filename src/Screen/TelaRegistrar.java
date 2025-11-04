@@ -34,6 +34,50 @@ public class TelaRegistrar extends javax.swing.JFrame {
     
     public TelaRegistrar() {
         initComponents();
+        
+        try {
+            java.net.URL url = getClass().getResource("/images/Close Icon.png");
+            if (url == null) {
+                System.err.println("Imagem não encontrada. Verifique: /images/Close Icon.png ou src/images/Close Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(11, 11, java.awt.Image.SCALE_SMOOTH);
+                btnFecharTela.setIcon(new javax.swing.ImageIcon(img));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            btnFecharTela.setText("X"); // fallback
+        }
+
+        try {
+            java.net.URL url = getClass().getResource("/images/Maximize Icon.png");
+            if (url == null) {
+                System.err.println("Imagem não encontrada. Verifique: /images/Maximize Icon.png ou src/images/Maximize Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(11, 11, java.awt.Image.SCALE_SMOOTH);
+                btnMaximizarTela.setIcon(new javax.swing.ImageIcon(img));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            btnMaximizarTela.setText("[]"); // fallback
+        }
+
+        try {
+            java.net.URL url = getClass().getResource("/images/Minimize Icon.png");
+            if (url == null) {
+                System.err.println("Imagem não encontrada. Verifique: /images/Minimize Icon.png ou src/images/Minimize Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(11, 2, java.awt.Image.SCALE_SMOOTH);
+                btnMinimizarTela.setIcon(new javax.swing.ImageIcon(img));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            btnMinimizarTela.setText("-"); // fallback
+        }
+        
+        setUndecorated(true);
         estilizarComboLinguagem();
         setIcon();
         setResizable(false);
@@ -102,6 +146,9 @@ public class TelaRegistrar extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnFecharTela = new javax.swing.JButton();
+        btnMaximizarTela = new javax.swing.JButton();
+        btnMinimizarTela = new javax.swing.JButton();
         btnResgistrar = new javax.swing.JButton();
         jilbAindaNaoTemConta = new javax.swing.JLabel();
         jilbRegistreSe = new javax.swing.JLabel();
@@ -112,9 +159,7 @@ public class TelaRegistrar extends javax.swing.JFrame {
         jilbSenha = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
         txtUsuario = new javax.swing.JTextField();
-        jilbLogo = new javax.swing.JLabel();
         jlibLogo1 = new javax.swing.JLabel();
-        jlibLogo2 = new javax.swing.JLabel();
         jilRegistre = new javax.swing.JLabel();
         jilbLinha = new javax.swing.JLabel();
         jilbTexto = new javax.swing.JLabel();
@@ -134,6 +179,41 @@ public class TelaRegistrar extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("CT Contab Manager");
         getContentPane().setLayout(null);
+
+        btnFecharTela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Close Icon.png"))); // NOI18N
+        btnFecharTela.setContentAreaFilled(false);
+        btnFecharTela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharTelaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnFecharTela);
+        btnFecharTela.setBounds(1425, 0, 15, 25);
+
+        btnMaximizarTela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Maximize Icon.png"))); // NOI18N
+        btnMaximizarTela.setContentAreaFilled(false);
+        btnMaximizarTela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMaximizarTelaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnMaximizarTela);
+        btnMaximizarTela.setBounds(1390, 0, 15, 25);
+
+        btnMinimizarTela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Minimize Icon.png"))); // NOI18N
+        btnMinimizarTela.setContentAreaFilled(false);
+        btnMinimizarTela.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMinimizarTelaMouseClicked(evt);
+            }
+        });
+        btnMinimizarTela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMinimizarTelaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnMinimizarTela);
+        btnMinimizarTela.setBounds(1355, 0, 15, 25);
 
         btnResgistrar.setBackground(new java.awt.Color(30, 30, 30));
         btnResgistrar.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
@@ -157,9 +237,9 @@ public class TelaRegistrar extends javax.swing.JFrame {
         jilbRegistreSe.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jilbRegistreSe.setForeground(new java.awt.Color(16, 165, 103));
         jilbRegistreSe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jilbRegistreSe.setText("Login");
+        jilbRegistreSe.setText("  Login");
         getContentPane().add(jilbRegistreSe);
-        jilbRegistreSe.setBounds(130, 580, 70, 20);
+        jilbRegistreSe.setBounds(120, 580, 80, 20);
 
         btnTermosServico.setBackground(new java.awt.Color(30, 30, 30));
         btnTermosServico.setContentAreaFilled(false);
@@ -198,7 +278,7 @@ public class TelaRegistrar extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnLogin);
-        btnLogin.setBounds(40, 540, 370, 40);
+        btnLogin.setBounds(40, 540, 360, 40);
 
         jilbUsuario.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jilbUsuario.setForeground(new java.awt.Color(255, 255, 255));
@@ -232,35 +312,30 @@ public class TelaRegistrar extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txtEmail);
-        txtEmail.setBounds(40, 310, 370, 40);
+        txtEmail.setBounds(40, 310, 360, 40);
         addPlaceholder(txtEmail, "  email@exemplo.com");
 
         txtUsuario.setBackground(new java.awt.Color(4, 21, 57));
         txtUsuario.setForeground(new java.awt.Color(255, 255, 255));
         txtUsuario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84)));
         txtUsuario.setCaretColor(new java.awt.Color(255, 255, 255));
+        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUsuarioActionPerformed(evt);
+            }
+        });
         txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtUsuarioKeyReleased(evt);
             }
         });
         getContentPane().add(txtUsuario);
-        txtUsuario.setBounds(40, 240, 370, 40);
+        txtUsuario.setBounds(40, 240, 360, 40);
 
-        jilbLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Logo Icon_1.png"))); // NOI18N
-        jilbLogo.setText("jLabel2");
-        getContentPane().add(jilbLogo);
-        jilbLogo.setBounds(20, 10, 40, 50);
-
-        jlibLogo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Logo Text Icon.png"))); // NOI18N
+        jlibLogo1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Logoctcontab.png"))); // NOI18N
         jlibLogo1.setPreferredSize(new java.awt.Dimension(40, 59));
         getContentPane().add(jlibLogo1);
-        jlibLogo1.setBounds(60, 10, 180, 60);
-
-        jlibLogo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Logo Text Icon.png"))); // NOI18N
-        jlibLogo2.setPreferredSize(new java.awt.Dimension(40, 59));
-        getContentPane().add(jlibLogo2);
-        jlibLogo2.setBounds(60, 10, 180, 60);
+        jlibLogo1.setBounds(10, 0, 200, 80);
 
         jilRegistre.setFont(new java.awt.Font("Segoe UI", 0, 32)); // NOI18N
         jilRegistre.setForeground(new java.awt.Color(255, 255, 255));
@@ -272,7 +347,7 @@ public class TelaRegistrar extends javax.swing.JFrame {
         jilbLinha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Line 1.png"))); // NOI18N
         jilbLinha.setText("jLabel1");
         getContentPane().add(jilbLinha);
-        jilbLinha.setBounds(0, 0, 450, 160);
+        jilbLinha.setBounds(0, 0, 440, 160);
 
         jilbTexto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jilbTexto.setForeground(new java.awt.Color(255, 255, 255));
@@ -294,9 +369,9 @@ public class TelaRegistrar extends javax.swing.JFrame {
 
         jilbCreditos1.setBackground(new java.awt.Color(255, 255, 255));
         jilbCreditos1.setForeground(new java.awt.Color(255, 255, 255));
-        jilbCreditos1.setText("© 2025 CT Contab. Todos os direitos reservados.");
+        jilbCreditos1.setText("  © 2025 CT Contab. Todos os direitos reservados.");
         getContentPane().add(jilbCreditos1);
-        jilbCreditos1.setBounds(20, 680, 350, 20);
+        jilbCreditos1.setBounds(10, 710, 350, 30);
 
         chbLembre.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         chbLembre.setForeground(new java.awt.Color(255, 255, 255));
@@ -316,7 +391,7 @@ public class TelaRegistrar extends javax.swing.JFrame {
         jlibErroRegistro.setForeground(new java.awt.Color(255, 0, 0));
         jlibErroRegistro.setText("Seu e-mail, senha ou usuário estão incorretos.");
         getContentPane().add(jlibErroRegistro);
-        jlibErroRegistro.setBounds(150, 490, 260, 30);
+        jlibErroRegistro.setBounds(140, 490, 260, 30);
 
         chbMostrarSenha.setContentAreaFilled(false);
         chbMostrarSenha.setFocusPainted(false);
@@ -328,13 +403,13 @@ public class TelaRegistrar extends javax.swing.JFrame {
             }
         });
         getContentPane().add(chbMostrarSenha);
-        chbMostrarSenha.setBounds(370, 380, 30, 40);
+        chbMostrarSenha.setBounds(360, 380, 30, 40);
 
         txtSenha2.setBackground(new java.awt.Color(4, 21, 57));
         txtSenha2.setForeground(new java.awt.Color(115, 115, 115));
         txtSenha2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84)));
         getContentPane().add(txtSenha2);
-        txtSenha2.setBounds(40, 450, 370, 40);
+        txtSenha2.setBounds(40, 450, 360, 40);
 
         txtSenha.setBackground(new java.awt.Color(4, 21, 57));
         txtSenha.setForeground(new java.awt.Color(255, 255, 255));
@@ -345,11 +420,11 @@ public class TelaRegistrar extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txtSenha);
-        txtSenha.setBounds(40, 380, 370, 40);
+        txtSenha.setBounds(40, 380, 360, 40);
 
         jilbGlobo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Globo.png"))); // NOI18N
         getContentPane().add(jilbGlobo);
-        jilbGlobo.setBounds(310, 20, 30, 40);
+        jilbGlobo.setBounds(300, 20, 30, 40);
 
         cmbLinguagens.setBackground(new java.awt.Color(10, 25, 47));
         cmbLinguagens.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -363,16 +438,16 @@ public class TelaRegistrar extends javax.swing.JFrame {
             }
         });
         getContentPane().add(cmbLinguagens);
-        cmbLinguagens.setBounds(310, 20, 120, 40);
+        cmbLinguagens.setBounds(300, 20, 120, 40);
 
         jlibBlueSquad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Dashboard Overlay.png"))); // NOI18N
         getContentPane().add(jlibBlueSquad);
-        jlibBlueSquad.setBounds(0, 0, 450, 750);
+        jlibBlueSquad.setBounds(0, 0, 440, 750);
 
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Background Login.png"))); // NOI18N
         Background.setText("jLabel3");
         getContentPane().add(Background);
-        Background.setBounds(20, 0, 1420, 750);
+        Background.setBounds(40, 0, 1420, 760);
 
         setSize(new java.awt.Dimension(1450, 750));
         setLocationRelativeTo(null);
@@ -586,6 +661,26 @@ public class TelaRegistrar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbLinguagensActionPerformed
 
+    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsuarioActionPerformed
+
+    private void btnFecharTelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharTelaActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnFecharTelaActionPerformed
+
+    private void btnMaximizarTelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaximizarTelaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnMaximizarTelaActionPerformed
+
+    private void btnMinimizarTelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMinimizarTelaMouseClicked
+        setState(javax.swing.JFrame.ICONIFIED);
+    }//GEN-LAST:event_btnMinimizarTelaMouseClicked
+
+    private void btnMinimizarTelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinimizarTelaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnMinimizarTelaActionPerformed
+
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -613,7 +708,10 @@ public class TelaRegistrar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
+    private javax.swing.JButton btnFecharTela;
     private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnMaximizarTela;
+    private javax.swing.JButton btnMinimizarTela;
     private javax.swing.JButton btnResgistrar;
     private javax.swing.JButton btnTermosServico;
     private javax.swing.JCheckBox chbLembre;
@@ -625,7 +723,6 @@ public class TelaRegistrar extends javax.swing.JFrame {
     private javax.swing.JLabel jilbEmail;
     private javax.swing.JLabel jilbGlobo;
     private javax.swing.JLabel jilbLinha;
-    private javax.swing.JLabel jilbLogo;
     private javax.swing.JLabel jilbRegistreSe;
     private javax.swing.JLabel jilbSenha;
     private javax.swing.JLabel jilbSenha2;
@@ -635,7 +732,6 @@ public class TelaRegistrar extends javax.swing.JFrame {
     private javax.swing.JLabel jlibBlueSquad;
     private javax.swing.JLabel jlibErroRegistro;
     private javax.swing.JLabel jlibLogo1;
-    private javax.swing.JLabel jlibLogo2;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JPasswordField txtSenha;
     private javax.swing.JPasswordField txtSenha2;
