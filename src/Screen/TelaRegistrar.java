@@ -24,6 +24,7 @@ import java.awt.Font;
 import javax.swing.UIManager;
 import javax.swing.BorderFactory;
 import java.awt.Color;
+import java.io.InputStream;
 
 public class TelaRegistrar extends javax.swing.JFrame {
     
@@ -32,8 +33,41 @@ public class TelaRegistrar extends javax.swing.JFrame {
     private javax.swing.border.Border bordaPadrao;
     private javax.swing.border.Border bordaErro;
     
+    private Font ralewayMedium;
+    private Font latoRegular;
+    
     public TelaRegistrar() {
         initComponents();
+        
+        ralewayMedium = loadFont("/resources/fonts/Raleway-Medium.ttf", 18f);
+        latoRegular   = loadFont("/resources/fonts/Lato-Regular.ttf", 14f);
+        
+        try {
+            if (ralewayMedium != null) {
+                jilRegistre.setFont(ralewayMedium.deriveFont(32f));
+            }
+            if (latoRegular != null) {
+                jilbTexto.setFont(latoRegular.deriveFont(14f));
+                jilbTexto2.setFont(latoRegular.deriveFont(14f));
+                jilbUsuario.setFont(latoRegular.deriveFont(13f));
+                jilbEmail.setFont(latoRegular.deriveFont(13f));
+                jilbSenha.setFont(latoRegular.deriveFont(13f));
+                jilbSenha2.setFont(latoRegular.deriveFont(13f));
+                jilbJaTemConta.setFont(latoRegular.deriveFont(13f));
+                jilbCreditos.setFont(latoRegular.deriveFont(13f));
+                jlibErroRegistro.setFont(latoRegular.deriveFont(12f));
+                btnRegistrar.setFont(latoRegular.deriveFont(Font.BOLD, 13f));
+                jilbLogin.setFont(latoRegular.deriveFont(13f));
+                txtUsuario.setFont(latoRegular.deriveFont(13f));
+                txtEmail.setFont(latoRegular.deriveFont(13f));
+                txtSenha.setFont(latoRegular.deriveFont(13f));
+                txtSenha2.setFont(latoRegular.deriveFont(13f));
+                cmbLinguagens.setFont(latoRegular.deriveFont(16f));
+                chbLembre.setFont(latoRegular.deriveFont(13f));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
         
         try {
             java.net.URL url = getClass().getResource("/images/Close Icon.png");
@@ -114,6 +148,20 @@ public class TelaRegistrar extends javax.swing.JFrame {
         
         jlibErroRegistro.setVisible(false);
     }
+    
+    private Font loadFont(String path, float size) {
+        try (InputStream is = getClass().getResourceAsStream(path)) {
+            if (is == null) {
+                System.err.println("Fonte não encontrada em: " + path);
+                return new Font("SansSerif", Font.PLAIN, (int) size);
+            }
+            Font f = Font.createFont(Font.TRUETYPE_FONT, is);
+            return f.deriveFont(size);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Font("SansSerif", Font.PLAIN, (int) size);
+        }
+    }
 
     private void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/logo-icon.png")));
@@ -150,10 +198,10 @@ public class TelaRegistrar extends javax.swing.JFrame {
         btnMaximizarTela = new javax.swing.JButton();
         btnMinimizarTela = new javax.swing.JButton();
         btnResgistrar = new javax.swing.JButton();
-        jilbAindaNaoTemConta = new javax.swing.JLabel();
-        jilbRegistreSe = new javax.swing.JLabel();
+        jilbJaTemConta = new javax.swing.JLabel();
+        jilbLogin = new javax.swing.JLabel();
         btnTermosServico = new javax.swing.JButton();
-        btnLogin = new javax.swing.JButton();
+        btnRegistrar = new javax.swing.JButton();
         jilbUsuario = new javax.swing.JLabel();
         jilbEmail = new javax.swing.JLabel();
         jilbSenha = new javax.swing.JLabel();
@@ -165,7 +213,7 @@ public class TelaRegistrar extends javax.swing.JFrame {
         jilbTexto = new javax.swing.JLabel();
         jilbTexto2 = new javax.swing.JLabel();
         jilbSenha2 = new javax.swing.JLabel();
-        jilbCreditos1 = new javax.swing.JLabel();
+        jilbCreditos = new javax.swing.JLabel();
         chbLembre = new javax.swing.JCheckBox();
         jlibErroRegistro = new javax.swing.JLabel();
         chbMostrarSenha = new javax.swing.JCheckBox();
@@ -227,19 +275,19 @@ public class TelaRegistrar extends javax.swing.JFrame {
         getContentPane().add(btnResgistrar);
         btnResgistrar.setBounds(140, 580, 50, 20);
 
-        jilbAindaNaoTemConta.setBackground(new java.awt.Color(255, 255, 255));
-        jilbAindaNaoTemConta.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        jilbAindaNaoTemConta.setForeground(new java.awt.Color(255, 255, 255));
-        jilbAindaNaoTemConta.setText("Você já tem conta?");
-        getContentPane().add(jilbAindaNaoTemConta);
-        jilbAindaNaoTemConta.setBounds(40, 580, 130, 20);
+        jilbJaTemConta.setBackground(new java.awt.Color(255, 255, 255));
+        jilbJaTemConta.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        jilbJaTemConta.setForeground(new java.awt.Color(255, 255, 255));
+        jilbJaTemConta.setText(" Você já tem conta?");
+        getContentPane().add(jilbJaTemConta);
+        jilbJaTemConta.setBounds(40, 580, 130, 20);
 
-        jilbRegistreSe.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        jilbRegistreSe.setForeground(new java.awt.Color(16, 165, 103));
-        jilbRegistreSe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jilbRegistreSe.setText("  Login");
-        getContentPane().add(jilbRegistreSe);
-        jilbRegistreSe.setBounds(120, 580, 80, 20);
+        jilbLogin.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        jilbLogin.setForeground(new java.awt.Color(16, 165, 103));
+        jilbLogin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jilbLogin.setText("       Login");
+        getContentPane().add(jilbLogin);
+        jilbLogin.setBounds(120, 580, 80, 20);
 
         btnTermosServico.setBackground(new java.awt.Color(30, 30, 30));
         btnTermosServico.setContentAreaFilled(false);
@@ -251,34 +299,34 @@ public class TelaRegistrar extends javax.swing.JFrame {
         getContentPane().add(btnTermosServico);
         btnTermosServico.setBounds(120, 680, 190, 20);
 
-        btnLogin.setBackground(new java.awt.Color(17, 168, 100));
-        btnLogin.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        btnLogin.setForeground(new java.awt.Color(255, 255, 255));
-        btnLogin.setText("Registrar");
-        btnLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnRegistrar.setBackground(new java.awt.Color(17, 168, 100));
+        btnRegistrar.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        btnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegistrar.setText("Registrar");
+        btnRegistrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnLoginMouseClicked(evt);
+                btnRegistrarMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnLoginMouseEntered(evt);
+                btnRegistrarMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnLoginMouseExited(evt);
+                btnRegistrarMouseExited(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnLoginMousePressed(evt);
+                btnRegistrarMousePressed(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btnLoginMouseReleased(evt);
+                btnRegistrarMouseReleased(evt);
             }
         });
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
+                btnRegistrarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnLogin);
-        btnLogin.setBounds(40, 540, 360, 40);
+        getContentPane().add(btnRegistrar);
+        btnRegistrar.setBounds(40, 540, 360, 40);
 
         jilbUsuario.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jilbUsuario.setForeground(new java.awt.Color(255, 255, 255));
@@ -342,7 +390,7 @@ public class TelaRegistrar extends javax.swing.JFrame {
         jilRegistre.setText("Registre-se");
         jilRegistre.setPreferredSize(new java.awt.Dimension(100, 100));
         getContentPane().add(jilRegistre);
-        jilRegistre.setBounds(40, 100, 170, 50);
+        jilRegistre.setBounds(40, 100, 200, 50);
 
         jilbLinha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Line 1.png"))); // NOI18N
         jilbLinha.setText("jLabel1");
@@ -367,11 +415,11 @@ public class TelaRegistrar extends javax.swing.JFrame {
         getContentPane().add(jilbSenha2);
         jilbSenha2.setBounds(40, 430, 170, 20);
 
-        jilbCreditos1.setBackground(new java.awt.Color(255, 255, 255));
-        jilbCreditos1.setForeground(new java.awt.Color(255, 255, 255));
-        jilbCreditos1.setText("  © 2025 CT Contab. Todos os direitos reservados.");
-        getContentPane().add(jilbCreditos1);
-        jilbCreditos1.setBounds(10, 710, 350, 30);
+        jilbCreditos.setBackground(new java.awt.Color(255, 255, 255));
+        jilbCreditos.setForeground(new java.awt.Color(255, 255, 255));
+        jilbCreditos.setText("  © 2025 CT Contab. Todos os direitos reservados.");
+        getContentPane().add(jilbCreditos);
+        jilbCreditos.setBounds(10, 710, 350, 40);
 
         chbLembre.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         chbLembre.setForeground(new java.awt.Color(255, 255, 255));
@@ -387,11 +435,11 @@ public class TelaRegistrar extends javax.swing.JFrame {
         getContentPane().add(chbLembre);
         chbLembre.setBounds(40, 490, 110, 30);
 
-        jlibErroRegistro.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        jlibErroRegistro.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         jlibErroRegistro.setForeground(new java.awt.Color(255, 0, 0));
-        jlibErroRegistro.setText("Seu e-mail, senha ou usuário estão incorretos.");
+        jlibErroRegistro.setText("    Seu e-mail, senha ou usuário estão incorretos.");
         getContentPane().add(jlibErroRegistro);
-        jlibErroRegistro.setBounds(140, 490, 260, 30);
+        jlibErroRegistro.setBounds(160, 490, 240, 30);
 
         chbMostrarSenha.setContentAreaFilled(false);
         chbMostrarSenha.setFocusPainted(false);
@@ -457,7 +505,7 @@ public class TelaRegistrar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmailActionPerformed
 
-    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
       
         String usuario = txtUsuario.getText().trim();
         String email = txtEmail.getText().trim();
@@ -490,7 +538,7 @@ public class TelaRegistrar extends javax.swing.JFrame {
                 MensagemUtil.exibirErro("Erro na conexão com o banco de dados!");
             }
         }
-    }//GEN-LAST:event_btnLoginActionPerformed
+    }//GEN-LAST:event_btnRegistrarActionPerformed
     
     private ImageIcon createCheckboxIcon(boolean checked) {
         int size = 18;
@@ -617,30 +665,30 @@ public class TelaRegistrar extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnTermosServicoActionPerformed
 
-    private void btnLoginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseEntered
-        btnLogin.setBackground(new java.awt.Color(20, 190, 115));
-    }//GEN-LAST:event_btnLoginMouseEntered
+    private void btnRegistrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMouseEntered
+        btnRegistrar.setBackground(new java.awt.Color(20, 190, 115));
+    }//GEN-LAST:event_btnRegistrarMouseEntered
 
-    private void btnLoginMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseExited
-        btnLogin.setBackground(new java.awt.Color(17, 168, 100));
-    }//GEN-LAST:event_btnLoginMouseExited
+    private void btnRegistrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMouseExited
+        btnRegistrar.setBackground(new java.awt.Color(17, 168, 100));
+    }//GEN-LAST:event_btnRegistrarMouseExited
 
-    private void btnLoginMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMousePressed
-        btnLogin.setBackground(new java.awt.Color(14, 140, 85));
-    }//GEN-LAST:event_btnLoginMousePressed
+    private void btnRegistrarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMousePressed
+        btnRegistrar.setBackground(new java.awt.Color(14, 140, 85));
+    }//GEN-LAST:event_btnRegistrarMousePressed
 
-    private void btnLoginMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseReleased
-        btnLogin.setBackground(new java.awt.Color(17, 168, 100));
-    }//GEN-LAST:event_btnLoginMouseReleased
+    private void btnRegistrarMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMouseReleased
+        btnRegistrar.setBackground(new java.awt.Color(17, 168, 100));
+    }//GEN-LAST:event_btnRegistrarMouseReleased
 
     private void btnResgistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResgistrarActionPerformed
         dispose();
         new TelaLogin().setVisible(true);
     }//GEN-LAST:event_btnResgistrarActionPerformed
 
-    private void btnLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseClicked
+    private void btnRegistrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnLoginMouseClicked
+    }//GEN-LAST:event_btnRegistrarMouseClicked
 
     private void txtSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaActionPerformed
         // TODO add your handling code here:
@@ -709,21 +757,21 @@ public class TelaRegistrar extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
     private javax.swing.JButton btnFecharTela;
-    private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnMaximizarTela;
     private javax.swing.JButton btnMinimizarTela;
+    private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton btnResgistrar;
     private javax.swing.JButton btnTermosServico;
     private javax.swing.JCheckBox chbLembre;
     private javax.swing.JCheckBox chbMostrarSenha;
     private javax.swing.JComboBox<String> cmbLinguagens;
     private javax.swing.JLabel jilRegistre;
-    private javax.swing.JLabel jilbAindaNaoTemConta;
-    private javax.swing.JLabel jilbCreditos1;
+    private javax.swing.JLabel jilbCreditos;
     private javax.swing.JLabel jilbEmail;
     private javax.swing.JLabel jilbGlobo;
+    private javax.swing.JLabel jilbJaTemConta;
     private javax.swing.JLabel jilbLinha;
-    private javax.swing.JLabel jilbRegistreSe;
+    private javax.swing.JLabel jilbLogin;
     private javax.swing.JLabel jilbSenha;
     private javax.swing.JLabel jilbSenha2;
     private javax.swing.JLabel jilbTexto;

@@ -29,14 +29,47 @@ import java.awt.Font;
 import javax.swing.UIManager;
 import javax.swing.BorderFactory;
 import java.awt.Color;
+import java.io.InputStream;
 
 public class TelaLogin extends javax.swing.JFrame {
 
     private javax.swing.border.Border bordaPadrao;
     private javax.swing.border.Border bordaErro;
     
+    private Font ralewayMedium;
+    private Font latoRegular;
+    
     public TelaLogin() {
         initComponents();
+        
+        ralewayMedium = loadFont("/resources/fonts/Raleway-Medium.ttf", 18f);
+        latoRegular   = loadFont("/resources/fonts/Lato-Regular.ttf", 14f);
+
+        try {
+            if (ralewayMedium != null) {
+                jilbTitulo.setFont(ralewayMedium.deriveFont(32f));
+            }
+            if (latoRegular != null) {
+                jilbTexto.setFont(latoRegular.deriveFont(14f));
+                jilbTexto2.setFont(latoRegular.deriveFont(14f));
+                jilbTexto3.setFont(latoRegular.deriveFont(14f));
+                jilbEmailOuUsuario.setFont(latoRegular.deriveFont(13f));
+                jilbSenha.setFont(latoRegular.deriveFont(13f));
+                jilbAindaNaoTemConta.setFont(latoRegular.deriveFont(13f));
+                jilbCreditos.setFont(latoRegular.deriveFont(13f));
+                jlibEsqueceuASenha.setFont(latoRegular.deriveFont(13f));
+                jlibErroLogin.setFont(latoRegular.deriveFont(13f));
+                btnLogin.setFont(latoRegular.deriveFont(Font.BOLD, 13f));
+                btnGoogle.setFont(latoRegular.deriveFont(Font.PLAIN, 13f));
+                jilbRegistreSe.setFont(latoRegular.deriveFont(13f));
+                txtLogin.setFont(latoRegular.deriveFont(13f));
+                txtSenha.setFont(latoRegular.deriveFont(13f));
+                cmbLinguagens.setFont(latoRegular.deriveFont(16f));
+                chbLembre.setFont(latoRegular.deriveFont(13f));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
         
          try {
             java.net.URL url = getClass().getResource("/images/Close Icon.png");
@@ -107,6 +140,20 @@ public class TelaLogin extends javax.swing.JFrame {
 
     }
 
+    private Font loadFont(String path, float size) {
+        try (InputStream is = getClass().getResourceAsStream(path)) {
+            if (is == null) {
+                System.err.println("Fonte não encontrada em: " + path);
+                return new Font("SansSerif", Font.PLAIN, (int) size);
+            }
+            Font f = Font.createFont(Font.TRUETYPE_FONT, is);
+            return f.deriveFont(size);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Font("SansSerif", Font.PLAIN, (int) size);
+        }
+    }
+    
     private void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/logo-icon.png")));
     }
@@ -259,7 +306,7 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnTermosServico);
-        btnTermosServico.setBounds(120, 680, 190, 20);
+        btnTermosServico.setBounds(120, 720, 190, 20);
 
         jlibErroLogin.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jlibErroLogin.setForeground(new java.awt.Color(255, 0, 0));
@@ -400,19 +447,19 @@ public class TelaLogin extends javax.swing.JFrame {
         jilbCreditos.setForeground(new java.awt.Color(255, 255, 255));
         jilbCreditos.setText("  © 2025 CT Contab. Todos os direitos reservados.");
         getContentPane().add(jilbCreditos);
-        jilbCreditos.setBounds(10, 710, 350, 30);
+        jilbCreditos.setBounds(10, 710, 350, 40);
 
         jilbAindaNaoTemConta.setBackground(new java.awt.Color(255, 255, 255));
         jilbAindaNaoTemConta.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jilbAindaNaoTemConta.setForeground(new java.awt.Color(255, 255, 255));
-        jilbAindaNaoTemConta.setText("Não registrado ainda?");
+        jilbAindaNaoTemConta.setText(" Não registrado ainda?");
         getContentPane().add(jilbAindaNaoTemConta);
         jilbAindaNaoTemConta.setBounds(40, 540, 140, 20);
 
         jilbRegistreSe.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jilbRegistreSe.setForeground(new java.awt.Color(16, 168, 105));
         jilbRegistreSe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jilbRegistreSe.setText("  Crie uma conta");
+        jilbRegistreSe.setText("       Crie uma conta");
         getContentPane().add(jilbRegistreSe);
         jilbRegistreSe.setBounds(150, 540, 110, 20);
 
@@ -424,7 +471,7 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnResgistrar);
-        btnResgistrar.setBounds(160, 540, 100, 20);
+        btnResgistrar.setBounds(170, 540, 100, 20);
 
         jilbTitulo.setFont(new java.awt.Font("Segoe UI", 0, 32)); // NOI18N
         jilbTitulo.setForeground(new java.awt.Color(255, 255, 255));
@@ -458,11 +505,11 @@ public class TelaLogin extends javax.swing.JFrame {
         jilbLinha3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Line 1.png"))); // NOI18N
         jilbLinha3.setText("jLabel6");
         getContentPane().add(jilbLinha3);
-        jilbLinha3.setBounds(40, 290, 80, 16);
+        jilbLinha3.setBounds(40, 290, 90, 16);
 
         jilbTexto3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jilbTexto3.setForeground(new java.awt.Color(255, 255, 255));
-        jilbTexto3.setText("   ou faça login com o email");
+        jilbTexto3.setText("    ou faça login com o email");
         getContentPane().add(jilbTexto3);
         jilbTexto3.setBounds(130, 280, 180, 30);
 
@@ -487,7 +534,7 @@ public class TelaLogin extends javax.swing.JFrame {
         jilbLinha2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Line 1.png"))); // NOI18N
         jilbLinha2.setText("jLabel8");
         getContentPane().add(jilbLinha2);
-        jilbLinha2.setBounds(320, 290, 80, 16);
+        jilbLinha2.setBounds(310, 290, 90, 16);
 
         jilbGoogleIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image 1.png"))); // NOI18N
         getContentPane().add(jilbGoogleIcon);
@@ -496,7 +543,7 @@ public class TelaLogin extends javax.swing.JFrame {
         btnGoogle.setBackground(new Color(0, 0, 0, 0));
         btnGoogle.setForeground(new java.awt.Color(255, 255, 255));
         btnGoogle.setFont(new Font("SansSerif", Font.PLAIN, 13));
-        btnGoogle.setText("Sing in with Google");
+        btnGoogle.setText("  Sing in with Google");
         btnGoogle.setFocusPainted(false);
         btnGoogle.setContentAreaFilled(false);
         btnGoogle.setBorderPainted(true);
@@ -652,7 +699,6 @@ public class TelaLogin extends javax.swing.JFrame {
     }
 });
 }
-
 
     private void mostrarMensagemCopiaComSucesso() {
         jlibErroLogin.setText("Cópia do login feita com sucesso!");
