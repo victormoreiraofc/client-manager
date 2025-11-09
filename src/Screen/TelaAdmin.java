@@ -11,12 +11,16 @@ import java.io.FileReader;
 import java.io.IOException;
 import Screen.FonteUtils;
 import java.awt.BorderLayout;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Insets;
+import java.awt.RenderingHints;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 
 public class TelaAdmin extends javax.swing.JFrame {
 
@@ -26,6 +30,14 @@ public class TelaAdmin extends javax.swing.JFrame {
     public TelaAdmin(Usuario usuario) {
         this.usuarioLogado = usuario;
         initComponents();
+
+        addHoverLabel(btnDashboard, "Dashboard");
+        addHoverLabel(btnCalendario, "Calendário");
+        addHoverLabel(btnClientes, "Clientes");
+        addHoverLabel(btnRelatorios, "Relatórios");
+        addHoverLabel(btnTarefas, "Tarefas");
+        addHoverLabel(btnConfiguracoes, "Configuração");
+        addHoverLabel(btnAdministracao, "Administração");
 
         try {
             java.net.URL url = getClass().getResource("/images/Close Icon.png");
@@ -228,6 +240,44 @@ public class TelaAdmin extends javax.swing.JFrame {
         setIcon();
         carregarLogs();
         setResizable(false); // Impede o redimencionamento da tela.
+    }
+
+    private void addHoverLabel(JButton botao, String texto) {
+        JLabel label = new JLabel(texto, SwingConstants.CENTER) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(new Color(7, 30, 70)); // fundo azul escuro
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15); // cantos arredondados
+                super.paintComponent(g2);
+                g2.dispose();
+            }
+        };
+
+        label.setOpaque(false); // importante pra deixar o fundo transparente pro desenho funcionar
+        label.setForeground(Color.WHITE);
+        label.setFont(FonteUtils.carregarSofiaSansBlack(13f));
+        label.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+        label.setVisible(false);
+
+        botao.getParent().add(label, 0);
+
+        botao.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                label.setSize(label.getPreferredSize());
+                label.setLocation(botao.getX() + botao.getWidth() + 30, botao.getY() + (botao.getHeight() - label.getHeight()) / 2);
+                label.setVisible(true);
+                botao.getParent().repaint();
+            }
+
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                label.setVisible(false);
+            }
+        });
     }
 
     private void aplicarHoverIcon(javax.swing.JComponent componente,

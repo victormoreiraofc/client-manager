@@ -77,5 +77,19 @@ public class FonteUtils {
             return new Font("SofiaSans-Bold", Font.BOLD, (int) tamanho);
         }
     }
+    
+    public static Font carregarInterExtraBold(float tamanho) {
+        try {
+            File arquivoFonte = new File("src/resources/fonts/Inter_28pt-ExtraBold.ttf");
+            Font interextrabold = Font.createFont(Font.TRUETYPE_FONT, arquivoFonte);
+            interextrabold = interextrabold.deriveFont(tamanho);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(interextrabold);
+            return interextrabold;
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+            return new Font("Inter_28pt-ExtraBold", Font.BOLD, (int) tamanho);
+        }
+    }
 
 }

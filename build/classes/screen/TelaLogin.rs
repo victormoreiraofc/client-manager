@@ -6,6 +6,10 @@ screen.TelaLogin$1
 screen.TelaLogin$12
 screen.TelaLogin$11
 screen.TelaLogin$10
+screen.TelaLogin$21
+screen.TelaLogin$20
+screen.TelaLogin$19
+screen.TelaLogin$18
 screen.TelaLogin$17
 screen.TelaLogin$16
 screen.TelaLogin$8
