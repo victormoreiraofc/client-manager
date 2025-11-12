@@ -38,6 +38,9 @@ public class TelaAdmin extends javax.swing.JFrame {
         addHoverLabel(btnTarefas, "Tarefas");
         addHoverLabel(btnConfiguracoes, "Configuração");
         addHoverLabel(btnAdministracao, "Administração");
+        addHoverLabel(btnNotificacoes, "Notificações");
+        addHoverLabel(btnInfo, "Ajuda");
+        addHoverLabel(btnUserIcon, "Nome e Sobrenome");
 
         try {
             java.net.URL url = getClass().getResource("/images/Close Icon.png");
@@ -268,9 +271,25 @@ public class TelaAdmin extends javax.swing.JFrame {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 label.setSize(label.getPreferredSize());
-                label.setLocation(botao.getX() + botao.getWidth() + 30, botao.getY() + (botao.getHeight() - label.getHeight()) / 2);
                 label.setVisible(true);
                 botao.getParent().repaint();
+
+                if (botao == btnUserIcon) {
+                    label.setLocation(
+                            botao.getParent().getWidth() - label.getWidth() - 10,
+                            botao.getY() + botao.getHeight() + 5
+                    );
+                } else if (botao == btnNotificacoes || botao == btnInfo) {
+                    label.setLocation(
+                            botao.getX() + (botao.getWidth() - label.getWidth()) / 2,
+                            botao.getY() + botao.getHeight() + 5
+                    );
+                } else {
+                    label.setLocation(
+                            botao.getX() + botao.getWidth() + 30,
+                            botao.getY() + (botao.getHeight() - label.getHeight()) / 2
+                    );
+                }
             }
 
             @Override
@@ -278,6 +297,7 @@ public class TelaAdmin extends javax.swing.JFrame {
                 label.setVisible(false);
             }
         });
+
     }
 
     private void aplicarHoverIcon(javax.swing.JComponent componente,
@@ -357,6 +377,7 @@ public class TelaAdmin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnUserIcon = new javax.swing.JButton();
         btnInfo = new javax.swing.JButton();
         btnMinimizarTela = new javax.swing.JButton();
         btnMaximizarTela = new javax.swing.JButton();
@@ -388,6 +409,16 @@ public class TelaAdmin extends javax.swing.JFrame {
             }
         });
         getContentPane().setLayout(null);
+
+        btnUserIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Administrative Icon.png"))); // NOI18N
+        btnUserIcon.setContentAreaFilled(false);
+        btnUserIcon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUserIconActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnUserIcon);
+        btnUserIcon.setBounds(1390, 30, 50, 50);
 
         btnInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Information Icon.png"))); // NOI18N
         btnInfo.setContentAreaFilled(false);
@@ -664,6 +695,10 @@ public class TelaAdmin extends javax.swing.JFrame {
         setLocation(x - mouseX, y - mouseY);
     }//GEN-LAST:event_lblBarraSuperiorMouseDragged
 
+    private void btnUserIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserIconActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUserIconActionPerformed
+
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -698,6 +733,7 @@ public class TelaAdmin extends javax.swing.JFrame {
     private javax.swing.JButton btnNotificacoes;
     private javax.swing.JButton btnRelatorios;
     private javax.swing.JButton btnTarefas;
+    private javax.swing.JButton btnUserIcon;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblBarraLateral;
