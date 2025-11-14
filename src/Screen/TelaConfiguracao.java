@@ -369,7 +369,6 @@ public class TelaConfiguracao extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
         btnInfo = new javax.swing.JButton();
         btnMinimizarTela = new javax.swing.JButton();
         btnFecharTela = new javax.swing.JButton();
@@ -397,10 +396,6 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Configurações - CT CONTAB");
         getContentPane().setLayout(null);
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/azul.png"))); // NOI18N
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(0, 640, 80, 60);
 
         btnInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Information Icon.png"))); // NOI18N
         btnInfo.setContentAreaFilled(false);
@@ -736,7 +731,6 @@ public class TelaConfiguracao extends javax.swing.JFrame {
     private javax.swing.JButton btnNotificacoes;
     private javax.swing.JButton btnRelatorios;
     private javax.swing.JButton btnTarefas;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lblBarraLateral;
     private javax.swing.JLabel lblBarraSuperior;
     private javax.swing.JLabel lblDivisorTela;
