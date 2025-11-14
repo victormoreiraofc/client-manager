@@ -512,5 +512,17 @@ public class CTCONTAB {
             }
         }
     }
-
+    public static String buscarSenhaPorEmail(String email) throws ClassNotFoundException, SQLException {
+    conectado = conectar();
+    String sql = "SELECT senha FROM usuarios WHERE email = ?";
+    try (PreparedStatement st = conectado.prepareStatement(sql)) {
+        st.setString(1, email);
+        ResultSet rs = st.executeQuery();
+        if (rs.next()) {
+            return rs.getString("senha");
+        } else {
+            throw new SQLException("Usuário não encontrado.");
+        }
+    }
+}
 }

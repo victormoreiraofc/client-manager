@@ -1,40 +1,341 @@
 package screen;
 
 import Data.IconUtil;
-import Data.CTCONTAB;
+import java.awt.*;
+import javax.swing.*;
 import Data.PermissaoUtil;
 import Data.Usuario;
-import Screen.MensagemUtil;
+import Screen.FonteUtils;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.io.File;
-import java.io.FileInputStream;
-import java.sql.SQLException;
 import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
 import javax.swing.JTextField;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 
 public class TelaConfiguracao extends javax.swing.JFrame {
 
     private static final Logger logger = LoggerFactory.getLogger(TelaConfiguracao.class);
 
     private Usuario usuarioLogado;
+    private int mouseX, mouseY;
 
     public TelaConfiguracao(Usuario usuario) {
         this.usuarioLogado = usuario;
         initComponents();
-        PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
-        carregarImagemUsuario(usuario);
+
+        addHoverLabel(btnDashboard, "Dashboard");
+        addHoverLabel(btnCalendario, "Calendário");
+        addHoverLabel(btnClientes, "Clientes");
+        addHoverLabel(btnRelatorios, "Relatórios");
+        addHoverLabel(btnTarefas, "Tarefas");
+        addHoverLabel(btnConfiguracoes, "Configuração");
+        addHoverLabel(btnAdministracao, "Administração");
+
+        try {
+            java.net.URL url = getClass().getResource("/images/Close Icon.png");
+            if (url == null) {
+                System.err.println("Imagem não encontrada. Verifique: /images/Close Icon.png ou src/images/Close Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(11, 11, java.awt.Image.SCALE_SMOOTH);
+                btnFecharTela.setIcon(new javax.swing.ImageIcon(img));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            btnFecharTela.setText("X"); // fallback
+        }
+
+        try {
+            java.net.URL url = getClass().getResource("/images/Maximize Icon.png");
+            if (url == null) {
+                System.err.println("Imagem não encontrada. Verifique: /images/Maximize Icon.png ou src/images/Maximize Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(11, 11, java.awt.Image.SCALE_SMOOTH);
+                btnMaximizarTela.setIcon(new javax.swing.ImageIcon(img));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            btnMaximizarTela.setText("[]"); // fallback
+        }
+
+        try {
+            java.net.URL url = getClass().getResource("/images/Minimize Icon.png");
+            if (url == null) {
+                System.err.println("Imagem não encontrada. Verifique: /images/Minimize Icon.png ou src/images/Minimize Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(11, 2, java.awt.Image.SCALE_SMOOTH);
+                btnMinimizarTela.setIcon(new javax.swing.ImageIcon(img));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            btnMinimizarTela.setText("-"); // fallback
+        }
+
+        try {
+            java.net.URL url = getClass().getResource("/images/Divider Icon.png");
+            if (url == null) {
+                System.err.println("Imagem não encontrada. Verifique: /images/Divider Icon.png ou src/images/Divider Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(2, 11, java.awt.Image.SCALE_SMOOTH);
+                lblDivisorTela.setIcon(new javax.swing.ImageIcon(img));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            lblDivisorTela.setText("|"); // fallback
+        }
+
+        try {
+            java.net.URL url = getClass().getResource("/images/Information Icon.png");
+            if (url == null) {
+                System.err.println("Imagem não encontrada. Verifique: /images/Information Icon.png ou src/images/Information Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(13, 13, java.awt.Image.SCALE_SMOOTH);
+                btnInfo.setIcon(new javax.swing.ImageIcon(img));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            btnInfo.setText("?"); // fallback
+        }
+
+        try {
+            java.net.URL url = getClass().getResource("/images/Logo Icon.png");
+            if (url == null) {
+                System.err.println("Imagem não encontrada. Verifique: /images/Logo Icon.png ou src/images/Logo Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH);
+                lblLogo.setIcon(new javax.swing.ImageIcon(img));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            lblLogo.setText("LOGO");
+        }
+
+        try {
+            java.net.URL url = getClass().getResource("/images/Dashboard Icon.png");
+            if (url == null) {
+                System.err.println("Imagem não encontrada. Verifique: /images/Dashboard Icon.png ou src/images/Dashboard Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
+                btnDashboard.setIcon(new javax.swing.ImageIcon(img));
+                aplicarHoverIcon(btnDashboard, "/images/Dashboard Icon.png", "/images/Dashboard Icon Hover.png", 22, 22);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            java.net.URL url = getClass().getResource("/images/Calendar Icon.png");
+            if (url == null) {
+                System.err.println("Imagem não encontrada. Verifique: /images/Calendar Icon.png ou src/images/Calendar Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
+                btnCalendario.setIcon(new javax.swing.ImageIcon(img));
+                aplicarHoverIcon(btnCalendario, "/images/Calendar Icon.png", "/images/Calendar Icon Hover.png", 22, 22);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            java.net.URL url = getClass().getResource("/images/Client Icon.png");
+            if (url == null) {
+                System.err.println("Imagem não encontrada. Verifique: /images/Client Icon.png ou src/images/Client Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
+                btnClientes.setIcon(new javax.swing.ImageIcon(img));
+                aplicarHoverIcon(btnClientes, "/images/Client Icon.png", "/images/Client Icon Hover.png", 22, 22);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            java.net.URL url = getClass().getResource("/images/Tasks Icon.png");
+            if (url == null) {
+                System.err.println("Imagem não encontrada. Verifique: /images/Tasks Icon.png ou src/images/Tasks Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
+                btnTarefas.setIcon(new javax.swing.ImageIcon(img));
+                aplicarHoverIcon(btnTarefas, "/images/Tasks Icon.png", "/images/Tasks Icon Hover.png", 22, 22);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            java.net.URL url = getClass().getResource("/images/Settings Icon Active.png");
+            if (url == null) {
+                System.err.println("Imagem não encontrada. Verifique: /images/Settings Icon.png ou src/images/Settings Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
+                btnConfiguracoes.setIcon(new javax.swing.ImageIcon(
+                        javax.imageio.ImageIO.read(getClass().getResource("/images/Settings Icon Active.png"))
+                                .getScaledInstance(22, 22, Image.SCALE_SMOOTH)
+                ));
+                aplicarHoverIcon(btnConfiguracoes, "/images/Settings Icon Active.png", "/images/Settings Icon Hover.png", 22, 22);
+
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            java.net.URL url = getClass().getResource("/images/Report Icon.png");
+            if (url == null) {
+                System.err.println("Imagem não encontrada. Verifique: /images/Report Icon.png ou src/images/Report Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
+                btnRelatorios.setIcon(new javax.swing.ImageIcon(img));
+                aplicarHoverIcon(btnRelatorios, "/images/Report Icon.png", "/images/Report Icon  Hover.png", 22, 22);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            java.net.URL url = getClass().getResource("/images/Administrative Icon.png");
+            if (url == null) {
+                System.err.println("Imagem não encontrada. Verifique: /images/Administrative Icon Active.png ou src/images/Administrative Icon Active.png");
+            } else {
+                url = getClass().getResource("/images/Administrative Icon.png");
+                btnAdministracao.setIcon(new javax.swing.ImageIcon(
+                        javax.imageio.ImageIO.read(url).getScaledInstance(22, 22, Image.SCALE_SMOOTH)
+                ));
+                aplicarHoverIcon(btnAdministracao, "/images/Administrative Icon.png", "/images/Administrative Icon Hover.png", 22, 22);
+
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            java.net.URL url = getClass().getResource("/images/Notification Bell.png");
+            if (url == null) {
+                System.err.println("Imagem não encontrada. Verifique: /images/Notification Bell.png ou src/images/Notification Bell.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
+                btnNotificacoes.setIcon(new javax.swing.ImageIcon(img));
+                aplicarHoverIcon(btnNotificacoes, "/images/Notification Bell.png", "/images/Notification Bell Hover.png", 22, 22);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        setUndecorated(true); // Remove a barra superior.
         IconUtil.setIcon(usuarioLogado, lblUserIcon);
+        PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
         setIcon();
-        setResizable(false);
+        setResizable(false); // Impede o redimencionamento da tela.
+    }
+
+    private void addHoverLabel(JButton botao, String texto) {
+        JLabel label = new JLabel(texto, SwingConstants.CENTER) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(new Color(7, 30, 70)); // fundo azul escuro
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15); // cantos arredondados
+                super.paintComponent(g2);
+                g2.dispose();
+            }
+        };
+
+        label.setOpaque(false); // importante pra deixar o fundo transparente pro desenho funcionar
+        label.setForeground(Color.WHITE);
+        label.setFont(FonteUtils.carregarSofiaSansBlack(13f));
+        label.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+        label.setVisible(false);
+
+        botao.getParent().add(label, 0);
+
+        botao.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                label.setSize(label.getPreferredSize());
+                label.setLocation(botao.getX() + botao.getWidth() + 30, botao.getY() + (botao.getHeight() - label.getHeight()) / 2);
+                label.setVisible(true);
+                botao.getParent().repaint();
+            }
+
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                label.setVisible(false);
+            }
+        });
+    }
+
+    private void aplicarHoverIcon(javax.swing.JComponent componente,
+            String caminhoNormal,
+            String caminhoHover,
+            int largura,
+            int altura) {
+        try {
+            // Ícone normal
+            java.net.URL urlNormal = getClass().getResource(caminhoNormal);
+            java.awt.Image imgNormal = javax.imageio.ImageIO.read(urlNormal)
+                    .getScaledInstance(largura, altura, java.awt.Image.SCALE_SMOOTH);
+            javax.swing.ImageIcon iconNormal = new javax.swing.ImageIcon(imgNormal);
+
+            // Ícone de hover
+            java.net.URL urlHover = getClass().getResource(caminhoHover);
+            java.awt.Image imgHover = javax.imageio.ImageIO.read(urlHover)
+                    .getScaledInstance(largura, altura, java.awt.Image.SCALE_SMOOTH);
+            javax.swing.ImageIcon iconHover = new javax.swing.ImageIcon(imgHover);
+
+            if (componente instanceof JLabel lbl) {
+                lbl.setIcon(iconNormal);
+
+                lbl.addMouseListener(new java.awt.event.MouseAdapter() {
+                    @Override
+                    public void mouseEntered(java.awt.event.MouseEvent e) {
+                        lbl.setIcon(iconHover);
+                    }
+
+                    @Override
+                    public void mouseExited(java.awt.event.MouseEvent e) {
+                        lbl.setIcon(iconNormal);
+                    }
+                });
+
+            } else if (componente instanceof JButton btn) {
+                btn.setIcon(iconNormal);
+
+                btn.addMouseListener(new java.awt.event.MouseAdapter() {
+                    @Override
+                    public void mouseEntered(java.awt.event.MouseEvent e) {
+                        btn.setIcon(iconHover);
+                    }
+
+                    @Override
+                    public void mouseExited(java.awt.event.MouseEvent e) {
+                        btn.setIcon(iconNormal);
+                    }
+                });
+            }
+        } catch (Exception ex) {
+            System.err.println("Erro ao carregar ícones: " + caminhoNormal + " / " + caminhoHover);
+            ex.printStackTrace();
+        }
     }
 
     private void setIcon() {
@@ -68,65 +369,114 @@ public class TelaConfiguracao extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnHome = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        btnInfo = new javax.swing.JButton();
+        btnMinimizarTela = new javax.swing.JButton();
+        btnFecharTela = new javax.swing.JButton();
+        btnMaximizarTela = new javax.swing.JButton();
+        lblLogoTexto = new javax.swing.JLabel();
+        lblLogo = new javax.swing.JLabel();
+        lblTituloPagina = new javax.swing.JLabel();
+        lblDivisorTela = new javax.swing.JLabel();
+        btnDashboard = new javax.swing.JButton();
         btnCalendario = new javax.swing.JButton();
         btnClientes = new javax.swing.JButton();
         btnRelatorios = new javax.swing.JButton();
         btnTarefas = new javax.swing.JButton();
         btnConfiguracoes = new javax.swing.JButton();
         btnAdministracao = new javax.swing.JButton();
-        JPanelTelaAcesso3 = new javax.swing.JPanel();
-        lblContabilidade = new javax.swing.JLabel();
-        lblCTCONTAB = new javax.swing.JLabel();
         lblUserIcon = new javax.swing.JLabel();
         btnNotificacoes = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        jButton1 = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        btnLogin = new javax.swing.JButton();
-        txtNovaSenha = new javax.swing.JTextField();
-        txtSeuEmail = new javax.swing.JTextField();
-        txtNovoEmail = new javax.swing.JTextField();
-        txtSenhaAtual = new javax.swing.JTextField();
-        lblImagem = new javax.swing.JLabel();
-        lblDataDeCadastro = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        txtNomeAtual = new javax.swing.JTextField();
-        jLabel18 = new javax.swing.JLabel();
-        txtNomeNovo = new javax.swing.JTextField();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jlibLogo2 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        btnEditarSenha = new javax.swing.JButton();
+        btnEditarNome = new javax.swing.JButton();
+        btnAtualizarEmail = new javax.swing.JButton();
+        lblBarraSuperior = new javax.swing.JLabel();
+        lblBarraLateral = new javax.swing.JLabel();
         Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("CT Contab Manager");
+        setTitle("Configurações - CT CONTAB");
         getContentPane().setLayout(null);
 
-        btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/home-menu.png"))); // NOI18N
-        btnHome.setContentAreaFilled(false);
-        btnHome.addActionListener(new java.awt.event.ActionListener() {
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/azul.png"))); // NOI18N
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(0, 640, 80, 60);
+
+        btnInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Information Icon.png"))); // NOI18N
+        btnInfo.setContentAreaFilled(false);
+        btnInfo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHomeActionPerformed(evt);
+                btnInfoActionPerformed(evt);
             }
         });
-        getContentPane().add(btnHome);
-        btnHome.setBounds(0, 120, 80, 50);
+        getContentPane().add(btnInfo);
+        btnInfo.setBounds(1305, 0, 15, 25);
 
-        btnCalendario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/calendar-menu.png"))); // NOI18N
+        btnMinimizarTela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Minimize Icon.png"))); // NOI18N
+        btnMinimizarTela.setContentAreaFilled(false);
+        btnMinimizarTela.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMinimizarTelaMouseClicked(evt);
+            }
+        });
+        btnMinimizarTela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMinimizarTelaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnMinimizarTela);
+        btnMinimizarTela.setBounds(1355, 0, 15, 25);
+
+        btnFecharTela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Close Icon.png"))); // NOI18N
+        btnFecharTela.setContentAreaFilled(false);
+        btnFecharTela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharTelaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnFecharTela);
+        btnFecharTela.setBounds(1425, 0, 15, 25);
+
+        btnMaximizarTela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Maximize Icon.png"))); // NOI18N
+        btnMaximizarTela.setContentAreaFilled(false);
+        btnMaximizarTela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMaximizarTelaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnMaximizarTela);
+        btnMaximizarTela.setBounds(1390, 0, 15, 25);
+
+        lblLogoTexto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Logo Text Icon.png"))); // NOI18N
+        getContentPane().add(lblLogoTexto);
+        lblLogoTexto.setBounds(80, 35, 176, 46);
+
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Logo Icon.png"))); // NOI18N
+        getContentPane().add(lblLogo);
+        lblLogo.setBounds(15, 35, 40, 40);
+
+        lblTituloPagina.setForeground(new java.awt.Color(255, 255, 255));
+        lblTituloPagina.setText("Configuração");
+        lblTituloPagina.setFont(FonteUtils.carregarRoboto(13f));
+        getContentPane().add(lblTituloPagina);
+        lblTituloPagina.setBounds(720, 3, 120, 20);
+
+        lblDivisorTela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Close Icon.png"))); // NOI18N
+        lblDivisorTela.setPreferredSize(new java.awt.Dimension(13, 13));
+        getContentPane().add(lblDivisorTela);
+        lblDivisorTela.setBounds(1335, 0, 15, 25);
+
+        btnDashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Dashboard Icon.png"))); // NOI18N
+        btnDashboard.setContentAreaFilled(false);
+        btnDashboard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDashboardActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnDashboard);
+        btnDashboard.setBounds(19, 240, 30, 30);
+
+        btnCalendario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Calendar Icon.png"))); // NOI18N
         btnCalendario.setContentAreaFilled(false);
         btnCalendario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,9 +484,9 @@ public class TelaConfiguracao extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnCalendario);
-        btnCalendario.setBounds(0, 190, 80, 50);
+        btnCalendario.setBounds(19, 280, 30, 30);
 
-        btnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/client-menu.png"))); // NOI18N
+        btnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Client Icon.png"))); // NOI18N
         btnClientes.setContentAreaFilled(false);
         btnClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,9 +494,9 @@ public class TelaConfiguracao extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnClientes);
-        btnClientes.setBounds(5, 260, 70, 50);
+        btnClientes.setBounds(19, 320, 30, 30);
 
-        btnRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/relatory-menu.png"))); // NOI18N
+        btnRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Report Icon.png"))); // NOI18N
         btnRelatorios.setContentAreaFilled(false);
         btnRelatorios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,9 +504,9 @@ public class TelaConfiguracao extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnRelatorios);
-        btnRelatorios.setBounds(0, 330, 80, 50);
+        btnRelatorios.setBounds(19, 360, 30, 30);
 
-        btnTarefas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/task-menu.png"))); // NOI18N
+        btnTarefas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Tasks Icon.png"))); // NOI18N
         btnTarefas.setContentAreaFilled(false);
         btnTarefas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,9 +514,9 @@ public class TelaConfiguracao extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnTarefas);
-        btnTarefas.setBounds(0, 400, 80, 50);
+        btnTarefas.setBounds(19, 400, 30, 30);
 
-        btnConfiguracoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/configuration-menu.png"))); // NOI18N
+        btnConfiguracoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Settings Icon.png"))); // NOI18N
         btnConfiguracoes.setContentAreaFilled(false);
         btnConfiguracoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -174,9 +524,9 @@ public class TelaConfiguracao extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnConfiguracoes);
-        btnConfiguracoes.setBounds(0, 470, 80, 50);
+        btnConfiguracoes.setBounds(19, 440, 30, 30);
 
-        btnAdministracao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/admin-menu.png"))); // NOI18N
+        btnAdministracao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Administrative Icon.png"))); // NOI18N
         btnAdministracao.setContentAreaFilled(false);
         btnAdministracao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -184,373 +534,130 @@ public class TelaConfiguracao extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnAdministracao);
-        btnAdministracao.setBounds(2, 530, 80, 70);
+        btnAdministracao.setBounds(19, 480, 30, 30);
 
-        JPanelTelaAcesso3.setBackground(new java.awt.Color(194, 166, 40));
-        getContentPane().add(JPanelTelaAcesso3);
-        JPanelTelaAcesso3.setBounds(0, 460, 80, 70);
-
-        lblContabilidade.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
-        lblContabilidade.setForeground(new java.awt.Color(153, 153, 0));
-        lblContabilidade.setText("Contabilidade & Consultoria");
-        getContentPane().add(lblContabilidade);
-        lblContabilidade.setBounds(90, 7, 205, 80);
-
-        lblCTCONTAB.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblCTCONTAB.setForeground(new java.awt.Color(200, 200, 200));
-        lblCTCONTAB.setText("CT CONTAB");
-        getContentPane().add(lblCTCONTAB);
-        lblCTCONTAB.setBounds(90, 7, 190, 40);
-
-        lblUserIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/minhatura-de-perfil.png"))); // NOI18N
+        lblUserIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Jonh Doe Icon.png"))); // NOI18N
         getContentPane().add(lblUserIcon);
-        lblUserIcon.setBounds(1210, 15, 50, 50);
+        lblUserIcon.setBounds(1390, 30, 512, 50);
 
-        btnNotificacoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/alert-bell.png"))); // NOI18N
+        btnNotificacoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Notification Bell.png"))); // NOI18N
         btnNotificacoes.setContentAreaFilled(false);
         getContentPane().add(btnNotificacoes);
-        btnNotificacoes.setBounds(1160, 10, 60, 60);
+        btnNotificacoes.setBounds(1340, 35, 40, 40);
 
-        jPanel1.setBackground(new java.awt.Color(5, 27, 74));
-        jPanel1.setLayout(null);
-
-        jButton2.setBackground(new java.awt.Color(84, 84, 84, 0));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnEditarSenha.setBackground(new java.awt.Color(15, 25, 45));
+        btnEditarSenha.setForeground(new java.awt.Color(153, 153, 0));
+        btnEditarSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Group 19.png"))); // NOI18N
+        btnEditarSenha.setText("jButton1");
+        btnEditarSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnEditarSenhaActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2);
-        jButton2.setBounds(10, 460, 350, 30);
+        getContentPane().add(btnEditarSenha);
+        btnEditarSenha.setBounds(990, 230, 270, 270);
 
-        jLabel4.setBackground(new java.awt.Color(153, 153, 0));
-        jLabel4.setFont(new java.awt.Font("Segoe UI Black", 1, 20)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(205, 168, 16));
-        jLabel4.setText("Configurações");
-        jPanel1.add(jLabel4);
-        jLabel4.setBounds(20, 10, 250, 40);
-
-        jSeparator1.setBackground(new java.awt.Color(115, 115, 115));
-        jSeparator1.setForeground(new java.awt.Color(115, 115, 115));
-        jPanel1.add(jSeparator1);
-        jSeparator1.setBounds(0, 60, 1140, 30);
-
-        jButton1.setBackground(new java.awt.Color(84, 84, 84, 0));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnEditarNome.setBackground(new java.awt.Color(15, 25, 45));
+        btnEditarNome.setForeground(new java.awt.Color(153, 153, 0));
+        btnEditarNome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Group 18.png"))); // NOI18N
+        btnEditarNome.setText("jButton1");
+        btnEditarNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnEditarNomeActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1);
-        jButton1.setBounds(970, 250, 140, 30);
+        getContentPane().add(btnEditarNome);
+        btnEditarNome.setBounds(610, 230, 270, 270);
 
-        jLabel5.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel5.setText("Editar o email da conta não levará a perca nem a alteração de nenhum dado a não ser o email necessário para fazer o login no sistema.");
-        jPanel1.add(jLabel5);
-        jLabel5.setBounds(20, 100, 730, 16);
-
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Seu Novo E-mail");
-        jPanel1.add(jLabel6);
-        jLabel6.setBounds(310, 120, 140, 30);
-
-        btnLogin.setBackground(new java.awt.Color(194, 166, 40));
-        btnLogin.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        btnLogin.setForeground(new java.awt.Color(255, 255, 255));
-        btnLogin.setText("Atualizar");
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+        btnAtualizarEmail.setBackground(new java.awt.Color(15, 25, 45));
+        btnAtualizarEmail.setForeground(new java.awt.Color(153, 153, 0));
+        btnAtualizarEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Frame 36.png"))); // NOI18N
+        btnAtualizarEmail.setText("jButton1");
+        btnAtualizarEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
+                btnAtualizarEmailActionPerformed(evt);
             }
         });
-        jPanel1.add(btnLogin);
-        btnLogin.setBounds(960, 490, 160, 40);
+        getContentPane().add(btnAtualizarEmail);
+        btnAtualizarEmail.setBounds(230, 230, 270, 270);
 
-        txtNovaSenha.setBackground(new java.awt.Color(4, 21, 57));
-        txtNovaSenha.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        txtNovaSenha.setForeground(new java.awt.Color(115, 115, 115));
-        txtNovaSenha.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
-        txtNovaSenha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNovaSenhaActionPerformed(evt);
+        lblBarraSuperior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NIGHT-ABYSS Color.png"))); // NOI18N
+        lblBarraSuperior.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                lblBarraSuperiorMouseDragged(evt);
             }
         });
-        jPanel1.add(txtNovaSenha);
-        txtNovaSenha.setBounds(310, 270, 280, 35);
-
-        txtSeuEmail.setBackground(new java.awt.Color(4, 21, 57));
-        txtSeuEmail.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        txtSeuEmail.setForeground(new java.awt.Color(115, 115, 115));
-        txtSeuEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
-        txtSeuEmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSeuEmailActionPerformed(evt);
+        lblBarraSuperior.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                lblBarraSuperiorMousePressed(evt);
             }
         });
-        jPanel1.add(txtSeuEmail);
-        txtSeuEmail.setBounds(20, 150, 280, 35);
-        addPlaceholder(txtSeuEmail, "  Digite seu e-mail atual");
-        addPlaceholder(txtNovoEmail, "  Digite seu novo e-mail");
-        addPlaceholder(txtSenhaAtual, "  Digite sua senha atual");
-        addPlaceholder(txtNovaSenha, "  Digite sua nova senha");
-        addPlaceholder(txtNomeAtual, "  Digite seu nome de usuário atual");
-        addPlaceholder(txtNomeNovo, "  Digite seu novo nome de usuário");
+        getContentPane().add(lblBarraSuperior);
+        lblBarraSuperior.setBounds(0, 0, 1480, 25);
 
-        txtNovoEmail.setBackground(new java.awt.Color(4, 21, 57));
-        txtNovoEmail.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        txtNovoEmail.setForeground(new java.awt.Color(115, 115, 115));
-        txtNovoEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
-        txtNovoEmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNovoEmailActionPerformed(evt);
-            }
-        });
-        jPanel1.add(txtNovoEmail);
-        txtNovoEmail.setBounds(310, 150, 280, 35);
+        lblBarraLateral.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/DEEP-OCEAN Color.png"))); // NOI18N
+        getContentPane().add(lblBarraLateral);
+        lblBarraLateral.setBounds(0, 0, 70, 750);
 
-        txtSenhaAtual.setBackground(new java.awt.Color(4, 21, 57));
-        txtSenhaAtual.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        txtSenhaAtual.setForeground(new java.awt.Color(115, 115, 115));
-        txtSenhaAtual.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
-        txtSenhaAtual.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSenhaAtualActionPerformed(evt);
-            }
-        });
-        jPanel1.add(txtSenhaAtual);
-        txtSenhaAtual.setBounds(20, 270, 280, 35);
-
-        lblImagem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/perfil-de-usuario.png"))); // NOI18N
-        jPanel1.add(lblImagem);
-        lblImagem.setBounds(960, 80, 160, 170);
-
-        lblDataDeCadastro.setForeground(new java.awt.Color(186, 186, 186));
-        lblDataDeCadastro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblDataDeCadastro.setText("<html><u>Alterar imagem</u></html>");
-        lblDataDeCadastro.setToolTipText("");
-        jPanel1.add(lblDataDeCadastro);
-        lblDataDeCadastro.setBounds(960, 250, 160, 30);
-
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Seu Atual E-mail");
-        jPanel1.add(jLabel9);
-        jLabel9.setBounds(20, 120, 110, 30);
-
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Editar o email da conta");
-        jPanel1.add(jLabel10);
-        jLabel10.setBounds(20, 80, 170, 20);
-
-        jLabel11.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel11.setText("Editar a senha da conta não levará a perca nem a alteração de nenhum dado a não ser a senha necessária para fazer o login no sistema.");
-        jPanel1.add(jLabel11);
-        jLabel11.setBounds(20, 220, 730, 16);
-
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(82, 113, 255));
-        jLabel12.setText("Exibir configurações do sistema operacional do CT CONTAB");
-        jPanel1.add(jLabel12);
-        jLabel12.setBounds(20, 460, 440, 20);
-
-        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Sua Senha Atual");
-        jPanel1.add(jLabel13);
-        jLabel13.setBounds(20, 240, 110, 30);
-
-        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel14.setText("Sua Nova Senha");
-        jPanel1.add(jLabel14);
-        jLabel14.setBounds(310, 240, 140, 30);
-
-        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel15.setText("Editar o nome de usuário da conta");
-        jPanel1.add(jLabel15);
-        jLabel15.setBounds(20, 320, 270, 20);
-
-        jLabel16.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel16.setText("Editar o usuário da conta não levará a perca nem a alteração de nenhum dado a não ser o usuário necessário para fazer o login no sistema.");
-        jPanel1.add(jLabel16);
-        jLabel16.setBounds(20, 340, 750, 16);
-
-        jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel17.setText("Nome de Usuário atual");
-        jPanel1.add(jLabel17);
-        jLabel17.setBounds(20, 360, 180, 30);
-
-        txtNomeAtual.setBackground(new java.awt.Color(4, 21, 57));
-        txtNomeAtual.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        txtNomeAtual.setForeground(new java.awt.Color(115, 115, 115));
-        txtNomeAtual.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
-        txtNomeAtual.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNomeAtualActionPerformed(evt);
-            }
-        });
-        jPanel1.add(txtNomeAtual);
-        txtNomeAtual.setBounds(20, 390, 280, 35);
-
-        jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel18.setText("Novo Nome de Usuário");
-        jPanel1.add(jLabel18);
-        jLabel18.setBounds(310, 360, 140, 30);
-
-        txtNomeNovo.setBackground(new java.awt.Color(4, 21, 57));
-        txtNomeNovo.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        txtNomeNovo.setForeground(new java.awt.Color(115, 115, 115));
-        txtNomeNovo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
-        txtNomeNovo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNomeNovoActionPerformed(evt);
-            }
-        });
-        jPanel1.add(txtNomeNovo);
-        txtNomeNovo.setBounds(310, 390, 280, 35);
-
-        jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel19.setText("Editar a senha da conta");
-        jPanel1.add(jLabel19);
-        jLabel19.setBounds(20, 200, 170, 20);
-
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(110, 100, 1140, 540);
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/azul.png"))); // NOI18N
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(0, 640, 80, 60);
-
-        jlibLogo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo.png"))); // NOI18N
-        getContentPane().add(jlibLogo2);
-        jlibLogo2.setBounds(4, 10, 60, 50);
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/azul.png"))); // NOI18N
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(0, -50, 80, 750);
-
-        Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/background-contabil.png"))); // NOI18N
+        Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Dashboard Background.png"))); // NOI18N
         getContentPane().add(Background);
-        Background.setBounds(0, 0, 1280, 711);
+        Background.setBounds(0, 0, 1450, 750);
 
-        setSize(new java.awt.Dimension(1450, 750));
+        setSize(new java.awt.Dimension(1452, 708));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {
-        MDC.put("usuario", usuarioLogado.getUsuario());
 
-        String emailAtual = txtSeuEmail.getText().trim();
-        String emailNovo = txtNovoEmail.getText().trim();
-        String senhaNova = txtNovaSenha.getText().trim();
-        String nomeAtual = txtNomeAtual.getText().trim();
-        String nomeNovo = txtNomeNovo.getText().trim();
+    private void btnEditarNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarNomeActionPerformed
+        TelaAlterarUsuario popup = new TelaAlterarUsuario(this, usuarioLogado);
+        popup.setVisible(true);
+    }//GEN-LAST:event_btnEditarNomeActionPerformed
 
-        boolean alterouAlgo = false;
+    private void btnAtualizarEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarEmailActionPerformed
+        TelaAlterarEmail popup = new TelaAlterarEmail(this, usuarioLogado);
+        popup.setVisible(true);
+    }//GEN-LAST:event_btnAtualizarEmailActionPerformed
 
-        try {
-            if (!emailNovo.isEmpty() && !emailNovo.equals(emailAtual)) {
-                CTCONTAB.atualizarEmailUsuario(emailAtual, emailNovo);
-                usuarioLogado.setEmail(emailNovo);
-                alterouAlgo = true;
-            }
+    private void btnEditarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarSenhaActionPerformed
+        TelaAlterarSenha popup = new TelaAlterarSenha(this, usuarioLogado);
+        popup.setVisible(true);
+    }//GEN-LAST:event_btnEditarSenhaActionPerformed
 
-            if (!nomeNovo.isEmpty() && !nomeNovo.equals(nomeAtual)) {
-                if (!nomeNovo.matches("^[a-zA-Z]+$")) {
-                    MensagemUtil.exibirErro("O nome de usuário só pode conter letras!");
-                    return;
-                }
-                CTCONTAB.atualizarNomeUsuario(nomeAtual, nomeNovo);
-                usuarioLogado.setUsuario(nomeNovo);
-                alterouAlgo = true;
-            }
-
-            if (!senhaNova.isEmpty()) {
-                CTCONTAB.atualizarSenhaUsuario(emailNovo.isEmpty() ? emailAtual : emailNovo, senhaNova);
-                alterouAlgo = true;
-            }
-
-            if (alterouAlgo) {
-                MensagemUtil.exibirSucesso("Dados atualizados com sucesso!");
-                logger.info("editou suas configurações pessoais");
-            } else {
-                MensagemUtil.exibirErro("Nenhum dado foi alterado!");
-            }
-
-        } catch (SQLException e) {
-            if (e.getMessage().contains("O e-mail já está sendo usado")) {
-                MensagemUtil.exibirErro("Este e-mail já está cadastrado. Escolha outro.");
-            } else if (e.getMessage().contains("O nome de usuário já está em uso")) {
-                MensagemUtil.exibirErro("Este nome de usuário já está sendo usado. Escolha outro.");
-            } else {
-                MensagemUtil.exibirErro("" + e.getMessage());
-            }
-        } catch (ClassNotFoundException e) {
-            MensagemUtil.exibirErro("Erro ao atualizar os dados.");
-        }
-    }
-
-    private void txtNovaSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNovaSenhaActionPerformed
+    private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNovaSenhaActionPerformed
+    }//GEN-LAST:event_btnInfoActionPerformed
 
-    private void txtSeuEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSeuEmailActionPerformed
+    private void btnMinimizarTelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMinimizarTelaMouseClicked
+        setState(javax.swing.JFrame.ICONIFIED);
+    }//GEN-LAST:event_btnMinimizarTelaMouseClicked
+
+    private void btnMinimizarTelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinimizarTelaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSeuEmailActionPerformed
+    }//GEN-LAST:event_btnMinimizarTelaActionPerformed
 
-    private void txtNovoEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNovoEmailActionPerformed
+    private void btnFecharTelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharTelaActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnFecharTelaActionPerformed
+
+    private void btnMaximizarTelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaximizarTelaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNovoEmailActionPerformed
+    }//GEN-LAST:event_btnMaximizarTelaActionPerformed
 
-    private void txtSenhaAtualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaAtualActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSenhaAtualActionPerformed
+    private void lblBarraSuperiorMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBarraSuperiorMouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        setLocation(x - mouseX, y - mouseY);
+    }//GEN-LAST:event_lblBarraSuperiorMouseDragged
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JFileChooser jfile = new JFileChooser();
-        jfile.setCurrentDirectory(new File(System.getProperty("user.home")));
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Image files", "jpg", "png");
-        jfile.addChoosableFileFilter(filter);
+    private void lblBarraSuperiorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBarraSuperiorMousePressed
+        mouseX = evt.getX();
+        mouseY = evt.getY();
+    }//GEN-LAST:event_lblBarraSuperiorMousePressed
 
-        int result = jfile.showOpenDialog(null);
-        File selectedFile = jfile.getSelectedFile();
-        String filename = selectedFile.getName();
-        if (filename.endsWith(".jpg") || filename.endsWith(".JPG") || filename.endsWith(".png") || filename.endsWith(".PNG")) {
-            if (result == JFileChooser.APPROVE_OPTION) {
-                try {
-                    String path = selectedFile.getAbsolutePath();
-                    ImageIcon myImage = new ImageIcon(path);
-                    Image img = myImage.getImage();
-                    Image newImage = img.getScaledInstance(lblImagem.getWidth(), lblImagem.getHeight(), Image.SCALE_SMOOTH);
-                    ImageIcon image = new ImageIcon(newImage);
-                    lblImagem.setIcon(image);
-                    FileInputStream fis = new FileInputStream(selectedFile);
-                    CTCONTAB.registrarImagemUsuario(fis, usuarioLogado);
-
-                    fis.close();
-                    MensagemUtil.exibirSucesso("Imagem salva com sucesso!");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    MensagemUtil.exibirErro("Erro ao salvar imagem!");
-                }
-
-            } else {
-                MensagemUtil.exibirErro("Erro, selecione o arquivo compatível (PNG ou JPG)");
-            }
-
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
+    private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
         new TelaMenu(usuarioLogado).setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnHomeActionPerformed
+    }//GEN-LAST:event_btnDashboardActionPerformed
 
     private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarioActionPerformed
         new TelaEventoTable(usuarioLogado).setVisible(true);
@@ -582,113 +689,60 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnAdministracaoActionPerformed
 
-    private void txtNomeAtualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeAtualActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomeAtualActionPerformed
+    private JPanel criarCard(String iconePath, String titulo, String subtitulo) {
+        JPanel card = new JPanel();
+        card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
+        card.setOpaque(true);
+        card.setBackground(new Color(255, 255, 255, 40)); // Transparente
+        card.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+        card.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-    private void txtNomeNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeNovoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomeNovoActionPerformed
+        JLabel icon = new JLabel(new ImageIcon(getClass().getResource(iconePath)));
+        icon.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        new TelaSOP(usuarioLogado).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+        JLabel lblTitulo = new JLabel(titulo);
+        lblTitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        lblTitulo.setForeground(Color.WHITE);
+        lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 16));
 
-    private void carregarImagemUsuario(Usuario usuario) {
-        try {
-            byte[] imagemByte = CTCONTAB.getImagemUsuario(usuario.getId());
+        JLabel lblSub = new JLabel(subtitulo);
+        lblSub.setAlignmentX(Component.CENTER_ALIGNMENT);
+        lblSub.setForeground(new Color(220, 220, 220));
+        lblSub.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 
-            if (imagemByte != null && imagemByte.length > 0) {
-                ImageIcon imagemIcon = new ImageIcon(imagemByte);
-                Image img = imagemIcon.getImage();
-                Image newImage = img.getScaledInstance(lblImagem.getWidth(), lblImagem.getHeight(), Image.SCALE_SMOOTH);
-                lblImagem.setIcon(new ImageIcon(newImage));
-            } else {
-                carregarIconePadrao();
-            }
-        } catch (SQLException | ClassNotFoundException ex) {
-            ex.printStackTrace();
-            carregarIconePadrao();
-        }
-    }
+        card.add(icon);
+        card.add(Box.createVerticalStrut(15));
+        card.add(lblTitulo);
+        card.add(Box.createVerticalStrut(5));
+        card.add(lblSub);
 
-    private void carregarIconePadrao() {
-        try {
-            ImageIcon icon = new ImageIcon(getClass().getResource("/images/perfil-de-usuario.png"));
-            Image img = icon.getImage();
-            Image newImage = img.getScaledInstance(lblImagem.getWidth(), lblImagem.getHeight(), Image.SCALE_SMOOTH);
-
-            lblImagem.setIcon(new ImageIcon(newImage));
-        } catch (Exception e) {
-            e.printStackTrace();
-            MensagemUtil.exibirErro("Erro ao carregar ícone padrão!");
-        }
-    }
-
-    public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaConfiguracao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaConfiguracao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaConfiguracao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaConfiguracao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
+        return card;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
-    private javax.swing.JPanel JPanelTelaAcesso3;
     private javax.swing.JButton btnAdministracao;
+    private javax.swing.JButton btnAtualizarEmail;
     private javax.swing.JButton btnCalendario;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnConfiguracoes;
-    private javax.swing.JButton btnHome;
-    private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnDashboard;
+    private javax.swing.JButton btnEditarNome;
+    private javax.swing.JButton btnEditarSenha;
+    private javax.swing.JButton btnFecharTela;
+    private javax.swing.JButton btnInfo;
+    private javax.swing.JButton btnMaximizarTela;
+    private javax.swing.JButton btnMinimizarTela;
     private javax.swing.JButton btnNotificacoes;
     private javax.swing.JButton btnRelatorios;
     private javax.swing.JButton btnTarefas;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel jlibLogo2;
-    private javax.swing.JLabel lblCTCONTAB;
-    private javax.swing.JLabel lblContabilidade;
-    private javax.swing.JLabel lblDataDeCadastro;
-    private javax.swing.JLabel lblImagem;
+    private javax.swing.JLabel lblBarraLateral;
+    private javax.swing.JLabel lblBarraSuperior;
+    private javax.swing.JLabel lblDivisorTela;
+    private javax.swing.JLabel lblLogo;
+    private javax.swing.JLabel lblLogoTexto;
+    private javax.swing.JLabel lblTituloPagina;
     private javax.swing.JLabel lblUserIcon;
-    private javax.swing.JTextField txtNomeAtual;
-    private javax.swing.JTextField txtNomeNovo;
-    private javax.swing.JTextField txtNovaSenha;
-    private javax.swing.JTextField txtNovoEmail;
-    private javax.swing.JTextField txtSenhaAtual;
-    private javax.swing.JTextField txtSeuEmail;
     // End of variables declaration//GEN-END:variables
 }
