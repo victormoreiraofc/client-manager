@@ -197,6 +197,7 @@ public class TelaRelatorio extends javax.swing.JFrame {
         getContentPane().add(btnHome);
         btnHome.setBounds(0, 120, 80, 50);
 
+        btnCalendario.setBackground(new java.awt.Color(204, 204, 204));
         btnCalendario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/calendar-menu.png"))); // NOI18N
         btnCalendario.setContentAreaFilled(false);
         btnCalendario.addActionListener(new java.awt.event.ActionListener() {

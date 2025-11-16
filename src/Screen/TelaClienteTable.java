@@ -581,7 +581,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txtLogin);
-        txtLogin.setBounds(110, 120, 950, 40);
+        txtLogin.setBounds(110, 120, 340, 40);
         addPlaceholder(txtLogin, "Escreva o nome do cliente que deseja buscar.");
 
         btnLogin.setBackground(new java.awt.Color(194, 166, 40));
@@ -594,7 +594,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnLogin);
-        btnLogin.setBounds(1070, 120, 170, 40);
+        btnLogin.setBounds(490, 120, 170, 40);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/azul.png"))); // NOI18N
         getContentPane().add(jLabel2);

@@ -617,7 +617,7 @@ public class TelaAdminTable extends javax.swing.JFrame {
         btnLogin.setBackground(new java.awt.Color(194, 166, 40));
         btnLogin.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         btnLogin.setForeground(new java.awt.Color(255, 255, 255));
-        btnLogin.setText("Auditoria");
+        btnLogin.setText("Buscar");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoginActionPerformed(evt);

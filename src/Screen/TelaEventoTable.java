@@ -651,6 +651,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
         getContentPane().add(jLabel2);
         jLabel2.setBounds(0, 0, 80, 750);
 
+        btnNotificacoes.setForeground(new java.awt.Color(205, 168, 16));
         btnNotificacoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/alert-bell.png"))); // NOI18N
         btnNotificacoes.setContentAreaFilled(false);
         getContentPane().add(btnNotificacoes);

@@ -564,20 +564,20 @@ public class TelaTarefaTable extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txtLogin);
-        txtLogin.setBounds(110, 120, 950, 40);
+        txtLogin.setBounds(110, 120, 340, 40);
         addPlaceholder(txtLogin, "Escreva o nome da tarefa que deseja buscar.");
 
         btnLogin.setBackground(new java.awt.Color(194, 166, 40));
         btnLogin.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         btnLogin.setForeground(new java.awt.Color(255, 255, 255));
-        btnLogin.setText("Cadastrar");
+        btnLogin.setText("Nova Tarefa");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoginActionPerformed(evt);
             }
         });
         getContentPane().add(btnLogin);
-        btnLogin.setBounds(1070, 120, 170, 40);
+        btnLogin.setBounds(490, 120, 170, 40);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/azul.png"))); // NOI18N
         getContentPane().add(jLabel2);
@@ -598,6 +598,7 @@ public class TelaTarefaTable extends javax.swing.JFrame {
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/background-contabil.png"))); // NOI18N
         getContentPane().add(Background);
         Background.setBounds(0, 0, 1280, 711);
+        Background.getAccessibleContext().setAccessibleName("");
 
         jSeparator8.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator8.setForeground(new java.awt.Color(115, 115, 115));
