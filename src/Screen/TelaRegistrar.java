@@ -714,7 +714,7 @@ public class TelaRegistrar extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
     private void btnFecharTelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharTelaActionPerformed
-        this.dispose();
+        System.exit(0);
     }//GEN-LAST:event_btnFecharTelaActionPerformed
 
     private void btnMaximizarTelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaximizarTelaActionPerformed
