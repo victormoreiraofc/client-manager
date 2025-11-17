@@ -266,7 +266,16 @@ public class TelaAdminTable extends javax.swing.JFrame {
                 atualizarTabela(listaFuncionarios);
 
                 MensagemUtil.exibirSucesso("Permissão alterada para: " + novaPermissao);
-                logger.info("promoveu o usuário [{}]", funcionario.getUsuario());
+                logger.info("Usuário promovido: " + funcionario.getUsuario());
+                try {
+                    CTCONTAB.registrarAuditoria(
+                            usuarioLogado.getUsuario(),
+                            "promoveu " + funcionario.getUsuario() + " para ADM"
+                    );
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             } catch (Exception e) {
                 MensagemUtil.exibirErro("Erro ao alterar permissão!");
             }
@@ -285,7 +294,16 @@ public class TelaAdminTable extends javax.swing.JFrame {
                 atualizarTabela(listaFuncionarios);
 
                 MensagemUtil.exibirSucesso("Permissão revertida para: " + novaPermissao);
-                logger.info("rebaixou o usuário [{}]", funcionario.getUsuario());
+                logger.info("Usuário rebaixado: " + funcionario.getUsuario());
+                try {
+                    CTCONTAB.registrarAuditoria(
+                            usuarioLogado.getUsuario(),
+                            "rebaixou " + funcionario.getUsuario() + " para usuário comum"
+                    );
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             } catch (Exception e) {
                 MensagemUtil.exibirErro("Erro ao reverter permissão!");
             }
@@ -302,7 +320,16 @@ public class TelaAdminTable extends javax.swing.JFrame {
                 atualizarTabela(listaFuncionarios);
 
                 MensagemUtil.exibirSucesso("Usuário excluído com sucesso!");
-                logger.info("excluiu o usuário [{}]", funcionario.getUsuario());
+                logger.info("Usuário excluído: " + funcionario.getUsuario());
+                try {
+                    CTCONTAB.registrarAuditoria(
+                            usuarioLogado.getUsuario(),
+                            "deletou o usuário " + funcionario.getUsuario()
+                    );
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             } catch (Exception e) {
                 MensagemUtil.exibirErro("Erro ao excluir usuário!");
             }

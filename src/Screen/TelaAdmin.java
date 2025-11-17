@@ -3,24 +3,20 @@ package screen;
 import Data.IconUtil;
 import Data.Usuario;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Toolkit;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import Screen.FonteUtils;
-import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Insets;
 import java.awt.RenderingHints;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import Data.CTCONTAB;
 
 public class TelaAdmin extends javax.swing.JFrame {
 
@@ -30,6 +26,7 @@ public class TelaAdmin extends javax.swing.JFrame {
     public TelaAdmin(Usuario usuario) {
         this.usuarioLogado = usuario;
         initComponents();
+        carregarAuditoriaDoBanco();
 
         addHoverLabel(btnDashboard, "Dashboard");
         addHoverLabel(btnCalendario, "Calendário");
@@ -241,7 +238,6 @@ public class TelaAdmin extends javax.swing.JFrame {
         setUndecorated(true); // Remove a barra superior.
         IconUtil.setIcon(usuarioLogado, lblUserIcon);
         setIcon();
-        carregarLogs();
         setResizable(false); // Impede o redimencionamento da tela.
     }
 
@@ -358,18 +354,33 @@ public class TelaAdmin extends javax.swing.JFrame {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/logo-icon.png")));
     }
 
-    private void carregarLogs() {
-        File logFile = new File("logs/aplicacao.log");
-        StringBuilder logContent = new StringBuilder();
+    private void carregarAuditoriaDoBanco() {
+        jTextArea1.setText("");
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(logFile))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                logContent.append(line).append("\n");
+        String sql = "SELECT usuario, acao, data_hora FROM auditoria ORDER BY id DESC";
+
+        try {
+            Connection conn = CTCONTAB.conectar();
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                String linha = rs.getString("usuario")
+                        + " — " + rs.getString("acao")
+                        + " (" + rs.getString("data_hora") + ")\n";
+
+                jTextArea1.append(linha);
             }
-            jTextArea1.setText(logContent.toString());
-        } catch (IOException e) {
-            jTextArea1.setText("Erro ao carregar logs: " + e.getMessage());
+
+            rs.close();
+            st.close();
+            conn.close();
+
+            jTextArea1.setCaretPosition(0);
+
+        } catch (Exception e) {
+            jTextArea1.setText("Erro ao carregar auditoria.");
+            e.printStackTrace();
         }
     }
 
