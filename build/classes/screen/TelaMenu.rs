@@ -1,4 +1,4 @@
-screen.TelaMenu$14
+screen.TelaMenu$25
 screen.TelaMenu$5
 screen.TelaMenu$6
 screen.TelaMenu$7
@@ -13,3 +13,14 @@ screen.TelaMenu$2
 screen.TelaMenu$3
 screen.TelaMenu$4
 screen.TelaMenu
+screen.TelaMenu$16
+screen.TelaMenu$17
+screen.TelaMenu$14
+screen.TelaMenu$15
+screen.TelaMenu$18
+screen.TelaMenu$19
+screen.TelaMenu$20
+screen.TelaMenu$23
+screen.TelaMenu$24
+screen.TelaMenu$21
+screen.TelaMenu$22

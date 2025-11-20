@@ -3,24 +3,24 @@ package screen;
 import Data.IconUtil;
 import Data.Usuario;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Toolkit;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import Screen.FonteUtils;
-import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Insets;
 import java.awt.RenderingHints;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import javax.swing.plaf.basic.BasicButtonUI;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import Data.CTCONTAB;
+import java.awt.Insets;
+import java.awt.event.MouseListener;
 
 public class TelaAdmin extends javax.swing.JFrame {
 
@@ -30,6 +30,7 @@ public class TelaAdmin extends javax.swing.JFrame {
     public TelaAdmin(Usuario usuario) {
         this.usuarioLogado = usuario;
         initComponents();
+        carregarAuditoriaDoBanco();
 
         addHoverLabel(btnDashboard, "Dashboard");
         addHoverLabel(btnCalendario, "Calendário");
@@ -40,12 +41,13 @@ public class TelaAdmin extends javax.swing.JFrame {
         addHoverLabel(btnAdministracao, "Administração");
         addHoverLabel(btnNotificacoes, "Notificações");
         addHoverLabel(btnInfo, "Ajuda");
-        addHoverLabel(btnUserIcon, "Nome e Sobrenome");
+        addHoverLabel(btnUserIcon, usuarioLogado.getUsuario());
 
         try {
             java.net.URL url = getClass().getResource("/images/Close Icon.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Close Icon.png ou src/images/Close Icon.png");
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Close Icon.png ou src/images/Close Icon.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(11, 11, java.awt.Image.SCALE_SMOOTH);
@@ -59,7 +61,8 @@ public class TelaAdmin extends javax.swing.JFrame {
         try {
             java.net.URL url = getClass().getResource("/images/Maximize Icon.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Maximize Icon.png ou src/images/Maximize Icon.png");
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Maximize Icon.png ou src/images/Maximize Icon.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(11, 11, java.awt.Image.SCALE_SMOOTH);
@@ -73,7 +76,8 @@ public class TelaAdmin extends javax.swing.JFrame {
         try {
             java.net.URL url = getClass().getResource("/images/Minimize Icon.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Minimize Icon.png ou src/images/Minimize Icon.png");
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Minimize Icon.png ou src/images/Minimize Icon.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(11, 2, java.awt.Image.SCALE_SMOOTH);
@@ -87,7 +91,8 @@ public class TelaAdmin extends javax.swing.JFrame {
         try {
             java.net.URL url = getClass().getResource("/images/Divider Icon.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Divider Icon.png ou src/images/Divider Icon.png");
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Divider Icon.png ou src/images/Divider Icon.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(2, 11, java.awt.Image.SCALE_SMOOTH);
@@ -101,7 +106,8 @@ public class TelaAdmin extends javax.swing.JFrame {
         try {
             java.net.URL url = getClass().getResource("/images/Information Icon.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Information Icon.png ou src/images/Information Icon.png");
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Information Icon.png ou src/images/Information Icon.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(13, 13, java.awt.Image.SCALE_SMOOTH);
@@ -115,7 +121,8 @@ public class TelaAdmin extends javax.swing.JFrame {
         try {
             java.net.URL url = getClass().getResource("/images/Logo Icon.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Logo Icon.png ou src/images/Logo Icon.png");
+                System.err
+                        .println("Imagem não encontrada. Verifique: /images/Logo Icon.png ou src/images/Logo Icon.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH);
@@ -129,12 +136,14 @@ public class TelaAdmin extends javax.swing.JFrame {
         try {
             java.net.URL url = getClass().getResource("/images/Dashboard Icon.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Dashboard Icon.png ou src/images/Dashboard Icon.png");
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Dashboard Icon.png ou src/images/Dashboard Icon.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
                 btnDashboard.setIcon(new javax.swing.ImageIcon(img));
-                aplicarHoverIcon(btnDashboard, "/images/Dashboard Icon.png", "/images/Dashboard Icon Hover.png", 22, 22);
+                aplicarHoverIcon(btnDashboard, "/images/Dashboard Icon.png", "/images/Dashboard Icon Hover.png", 22,
+                        22);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -143,7 +152,8 @@ public class TelaAdmin extends javax.swing.JFrame {
         try {
             java.net.URL url = getClass().getResource("/images/Calendar Icon.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Calendar Icon.png ou src/images/Calendar Icon.png");
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Calendar Icon.png ou src/images/Calendar Icon.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
@@ -157,7 +167,8 @@ public class TelaAdmin extends javax.swing.JFrame {
         try {
             java.net.URL url = getClass().getResource("/images/Client Icon.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Client Icon.png ou src/images/Client Icon.png");
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Client Icon.png ou src/images/Client Icon.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
@@ -171,7 +182,8 @@ public class TelaAdmin extends javax.swing.JFrame {
         try {
             java.net.URL url = getClass().getResource("/images/Tasks Icon.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Tasks Icon.png ou src/images/Tasks Icon.png");
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Tasks Icon.png ou src/images/Tasks Icon.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
@@ -185,12 +197,14 @@ public class TelaAdmin extends javax.swing.JFrame {
         try {
             java.net.URL url = getClass().getResource("/images/Settings Icon.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Settings Icon.png ou src/images/Settings Icon.png");
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Settings Icon.png ou src/images/Settings Icon.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
                 btnConfiguracoes.setIcon(new javax.swing.ImageIcon(img));
-                aplicarHoverIcon(btnConfiguracoes, "/images/Settings Icon.png", "/images/Settings Icon Hover.png", 22, 22);
+                aplicarHoverIcon(btnConfiguracoes, "/images/Settings Icon.png", "/images/Settings Icon Hover.png", 22,
+                        22);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -199,7 +213,8 @@ public class TelaAdmin extends javax.swing.JFrame {
         try {
             java.net.URL url = getClass().getResource("/images/Report Icon.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Report Icon.png ou src/images/Report Icon.png");
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Report Icon.png ou src/images/Report Icon.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
@@ -213,12 +228,14 @@ public class TelaAdmin extends javax.swing.JFrame {
         try {
             java.net.URL url = getClass().getResource("/images/Administrative Icon Active.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Administrative Icon Active.png ou src/images/Administrative Icon Active.png");
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Administrative Icon Active.png ou src/images/Administrative Icon Active.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
                 btnAdministracao.setIcon(new javax.swing.ImageIcon(img));
-                aplicarHoverIcon(btnAdministracao, "/images/Administrative Icon Active.png", "/images/Administrative Icon Hover.png", 22, 22);
+                aplicarHoverIcon(btnAdministracao, "/images/Administrative Icon Active.png",
+                        "/images/Administrative Icon Hover.png", 22, 22);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -227,12 +244,14 @@ public class TelaAdmin extends javax.swing.JFrame {
         try {
             java.net.URL url = getClass().getResource("/images/Notification Bell.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Notification Bell.png ou src/images/Notification Bell.png");
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Notification Bell.png ou src/images/Notification Bell.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
                 btnNotificacoes.setIcon(new javax.swing.ImageIcon(img));
-                aplicarHoverIcon(btnNotificacoes, "/images/Notification Bell.png", "/images/Notification Bell Hover.png", 22, 22);
+                aplicarHoverIcon(btnNotificacoes, "/images/Notification Bell.png",
+                        "/images/Notification Bell Hover.png", 22, 22);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -241,7 +260,6 @@ public class TelaAdmin extends javax.swing.JFrame {
         setUndecorated(true); // Remove a barra superior.
         IconUtil.setIcon(usuarioLogado, lblUserIcon);
         setIcon();
-        carregarLogs();
         setResizable(false); // Impede o redimencionamento da tela.
     }
 
@@ -277,18 +295,15 @@ public class TelaAdmin extends javax.swing.JFrame {
                 if (botao == btnUserIcon) {
                     label.setLocation(
                             botao.getParent().getWidth() - label.getWidth() - 10,
-                            botao.getY() + botao.getHeight() + 5
-                    );
+                            botao.getY() + botao.getHeight() + 5);
                 } else if (botao == btnNotificacoes || botao == btnInfo) {
                     label.setLocation(
                             botao.getX() + (botao.getWidth() - label.getWidth()) / 2,
-                            botao.getY() + botao.getHeight() + 5
-                    );
+                            botao.getY() + botao.getHeight() + 5);
                 } else {
                     label.setLocation(
                             botao.getX() + botao.getWidth() + 30,
-                            botao.getY() + (botao.getHeight() - label.getHeight()) / 2
-                    );
+                            botao.getY() + (botao.getHeight() - label.getHeight()) / 2);
                 }
             }
 
@@ -358,25 +373,43 @@ public class TelaAdmin extends javax.swing.JFrame {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/logo-icon.png")));
     }
 
-    private void carregarLogs() {
-        File logFile = new File("logs/aplicacao.log");
-        StringBuilder logContent = new StringBuilder();
+    private void carregarAuditoriaDoBanco() {
+        jTextArea1.setText("");
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(logFile))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                logContent.append(line).append("\n");
+        String sql = "SELECT usuario, acao, data_hora FROM auditoria ORDER BY id DESC";
+
+        try {
+            Connection conn = CTCONTAB.conectar();
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                String linha = rs.getString("usuario")
+                        + " — " + rs.getString("acao")
+                        + " (" + rs.getString("data_hora") + ")\n";
+
+                jTextArea1.append(linha);
             }
-            jTextArea1.setText(logContent.toString());
-        } catch (IOException e) {
-            jTextArea1.setText("Erro ao carregar logs: " + e.getMessage());
+
+            rs.close();
+            st.close();
+            conn.close();
+
+            jTextArea1.setCaretPosition(0);
+
+        } catch (Exception e) {
+            jTextArea1.setText("Erro ao carregar auditoria.");
+            e.printStackTrace();
         }
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnCancelar = new javax.swing.JButton();
+        btnVoltar = new javax.swing.JButton();
         btnUserIcon = new javax.swing.JButton();
         btnInfo = new javax.swing.JButton();
         btnMinimizarTela = new javax.swing.JButton();
@@ -409,6 +442,99 @@ public class TelaAdmin extends javax.swing.JFrame {
             }
         });
         getContentPane().setLayout(null);
+
+        btnCancelar = new javax.swing.JButton();
+
+        btnCancelar = new JButton("Cancelar") {
+
+            private final int radius = 12;
+
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                // fundo
+                g2.setColor(new Color(28, 46, 74)); // #1C2E4A
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), radius, radius);
+
+                super.paintComponent(g2);
+                g2.dispose();
+            }
+
+            @Override
+            protected void paintBorder(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                // borda (#2A3E61)
+                g2.setColor(new Color(42, 62, 97));
+                g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, radius, radius);
+
+                g2.dispose();
+            }
+        };
+
+        btnCancelar.setUI(new BasicButtonUI());
+
+        btnCancelar.setOpaque(false);
+        btnCancelar.setContentAreaFilled(false);
+        btnCancelar.setBorderPainted(false);
+        btnCancelar.setFocusPainted(false);
+        btnCancelar.setRolloverEnabled(false);
+
+        btnCancelar.setFont(FonteUtils.carregarRalewayMedium(13f));
+        btnCancelar.setForeground(Color.WHITE);
+        btnCancelar.setMargin(new Insets(10, 20, 10, 20));
+
+        btnCancelar.addActionListener(e -> {
+            new TelaMenu(usuarioLogado).setVisible(true);
+            this.dispose();
+        });
+
+        getContentPane().add(btnCancelar);
+        btnCancelar.setBounds(1110, 660, 120, 35);
+
+        btnVoltar = new JButton("Voltar") {
+
+            private final int radius = 12;
+
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                g2.setColor(new Color(0x2D9CDB));
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), radius, radius);
+
+                super.paintComponent(g2);
+                g2.dispose();
+            }
+
+            @Override
+            protected void paintBorder(Graphics g) {
+            }
+        };
+
+        btnVoltar.setUI(new BasicButtonUI());
+
+        btnVoltar.setOpaque(false);
+        btnVoltar.setContentAreaFilled(false);
+        btnVoltar.setBorderPainted(false);
+        btnVoltar.setFocusPainted(false);
+        btnVoltar.setRolloverEnabled(false);
+
+        btnVoltar.setFont(FonteUtils.carregarRalewayMedium(13f));
+        btnVoltar.setForeground(Color.BLACK);
+
+        btnVoltar.setMargin(new Insets(10, 20, 10, 20));
+
+        btnVoltar.addActionListener(e -> {
+            new TelaAdminTable(usuarioLogado).setVisible(true);
+            this.dispose();
+        });
+        getContentPane().add(btnVoltar);
+        btnVoltar.setBounds(1240, 660, 160, 35);
 
         btnUserIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Administrative Icon.png"))); // NOI18N
         btnUserIcon.setContentAreaFilled(false);
@@ -522,11 +648,10 @@ public class TelaAdmin extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTextArea1);
 
         jScrollPane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        jScrollPane1.getVerticalScrollBar().setPreferredSize(new java.awt.Dimension(0, 0));  // Oculta a barra de rolagem
+        jScrollPane1.getVerticalScrollBar().setPreferredSize(new java.awt.Dimension(0, 0)); // Oculta a barra de rolagem
         jScrollPane1.setBorder(javax.swing.BorderFactory.createCompoundBorder(
-            new javax.swing.border.LineBorder(new java.awt.Color(42, 62, 97), 5, true), // borda arredondada e fixa
-            javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0)
-        ));
+                new javax.swing.border.LineBorder(new java.awt.Color(42, 62, 97), 5, true), // borda arredondada e fixa
+                javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0)));
 
         jScrollPane1.setOpaque(false);
         jScrollPane1.getViewport().setOpaque(false);
@@ -625,79 +750,129 @@ public class TelaAdmin extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
+    private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnDashboardActionPerformed
         new TelaMenu(usuarioLogado).setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnDashboardActionPerformed
+    }// GEN-LAST:event_btnDashboardActionPerformed
 
-    private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarioActionPerformed
+    private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnCalendarioActionPerformed
         new TelaEventoTable(usuarioLogado).setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnCalendarioActionPerformed
+    }// GEN-LAST:event_btnCalendarioActionPerformed
 
-    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
+    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnClientesActionPerformed
         new TelaClienteTable(usuarioLogado).setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnClientesActionPerformed
+    }// GEN-LAST:event_btnClientesActionPerformed
 
-    private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatoriosActionPerformed
+    private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnRelatoriosActionPerformed
         new TelaRelatorioTable(usuarioLogado).setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnRelatoriosActionPerformed
+    }// GEN-LAST:event_btnRelatoriosActionPerformed
 
-    private void btnTarefasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTarefasActionPerformed
+    private void btnTarefasActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnTarefasActionPerformed
         new TelaTarefaTable(usuarioLogado).setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnTarefasActionPerformed
+    }// GEN-LAST:event_btnTarefasActionPerformed
 
-    private void btnConfiguracoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracoesActionPerformed
+    private void btnConfiguracoesActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnConfiguracoesActionPerformed
         new TelaConfiguracao(usuarioLogado).setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnConfiguracoesActionPerformed
+    }// GEN-LAST:event_btnConfiguracoesActionPerformed
 
-    private void btnAdministracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracaoActionPerformed
+    private void btnAdministracaoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAdministracaoActionPerformed
         new TelaAdminTable(usuarioLogado).setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnAdministracaoActionPerformed
+    }// GEN-LAST:event_btnAdministracaoActionPerformed
 
-    private void btnFecharTelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharTelaActionPerformed
+    private void btnFecharTelaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnFecharTelaActionPerformed
         System.exit(0);
-    }//GEN-LAST:event_btnFecharTelaActionPerformed
+    }// GEN-LAST:event_btnFecharTelaActionPerformed
 
-    private void btnMaximizarTelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaximizarTelaActionPerformed
+    private void btnMaximizarTelaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnMaximizarTelaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnMaximizarTelaActionPerformed
+    }// GEN-LAST:event_btnMaximizarTelaActionPerformed
 
-    private void btnMinimizarTelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinimizarTelaActionPerformed
+    private void btnMinimizarTelaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnMinimizarTelaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnMinimizarTelaActionPerformed
+    }// GEN-LAST:event_btnMinimizarTelaActionPerformed
 
-    private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoActionPerformed
+    private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnInfoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnInfoActionPerformed
+    }// GEN-LAST:event_btnInfoActionPerformed
 
-    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_formMouseClicked
 
-    }//GEN-LAST:event_formMouseClicked
+    }// GEN-LAST:event_formMouseClicked
 
-    private void btnMinimizarTelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMinimizarTelaMouseClicked
+    private void btnMinimizarTelaMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnMinimizarTelaMouseClicked
         setState(javax.swing.JFrame.ICONIFIED);
-    }//GEN-LAST:event_btnMinimizarTelaMouseClicked
+    }// GEN-LAST:event_btnMinimizarTelaMouseClicked
 
-    private void lblBarraSuperiorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBarraSuperiorMousePressed
+    private void lblBarraSuperiorMousePressed(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblBarraSuperiorMousePressed
         mouseX = evt.getX();
         mouseY = evt.getY();
-    }//GEN-LAST:event_lblBarraSuperiorMousePressed
+    }// GEN-LAST:event_lblBarraSuperiorMousePressed
 
-    private void lblBarraSuperiorMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblBarraSuperiorMouseDragged
+    private void lblBarraSuperiorMouseDragged(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblBarraSuperiorMouseDragged
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
         setLocation(x - mouseX, y - mouseY);
-    }//GEN-LAST:event_lblBarraSuperiorMouseDragged
+    }// GEN-LAST:event_lblBarraSuperiorMouseDragged
 
-    private void btnUserIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserIconActionPerformed
+    private void btnUserIconActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnUserIconActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnUserIconActionPerformed
+    }// GEN-LAST:event_btnUserIconActionPerformed
+
+    private void btnVoltarMouseEntered(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnVoltarMouseEntered
+        btnVoltar.setBackground(new java.awt.Color(20, 190, 115));
+    }// GEN-LAST:event_btnVoltarMouseEntered
+
+    private void btnVoltarMouseExited(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnVoltarMouseExited
+        btnVoltar.setBackground(new java.awt.Color(17, 168, 100));
+    }// GEN-LAST:event_btnVoltarMouseExited
+
+    private void btnVoltarMousePressed(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnVoltarMousePressed
+        btnVoltar.setBackground(new java.awt.Color(14, 140, 85));
+    }// GEN-LAST:event_btnVoltarMousePressed
+
+    private void btnVoltarMouseReleased(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnVoltarMouseReleased
+        btnVoltar.setBackground(new java.awt.Color(17, 168, 100));
+    }// GEN-LAST:event_btnVoltarMouseReleased
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnVoltarActionPerformed
+
+    }// GEN-LAST:event_btnVoltarActionPerformed
+
+    private void btnVoltarKeyPressed(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_btnVoltarKeyPressed
+        if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+            btnVoltar.doClick();
+        }
+    }// GEN-LAST:event_btnVoltarKeyPressed
+
+    private void btnCancelarMouseEntered(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnCancelarMouseEntered
+        // TODO add your handling code here:
+    }// GEN-LAST:event_btnCancelarMouseEntered
+
+    private void btnCancelarMouseExited(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnCancelarMouseExited
+        // TODO add your handling code here:
+    }// GEN-LAST:event_btnCancelarMouseExited
+
+    private void btnCancelarMousePressed(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnCancelarMousePressed
+        // TODO add your handling code here:
+    }// GEN-LAST:event_btnCancelarMousePressed
+
+    private void btnCancelarMouseReleased(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnCancelarMouseReleased
+        // TODO add your handling code here:
+    }// GEN-LAST:event_btnCancelarMouseReleased
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+    }// GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnCancelarKeyPressed(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_btnCancelarKeyPressed
+        // TODO add your handling code here:
+    }// GEN-LAST:event_btnCancelarKeyPressed
 
     public static void main(String args[]) {
         try {
@@ -728,6 +903,8 @@ public class TelaAdmin extends javax.swing.JFrame {
     private javax.swing.JButton btnDashboard;
     private javax.swing.JButton btnFecharTela;
     private javax.swing.JButton btnInfo;
+    private javax.swing.JButton btnVoltar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnMaximizarTela;
     private javax.swing.JButton btnMinimizarTela;
     private javax.swing.JButton btnNotificacoes;

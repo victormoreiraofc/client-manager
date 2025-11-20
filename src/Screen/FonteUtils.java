@@ -35,6 +35,20 @@ public class FonteUtils {
             return new Font("SansSerif", Font.PLAIN, (int) tamanho);
         }
     }
+    
+    public static Font carregarRalewayMedium(float tamanho) {
+        try {
+            File arquivoFonte = new File("src/resources/fonts/Raleway-Medium.ttf");
+            Font ralewaymedium = Font.createFont(Font.TRUETYPE_FONT, arquivoFonte);
+            ralewaymedium = ralewaymedium.deriveFont(tamanho);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(ralewaymedium);
+            return ralewaymedium;
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+            return new Font("SansSerif", Font.PLAIN, (int) tamanho);
+        }
+    }
 
     public static Font carregarSofiaSans(float tamanho) {
         try {

@@ -59,3 +59,10 @@ CREATE TABLE agenda (
     usuario VARCHAR(255) NOT NULL,
     CONSTRAINT fk_usuario FOREIGN KEY (usuario) REFERENCES usuarios(usuario) ON UPDATE CASCADE
 );
+
+CREATE TABLE auditoria (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario VARCHAR(100) NOT NULL,
+    acao TEXT NOT NULL,
+    data_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
