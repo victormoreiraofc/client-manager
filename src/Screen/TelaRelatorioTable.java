@@ -527,20 +527,20 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txtLogin);
-        txtLogin.setBounds(110, 120, 340, 40);
+        txtLogin.setBounds(110, 120, 950, 40);
         addPlaceholder(txtLogin, "Escreva o nome do relatório que deseja buscar.");
 
         btnLogin.setBackground(new java.awt.Color(194, 166, 40));
         btnLogin.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         btnLogin.setForeground(new java.awt.Color(255, 255, 255));
-        btnLogin.setText("Novo Relatório");
+        btnLogin.setText("Cadastrar");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoginActionPerformed(evt);
             }
         });
         getContentPane().add(btnLogin);
-        btnLogin.setBounds(490, 120, 170, 40);
+        btnLogin.setBounds(1070, 120, 170, 40);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/azul.png"))); // NOI18N
         getContentPane().add(jLabel2);

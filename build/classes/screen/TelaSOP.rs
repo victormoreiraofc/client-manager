@@ -1,5 +1,3 @@
-screen.TelaSOP$8
-screen.TelaSOP$9
 screen.TelaSOP$4
 screen.TelaSOP$5
 screen.TelaSOP$6
@@ -8,9 +6,4 @@ screen.TelaSOP$7
 screen.TelaSOP$1
 screen.TelaSOP$2
 screen.TelaSOP$3
-screen.TelaSOP$10
-screen.TelaSOP$11
-screen.TelaSOP$12
-screen.TelaSOP$13
-screen.TelaSOP$14
-screen.TelaSOP$15
+screen.TelaSOP$8

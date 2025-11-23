@@ -14,13 +14,11 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.plaf.basic.BasicButtonUI;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import Data.CTCONTAB;
 import java.awt.Insets;
-import java.awt.event.MouseListener;
 
 public class TelaAdmin extends javax.swing.JFrame {
 
@@ -31,6 +29,10 @@ public class TelaAdmin extends javax.swing.JFrame {
         this.usuarioLogado = usuario;
         initComponents();
         carregarAuditoriaDoBanco();
+        setUndecorated(true);
+        IconUtil.setIcon(usuarioLogado, lblUserIcon);
+        setIcon();
+        setResizable(false);
 
         addHoverLabel(btnDashboard, "Dashboard");
         addHoverLabel(btnCalendario, "Calendário");
@@ -55,7 +57,7 @@ public class TelaAdmin extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            btnFecharTela.setText("X"); // fallback
+            btnFecharTela.setText("X");
         }
 
         try {
@@ -70,7 +72,7 @@ public class TelaAdmin extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            btnMaximizarTela.setText("[]"); // fallback
+            btnMaximizarTela.setText("[]");
         }
 
         try {
@@ -85,7 +87,7 @@ public class TelaAdmin extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            btnMinimizarTela.setText("-"); // fallback
+            btnMinimizarTela.setText("-");
         }
 
         try {
@@ -100,7 +102,7 @@ public class TelaAdmin extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            lblDivisorTela.setText("|"); // fallback
+            lblDivisorTela.setText("|");
         }
 
         try {
@@ -115,7 +117,7 @@ public class TelaAdmin extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            btnInfo.setText("?"); // fallback
+            btnInfo.setText("?");
         }
 
         try {
@@ -256,11 +258,10 @@ public class TelaAdmin extends javax.swing.JFrame {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
 
-        setUndecorated(true); // Remove a barra superior.
-        IconUtil.setIcon(usuarioLogado, lblUserIcon);
-        setIcon();
-        setResizable(false); // Impede o redimencionamento da tela.
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/logo-icon.png")));
     }
 
     private void addHoverLabel(JButton botao, String texto) {
@@ -269,14 +270,14 @@ public class TelaAdmin extends javax.swing.JFrame {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(new Color(7, 30, 70)); // fundo azul escuro
-                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15); // cantos arredondados
+                g2.setColor(new Color(7, 30, 70));
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
                 super.paintComponent(g2);
                 g2.dispose();
             }
         };
 
-        label.setOpaque(false); // importante pra deixar o fundo transparente pro desenho funcionar
+        label.setOpaque(false);
         label.setForeground(Color.WHITE);
         label.setFont(FonteUtils.carregarSofiaSansBlack(13f));
         label.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -321,13 +322,11 @@ public class TelaAdmin extends javax.swing.JFrame {
             int largura,
             int altura) {
         try {
-            // Ícone normal
             java.net.URL urlNormal = getClass().getResource(caminhoNormal);
             java.awt.Image imgNormal = javax.imageio.ImageIO.read(urlNormal)
                     .getScaledInstance(largura, altura, java.awt.Image.SCALE_SMOOTH);
             javax.swing.ImageIcon iconNormal = new javax.swing.ImageIcon(imgNormal);
 
-            // Ícone de hover
             java.net.URL urlHover = getClass().getResource(caminhoHover);
             java.awt.Image imgHover = javax.imageio.ImageIO.read(urlHover)
                     .getScaledInstance(largura, altura, java.awt.Image.SCALE_SMOOTH);
@@ -367,10 +366,6 @@ public class TelaAdmin extends javax.swing.JFrame {
             System.err.println("Erro ao carregar ícones: " + caminhoNormal + " / " + caminhoHover);
             ex.printStackTrace();
         }
-    }
-
-    private void setIcon() {
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/logo-icon.png")));
     }
 
     private void carregarAuditoriaDoBanco() {

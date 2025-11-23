@@ -346,7 +346,7 @@ public class TelaTarefa extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnLogin);
-        btnLogin.setBounds(730, 490, 170, 40);
+        btnLogin.setBounds(780, 490, 170, 40);
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -448,14 +448,12 @@ public class TelaTarefa extends javax.swing.JFrame {
         jLabel7.setBounds(600, 120, 80, 70);
 
         jLabel28.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel28.setText("Dê um titulo para tarefa.");
-        jLabel28.setToolTipText("");
+        jLabel28.setText("De um titulo para tarefa que deseja que seja feita, seja breve e objetivo.");
         jPanel1.add(jLabel28);
         jLabel28.setBounds(20, 100, 730, 16);
 
         jLabel29.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel29.setText("Informe os príncipais detalhes sobre a tarefa, como o objetivo, as etapas necessárias, entre outras informações.");
-        jLabel29.setToolTipText("");
+        jLabel29.setText("Forneça detalhes sobre a tarefa, incluindo o objetivo, as etapas necessárias e quaisquer informações relevantes.");
         jPanel1.add(jLabel29);
         jLabel29.setBounds(20, 200, 730, 16);
 
@@ -477,8 +475,7 @@ public class TelaTarefa extends javax.swing.JFrame {
         jLabel16.setBounds(20, 270, 140, 30);
 
         jLabel31.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel31.setText("Atribua uma data de vencimento para a tarefa garantindo que ela seja concluída dentro do prazo.");
-        jLabel31.setToolTipText("");
+        jLabel31.setText("Escolha a data de vencimento da tarefa para garantir que ela seja concluída dentro do prazo.");
         jPanel1.add(jLabel31);
         jLabel31.setBounds(20, 400, 730, 16);
 

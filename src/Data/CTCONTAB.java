@@ -13,14 +13,27 @@ public class CTCONTAB {
 
     static Connection conectado;
 
-    private static Connection conectar() throws ClassNotFoundException, SQLException {
+    public static Connection conectar() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        conectado = DriverManager.getConnection("jdbc:mysql://localhost:3306/ctcontab", "root", "1234");
+        conectado = DriverManager.getConnection("jdbc:mysql://root:eHLrBDlgLeqCsasGOzqMIgEeCClpoqID@crossover.proxy.rlwy.net:22307/railway", "root", "eHLrBDlgLeqCsasGOzqMIgEeCClpoqID");
         return conectado;
     }
 
     public static String sanitizeInput(String input) {
         return input.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    }
+
+    public static void registrarAuditoria(String usuario, String acao) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+
+        PreparedStatement st = conectado.prepareStatement(
+                "INSERT INTO auditoria (usuario, acao, data_hora) "
+                + "VALUES (?, ?, CONVERT_TZ(NOW(), @@session.time_zone, '-03:00'))"
+        );
+
+        st.setString(1, usuario);
+        st.setString(2, acao);
+        st.executeUpdate();
     }
 
     public static Usuario fazerLoginU(String u, String s) throws ClassNotFoundException, SQLException {
@@ -512,17 +525,18 @@ public class CTCONTAB {
             }
         }
     }
+
     public static String buscarSenhaPorEmail(String email) throws ClassNotFoundException, SQLException {
-    conectado = conectar();
-    String sql = "SELECT senha FROM usuarios WHERE email = ?";
-    try (PreparedStatement st = conectado.prepareStatement(sql)) {
-        st.setString(1, email);
-        ResultSet rs = st.executeQuery();
-        if (rs.next()) {
-            return rs.getString("senha");
-        } else {
-            throw new SQLException("Usuário não encontrado.");
+        conectado = conectar();
+        String sql = "SELECT senha FROM usuarios WHERE email = ?";
+        try (PreparedStatement st = conectado.prepareStatement(sql)) {
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return rs.getString("senha");
+            } else {
+                throw new SQLException("Usuário não encontrado.");
+            }
         }
     }
-}
 }

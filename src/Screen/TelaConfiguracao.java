@@ -28,7 +28,12 @@ public class TelaConfiguracao extends javax.swing.JFrame {
     public TelaConfiguracao(Usuario usuario) {
         this.usuarioLogado = usuario;
         initComponents();
-
+        setUndecorated(true);
+        IconUtil.setIcon(usuarioLogado, lblUserIcon);
+        setIcon();
+        setResizable(false);
+        PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
+        
         addHoverLabel(btnDashboard, "Dashboard");
         addHoverLabel(btnCalendario, "Calendário");
         addHoverLabel(btnClientes, "Clientes");
@@ -36,11 +41,15 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         addHoverLabel(btnTarefas, "Tarefas");
         addHoverLabel(btnConfiguracoes, "Configuração");
         addHoverLabel(btnAdministracao, "Administração");
+        addHoverLabel(btnNotificacoes, "Notificações");
+        addHoverLabel(btnInfo, "Ajuda");
+        addHoverLabel(btnUserIcon, usuarioLogado.getUsuario());
 
         try {
             java.net.URL url = getClass().getResource("/images/Close Icon.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Close Icon.png ou src/images/Close Icon.png");
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Close Icon.png ou src/images/Close Icon.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(11, 11, java.awt.Image.SCALE_SMOOTH);
@@ -48,13 +57,14 @@ public class TelaConfiguracao extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            btnFecharTela.setText("X"); // fallback
+            btnFecharTela.setText("X");
         }
 
         try {
             java.net.URL url = getClass().getResource("/images/Maximize Icon.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Maximize Icon.png ou src/images/Maximize Icon.png");
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Maximize Icon.png ou src/images/Maximize Icon.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(11, 11, java.awt.Image.SCALE_SMOOTH);
@@ -62,13 +72,14 @@ public class TelaConfiguracao extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            btnMaximizarTela.setText("[]"); // fallback
+            btnMaximizarTela.setText("[]");
         }
 
         try {
             java.net.URL url = getClass().getResource("/images/Minimize Icon.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Minimize Icon.png ou src/images/Minimize Icon.png");
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Minimize Icon.png ou src/images/Minimize Icon.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(11, 2, java.awt.Image.SCALE_SMOOTH);
@@ -76,13 +87,14 @@ public class TelaConfiguracao extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            btnMinimizarTela.setText("-"); // fallback
+            btnMinimizarTela.setText("-");
         }
 
         try {
             java.net.URL url = getClass().getResource("/images/Divider Icon.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Divider Icon.png ou src/images/Divider Icon.png");
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Divider Icon.png ou src/images/Divider Icon.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(2, 11, java.awt.Image.SCALE_SMOOTH);
@@ -90,13 +102,14 @@ public class TelaConfiguracao extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            lblDivisorTela.setText("|"); // fallback
+            lblDivisorTela.setText("|");
         }
 
         try {
             java.net.URL url = getClass().getResource("/images/Information Icon.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Information Icon.png ou src/images/Information Icon.png");
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Information Icon.png ou src/images/Information Icon.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(13, 13, java.awt.Image.SCALE_SMOOTH);
@@ -104,13 +117,14 @@ public class TelaConfiguracao extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            btnInfo.setText("?"); // fallback
+            btnInfo.setText("?");
         }
 
         try {
             java.net.URL url = getClass().getResource("/images/Logo Icon.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Logo Icon.png ou src/images/Logo Icon.png");
+                System.err
+                        .println("Imagem não encontrada. Verifique: /images/Logo Icon.png ou src/images/Logo Icon.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(40, 40, java.awt.Image.SCALE_SMOOTH);
@@ -124,12 +138,14 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         try {
             java.net.URL url = getClass().getResource("/images/Dashboard Icon.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Dashboard Icon.png ou src/images/Dashboard Icon.png");
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Dashboard Icon.png ou src/images/Dashboard Icon.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
                 btnDashboard.setIcon(new javax.swing.ImageIcon(img));
-                aplicarHoverIcon(btnDashboard, "/images/Dashboard Icon.png", "/images/Dashboard Icon Hover.png", 22, 22);
+                aplicarHoverIcon(btnDashboard, "/images/Dashboard Icon.png", "/images/Dashboard Icon Hover.png", 22,
+                        22);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -138,7 +154,8 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         try {
             java.net.URL url = getClass().getResource("/images/Calendar Icon.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Calendar Icon.png ou src/images/Calendar Icon.png");
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Calendar Icon.png ou src/images/Calendar Icon.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
@@ -152,7 +169,8 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         try {
             java.net.URL url = getClass().getResource("/images/Client Icon.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Client Icon.png ou src/images/Client Icon.png");
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Client Icon.png ou src/images/Client Icon.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
@@ -166,7 +184,8 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         try {
             java.net.URL url = getClass().getResource("/images/Tasks Icon.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Tasks Icon.png ou src/images/Tasks Icon.png");
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Tasks Icon.png ou src/images/Tasks Icon.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
@@ -178,18 +197,16 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         }
 
         try {
-            java.net.URL url = getClass().getResource("/images/Settings Icon Active.png");
+            java.net.URL url = getClass().getResource("/images/Settings Icon.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Settings Icon.png ou src/images/Settings Icon.png");
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Settings Icon.png ou src/images/Settings Icon.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
-                btnConfiguracoes.setIcon(new javax.swing.ImageIcon(
-                        javax.imageio.ImageIO.read(getClass().getResource("/images/Settings Icon Active.png"))
-                                .getScaledInstance(22, 22, Image.SCALE_SMOOTH)
-                ));
-                aplicarHoverIcon(btnConfiguracoes, "/images/Settings Icon Active.png", "/images/Settings Icon Hover.png", 22, 22);
-
+                btnConfiguracoes.setIcon(new javax.swing.ImageIcon(img));
+                aplicarHoverIcon(btnConfiguracoes, "/images/Settings Icon.png", "/images/Settings Icon Hover.png", 22,
+                        22);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -198,7 +215,8 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         try {
             java.net.URL url = getClass().getResource("/images/Report Icon.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Report Icon.png ou src/images/Report Icon.png");
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Report Icon.png ou src/images/Report Icon.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
@@ -210,16 +228,16 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         }
 
         try {
-            java.net.URL url = getClass().getResource("/images/Administrative Icon.png");
+            java.net.URL url = getClass().getResource("/images/Administrative Icon Active.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Administrative Icon Active.png ou src/images/Administrative Icon Active.png");
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Administrative Icon Active.png ou src/images/Administrative Icon Active.png");
             } else {
-                url = getClass().getResource("/images/Administrative Icon.png");
-                btnAdministracao.setIcon(new javax.swing.ImageIcon(
-                        javax.imageio.ImageIO.read(url).getScaledInstance(22, 22, Image.SCALE_SMOOTH)
-                ));
-                aplicarHoverIcon(btnAdministracao, "/images/Administrative Icon.png", "/images/Administrative Icon Hover.png", 22, 22);
-
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
+                btnAdministracao.setIcon(new javax.swing.ImageIcon(img));
+                aplicarHoverIcon(btnAdministracao, "/images/Administrative Icon Active.png",
+                        "/images/Administrative Icon Hover.png", 22, 22);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -228,22 +246,22 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         try {
             java.net.URL url = getClass().getResource("/images/Notification Bell.png");
             if (url == null) {
-                System.err.println("Imagem não encontrada. Verifique: /images/Notification Bell.png ou src/images/Notification Bell.png");
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Notification Bell.png ou src/images/Notification Bell.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
                 btnNotificacoes.setIcon(new javax.swing.ImageIcon(img));
-                aplicarHoverIcon(btnNotificacoes, "/images/Notification Bell.png", "/images/Notification Bell Hover.png", 22, 22);
+                aplicarHoverIcon(btnNotificacoes, "/images/Notification Bell.png",
+                        "/images/Notification Bell Hover.png", 22, 22);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
 
-        setUndecorated(true); // Remove a barra superior.
-        IconUtil.setIcon(usuarioLogado, lblUserIcon);
-        PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
-        setIcon();
-        setResizable(false); // Impede o redimencionamento da tela.
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/logo-icon.png")));
     }
 
     private void addHoverLabel(JButton botao, String texto) {
@@ -252,14 +270,14 @@ public class TelaConfiguracao extends javax.swing.JFrame {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(new Color(7, 30, 70)); // fundo azul escuro
-                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15); // cantos arredondados
+                g2.setColor(new Color(7, 30, 70));
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
                 super.paintComponent(g2);
                 g2.dispose();
             }
         };
 
-        label.setOpaque(false); // importante pra deixar o fundo transparente pro desenho funcionar
+        label.setOpaque(false);
         label.setForeground(Color.WHITE);
         label.setFont(FonteUtils.carregarSofiaSansBlack(13f));
         label.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -272,9 +290,22 @@ public class TelaConfiguracao extends javax.swing.JFrame {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 label.setSize(label.getPreferredSize());
-                label.setLocation(botao.getX() + botao.getWidth() + 30, botao.getY() + (botao.getHeight() - label.getHeight()) / 2);
                 label.setVisible(true);
                 botao.getParent().repaint();
+
+                if (botao == btnUserIcon) {
+                    label.setLocation(
+                            botao.getParent().getWidth() - label.getWidth() - 10,
+                            botao.getY() + botao.getHeight() + 5);
+                } else if (botao == btnNotificacoes || botao == btnInfo) {
+                    label.setLocation(
+                            botao.getX() + (botao.getWidth() - label.getWidth()) / 2,
+                            botao.getY() + botao.getHeight() + 5);
+                } else {
+                    label.setLocation(
+                            botao.getX() + botao.getWidth() + 30,
+                            botao.getY() + (botao.getHeight() - label.getHeight()) / 2);
+                }
             }
 
             @Override
@@ -282,6 +313,7 @@ public class TelaConfiguracao extends javax.swing.JFrame {
                 label.setVisible(false);
             }
         });
+
     }
 
     private void aplicarHoverIcon(javax.swing.JComponent componente,
@@ -290,13 +322,11 @@ public class TelaConfiguracao extends javax.swing.JFrame {
             int largura,
             int altura) {
         try {
-            // Ícone normal
             java.net.URL urlNormal = getClass().getResource(caminhoNormal);
             java.awt.Image imgNormal = javax.imageio.ImageIO.read(urlNormal)
                     .getScaledInstance(largura, altura, java.awt.Image.SCALE_SMOOTH);
             javax.swing.ImageIcon iconNormal = new javax.swing.ImageIcon(imgNormal);
 
-            // Ícone de hover
             java.net.URL urlHover = getClass().getResource(caminhoHover);
             java.awt.Image imgHover = javax.imageio.ImageIO.read(urlHover)
                     .getScaledInstance(largura, altura, java.awt.Image.SCALE_SMOOTH);
@@ -338,37 +368,12 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         }
     }
 
-    private void setIcon() {
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/logo-icon.png")));
-    }
-
-    private void addPlaceholder(JTextField field, String placeholder) {
-        field.setText(placeholder);
-        field.setForeground(Color.GRAY);
-
-        field.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (field.getText().equals(placeholder)) {
-                    field.setText("");
-                    field.setForeground(Color.WHITE);
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (field.getText().isEmpty()) {
-                    field.setText(placeholder);
-                    field.setForeground(Color.GRAY);
-                }
-            }
-        });
-    }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblUserIcon = new javax.swing.JLabel();
+        btnUserIcon = new javax.swing.JButton();
         btnInfo = new javax.swing.JButton();
         btnMinimizarTela = new javax.swing.JButton();
         btnFecharTela = new javax.swing.JButton();
@@ -384,7 +389,6 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         btnTarefas = new javax.swing.JButton();
         btnConfiguracoes = new javax.swing.JButton();
         btnAdministracao = new javax.swing.JButton();
-        lblUserIcon = new javax.swing.JLabel();
         btnNotificacoes = new javax.swing.JButton();
         btnEditarSenha = new javax.swing.JButton();
         btnEditarNome = new javax.swing.JButton();
@@ -396,6 +400,20 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Configurações - CT CONTAB");
         getContentPane().setLayout(null);
+
+        lblUserIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Jonh Doe Icon.png"))); // NOI18N
+        getContentPane().add(lblUserIcon);
+        lblUserIcon.setBounds(1390, 30, 512, 50);
+
+        btnUserIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Administrative Icon.png"))); // NOI18N
+        btnUserIcon.setContentAreaFilled(false);
+        btnUserIcon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUserIconActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnUserIcon);
+        btnUserIcon.setBounds(1390, 30, 50, 50);
 
         btnInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Information Icon.png"))); // NOI18N
         btnInfo.setContentAreaFilled(false);
@@ -451,7 +469,7 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         lblLogo.setBounds(15, 35, 40, 40);
 
         lblTituloPagina.setForeground(new java.awt.Color(255, 255, 255));
-        lblTituloPagina.setText("Configuração");
+        lblTituloPagina.setText("CONFIGURAÇÕES");
         lblTituloPagina.setFont(FonteUtils.carregarRoboto(13f));
         getContentPane().add(lblTituloPagina);
         lblTituloPagina.setBounds(720, 3, 120, 20);
@@ -531,19 +549,14 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         getContentPane().add(btnAdministracao);
         btnAdministracao.setBounds(19, 480, 30, 30);
 
-        lblUserIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Jonh Doe Icon.png"))); // NOI18N
-        getContentPane().add(lblUserIcon);
-        lblUserIcon.setBounds(1390, 30, 512, 50);
-
         btnNotificacoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Notification Bell.png"))); // NOI18N
         btnNotificacoes.setContentAreaFilled(false);
         getContentPane().add(btnNotificacoes);
         btnNotificacoes.setBounds(1340, 35, 40, 40);
 
-        btnEditarSenha.setBackground(new java.awt.Color(15, 25, 45));
+        btnEditarSenha.setBackground(new java.awt.Color(217, 217, 217, 5));
+        btnEditarSenha.setOpaque(true);
         btnEditarSenha.setForeground(new java.awt.Color(153, 153, 0));
-        btnEditarSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Group 19.png"))); // NOI18N
-        btnEditarSenha.setText("jButton1");
         btnEditarSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarSenhaActionPerformed(evt);
@@ -552,10 +565,8 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         getContentPane().add(btnEditarSenha);
         btnEditarSenha.setBounds(990, 230, 270, 270);
 
-        btnEditarNome.setBackground(new java.awt.Color(15, 25, 45));
+        btnEditarNome.setBackground(new java.awt.Color(217, 217, 217, 15));
         btnEditarNome.setForeground(new java.awt.Color(153, 153, 0));
-        btnEditarNome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Group 18.png"))); // NOI18N
-        btnEditarNome.setText("jButton1");
         btnEditarNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarNomeActionPerformed(evt);
@@ -564,10 +575,8 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         getContentPane().add(btnEditarNome);
         btnEditarNome.setBounds(610, 230, 270, 270);
 
-        btnAtualizarEmail.setBackground(new java.awt.Color(15, 25, 45));
+        btnAtualizarEmail.setBackground(new java.awt.Color(217, 217, 217, 15));
         btnAtualizarEmail.setForeground(new java.awt.Color(153, 153, 0));
-        btnAtualizarEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Frame 36.png"))); // NOI18N
-        btnAtualizarEmail.setText("jButton1");
         btnAtualizarEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAtualizarEmailActionPerformed(evt);
@@ -596,9 +605,9 @@ public class TelaConfiguracao extends javax.swing.JFrame {
 
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Dashboard Background.png"))); // NOI18N
         getContentPane().add(Background);
-        Background.setBounds(0, 0, 1450, 750);
+        Background.setBounds(0, 0, 1460, 750);
 
-        setSize(new java.awt.Dimension(1452, 708));
+        setSize(new java.awt.Dimension(1450, 750));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -684,6 +693,10 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnAdministracaoActionPerformed
 
+    private void btnUserIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserIconActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUserIconActionPerformed
+
     private JPanel criarCard(String iconePath, String titulo, String subtitulo) {
         JPanel card = new JPanel();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
@@ -731,6 +744,7 @@ public class TelaConfiguracao extends javax.swing.JFrame {
     private javax.swing.JButton btnNotificacoes;
     private javax.swing.JButton btnRelatorios;
     private javax.swing.JButton btnTarefas;
+    private javax.swing.JButton btnUserIcon;
     private javax.swing.JLabel lblBarraLateral;
     private javax.swing.JLabel lblBarraSuperior;
     private javax.swing.JLabel lblDivisorTela;

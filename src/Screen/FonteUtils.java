@@ -105,5 +105,19 @@ public class FonteUtils {
             return new Font("Inter_28pt-ExtraBold", Font.BOLD, (int) tamanho);
         }
     }
+    
+    public static Font carregarLato(float tamanho) {
+        try {
+            File arquivoFonte = new File("src/resources/fonts/Lato-Regular.ttf");
+            Font lato = Font.createFont(Font.TRUETYPE_FONT, arquivoFonte);
+            lato = lato.deriveFont(tamanho);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(lato);
+            return lato;
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+            return new Font("SansSerif", Font.PLAIN, (int) tamanho);
+        }
+    }
 
 }
