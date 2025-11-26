@@ -21,6 +21,34 @@ public class FonteUtils {
             return new Font("SansSerif", Font.PLAIN, (int) tamanho);
         }
     }
+    
+    public static Font carregarRobotoSemiBold(float tamanho) {
+        try {
+            File arquivoFonte = new File("src/resources/fonts/Roboto-SemiBold.ttf");
+            Font robotosemibold = Font.createFont(Font.TRUETYPE_FONT, arquivoFonte);
+            robotosemibold = robotosemibold.deriveFont(tamanho);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(robotosemibold);
+            return robotosemibold;
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+            return new Font("SansSerif", Font.PLAIN, (int) tamanho);
+        }
+    }
+    
+    public static Font carregarRobotoExtraBold(float tamanho) {
+        try {
+            File arquivoFonte = new File("src/resources/fonts/Roboto-ExtraBold.ttf");
+            Font robotoextrabold = Font.createFont(Font.TRUETYPE_FONT, arquivoFonte);
+            robotoextrabold = robotoextrabold.deriveFont(tamanho);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(robotoextrabold);
+            return robotoextrabold;
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+            return new Font("SansSerif", Font.PLAIN, (int) tamanho);
+        }
+    }
 
     public static Font carregarRaleway(float tamanho) {
         try {

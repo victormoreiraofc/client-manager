@@ -7,12 +7,8 @@ import Data.PermissaoUtil;
 import Data.Usuario;
 import Screen.FonteUtils;
 import java.awt.Color;
-import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import javax.swing.ImageIcon;
-import javax.swing.JTextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.Box;
@@ -197,15 +193,15 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         }
 
         try {
-            java.net.URL url = getClass().getResource("/images/Settings Icon.png");
+            java.net.URL url = getClass().getResource("/images/Settings Icon Active.png");
             if (url == null) {
                 System.err.println(
-                        "Imagem não encontrada. Verifique: /images/Settings Icon.png ou src/images/Settings Icon.png");
+                        "Imagem não encontrada. Verifique: /images/Settings Icon Active.png ou src/images/Settings Icon Active.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
                 btnConfiguracoes.setIcon(new javax.swing.ImageIcon(img));
-                aplicarHoverIcon(btnConfiguracoes, "/images/Settings Icon.png", "/images/Settings Icon Hover.png", 22,
+                aplicarHoverIcon(btnConfiguracoes, "/images/Settings Icon Active.png", "/images/Settings Icon Hover.png", 22,
                         22);
             }
         } catch (Exception ex) {
@@ -228,15 +224,15 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         }
 
         try {
-            java.net.URL url = getClass().getResource("/images/Administrative Icon Active.png");
+            java.net.URL url = getClass().getResource("/images/Administrative Icon.png");
             if (url == null) {
                 System.err.println(
-                        "Imagem não encontrada. Verifique: /images/Administrative Icon Active.png ou src/images/Administrative Icon Active.png");
+                        "Imagem não encontrada. Verifique: /images/Administrative Icon.png ou src/images/Administrative Icon.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
                 btnAdministracao.setIcon(new javax.swing.ImageIcon(img));
-                aplicarHoverIcon(btnAdministracao, "/images/Administrative Icon Active.png",
+                aplicarHoverIcon(btnAdministracao, "/images/Administrative Icon.png",
                         "/images/Administrative Icon Hover.png", 22, 22);
             }
         } catch (Exception ex) {
@@ -254,6 +250,48 @@ public class TelaConfiguracao extends javax.swing.JFrame {
                 btnNotificacoes.setIcon(new javax.swing.ImageIcon(img));
                 aplicarHoverIcon(btnNotificacoes, "/images/Notification Bell.png",
                         "/images/Notification Bell Hover.png", 22, 22);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        try {
+            java.net.URL url = getClass().getResource("/images/Edit Email Icon.png");
+            if (url == null) {
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Edit Email Icon.png ou src/images/Edit Email Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(70, 70, java.awt.Image.SCALE_SMOOTH);
+                lblLogoAtualizarEmail.setIcon(new javax.swing.ImageIcon(img));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+         try {
+            java.net.URL url = getClass().getResource("/images/User Edit Name Icon.png");
+            if (url == null) {
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/User Edit Name Icon.png ou src/images/User Edit Name Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(70, 70, java.awt.Image.SCALE_SMOOTH);
+                lblLogoAtualizarUsuario.setIcon(new javax.swing.ImageIcon(img));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+         
+          try {
+            java.net.URL url = getClass().getResource("/images/Edit Password Icon.png");
+            if (url == null) {
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Edit Password Icon.png ou src/images/Edit Password Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(70, 70, java.awt.Image.SCALE_SMOOTH);
+                lblLogoAtualizarSenha.setIcon(new javax.swing.ImageIcon(img));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -372,6 +410,22 @@ public class TelaConfiguracao extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblTituloPagina = new javax.swing.JLabel();
+        lblTituloAtualizarSenha = new javax.swing.JLabel();
+        lblLogoAtualizarSenha = new javax.swing.JLabel();
+        lblDescricaoAtualizarSenha = new javax.swing.JLabel();
+        btnAtualizarSenha = new javax.swing.JButton();
+        jPanelBackgroundSenha = new javax.swing.JPanel();
+        lblLogoAtualizarUsuario = new javax.swing.JLabel();
+        lblTituloAtualizarUsuario = new javax.swing.JLabel();
+        lblDescricaoAtualizarUsuario = new javax.swing.JLabel();
+        btnAtualizarUsuario = new javax.swing.JButton();
+        jPanelBackgroundUsuario = new javax.swing.JPanel();
+        lblDescricaoAtualizarEmail = new javax.swing.JLabel();
+        lblTituloAtualizarEmail = new javax.swing.JLabel();
+        lblLogoAtualizarEmail = new javax.swing.JLabel();
+        jPanelBackgroundEmail = new javax.swing.JPanel();
+        btnAtualizarEmail = new javax.swing.JButton();
         lblUserIcon = new javax.swing.JLabel();
         btnUserIcon = new javax.swing.JButton();
         btnInfo = new javax.swing.JButton();
@@ -380,7 +434,6 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         btnMaximizarTela = new javax.swing.JButton();
         lblLogoTexto = new javax.swing.JLabel();
         lblLogo = new javax.swing.JLabel();
-        lblTituloPagina = new javax.swing.JLabel();
         lblDivisorTela = new javax.swing.JLabel();
         btnDashboard = new javax.swing.JButton();
         btnCalendario = new javax.swing.JButton();
@@ -390,9 +443,6 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         btnConfiguracoes = new javax.swing.JButton();
         btnAdministracao = new javax.swing.JButton();
         btnNotificacoes = new javax.swing.JButton();
-        btnEditarSenha = new javax.swing.JButton();
-        btnEditarNome = new javax.swing.JButton();
-        btnAtualizarEmail = new javax.swing.JButton();
         lblBarraSuperior = new javax.swing.JLabel();
         lblBarraLateral = new javax.swing.JLabel();
         Background = new javax.swing.JLabel();
@@ -400,6 +450,112 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Configurações - CT CONTAB");
         getContentPane().setLayout(null);
+
+        lblTituloPagina.setForeground(new java.awt.Color(255, 255, 255));
+        lblTituloPagina.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTituloPagina.setText("CONFIGURAÇÕES");
+        lblTituloPagina.setFont(FonteUtils.carregarRoboto(13f));
+        getContentPane().add(lblTituloPagina);
+        lblTituloPagina.setBounds(0, 3, 1440, 20);
+
+        lblTituloAtualizarSenha.setFont(FonteUtils.carregarRalewayMedium(16f));
+        lblTituloAtualizarSenha.setForeground(new java.awt.Color(255, 255, 255));
+        lblTituloAtualizarSenha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTituloAtualizarSenha.setText("Redefinir Senha");
+        getContentPane().add(lblTituloAtualizarSenha);
+        lblTituloAtualizarSenha.setBounds(1050, 410, 240, 30);
+
+        lblLogoAtualizarSenha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(lblLogoAtualizarSenha);
+        lblLogoAtualizarSenha.setBounds(1050, 330, 240, 80);
+
+        lblDescricaoAtualizarSenha.setFont(FonteUtils.carregarRalewayMedium(13f));
+        lblDescricaoAtualizarSenha.setForeground(new java.awt.Color(105, 105, 105));
+        lblDescricaoAtualizarSenha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblDescricaoAtualizarSenha.setText("<html><center>Altere sua senha em poucos segundos</center></html>");
+        lblDescricaoAtualizarSenha.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(lblDescricaoAtualizarSenha);
+        lblDescricaoAtualizarSenha.setBounds(1060, 440, 220, 30);
+
+        btnAtualizarSenha.setBackground(new java.awt.Color(30, 30, 30));
+        btnAtualizarSenha.setContentAreaFilled(false);
+        btnAtualizarSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarSenhaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnAtualizarSenha);
+        btnAtualizarSenha.setBounds(1050, 280, 240, 240);
+
+        jPanelBackgroundSenha.setBackground(new java.awt.Color(255, 255, 255, 15));
+        getContentPane().add(jPanelBackgroundSenha);
+        jPanelBackgroundSenha.setBounds(1050, 280, 240, 240);
+
+        lblLogoAtualizarUsuario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(lblLogoAtualizarUsuario);
+        lblLogoAtualizarUsuario.setBounds(630, 330, 240, 80);
+
+        lblTituloAtualizarUsuario.setFont(FonteUtils.carregarRalewayMedium(16f));
+        lblTituloAtualizarUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        lblTituloAtualizarUsuario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTituloAtualizarUsuario.setText("Editar Nome de Usuário");
+        getContentPane().add(lblTituloAtualizarUsuario);
+        lblTituloAtualizarUsuario.setBounds(630, 410, 240, 30);
+
+        lblDescricaoAtualizarUsuario.setFont(FonteUtils.carregarRalewayMedium(13f));
+        lblDescricaoAtualizarUsuario.setForeground(new java.awt.Color(105, 105, 105));
+        lblDescricaoAtualizarUsuario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblDescricaoAtualizarUsuario.setText("<html><center>Escolha como deseja ser identificado</center></html>");
+        lblDescricaoAtualizarUsuario.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(lblDescricaoAtualizarUsuario);
+        lblDescricaoAtualizarUsuario.setBounds(640, 440, 220, 30);
+
+        btnAtualizarUsuario.setBackground(new java.awt.Color(30, 30, 30));
+        btnAtualizarUsuario.setContentAreaFilled(false);
+        btnAtualizarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarUsuarioActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnAtualizarUsuario);
+        btnAtualizarUsuario.setBounds(630, 280, 240, 240);
+
+        jPanelBackgroundUsuario.setBackground(new java.awt.Color(255, 255, 255, 15));
+        getContentPane().add(jPanelBackgroundUsuario);
+        jPanelBackgroundUsuario.setBounds(630, 280, 240, 240);
+
+        lblDescricaoAtualizarEmail.setFont(FonteUtils.carregarRalewayMedium(13f));
+        lblDescricaoAtualizarEmail.setForeground(new java.awt.Color(105, 105, 105));
+        lblDescricaoAtualizarEmail.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblDescricaoAtualizarEmail.setText("<html><center>Mantenha seu contato sempre atualizado</center></html>");
+        lblDescricaoAtualizarEmail.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(lblDescricaoAtualizarEmail);
+        lblDescricaoAtualizarEmail.setBounds(220, 440, 210, 30);
+
+        lblTituloAtualizarEmail.setFont(FonteUtils.carregarRalewayMedium(16f));
+        lblTituloAtualizarEmail.setForeground(new java.awt.Color(255, 255, 255));
+        lblTituloAtualizarEmail.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTituloAtualizarEmail.setText("Atualizar Email");
+        getContentPane().add(lblTituloAtualizarEmail);
+        lblTituloAtualizarEmail.setBounds(210, 410, 240, 30);
+
+        lblLogoAtualizarEmail.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(lblLogoAtualizarEmail);
+        lblLogoAtualizarEmail.setBounds(210, 330, 240, 80);
+
+        jPanelBackgroundEmail.setBackground(new java.awt.Color(255, 255, 255, 15));
+        getContentPane().add(jPanelBackgroundEmail);
+        jPanelBackgroundEmail.setBounds(210, 280, 240, 240);
+
+        btnAtualizarEmail.setBackground(new java.awt.Color(30, 30, 30));
+        btnAtualizarEmail.setContentAreaFilled(false);
+        btnAtualizarEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarEmailActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnAtualizarEmail);
+        btnAtualizarEmail.setBounds(210, 280, 240, 240);
 
         lblUserIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Jonh Doe Icon.png"))); // NOI18N
         getContentPane().add(lblUserIcon);
@@ -467,12 +623,6 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Logo Icon.png"))); // NOI18N
         getContentPane().add(lblLogo);
         lblLogo.setBounds(15, 35, 40, 40);
-
-        lblTituloPagina.setForeground(new java.awt.Color(255, 255, 255));
-        lblTituloPagina.setText("CONFIGURAÇÕES");
-        lblTituloPagina.setFont(FonteUtils.carregarRoboto(13f));
-        getContentPane().add(lblTituloPagina);
-        lblTituloPagina.setBounds(720, 3, 120, 20);
 
         lblDivisorTela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Close Icon.png"))); // NOI18N
         lblDivisorTela.setPreferredSize(new java.awt.Dimension(13, 13));
@@ -554,37 +704,6 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         getContentPane().add(btnNotificacoes);
         btnNotificacoes.setBounds(1340, 35, 40, 40);
 
-        btnEditarSenha.setBackground(new java.awt.Color(217, 217, 217, 5));
-        btnEditarSenha.setOpaque(true);
-        btnEditarSenha.setForeground(new java.awt.Color(153, 153, 0));
-        btnEditarSenha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarSenhaActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnEditarSenha);
-        btnEditarSenha.setBounds(990, 230, 270, 270);
-
-        btnEditarNome.setBackground(new java.awt.Color(217, 217, 217, 15));
-        btnEditarNome.setForeground(new java.awt.Color(153, 153, 0));
-        btnEditarNome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarNomeActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnEditarNome);
-        btnEditarNome.setBounds(610, 230, 270, 270);
-
-        btnAtualizarEmail.setBackground(new java.awt.Color(217, 217, 217, 15));
-        btnAtualizarEmail.setForeground(new java.awt.Color(153, 153, 0));
-        btnAtualizarEmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAtualizarEmailActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnAtualizarEmail);
-        btnAtualizarEmail.setBounds(230, 230, 270, 270);
-
         lblBarraSuperior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/NIGHT-ABYSS Color.png"))); // NOI18N
         lblBarraSuperior.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -611,21 +730,6 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-
-    private void btnEditarNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarNomeActionPerformed
-        TelaAlterarUsuario popup = new TelaAlterarUsuario(this, usuarioLogado);
-        popup.setVisible(true);
-    }//GEN-LAST:event_btnEditarNomeActionPerformed
-
-    private void btnAtualizarEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarEmailActionPerformed
-        TelaAlterarEmail popup = new TelaAlterarEmail(this, usuarioLogado);
-        popup.setVisible(true);
-    }//GEN-LAST:event_btnAtualizarEmailActionPerformed
-
-    private void btnEditarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarSenhaActionPerformed
-        TelaAlterarSenha popup = new TelaAlterarSenha(this, usuarioLogado);
-        popup.setVisible(true);
-    }//GEN-LAST:event_btnEditarSenhaActionPerformed
 
     private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoActionPerformed
         // TODO add your handling code here:
@@ -697,6 +801,21 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnUserIconActionPerformed
 
+    private void btnAtualizarEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarEmailActionPerformed
+        TelaAlterarEmail popup = new TelaAlterarEmail(this, usuarioLogado);
+        popup.setVisible(true);
+    }//GEN-LAST:event_btnAtualizarEmailActionPerformed
+
+    private void btnAtualizarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarUsuarioActionPerformed
+        TelaAlterarUsuario popup = new TelaAlterarUsuario(this, usuarioLogado);
+        popup.setVisible(true);
+    }//GEN-LAST:event_btnAtualizarUsuarioActionPerformed
+
+    private void btnAtualizarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarSenhaActionPerformed
+        TelaAlterarSenha popup = new TelaAlterarSenha(this, usuarioLogado);
+        popup.setVisible(true);
+    }//GEN-LAST:event_btnAtualizarSenhaActionPerformed
+
     private JPanel criarCard(String iconePath, String titulo, String subtitulo) {
         JPanel card = new JPanel();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
@@ -731,12 +850,12 @@ public class TelaConfiguracao extends javax.swing.JFrame {
     private javax.swing.JLabel Background;
     private javax.swing.JButton btnAdministracao;
     private javax.swing.JButton btnAtualizarEmail;
+    private javax.swing.JButton btnAtualizarSenha;
+    private javax.swing.JButton btnAtualizarUsuario;
     private javax.swing.JButton btnCalendario;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnConfiguracoes;
     private javax.swing.JButton btnDashboard;
-    private javax.swing.JButton btnEditarNome;
-    private javax.swing.JButton btnEditarSenha;
     private javax.swing.JButton btnFecharTela;
     private javax.swing.JButton btnInfo;
     private javax.swing.JButton btnMaximizarTela;
@@ -745,11 +864,23 @@ public class TelaConfiguracao extends javax.swing.JFrame {
     private javax.swing.JButton btnRelatorios;
     private javax.swing.JButton btnTarefas;
     private javax.swing.JButton btnUserIcon;
+    private javax.swing.JPanel jPanelBackgroundEmail;
+    private javax.swing.JPanel jPanelBackgroundSenha;
+    private javax.swing.JPanel jPanelBackgroundUsuario;
     private javax.swing.JLabel lblBarraLateral;
     private javax.swing.JLabel lblBarraSuperior;
+    private javax.swing.JLabel lblDescricaoAtualizarEmail;
+    private javax.swing.JLabel lblDescricaoAtualizarSenha;
+    private javax.swing.JLabel lblDescricaoAtualizarUsuario;
     private javax.swing.JLabel lblDivisorTela;
     private javax.swing.JLabel lblLogo;
+    private javax.swing.JLabel lblLogoAtualizarEmail;
+    private javax.swing.JLabel lblLogoAtualizarSenha;
+    private javax.swing.JLabel lblLogoAtualizarUsuario;
     private javax.swing.JLabel lblLogoTexto;
+    private javax.swing.JLabel lblTituloAtualizarEmail;
+    private javax.swing.JLabel lblTituloAtualizarSenha;
+    private javax.swing.JLabel lblTituloAtualizarUsuario;
     private javax.swing.JLabel lblTituloPagina;
     private javax.swing.JLabel lblUserIcon;
     // End of variables declaration//GEN-END:variables
