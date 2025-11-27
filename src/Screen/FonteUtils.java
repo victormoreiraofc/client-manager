@@ -147,5 +147,19 @@ public class FonteUtils {
             return new Font("SansSerif", Font.PLAIN, (int) tamanho);
         }
     }
+    
+    public static Font carregarInterSemiBold(float tamanho) {
+        try {
+            File arquivoFonte = new File("src/resources/fonts/Inter_28pt-SemiBold.ttf");
+            Font lato = Font.createFont(Font.TRUETYPE_FONT, arquivoFonte);
+            lato = lato.deriveFont(tamanho);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(lato);
+            return lato;
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+            return new Font("SansSerif", Font.PLAIN, (int) tamanho);
+        }
+    }
 
 }

@@ -654,11 +654,11 @@ jPanelBackground5.add(g6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 
         setTitle("CT Contab Manager");
         getContentPane().setLayout(null);
 
-        jlibCadastrarNovo.setFont(new java.awt.Font("Segoe UI", 1, 23)); // NOI18N
+        jlibCadastrarNovo.setFont(FonteUtils.carregarRoboto(22f));
         jlibCadastrarNovo.setForeground(new java.awt.Color(255, 255, 255));
         jlibCadastrarNovo.setText("CADASTRAR NOVOS CLIENTES");
         getContentPane().add(jlibCadastrarNovo);
-        jlibCadastrarNovo.setBounds(1063, 150, 340, 40);
+        jlibCadastrarNovo.setBounds(1080, 150, 340, 40);
 
         jlibSeta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/seta-direita.png"))); // NOI18N
         getContentPane().add(jlibSeta);
@@ -691,20 +691,23 @@ jPanelBackground5.add(g6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 
         jlibVariavel.setPreferredSize(new java.awt.Dimension(55, 20));
         jPanelBackground.add(jlibVariavel, new org.netbeans.lib.awtextra.AbsoluteConstraints(-93, 140, 250, 60));
 
+        lbltextinho1.setFont(FonteUtils.carregarInterSemiBold(11f));
         lbltextinho1.setForeground(new java.awt.Color(156, 163, 175));
         lbltextinho1.setText("<html> Este painel mostra a quantidade total<br>  de novos clientes que adquirimos no<br> mês, permitindo acompanhar o crescimento do nosso público.  </html>");
         jPanelBackground.add(lbltextinho1, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 220, 210, 80));
 
+        jLabel1.setFont(FonteUtils.carregarInterSemiBold(11f));
         jLabel1.setForeground(new java.awt.Color(199, 199, 199));
         jLabel1.setText("Número bruto de novos clientes.");
         jPanelBackground.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 210, -1, -1));
 
+        jLabel2.setFont(FonteUtils.carregarInterSemiBold(11f));
         jLabel2.setForeground(new java.awt.Color(199, 199, 199));
         jLabel2.setText("Novos clientes nesse mês");
-        jPanelBackground.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 130, 140, -1));
+        jPanelBackground.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 126, 140, 20));
 
         lblIcon1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Icon Badge.png"))); // NOI18N
-        jPanelBackground.add(lblIcon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 145, 50, -1));
+        jPanelBackground.add(lblIcon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 50, -1));
 
         getContentPane().add(jPanelBackground);
         jPanelBackground.setBounds(110, 320, 208, 303);
@@ -724,20 +727,23 @@ jPanelBackground5.add(g6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 
         lblTotalClientes.setText("Total de Clientes");
         jPanelBackground1.add(lblTotalClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 0, 120, -1));
 
+        lbltextinho2.setFont(FonteUtils.carregarInterSemiBold(11f));
         lbltextinho2.setForeground(new java.awt.Color(156, 163, 175));
         lbltextinho2.setText("<html>Este painel mostra o total acumulado<br> de clientes cadastrados, permitindo acompanhar o crescimento da<br>  base ao longo do tempo. </html>");
         jPanelBackground1.add(lbltextinho2, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 220, 210, 80));
 
+        jLabel4.setFont(FonteUtils.carregarInterSemiBold(11f));
         jLabel4.setForeground(new java.awt.Color(199, 199, 199));
         jLabel4.setText("Todos os clientes registrados");
         jPanelBackground1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 130, 160, -1));
 
+        jLabel6.setFont(FonteUtils.carregarInterSemiBold(11f));
         jLabel6.setForeground(new java.awt.Color(199, 199, 199));
         jLabel6.setText("Número bruto de clientes registrados");
         jPanelBackground1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 210, -1, -1));
 
         lblIcon2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Icon Badge1.png"))); // NOI18N
-        jPanelBackground1.add(lblIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 145, 50, -1));
+        jPanelBackground1.add(lblIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 50, -1));
 
         getContentPane().add(jPanelBackground1);
         jPanelBackground1.setBounds(330, 320, 208, 303);
@@ -757,20 +763,23 @@ jPanelBackground5.add(g6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 
         jlibVariavel2.setText("000");
         jPanelBackground2.add(jlibVariavel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-93, 140, 250, 60));
 
+        lbltextinho3.setFont(FonteUtils.carregarInterSemiBold(11f));
         lbltextinho3.setForeground(new java.awt.Color(156, 163, 175));
         lbltextinho3.setText("<html>Este painel indica todas as tarefas que<br>  ainda estão pendentes, facilitando<br> o controle das demandas que<br>  precisam ser concluídas. </html>");
         jPanelBackground2.add(lbltextinho3, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 220, 210, 80));
 
+        jLabel5.setFont(FonteUtils.carregarInterSemiBold(11f));
         jLabel5.setForeground(new java.awt.Color(199, 199, 199));
         jLabel5.setText("Todas as tarefas pendentes");
         jPanelBackground2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 130, 160, -1));
 
+        jLabel7.setFont(FonteUtils.carregarInterSemiBold(11f));
         jLabel7.setForeground(new java.awt.Color(199, 199, 199));
         jLabel7.setText("Todas as tarefas pendentes");
         jPanelBackground2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 210, -1, -1));
 
         lblIcon3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Icon Badge2.png"))); // NOI18N
-        jPanelBackground2.add(lblIcon3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 145, 50, -1));
+        jPanelBackground2.add(lblIcon3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 50, -1));
 
         getContentPane().add(jPanelBackground2);
         jPanelBackground2.setBounds(550, 320, 208, 303);
@@ -790,20 +799,23 @@ jPanelBackground5.add(g6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 
         jlibVariavel3.setText("000");
         jPanelBackground3.add(jlibVariavel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-93, 140, 250, 60));
 
+        jLabel8.setFont(FonteUtils.carregarInterSemiBold(11f));
         jLabel8.setForeground(new java.awt.Color(199, 199, 199));
         jLabel8.setText("Todas os relatórios feitos");
         jPanelBackground3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 130, 160, -1));
 
+        jLabel9.setFont(FonteUtils.carregarInterSemiBold(11f));
         jLabel9.setForeground(new java.awt.Color(199, 199, 199));
         jLabel9.setText("Número bruto de relatórios gerados");
         jPanelBackground3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 210, -1, -1));
 
+        lbltextinho4.setFont(FonteUtils.carregarInterSemiBold(11f));
         lbltextinho4.setForeground(new java.awt.Color(156, 163, 175));
         lbltextinho4.setText("<html>Aqui você acompanha quantos <br> relatórios foram emitidos,<br>  permitindo analisar o volume de<br>  registros e atividades documentadas. </html>");
         jPanelBackground3.add(lbltextinho4, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 220, 210, 80));
 
         lblIcon4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Icon Badge3.png"))); // NOI18N
-        jPanelBackground3.add(lblIcon4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 145, 50, -1));
+        jPanelBackground3.add(lblIcon4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 50, -1));
 
         getContentPane().add(jPanelBackground3);
         jPanelBackground3.setBounds(770, 320, 208, 303);
@@ -823,20 +835,23 @@ jPanelBackground5.add(g6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 
         jlibVariavel4.setText("000");
         jPanelBackground4.add(jlibVariavel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(-93, 140, 250, 60));
 
+        jLabel10.setFont(FonteUtils.carregarInterSemiBold(11f));
         jLabel10.setForeground(new java.awt.Color(199, 199, 199));
         jLabel10.setText("Tarefas não realizadas");
         jPanelBackground4.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 130, 160, -1));
 
+        jLabel11.setFont(FonteUtils.carregarInterSemiBold(11f));
         jLabel11.setForeground(new java.awt.Color(199, 199, 199));
         jLabel11.setText("Tarefas não realizadas");
         jPanelBackground4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 210, -1, -1));
 
+        lbltextinho5.setFont(FonteUtils.carregarInterSemiBold(11f));
         lbltextinho5.setForeground(new java.awt.Color(156, 163, 175));
         lbltextinho5.setText("<html>Este painel mostra as tarefas<br>  que foram iniciadas mas não<br>  finalizadas, ajudando a identificar<br>  gargalos e priorizar ações. </html>");
         jPanelBackground4.add(lbltextinho5, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 220, 210, 80));
 
         lblIcon5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Icon Badge4.png"))); // NOI18N
-        jPanelBackground4.add(lblIcon5, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 145, 50, -1));
+        jPanelBackground4.add(lblIcon5, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 50, -1));
 
         getContentPane().add(jPanelBackground4);
         jPanelBackground4.setBounds(990, 320, 208, 303);
@@ -856,20 +871,23 @@ jPanelBackground5.add(g6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 
         lblServicosFinalizados.setText("Tarefas Finalizadas");
         jPanelBackground5.add(lblServicosFinalizados, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 0, -1, -1));
 
+        jLabel12.setFont(FonteUtils.carregarInterSemiBold(11f));
         jLabel12.setForeground(new java.awt.Color(199, 199, 199));
         jLabel12.setText("Tarefas já realizadas");
         jPanelBackground5.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 130, 160, -1));
 
+        jLabel13.setFont(FonteUtils.carregarInterSemiBold(11f));
         jLabel13.setForeground(new java.awt.Color(199, 199, 199));
         jLabel13.setText("Numero bruto de tarefas concluídas");
-        jPanelBackground5.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 210, -1, -1));
+        jPanelBackground5.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 210, 200, -1));
 
+        lbltextinho6.setFont(FonteUtils.carregarInterSemiBold(11f));
         lbltextinho6.setForeground(new java.awt.Color(156, 163, 175));
         lbltextinho6.setText("<html>Indica todas as tarefas já finalizadas,<br> servindo como um termômetro da <br> produtividade e do progresso das atividades. </html>");
         jPanelBackground5.add(lbltextinho6, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 220, 210, 80));
 
         lblIcon6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Icon Badge5.png"))); // NOI18N
-        jPanelBackground5.add(lblIcon6, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 145, 50, -1));
+        jPanelBackground5.add(lblIcon6, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 50, -1));
 
         getContentPane().add(jPanelBackground5);
         jPanelBackground5.setBounds(1210, 320, 203, 303);
