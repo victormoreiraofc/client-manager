@@ -655,14 +655,14 @@ jPanelBackground5.add(g6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 
         getContentPane().setLayout(null);
 
         jlibCadastrarNovo.setFont(new java.awt.Font("Segoe UI", 1, 23)); // NOI18N
-        jlibCadastrarNovo.setForeground(new java.awt.Color(205, 168, 16));
+        jlibCadastrarNovo.setForeground(new java.awt.Color(255, 255, 255));
         jlibCadastrarNovo.setText("CADASTRAR NOVOS CLIENTES");
         getContentPane().add(jlibCadastrarNovo);
-        jlibCadastrarNovo.setBounds(1060, 150, 340, 40);
+        jlibCadastrarNovo.setBounds(1063, 150, 340, 40);
 
         jlibSeta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/seta-direita.png"))); // NOI18N
         getContentPane().add(jlibSeta);
-        jlibSeta.setBounds(1360, 240, 50, 40);
+        jlibSeta.setBounds(1363, 240, 50, 40);
 
         btnCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cadastrar-imagem.jpg"))); // NOI18N
         btnCadastrar.setContentAreaFilled(false);
@@ -672,7 +672,7 @@ jPanelBackground5.add(g6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 
             }
         });
         getContentPane().add(btnCadastrar);
-        btnCadastrar.setBounds(110, 148, 1290, 130);
+        btnCadastrar.setBounds(110, 148, 1303, 130);
 
         jPanelBackground.setBackground(new java.awt.Color(255, 255, 255, 15));
         jPanelBackground.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());

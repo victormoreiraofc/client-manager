@@ -33,13 +33,13 @@
           <Font name="Segoe UI" size="23" style="1"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="10" green="a8" red="cd" type="rgb"/>
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="CADASTRAR NOVOS CLIENTES"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="1060" y="150" width="340" height="40"/>
+          <AbsoluteConstraints x="1063" y="150" width="340" height="40"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -51,7 +51,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="1360" y="240" width="50" height="40"/>
+          <AbsoluteConstraints x="1363" y="240" width="50" height="40"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -67,7 +67,7 @@
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="110" y="148" width="1290" height="130"/>
+          <AbsoluteConstraints x="110" y="148" width="1303" height="130"/>
         </Constraint>
       </Constraints>
     </Component>
