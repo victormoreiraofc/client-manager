@@ -11,7 +11,8 @@ import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 import java.util.logging.Level;
 import org.slf4j.MDC;
-import Screen.FonteUtils; 
+import Screen.FonteUtils;
+// Importação simulada para classes de dados/conexão (mantenha as suas originais)
 
 public class TelaAlterarEmail extends JDialog {
 
@@ -28,7 +29,7 @@ public class TelaAlterarEmail extends JDialog {
         this.usuarioLogado = usuarioLogado;
         this.parentFrame = parent;
 
-        setSize(600, 270); 
+        setSize(600, 283);
         setLocationRelativeTo(parent);
         setUndecorated(true);
         setResizable(false);
@@ -44,7 +45,7 @@ public class TelaAlterarEmail extends JDialog {
 
         setBackground(new Color(0, 0, 0, 0));
 
-        // --- PAINEL PRINCIPAL ---
+        // --- PAINEL PRINCIPAL (Fundo arredondado e borda) ---
         JPanel panel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -53,11 +54,11 @@ public class TelaAlterarEmail extends JDialog {
 
                 int arco = 20;
 
-                // Fundo Escuro
+                // Fundo Escuro (Cor 28, 46, 74)
                 g2.setColor(new Color(28, 46, 74));
                 g2.fillRoundRect(0, 0, getWidth(), getHeight(), arco, arco);
 
-                // Borda Sutil
+                // Borda Sutil (Cor 42, 62, 97)
                 g2.setColor(new Color(42, 62, 97));
                 g2.setStroke(new BasicStroke(1f));
                 g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, arco, arco);
@@ -75,24 +76,46 @@ public class TelaAlterarEmail extends JDialog {
         gbc.gridx = 0;
         gbc.weightx = 1;
 
-        // --- Título ---
-        gbc.insets = new Insets(10, 25, 15, 25);
+        // --- Título e Botão Fechar (ROW 0) ---
+        // Margem direita ajustada para mover o botão mais para a borda
+        gbc.insets = new Insets(10, 25, 15, 15); 
         gbc.gridy = 0;
-        JLabel lblTitulo = new JLabel("Alterando seu email atual:");
+        
+        // Novo painel para alinhar Título (Esquerda) e Botão Fechar (Direita)
+        JPanel headerPanel = new JPanel(new GridBagLayout());
+        headerPanel.setOpaque(false);
+        
+        GridBagConstraints gbcHeader = new GridBagConstraints();
+        gbcHeader.insets = new Insets(0, 0, 0, 0);
+
+        // 1. Título (à Esquerda, Ocupa espaço)
+        gbcHeader.gridx = 0;
+        gbcHeader.weightx = 1.0;
+        gbcHeader.fill = GridBagConstraints.HORIZONTAL;
+        
+        JLabel lblTitulo = new JLabel("Alterando seu e-mail atual:");
         try {
             lblTitulo.setFont(FonteUtils.carregarRobotoExtraBold(20f));
         } catch (Exception e) { lblTitulo.setFont(new Font("Arial", Font.BOLD, 20)); }
         lblTitulo.setForeground(Color.WHITE);
-        panel.add(lblTitulo, gbc);
+        headerPanel.add(lblTitulo, gbcHeader);
+        
+        // 2. Botão Fechar (à Direita, Largura Fixa)
+        gbcHeader.gridx = 1;
+        gbcHeader.weightx = 0;
+        gbcHeader.fill = GridBagConstraints.NONE;
+        JButton btnClose = criarBotaoFechar(); // Usando o novo método
+        headerPanel.add(btnClose, gbcHeader);
+
+        // Adiciona o Painel de Cabeçalho ao Painel Principal
+        panel.add(headerPanel, gbc);
 
         // --- E-mail atual (Label) ---
         gbc.insets = new Insets(4, 25, 2, 25);
-        gbc.gridy++;
+        gbc.gridy = 1; 
         JLabel lblEmailAtual = new JLabel("E-mail Atual");
-        lblEmailAtual.setForeground(new Color(180, 200, 230)); 
-        try {
-            lblEmailAtual.setFont(FonteUtils.carregarRobotoSemiBold(13f));
-        } catch (Exception e) { lblEmailAtual.setFont(new Font("Arial", Font.PLAIN, 13)); }
+        lblEmailAtual.setForeground(new Color(180, 200, 230));
+        configurarFonteLabel(lblEmailAtual);
         panel.add(lblEmailAtual, gbc);
 
         // --- E-mail atual (Field) ---
@@ -100,7 +123,7 @@ public class TelaAlterarEmail extends JDialog {
         gbc.gridy++;
         txtEmailAtual = criarCampoTexto();
         txtEmailAtual.setText(usuarioLogado != null ? usuarioLogado.getEmail() : "");
-        txtEmailAtual.setEditable(false); 
+        txtEmailAtual.setEditable(false);
         txtEmailAtual.setForeground(Color.GRAY);
         panel.add(txtEmailAtual, gbc);
 
@@ -108,14 +131,12 @@ public class TelaAlterarEmail extends JDialog {
         gbc.insets = new Insets(4, 25, 2, 25);
         gbc.gridy++;
         JLabel lblNovoEmail = new JLabel("Novo E-mail");
-        lblNovoEmail.setForeground(new Color(180, 200, 230)); 
-        try {
-            lblNovoEmail.setFont(FonteUtils.carregarRobotoSemiBold(13f));
-        } catch (Exception e) { lblNovoEmail.setFont(new Font("Arial", Font.PLAIN, 13)); }
+        lblNovoEmail.setForeground(new Color(180, 200, 230));
+        configurarFonteLabel(lblNovoEmail);
         panel.add(lblNovoEmail, gbc);
 
         // --- Novo E-mail (Field) ---
-        gbc.insets = new Insets(2, 25, 15, 25); 
+        gbc.insets = new Insets(2, 25, 15, 25);
         gbc.gridy++;
         txtNovoEmail = criarCampoTexto();
         panel.add(txtNovoEmail, gbc);
@@ -123,22 +144,19 @@ public class TelaAlterarEmail extends JDialog {
         // --- PAINEL DE BOTÕES ---
         gbc.insets = new Insets(5, 15, 15, 15);
         gbc.gridy++;
-        // FlowLayout alinhado à direita
-        JPanel botoes = new JPanel(new FlowLayout(FlowLayout.RIGHT, 12, 0));
+        JPanel botoes = new JPanel(new FlowLayout(FlowLayout.RIGHT, 12, 0)); 
         botoes.setOpaque(false);
 
         // ==========================================
-        //         BOTÃO CANCELAR
+        //         BOTÃO CANCELAR (Ghost Style)
         // ==========================================
         JButton btnCancelar = new JButton("Cancelar") {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                
                 g2.setColor(new Color(28, 46, 74)); 
                 g2.fillRoundRect(0, 0, getWidth(), getHeight(), 12, 12);
-                
                 super.paintComponent(g2); 
                 g2.dispose();
             }
@@ -155,24 +173,20 @@ public class TelaAlterarEmail extends JDialog {
         };
         
         configurarEstiloBotao(btnCancelar);
-        btnCancelar.setPreferredSize(new Dimension(100, 35)); // <--- LARGURA MENOR
+        btnCancelar.setPreferredSize(new Dimension(100, 35)); 
         btnCancelar.setForeground(new Color(200, 200, 200));
-        
         btnCancelar.addActionListener(e -> dispose());
 
         // ==========================================
-        //         BOTÃO ATUALIZAR
+        //         BOTÃO ATUALIZAR (Solid Blue)
         // ==========================================
         JButton btnAtualizar = new JButton("Atualizar") {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-                // Azul Vibrante
                 g2.setColor(new Color(45, 156, 219)); 
                 g2.fillRoundRect(0, 0, getWidth(), getHeight(), 12, 12);
-
                 super.paintComponent(g2);
                 g2.dispose();
             }
@@ -184,9 +198,8 @@ public class TelaAlterarEmail extends JDialog {
         };
 
         configurarEstiloBotao(btnAtualizar);
-        btnAtualizar.setPreferredSize(new Dimension(145, 35)); // <--- LARGURA MAIOR
+        btnAtualizar.setPreferredSize(new Dimension(145, 35)); 
         btnAtualizar.setForeground(new Color(20, 30, 50)); 
-        
         btnAtualizar.addActionListener(e -> atualizarEmail());
 
         botoes.add(btnCancelar);
@@ -199,9 +212,73 @@ public class TelaAlterarEmail extends JDialog {
             JComponent.WHEN_IN_FOCUSED_WINDOW);
     }
 
+    // =========================================================================
+    //                            MÉTODOS AUXILIARES DE UI
+    // =========================================================================
+
     /**
-     * Configura apenas o estilo visual base, sem definir o tamanho.
+     * Cria e estiliza o botão de fechar ('X') no canto superior direito.
+     * Quadrado maior (35x35), borda mais arredondada (arco=12), sem hover.
      */
+    private JButton criarBotaoFechar() {
+        JButton btnClose = new JButton() {
+            private final Color defaultColor = new Color(28, 46, 74); // Fundo
+            private final Color borderColor = new Color(42, 62, 97); // Borda
+
+            {
+                // NOVO: Aumenta o tamanho do quadrado para 35x35
+                setPreferredSize(new Dimension(35, 35)); 
+                setOpaque(false);
+                setContentAreaFilled(false);
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+                setBorder(BorderFactory.createEmptyBorder());
+                setFocusPainted(false);
+            }
+
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                
+                int w = getWidth();
+                int h = getHeight();
+                int arco = 12; // NOVO: Aumenta o arredondamento da borda
+
+                // 1. Fundo 
+                g2.setColor(defaultColor);
+                g2.fillRoundRect(0, 0, w, h, arco, arco);
+                
+                // 2. Borda do Botão (Grossura: 3.0f)
+                g2.setColor(borderColor);
+                g2.setStroke(new BasicStroke(2.0f)); 
+                g2.drawRoundRect(0, 0, w - 1, h - 1, arco, arco);
+
+                // 3. Desenha o 'X'
+                g2.setColor(new Color(168, 178, 195));
+                g2.setStroke(new BasicStroke(1.5f)); 
+                // Ajusta o padding para centralizar no novo tamanho 35x35
+                int padding = 12; 
+
+                g2.drawLine(padding, padding, w - padding, h - padding);
+                g2.drawLine(w - padding, padding, padding, h - padding);
+
+                g2.dispose();
+            }
+        };
+
+        // Ação: Fechar a janela
+        btnClose.addActionListener(e -> dispose());
+        return btnClose;
+    }
+
+    private void configurarFonteLabel(JLabel label) {
+        try {
+            label.setFont(FonteUtils.carregarRobotoSemiBold(13f));
+        } catch (Exception e) {
+            label.setFont(new Font("Arial", Font.PLAIN, 13));
+        }
+    }
+
     private void configurarEstiloBotao(JButton btn) {
         btn.setUI(new BasicButtonUI());
         btn.setOpaque(false);
@@ -215,6 +292,23 @@ public class TelaAlterarEmail extends JDialog {
             btn.setFont(new Font("Segoe UI", Font.BOLD, 12));
         }
     }
+
+    private JTextField criarCampoTexto() {
+        JTextField txt = new JTextField();
+        txt.setBackground(new Color(25, 40, 65));
+        txt.setForeground(Color.WHITE);
+        txt.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        txt.setCaretColor(Color.WHITE);
+        txt.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(50, 70, 100)),
+                BorderFactory.createEmptyBorder(8, 10, 8, 10)
+        ));
+        return txt;
+    }
+    
+    // =========================================================================
+    //                             LÓGICA DO BLUR
+    // =========================================================================
 
     private void aplicarEfeitoDesfoqueFundo() {
         if (parentFrame != null) {
@@ -268,19 +362,11 @@ public class TelaAlterarEmail extends JDialog {
         return op.filter(imagemOriginal, null);
     }
 
-    private JTextField criarCampoTexto() {
-        JTextField txt = new JTextField();
-        txt.setBackground(new Color(25, 40, 65));
-        txt.setForeground(Color.WHITE);
-        txt.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        txt.setCaretColor(Color.WHITE);
-        txt.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(50, 70, 100)),
-                BorderFactory.createEmptyBorder(8, 10, 8, 10)
-        ));
-        return txt;
-    }
 
+    // =========================================================================
+    //                            LÓGICA DE NEGÓCIO
+    // =========================================================================
+    
     private void atualizarEmail() {
         if (usuarioLogado == null) return;
         MDC.put("usuario", usuarioLogado.getUsuario());
@@ -294,7 +380,11 @@ public class TelaAlterarEmail extends JDialog {
 
         try {
             if (!emailNovo.equals(emailAtual)) {
-                usuarioLogado.setEmail(emailNovo);
+                // Simulação da atualização no objeto/banco de dados
+                usuarioLogado.setEmail(emailNovo); 
+                
+                // Mensagem de sucesso 
+                JOptionPane.showMessageDialog(this, "E-mail alterado com sucesso!");
                 logger.info("Email alterado de " + emailAtual + " para " + emailNovo);
                 dispose();
             } else {

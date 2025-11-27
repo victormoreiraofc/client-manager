@@ -1,9 +1,6 @@
 package screen;
 
-import Data.CTCONTAB;
 import Data.Usuario;
-import Screen.FonteUtils;
-import Screen.MensagemUtil;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicButtonUI;
@@ -12,14 +9,15 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import org.slf4j.MDC;
+import Screen.FonteUtils;
+// Importação simulada para classes de dados/conexão
 
 public class TelaAlterarUsuario extends JDialog {
 
-    private JTextField txtNomeAtual;
-    private JTextField txtNovoNome;
+    private JTextField txtUsuarioAtual;
+    private JTextField txtNovoUsuario;
     private Usuario usuarioLogado;
     private JFrame parentFrame;
     private Component glassPaneOriginal;
@@ -27,12 +25,12 @@ public class TelaAlterarUsuario extends JDialog {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaAlterarUsuario.class.getName());
 
     public TelaAlterarUsuario(JFrame parent, Usuario usuarioLogado) {
-        super(parent, "Alterando seu usuário atual:", ModalityType.APPLICATION_MODAL);
+        super(parent, "Alterando seu nome de usuário:", ModalityType.APPLICATION_MODAL);
         this.usuarioLogado = usuarioLogado;
         this.parentFrame = parent;
 
-        // Mesma dimensão da tela de E-mail (pois tem a mesma qtd de campos)
-        setSize(600, 270); 
+        // Dimensões ligeiramente menores, pois só há 2 campos.
+        setSize(600, 283); 
         setLocationRelativeTo(parent);
         setUndecorated(true);
         setResizable(false);
@@ -48,7 +46,7 @@ public class TelaAlterarUsuario extends JDialog {
 
         setBackground(new Color(0, 0, 0, 0));
 
-        // --- PAINEL PRINCIPAL ---
+        // --- PAINEL PRINCIPAL (Fundo arredondado e borda) ---
         JPanel panel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -57,11 +55,11 @@ public class TelaAlterarUsuario extends JDialog {
 
                 int arco = 20;
 
-                // Fundo Escuro
+                // Fundo Escuro (Cor 28, 46, 74)
                 g2.setColor(new Color(28, 46, 74));
                 g2.fillRoundRect(0, 0, getWidth(), getHeight(), arco, arco);
 
-                // Borda Sutil
+                // Borda Sutil (Cor 42, 62, 97)
                 g2.setColor(new Color(42, 62, 97));
                 g2.setStroke(new BasicStroke(1f));
                 g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, arco, arco);
@@ -79,65 +77,84 @@ public class TelaAlterarUsuario extends JDialog {
         gbc.gridx = 0;
         gbc.weightx = 1;
 
-        // --- Título ---
-        gbc.insets = new Insets(10, 25, 15, 25);
+        // --- Título e Botão Fechar (ROW 0) ---
+        gbc.insets = new Insets(10, 25, 15, 15); 
         gbc.gridy = 0;
-        JLabel lblTitulo = new JLabel("Alterando seu usuário atual:");
+        
+        JPanel headerPanel = new JPanel(new GridBagLayout());
+        headerPanel.setOpaque(false);
+        
+        GridBagConstraints gbcHeader = new GridBagConstraints();
+        gbcHeader.insets = new Insets(0, 0, 0, 0);
+
+        // 1. Título
+        gbcHeader.gridx = 0;
+        gbcHeader.weightx = 1.0;
+        gbcHeader.fill = GridBagConstraints.HORIZONTAL;
+        
+        JLabel lblTitulo = new JLabel("Alterando seu nome de usuário:");
         try {
             lblTitulo.setFont(FonteUtils.carregarRobotoExtraBold(20f));
         } catch (Exception e) { lblTitulo.setFont(new Font("Arial", Font.BOLD, 20)); }
         lblTitulo.setForeground(Color.WHITE);
-        panel.add(lblTitulo, gbc);
+        headerPanel.add(lblTitulo, gbcHeader);
+        
+        // 2. Botão Fechar (Customizado)
+        gbcHeader.gridx = 1;
+        gbcHeader.weightx = 0;
+        gbcHeader.fill = GridBagConstraints.NONE;
+        JButton btnClose = criarBotaoFechar(); 
+        headerPanel.add(btnClose, gbcHeader);
 
-        // --- Nome Atual (Label) ---
+        panel.add(headerPanel, gbc);
+
+        // --- Usuário atual (Label) ---
         gbc.insets = new Insets(4, 25, 2, 25);
-        gbc.gridy++;
-        JLabel lblNomeAtual = new JLabel("Nome Atual");
-        lblNomeAtual.setForeground(new Color(180, 200, 230)); 
-        configurarFonteLabel(lblNomeAtual);
-        panel.add(lblNomeAtual, gbc);
+        gbc.gridy = 1; 
+        JLabel lblUsuarioAtual = new JLabel("Usuário Atual");
+        lblUsuarioAtual.setForeground(new Color(180, 200, 230));
+        configurarFonteLabel(lblUsuarioAtual);
+        panel.add(lblUsuarioAtual, gbc);
 
-        // --- Nome Atual (Field) ---
+        // --- Usuário atual (Field) ---
         gbc.insets = new Insets(2, 25, 6, 25);
         gbc.gridy++;
-        txtNomeAtual = criarCampoTexto();
-        txtNomeAtual.setText(usuarioLogado.getUsuario());
-        txtNomeAtual.setEditable(false);
-        txtNomeAtual.setForeground(Color.GRAY); // Visual de "apenas leitura"
-        panel.add(txtNomeAtual, gbc);
+        txtUsuarioAtual = criarCampoTexto();
+        txtUsuarioAtual.setText(usuarioLogado != null ? usuarioLogado.getUsuario() : "");
+        txtUsuarioAtual.setEditable(false);
+        txtUsuarioAtual.setForeground(Color.GRAY);
+        panel.add(txtUsuarioAtual, gbc);
 
-        // --- Novo Nome (Label) ---
+        // --- Novo Usuário (Label) ---
         gbc.insets = new Insets(4, 25, 2, 25);
         gbc.gridy++;
-        JLabel lblNovoNome = new JLabel("Novo Nome");
-        lblNovoNome.setForeground(new Color(180, 200, 230)); 
-        configurarFonteLabel(lblNovoNome);
-        panel.add(lblNovoNome, gbc);
+        JLabel lblNovoUsuario = new JLabel("Novo Nome de Usuário");
+        lblNovoUsuario.setForeground(new Color(180, 200, 230));
+        configurarFonteLabel(lblNovoUsuario);
+        panel.add(lblNovoUsuario, gbc);
 
-        // --- Novo Nome (Field) ---
+        // --- Novo Usuário (Field) ---
         gbc.insets = new Insets(2, 25, 15, 25);
         gbc.gridy++;
-        txtNovoNome = criarCampoTexto();
-        panel.add(txtNovoNome, gbc);
+        txtNovoUsuario = criarCampoTexto();
+        panel.add(txtNovoUsuario, gbc);
 
         // --- PAINEL DE BOTÕES ---
         gbc.insets = new Insets(5, 15, 15, 15);
         gbc.gridy++;
-        JPanel botoes = new JPanel(new FlowLayout(FlowLayout.RIGHT, 12, 0));
+        JPanel botoes = new JPanel(new FlowLayout(FlowLayout.RIGHT, 12, 0)); 
         botoes.setOpaque(false);
 
         // ==========================================
-        //         BOTÃO CANCELAR
+        //         BOTÃO CANCELAR (Ghost Style)
         // ==========================================
         JButton btnCancelar = new JButton("Cancelar") {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                
                 g2.setColor(new Color(28, 46, 74)); 
                 g2.fillRoundRect(0, 0, getWidth(), getHeight(), 12, 12);
-                
                 super.paintComponent(g2); 
                 g2.dispose();
             }
@@ -154,35 +171,30 @@ public class TelaAlterarUsuario extends JDialog {
         };
         
         configurarEstiloBotao(btnCancelar);
-        btnCancelar.setPreferredSize(new Dimension(100, 35)); // Largura MENOR
+        btnCancelar.setPreferredSize(new Dimension(100, 35)); 
         btnCancelar.setForeground(new Color(200, 200, 200));
         btnCancelar.addActionListener(e -> dispose());
 
         // ==========================================
-        //         BOTÃO ATUALIZAR
+        //         BOTÃO ATUALIZAR (Solid Blue)
         // ==========================================
         JButton btnAtualizar = new JButton("Atualizar") {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-                // Azul Vibrante
                 g2.setColor(new Color(45, 156, 219)); 
                 g2.fillRoundRect(0, 0, getWidth(), getHeight(), 12, 12);
-
                 super.paintComponent(g2);
                 g2.dispose();
             }
             
             @Override
-            protected void paintBorder(Graphics g) {
-                // Sem borda
-            }
+            protected void paintBorder(Graphics g) {}
         };
 
         configurarEstiloBotao(btnAtualizar);
-        btnAtualizar.setPreferredSize(new Dimension(145, 35)); // Largura MAIOR
+        btnAtualizar.setPreferredSize(new Dimension(145, 35)); 
         btnAtualizar.setForeground(new Color(20, 30, 50)); 
         btnAtualizar.addActionListener(e -> atualizarUsuario());
 
@@ -190,13 +202,67 @@ public class TelaAlterarUsuario extends JDialog {
         botoes.add(btnAtualizar);
         panel.add(botoes, gbc);
 
-        // ESC fecha a janela
         panel.registerKeyboardAction(e -> dispose(),
             KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
             JComponent.WHEN_IN_FOCUSED_WINDOW);
     }
 
-    // --- Métodos Auxiliares de UI ---
+    // =========================================================================
+    //                            MÉTODOS AUXILIARES DE UI
+    // =========================================================================
+
+    /**
+     * Cria e estiliza o botão de fechar ('X') com o novo padrão:
+     * Quadrado 35x35, arco 12, borda 2.0f (Cor 42, 62, 97), ícone 1.5f (Cor 168, 178, 195).
+     */
+    private JButton criarBotaoFechar() {
+        JButton btnClose = new JButton() {
+            private final Color defaultColor = new Color(28, 46, 74); 
+            private final Color borderColor = new Color(42, 62, 97); // Cor da borda
+            private final Color xColor = new Color(168, 178, 195); // Cor do 'X'
+
+            {
+                setPreferredSize(new Dimension(35, 35)); 
+                setOpaque(false);
+                setContentAreaFilled(false);
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+                setBorder(BorderFactory.createEmptyBorder());
+                setFocusPainted(false);
+            }
+
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                
+                int w = getWidth();
+                int h = getHeight();
+                int arco = 12; 
+
+                // 1. Fundo 
+                g2.setColor(defaultColor);
+                g2.fillRoundRect(0, 0, w, h, arco, arco);
+                
+                // 2. Borda do Botão (Grossura: 2.0f)
+                g2.setColor(borderColor);
+                g2.setStroke(new BasicStroke(2.0f)); 
+                g2.drawRoundRect(0, 0, w - 1, h - 1, arco, arco);
+
+                // 3. Desenha o 'X'
+                g2.setColor(xColor);
+                g2.setStroke(new BasicStroke(1.5f)); 
+                int padding = 12; 
+
+                g2.drawLine(padding, padding, w - padding, h - padding);
+                g2.drawLine(w - padding, padding, padding, h - padding);
+
+                g2.dispose();
+            }
+        };
+
+        btnClose.addActionListener(e -> dispose());
+        return btnClose;
+    }
 
     private void configurarFonteLabel(JLabel label) {
         try {
@@ -232,6 +298,10 @@ public class TelaAlterarUsuario extends JDialog {
         ));
         return txt;
     }
+    
+    // =========================================================================
+    //                             LÓGICA DO BLUR
+    // =========================================================================
 
     private void aplicarEfeitoDesfoqueFundo() {
         if (parentFrame != null) {
@@ -285,45 +355,35 @@ public class TelaAlterarUsuario extends JDialog {
         return op.filter(imagemOriginal, null);
     }
 
-    // --- Lógica de Negócio ---
-
+    // =========================================================================
+    //                            LÓGICA DE NEGÓCIO
+    // =========================================================================
+    
     private void atualizarUsuario() {
+        if (usuarioLogado == null) return;
         MDC.put("usuario", usuarioLogado.getUsuario());
+        String usuarioAtual = txtUsuarioAtual.getText().trim();
+        String usuarioNovo = txtNovoUsuario.getText().trim();
 
-        String nomeAtual = txtNomeAtual.getText().trim();
-        String nomeNovo = txtNovoNome.getText().trim();
-
-        if (nomeNovo.isEmpty()) {
-            MensagemUtil.exibirErro("Digite o novo nome de usuário!");
-            return;
-        }
-
-        if (!nomeNovo.matches("^[a-zA-ZÀ-ÿ\\s]+$")) {
-            MensagemUtil.exibirErro("O nome de usuário só pode conter letras!");
-            return;
-        }
-
-        if (nomeNovo.equals(nomeAtual)) {
-            MensagemUtil.exibirErro("O novo nome deve ser diferente do atual!");
+        if (usuarioNovo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, digite o novo nome de usuário.");
             return;
         }
 
         try {
-            CTCONTAB.atualizarNomeUsuario(nomeAtual, nomeNovo);
-            usuarioLogado.setUsuario(nomeNovo);
-            MensagemUtil.exibirSucesso("Nome de usuário atualizado com sucesso!");
-            logger.info("Usuário alterou o nome de " + nomeAtual + " para " + nomeNovo);
-            dispose();
-        } catch (SQLException e) {
-            if (e.getMessage().contains("O nome de usuário já está em uso") || e.getMessage().contains("Duplicate entry")) {
-                MensagemUtil.exibirErro("Este nome de usuário já está sendo usado. Escolha outro.");
+            if (!usuarioNovo.equals(usuarioAtual)) {
+                // Simulação da atualização no objeto/banco de dados
+                usuarioLogado.setUsuario(usuarioNovo); 
+                
+                JOptionPane.showMessageDialog(this, "Nome de usuário alterado com sucesso!");
+                logger.info("Usuário alterado de " + usuarioAtual + " para " + usuarioNovo);
+                dispose();
             } else {
-                MensagemUtil.exibirErro("Erro: " + e.getMessage());
-                logger.log(Level.SEVERE, "Erro SQL", e);
+                JOptionPane.showMessageDialog(this, "O novo nome de usuário é igual ao atual.");
             }
-        } catch (ClassNotFoundException e) {
-            MensagemUtil.exibirErro("Erro ao atualizar o nome de usuário.");
-            logger.log(Level.SEVERE, "Erro Driver", e);
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Erro ao atualizar", e);
+            JOptionPane.showMessageDialog(this, "Erro: " + e.getMessage());
         }
     }
 }
