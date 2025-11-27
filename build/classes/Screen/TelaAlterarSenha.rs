@@ -1,4 +1,5 @@
 screen.TelaAlterarSenha$6
+screen.TelaAlterarSenha$7
 screen.TelaAlterarSenha
 screen.TelaAlterarSenha$2
 screen.TelaAlterarSenha$3
