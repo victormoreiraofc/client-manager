@@ -530,7 +530,7 @@ public class TelaConfiguracao extends javax.swing.JFrame {
         lblDescricaoAtualizarEmail.setText("<html><center>Mantenha seu contato sempre atualizado</center></html>");
         lblDescricaoAtualizarEmail.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         getContentPane().add(lblDescricaoAtualizarEmail);
-        lblDescricaoAtualizarEmail.setBounds(220, 440, 210, 30);
+        lblDescricaoAtualizarEmail.setBounds(225, 440, 210, 30);
 
         lblTituloAtualizarEmail.setFont(FonteUtils.carregarRalewayMedium(16f));
         lblTituloAtualizarEmail.setForeground(new java.awt.Color(255, 255, 255));

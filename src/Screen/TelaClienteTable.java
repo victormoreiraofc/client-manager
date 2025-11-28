@@ -286,6 +286,92 @@ public class TelaClienteTable extends javax.swing.JFrame {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        
+        
+        // Icones dos Quadrados
+        try {
+            java.net.URL url = getClass().getResource("/images/New Report Icon.png");
+            if (url == null) {
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/New Report Icon.png ou src/images/New Report Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
+                lblIconeRelatorioNovo.setIcon(new javax.swing.ImageIcon(img));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        try {
+            java.net.URL url = getClass().getResource("/images/Report Pendent Icon.png");
+            if (url == null) {
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Report Pendent Icon.png ou src/images/Report Pendent Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
+                lblIconeRelatorioPendente.setIcon(new javax.swing.ImageIcon(img));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        try {
+            java.net.URL url = getClass().getResource("/images/Report Sucess Icon.png");
+            if (url == null) {
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Report Sucess Icon.png ou src/images/Report Sucess Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
+                lblIconeRelatorioConcluido.setIcon(new javax.swing.ImageIcon(img));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        try {
+            java.net.URL url = getClass().getResource("/images/Registered Employee of the Month Icon.png");
+            if (url == null) {
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Registered Employee of the Month Icon.png ou src/images/Registered Employee of the Month Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
+                lblIconeFuncionarioDoMes.setIcon(new javax.swing.ImageIcon(img));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        try {
+            java.net.URL url = getClass().getResource("/images/procurar.png");
+            if (url == null) {
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/procurar.png ou src/images/procurar.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(12, 12, java.awt.Image.SCALE_SMOOTH);
+                lblPesquisarIcone.setIcon(new javax.swing.ImageIcon(img));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        try {
+            java.net.URL url = getClass().getResource("/images/Plus Icon.png");
+            if (url == null) {
+                System.err.println(
+                        "Imagem não encontrada. Verifique: /images/Plus Icon.png ou src/images/Plus Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(12, 12, java.awt.Image.SCALE_SMOOTH);
+                btnCadastrar.setIcon(new javax.swing.ImageIcon(img));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void setIcon() {
@@ -636,9 +722,27 @@ public class TelaClienteTable extends javax.swing.JFrame {
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnCadastrar = new javax.swing.JButton();
+        lblRelatorioNovoTitulo1 = new javax.swing.JLabel();
+        lblIconeFuncionarioDoMes = new javax.swing.JLabel();
+        lblIconeRelatorioConcluido = new javax.swing.JLabel();
+        lblIconeRelatorioPendente = new javax.swing.JLabel();
+        lblIconeRelatorioNovo = new javax.swing.JLabel();
+        lblFuncionarioDoMesTitulo = new javax.swing.JLabel();
+        lblRelatorioConcluidoTitulo = new javax.swing.JLabel();
+        lblRelatorioPendenteTitulo = new javax.swing.JLabel();
+        lblRelatorioNovoTitulo = new javax.swing.JLabel();
+        jPanelFuncionarioDoMesIconeQuadrado = new javax.swing.JPanel();
+        jPanelRelatorioConcluidoIconeQuadrado = new javax.swing.JPanel();
+        jPanelRelatorioPendenteIconeQuadrado = new javax.swing.JPanel();
+        jPanelRelatorioNovoIconeQuadrado = new javax.swing.JPanel();
+        JPanelFuncionarioDoMes = new javax.swing.JPanel();
+        JPanelRelatorioConcluido = new javax.swing.JPanel();
+        JPanelRelatorioPendente = new javax.swing.JPanel();
+        JPanelRelatorioNovo = new javax.swing.JPanel();
         btnInfo = new javax.swing.JButton();
         btnNotificacoes = new javax.swing.JButton();
         btnCalendario = new javax.swing.JButton();
@@ -674,7 +778,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         jSeparator7 = new javax.swing.JSeparator();
         jSeparator6 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        lblPesquisarIcone = new javax.swing.JLabel();
         txtLogin = new javax.swing.JTextField();
         btnLogin = new javax.swing.JButton();
         Background = new javax.swing.JLabel();
@@ -682,6 +786,98 @@ public class TelaClienteTable extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CT Contab Manager");
         getContentPane().setLayout(null);
+
+        btnCadastrar.setBackground(new java.awt.Color(28, 46, 74));
+        btnCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Plus Icon.png"))); // NOI18N
+        btnCadastrar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(btnCadastrar);
+        btnCadastrar.setBounds(570, 213, 35, 35);
+
+        lblRelatorioNovoTitulo1.setFont(FonteUtils.carregarRalewayMedium(20f));
+        lblRelatorioNovoTitulo1.setForeground(new java.awt.Color(255, 255, 255));
+        lblRelatorioNovoTitulo1.setText("Performance");
+        getContentPane().add(lblRelatorioNovoTitulo1);
+        lblRelatorioNovoTitulo1.setBounds(100, 100, 210, 20);
+
+        lblIconeFuncionarioDoMes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblIconeFuncionarioDoMes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Registered Employee of the Month Icon.png"))); // NOI18N
+        getContentPane().add(lblIconeFuncionarioDoMes);
+        lblIconeFuncionarioDoMes.setBounds(1155, 155, 20, 20);
+
+        lblIconeRelatorioConcluido.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblIconeRelatorioConcluido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Report Sucess Icon.png"))); // NOI18N
+        getContentPane().add(lblIconeRelatorioConcluido);
+        lblIconeRelatorioConcluido.setBounds(805, 155, 20, 20);
+
+        lblIconeRelatorioPendente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblIconeRelatorioPendente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Report Pendent Icon.png"))); // NOI18N
+        getContentPane().add(lblIconeRelatorioPendente);
+        lblIconeRelatorioPendente.setBounds(466, 155, 20, 20);
+
+        lblIconeRelatorioNovo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblIconeRelatorioNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/New Report Icon.png"))); // NOI18N
+        getContentPane().add(lblIconeRelatorioNovo);
+        lblIconeRelatorioNovo.setBounds(125, 155, 20, 20);
+
+        lblFuncionarioDoMesTitulo.setFont(FonteUtils.carregarRalewayMedium(12f));
+        lblFuncionarioDoMesTitulo.setForeground(new java.awt.Color(168, 178, 195));
+        lblFuncionarioDoMesTitulo.setText("Funcionário Relator do Mês");
+        getContentPane().add(lblFuncionarioDoMesTitulo);
+        lblFuncionarioDoMesTitulo.setBounds(1200, 140, 210, 20);
+
+        lblRelatorioConcluidoTitulo.setFont(FonteUtils.carregarRalewayMedium(12f));
+        lblRelatorioConcluidoTitulo.setForeground(new java.awt.Color(168, 178, 195));
+        lblRelatorioConcluidoTitulo.setText("Total de Relatórios Concluidos");
+        getContentPane().add(lblRelatorioConcluidoTitulo);
+        lblRelatorioConcluidoTitulo.setBounds(850, 140, 210, 20);
+
+        lblRelatorioPendenteTitulo.setFont(FonteUtils.carregarRalewayMedium(12f));
+        lblRelatorioPendenteTitulo.setForeground(new java.awt.Color(168, 178, 195));
+        lblRelatorioPendenteTitulo.setText("Total de Relatórios Pendentes");
+        getContentPane().add(lblRelatorioPendenteTitulo);
+        lblRelatorioPendenteTitulo.setBounds(510, 140, 210, 20);
+
+        lblRelatorioNovoTitulo.setFont(FonteUtils.carregarRalewayMedium(12f));
+        lblRelatorioNovoTitulo.setForeground(new java.awt.Color(168, 178, 195));
+        lblRelatorioNovoTitulo.setText("Total de Relatórios Novos");
+        getContentPane().add(lblRelatorioNovoTitulo);
+        lblRelatorioNovoTitulo.setBounds(170, 140, 210, 20);
+
+        jPanelFuncionarioDoMesIconeQuadrado.setBackground(new java.awt.Color(155, 81, 224, 41));
+        getContentPane().add(jPanelFuncionarioDoMesIconeQuadrado);
+        jPanelFuncionarioDoMesIconeQuadrado.setBounds(1143, 143, 45, 45);
+
+        jPanelRelatorioConcluidoIconeQuadrado.setBackground(new java.awt.Color(39, 174, 96, 41));
+        getContentPane().add(jPanelRelatorioConcluidoIconeQuadrado);
+        jPanelRelatorioConcluidoIconeQuadrado.setBounds(793, 143, 45, 45);
+
+        jPanelRelatorioPendenteIconeQuadrado.setBackground(new java.awt.Color(242, 201, 76, 41));
+        getContentPane().add(jPanelRelatorioPendenteIconeQuadrado);
+        jPanelRelatorioPendenteIconeQuadrado.setBounds(453, 143, 45, 45);
+
+        jPanelRelatorioNovoIconeQuadrado.setBackground(new java.awt.Color(45, 156, 219, 41));
+        getContentPane().add(jPanelRelatorioNovoIconeQuadrado);
+        jPanelRelatorioNovoIconeQuadrado.setBounds(113, 143, 45, 45);
+
+        JPanelFuncionarioDoMes.setBackground(new java.awt.Color(28, 46, 74));
+        JPanelFuncionarioDoMes.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(42, 62, 97), 3, true));
+        getContentPane().add(JPanelFuncionarioDoMes);
+        JPanelFuncionarioDoMes.setBounds(1130, 130, 280, 70);
+
+        JPanelRelatorioConcluido.setBackground(new java.awt.Color(28, 46, 74));
+        JPanelRelatorioConcluido.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(42, 62, 97), 3, true));
+        getContentPane().add(JPanelRelatorioConcluido);
+        JPanelRelatorioConcluido.setBounds(780, 130, 280, 70);
+
+        JPanelRelatorioPendente.setBackground(new java.awt.Color(28, 46, 74));
+        JPanelRelatorioPendente.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(42, 62, 97), 3, true));
+        getContentPane().add(JPanelRelatorioPendente);
+        JPanelRelatorioPendente.setBounds(440, 130, 280, 70);
+
+        JPanelRelatorioNovo.setBackground(new java.awt.Color(28, 46, 74));
+        JPanelRelatorioNovo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(42, 62, 97), 3, true));
+        getContentPane().add(JPanelRelatorioNovo);
+        JPanelRelatorioNovo.setBounds(100, 130, 280, 70);
 
         btnInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Information Icon.png"))); // NOI18N
         btnInfo.setContentAreaFilled(false);
@@ -860,21 +1056,22 @@ public class TelaClienteTable extends javax.swing.JFrame {
         jTable1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jTable1.setForeground(new java.awt.Color(255, 255, 255));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][] {
-                        { null, null, null, null, null, null, null, null },
-                        { null, null, null, null, null, null, null, null },
-                        { null, null, null, null, null, null, null, null },
-                        { null, null, null, null, null, null, null, null }
-                },
-                new String[] {
-                        "NOME", "TIPO DE PESSOA", "STATUS", "SERVIÇO", "DATA DE CADASTRO", "AÇÃO 1", "AÇÃO 2", "AÇÃO 3"
-                }) {
-            boolean[] canEdit = new boolean[] {
-                    false, false, false, false, false, true, true, true
+            new Object [][] {
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "NOME", "TIPO DE PESSOA", "STATUS", "SERVIÇO", "DATA DE CADASTRO", "AÇÃO 1", "AÇÃO 2", "AÇÃO 3"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
+                return canEdit [columnIndex];
             }
         });
         jTable1.setGridColor(new java.awt.Color(115, 115, 115));
@@ -897,7 +1094,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(110, 220, 1130, 420);
+        jScrollPane1.setBounds(120, 340, 1100, 370);
         jTable1.setOpaque(false);
         ((DefaultTableCellRenderer) jTable1.getDefaultRenderer(Object.class)).setOpaque(false);
         jScrollPane1.setOpaque(false);
@@ -909,7 +1106,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         lblNome.setText("NOME");
         lblNome.setToolTipText("");
         getContentPane().add(lblNome);
-        lblNome.setBounds(110, 190, 190, 30);
+        lblNome.setBounds(130, 290, 160, 20);
 
         lblTipoDePessoa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTipoDePessoa.setForeground(new java.awt.Color(186, 186, 186));
@@ -917,7 +1114,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         lblTipoDePessoa.setText("TIPOS DE PESSOA");
         lblTipoDePessoa.setToolTipText("");
         getContentPane().add(lblTipoDePessoa);
-        lblTipoDePessoa.setBounds(300, 190, 185, 30);
+        lblTipoDePessoa.setBounds(320, 290, 150, 20);
 
         lblStatus.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblStatus.setForeground(new java.awt.Color(186, 186, 186));
@@ -925,7 +1122,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         lblStatus.setText("STATUS");
         lblStatus.setToolTipText("");
         getContentPane().add(lblStatus);
-        lblStatus.setBounds(485, 190, 190, 30);
+        lblStatus.setBounds(500, 290, 160, 20);
 
         lblServico.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblServico.setForeground(new java.awt.Color(186, 186, 186));
@@ -933,7 +1130,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         lblServico.setText("SERVIÇO");
         lblServico.setToolTipText("");
         getContentPane().add(lblServico);
-        lblServico.setBounds(680, 190, 180, 30);
+        lblServico.setBounds(700, 290, 150, 20);
 
         lblDataDeCadastro.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblDataDeCadastro.setForeground(new java.awt.Color(186, 186, 186));
@@ -941,7 +1138,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         lblDataDeCadastro.setText("DATA DE CADASTRO");
         lblDataDeCadastro.setToolTipText("");
         getContentPane().add(lblDataDeCadastro);
-        lblDataDeCadastro.setBounds(860, 190, 190, 30);
+        lblDataDeCadastro.setBounds(880, 220, 160, 20);
 
         lblTipoDePessoa4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTipoDePessoa4.setForeground(new java.awt.Color(186, 186, 186));
@@ -949,65 +1146,67 @@ public class TelaClienteTable extends javax.swing.JFrame {
         lblTipoDePessoa4.setText("AÇÕES");
         lblTipoDePessoa4.setToolTipText("");
         getContentPane().add(lblTipoDePessoa4);
-        lblTipoDePessoa4.setBounds(1050, 190, 190, 30);
+        lblTipoDePessoa4.setBounds(1070, 220, 160, 20);
 
         jSeparator4.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator4.setForeground(new java.awt.Color(115, 115, 115));
         getContentPane().add(jSeparator4);
-        jSeparator4.setBounds(110, 220, 1130, 80);
+        jSeparator4.setBounds(120, 340, 1100, 30);
 
         jSeparator2.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator2.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator2);
-        jSeparator2.setBounds(298, 190, 10, 450);
+        jSeparator2.setBounds(280, 310, 3, 400);
 
         jSeparator3.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator3.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator3);
-        jSeparator3.setBounds(485, 190, 30, 450);
+        jSeparator3.setBounds(480, 310, 3, 400);
 
         jSeparator5.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator5.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator5);
-        jSeparator5.setBounds(673, 190, 90, 450);
+        jSeparator5.setBounds(680, 310, 60, 400);
 
         jSeparator7.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator7.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator7.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator7);
-        jSeparator7.setBounds(1048, 190, 30, 450);
+        jSeparator7.setBounds(1050, 310, 3, 400);
 
         jSeparator6.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator6.setForeground(new java.awt.Color(115, 115, 115));
         jSeparator6.setOrientation(javax.swing.SwingConstants.VERTICAL);
         getContentPane().add(jSeparator6);
-        jSeparator6.setBounds(860, 190, 40, 450);
+        jSeparator6.setBounds(870, 310, 10, 400);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255, 15));
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(110, 190, 1130, 450);
+        jPanel1.setBounds(120, 310, 1100, 400);
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lupa.png"))); // NOI18N
-        getContentPane().add(jLabel4);
-        jLabel4.setBounds(120, 100, 20, 80);
+        lblPesquisarIcone.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPesquisarIcone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/procurar.png"))); // NOI18N
+        getContentPane().add(lblPesquisarIcone);
+        lblPesquisarIcone.setBounds(113, 224, 12, 12);
 
-        txtLogin.setBackground(new java.awt.Color(4, 21, 57));
-        txtLogin.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        txtLogin.setForeground(new java.awt.Color(115, 115, 115));
+        txtLogin.setBackground(new java.awt.Color(19, 35, 59));
+        txtLogin.setFont(FonteUtils.carregarLato(14f));
+        txtLogin.setForeground(new java.awt.Color(142, 162, 189));
         txtLogin.setBorder(javax.swing.BorderFactory.createCompoundBorder(
-                javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3),
-                javax.swing.BorderFactory.createEmptyBorder(0, 30, 0, 0)));
+            javax.swing.BorderFactory.createLineBorder(new java.awt.Color(42, 62, 97), 3),
+            javax.swing.BorderFactory.createEmptyBorder(0, 30, 0, 0)
+        ));
         txtLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtLoginActionPerformed(evt);
             }
         });
         getContentPane().add(txtLogin);
-        txtLogin.setBounds(110, 120, 950, 40);
-        addPlaceholder(txtLogin, "Escreva o nome do cliente que deseja buscar.");
+        txtLogin.setBounds(100, 210, 460, 40);
+        addPlaceholder(txtLogin, "Buscar");
 
         btnLogin.setBackground(new java.awt.Color(194, 166, 40));
         btnLogin.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
@@ -1019,7 +1218,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnLogin);
-        btnLogin.setBounds(1070, 120, 170, 40);
+        btnLogin.setBounds(1080, 240, 140, 30);
 
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Dashboard Background.png"))); // NOI18N
         getContentPane().add(Background);
@@ -1110,7 +1309,12 @@ public class TelaClienteTable extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
+    private javax.swing.JPanel JPanelFuncionarioDoMes;
+    private javax.swing.JPanel JPanelRelatorioConcluido;
+    private javax.swing.JPanel JPanelRelatorioNovo;
+    private javax.swing.JPanel JPanelRelatorioPendente;
     private javax.swing.JButton btnAdministracao;
+    private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnCalendario;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnConfiguracoes;
@@ -1124,8 +1328,11 @@ public class TelaClienteTable extends javax.swing.JFrame {
     private javax.swing.JButton btnRelatorios;
     private javax.swing.JButton btnTarefas;
     private javax.swing.JButton btnUserIcon;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanelFuncionarioDoMesIconeQuadrado;
+    private javax.swing.JPanel jPanelRelatorioConcluidoIconeQuadrado;
+    private javax.swing.JPanel jPanelRelatorioNovoIconeQuadrado;
+    private javax.swing.JPanel jPanelRelatorioPendenteIconeQuadrado;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
@@ -1138,9 +1345,19 @@ public class TelaClienteTable extends javax.swing.JFrame {
     private javax.swing.JLabel lblBarraSuperior;
     private javax.swing.JLabel lblDataDeCadastro;
     private javax.swing.JLabel lblDivisorTela;
+    private javax.swing.JLabel lblFuncionarioDoMesTitulo;
+    private javax.swing.JLabel lblIconeFuncionarioDoMes;
+    private javax.swing.JLabel lblIconeRelatorioConcluido;
+    private javax.swing.JLabel lblIconeRelatorioNovo;
+    private javax.swing.JLabel lblIconeRelatorioPendente;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblLogoTexto;
     private javax.swing.JLabel lblNome;
+    private javax.swing.JLabel lblPesquisarIcone;
+    private javax.swing.JLabel lblRelatorioConcluidoTitulo;
+    private javax.swing.JLabel lblRelatorioNovoTitulo;
+    private javax.swing.JLabel lblRelatorioNovoTitulo1;
+    private javax.swing.JLabel lblRelatorioPendenteTitulo;
     private javax.swing.JLabel lblServico;
     private javax.swing.JLabel lblStatus;
     private javax.swing.JLabel lblTipoDePessoa;
