@@ -69,6 +69,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         addHoverLabel(btnConfiguracoes, "Configuração");
         addHoverLabel(btnAdministracao, "Administração");
         addHoverLabel(btnNotificacoes, "Notificações");
+        addHoverLabel(btnCadastrar, "Novo Cliente");
         addHoverLabel(btnInfo, "Ajuda");
         addHoverLabel(btnUserIcon, usuarioLogado.getUsuario());
 
@@ -286,8 +287,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        
-        
+
         // Icones dos Quadrados
         try {
             java.net.URL url = getClass().getResource("/images/New Report Icon.png");
@@ -302,7 +302,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        
+
         try {
             java.net.URL url = getClass().getResource("/images/Report Pendent Icon.png");
             if (url == null) {
@@ -316,7 +316,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        
+
         try {
             java.net.URL url = getClass().getResource("/images/Report Sucess Icon.png");
             if (url == null) {
@@ -330,7 +330,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        
+
         try {
             java.net.URL url = getClass().getResource("/images/Registered Employee of the Month Icon.png");
             if (url == null) {
@@ -344,7 +344,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        
+
         try {
             java.net.URL url = getClass().getResource("/images/procurar.png");
             if (url == null) {
@@ -358,7 +358,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        
+
         try {
             java.net.URL url = getClass().getResource("/images/Plus Icon.png");
             if (url == null) {
@@ -415,6 +415,10 @@ public class TelaClienteTable extends javax.swing.JFrame {
                     label.setLocation(
                             botao.getX() + (botao.getWidth() - label.getWidth()) / 2,
                             botao.getY() + botao.getHeight() + 5);
+                } else if (botao == btnCadastrar) {
+                    label.setLocation(
+                            botao.getX() + botao.getWidth() + 9,
+                            botao.getY() + (botao.getHeight() - label.getHeight()) / 2);
                 } else {
                     label.setLocation(
                             botao.getX() + botao.getWidth() + 30,
@@ -722,10 +726,14 @@ public class TelaClienteTable extends javax.swing.JFrame {
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnCadastrar = new javax.swing.JButton();
+        btnCadastrar = new Screen.RoundButton(
+                new javax.swing.ImageIcon(getClass().getResource("/images/Plus Icon.png")));
         lblRelatorioNovoTitulo1 = new javax.swing.JLabel();
         lblIconeFuncionarioDoMes = new javax.swing.JLabel();
         lblIconeRelatorioConcluido = new javax.swing.JLabel();
@@ -787,9 +795,6 @@ public class TelaClienteTable extends javax.swing.JFrame {
         setTitle("CT Contab Manager");
         getContentPane().setLayout(null);
 
-        btnCadastrar.setBackground(new java.awt.Color(28, 46, 74));
-        btnCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Plus Icon.png"))); // NOI18N
-        btnCadastrar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         getContentPane().add(btnCadastrar);
         btnCadastrar.setBounds(570, 213, 35, 35);
 
@@ -800,17 +805,20 @@ public class TelaClienteTable extends javax.swing.JFrame {
         lblRelatorioNovoTitulo1.setBounds(100, 100, 210, 20);
 
         lblIconeFuncionarioDoMes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblIconeFuncionarioDoMes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Registered Employee of the Month Icon.png"))); // NOI18N
+        lblIconeFuncionarioDoMes.setIcon(
+                new javax.swing.ImageIcon(getClass().getResource("/images/Registered Employee of the Month Icon.png"))); // NOI18N
         getContentPane().add(lblIconeFuncionarioDoMes);
         lblIconeFuncionarioDoMes.setBounds(1155, 155, 20, 20);
 
         lblIconeRelatorioConcluido.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblIconeRelatorioConcluido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Report Sucess Icon.png"))); // NOI18N
+        lblIconeRelatorioConcluido
+                .setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Report Sucess Icon.png"))); // NOI18N
         getContentPane().add(lblIconeRelatorioConcluido);
         lblIconeRelatorioConcluido.setBounds(805, 155, 20, 20);
 
         lblIconeRelatorioPendente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblIconeRelatorioPendente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Report Pendent Icon.png"))); // NOI18N
+        lblIconeRelatorioPendente
+                .setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Report Pendent Icon.png"))); // NOI18N
         getContentPane().add(lblIconeRelatorioPendente);
         lblIconeRelatorioPendente.setBounds(466, 155, 20, 20);
 
@@ -1056,22 +1064,21 @@ public class TelaClienteTable extends javax.swing.JFrame {
         jTable1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jTable1.setForeground(new java.awt.Color(255, 255, 255));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "NOME", "TIPO DE PESSOA", "STATUS", "SERVIÇO", "DATA DE CADASTRO", "AÇÃO 1", "AÇÃO 2", "AÇÃO 3"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true, true, true
+                new Object[][] {
+                        { null, null, null, null, null, null, null, null },
+                        { null, null, null, null, null, null, null, null },
+                        { null, null, null, null, null, null, null, null },
+                        { null, null, null, null, null, null, null, null }
+                },
+                new String[] {
+                        "NOME", "TIPO DE PESSOA", "STATUS", "SERVIÇO", "DATA DE CADASTRO", "AÇÃO 1", "AÇÃO 2", "AÇÃO 3"
+                }) {
+            boolean[] canEdit = new boolean[] {
+                    false, false, false, false, false, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
         jTable1.setGridColor(new java.awt.Color(115, 115, 115));
@@ -1138,7 +1145,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         lblDataDeCadastro.setText("DATA DE CADASTRO");
         lblDataDeCadastro.setToolTipText("");
         getContentPane().add(lblDataDeCadastro);
-        lblDataDeCadastro.setBounds(880, 220, 160, 20);
+        lblDataDeCadastro.setBounds(880, 310, 160, 20);
 
         lblTipoDePessoa4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTipoDePessoa4.setForeground(new java.awt.Color(186, 186, 186));
@@ -1146,7 +1153,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         lblTipoDePessoa4.setText("AÇÕES");
         lblTipoDePessoa4.setToolTipText("");
         getContentPane().add(lblTipoDePessoa4);
-        lblTipoDePessoa4.setBounds(1070, 220, 160, 20);
+        lblTipoDePessoa4.setBounds(1070, 310, 160, 20);
 
         jSeparator4.setBackground(new java.awt.Color(115, 115, 115));
         jSeparator4.setForeground(new java.awt.Color(115, 115, 115));
@@ -1196,9 +1203,8 @@ public class TelaClienteTable extends javax.swing.JFrame {
         txtLogin.setFont(FonteUtils.carregarLato(14f));
         txtLogin.setForeground(new java.awt.Color(142, 162, 189));
         txtLogin.setBorder(javax.swing.BorderFactory.createCompoundBorder(
-            javax.swing.BorderFactory.createLineBorder(new java.awt.Color(42, 62, 97), 3),
-            javax.swing.BorderFactory.createEmptyBorder(0, 30, 0, 0)
-        ));
+                javax.swing.BorderFactory.createLineBorder(new java.awt.Color(42, 62, 97), 3),
+                javax.swing.BorderFactory.createEmptyBorder(0, 30, 0, 0)));
         txtLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtLoginActionPerformed(evt);
@@ -1218,7 +1224,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnLogin);
-        btnLogin.setBounds(1080, 240, 140, 30);
+        btnLogin.setBounds(1080, 330, 140, 30);
 
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Dashboard Background.png"))); // NOI18N
         getContentPane().add(Background);
