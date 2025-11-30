@@ -417,7 +417,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
                             botao.getY() + botao.getHeight() + 5);
                 } else if (botao == btnCadastrar) {
                     label.setLocation(
-                            botao.getX() + botao.getWidth() + 9,
+                            botao.getX() + botao.getWidth() + 8,
                             botao.getY() + (botao.getHeight() - label.getHeight()) / 2);
                 } else {
                     label.setLocation(
@@ -508,7 +508,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
     private void exibirMensagemCarregando() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-        model.addRow(new Object[] { "Carregando...", "", "", "", "", "" });
+        model.addRow(new Object[]{"Carregando...", "", "", "", "", ""});
     }
 
     private void carregarClientesAssincrono() {
@@ -534,7 +534,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
     private void exibirMensagemErro() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-        model.addRow(new Object[] { "Erro ao carregar dados.", "", "", "", "", "" });
+        model.addRow(new Object[]{"Erro ao carregar dados.", "", "", "", "", ""});
     }
 
     private void atualizarTabela(List<Cliente> clientes) {
@@ -554,15 +554,15 @@ public class TelaClienteTable extends javax.swing.JFrame {
                 e.printStackTrace();
             }
 
-            model.addRow(new Object[] {
-                    cliente.getNome(),
-                    cliente.getTipoPessoa(),
-                    cliente.getSituacaoServico(),
-                    cliente.getServico(),
-                    dataFormatada,
-                    "Visualizar",
-                    "Editar",
-                    "Excluir"
+            model.addRow(new Object[]{
+                cliente.getNome(),
+                cliente.getTipoPessoa(),
+                cliente.getSituacaoServico(),
+                cliente.getServico(),
+                dataFormatada,
+                "Visualizar",
+                "Editar",
+                "Excluir"
             });
         }
     }
@@ -729,9 +729,18 @@ public class TelaClienteTable extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblFuncionarioDoMesNome = new javax.swing.JLabel();
+        lblRelatorioConcluidoDescricao = new javax.swing.JLabel();
+        lblRelatorioConcluidoNumero = new javax.swing.JLabel();
+        lblRelatorioPendenteNumero = new javax.swing.JLabel();
+        lblRelatorioPendenteDescricao = new javax.swing.JLabel();
+        lblRelatorioNovoDescricao = new javax.swing.JLabel();
+        lblRelatorioNovoNumero = new javax.swing.JLabel();
         btnCadastrar = new Screen.RoundButton(
                 new javax.swing.ImageIcon(getClass().getResource("/images/Plus Icon.png")));
         lblRelatorioNovoTitulo1 = new javax.swing.JLabel();
@@ -795,6 +804,53 @@ public class TelaClienteTable extends javax.swing.JFrame {
         setTitle("CT Contab Manager");
         getContentPane().setLayout(null);
 
+        lblFuncionarioDoMesNome.setFont(FonteUtils.carregarLatoBlack(16f));
+        lblFuncionarioDoMesNome.setForeground(new java.awt.Color(255, 255, 255));
+        lblFuncionarioDoMesNome.setText("UsuarioName");
+        getContentPane().add(lblFuncionarioDoMesNome);
+        lblFuncionarioDoMesNome.setBounds(1200, 165, 210, 25);
+
+        lblRelatorioConcluidoDescricao.setFont(FonteUtils.carregarLato(11f));
+        lblRelatorioConcluidoDescricao.setForeground(new java.awt.Color(168, 178, 195));
+        lblRelatorioConcluidoDescricao.setText("Nesse mês");
+        getContentPane().add(lblRelatorioConcluidoDescricao);
+        lblRelatorioConcluidoDescricao.setBounds(900, 170, 160, 20);
+
+        lblRelatorioConcluidoNumero.setFont(FonteUtils.carregarLatoBlack(18f));
+        lblRelatorioConcluidoNumero.setForeground(new java.awt.Color(255, 255, 255));
+        lblRelatorioConcluidoNumero.setText("0,000");
+        getContentPane().add(lblRelatorioConcluidoNumero);
+        lblRelatorioConcluidoNumero.setBounds(850, 165, 210, 25);
+
+        lblRelatorioPendenteNumero.setFont(FonteUtils.carregarLatoBlack(18f));
+        lblRelatorioPendenteNumero.setForeground(new java.awt.Color(255, 255, 255));
+        lblRelatorioPendenteNumero.setText("0,000");
+        getContentPane().add(lblRelatorioPendenteNumero);
+        lblRelatorioPendenteNumero.setBounds(510, 165, 210, 25);
+
+        lblRelatorioPendenteDescricao.setFont(FonteUtils.carregarLato(11f));
+        lblRelatorioPendenteDescricao.setForeground(new java.awt.Color(168, 178, 195));
+        lblRelatorioPendenteDescricao.setText("Nesse mês");
+        getContentPane().add(lblRelatorioPendenteDescricao);
+        lblRelatorioPendenteDescricao.setBounds(560, 170, 160, 20);
+
+        lblRelatorioNovoDescricao.setFont(FonteUtils.carregarLato(11f));
+        lblRelatorioNovoDescricao.setForeground(new java.awt.Color(168, 178, 195));
+        lblRelatorioNovoDescricao.setText("Nesse mês");
+        getContentPane().add(lblRelatorioNovoDescricao);
+        lblRelatorioNovoDescricao.setBounds(220, 170, 160, 20);
+
+        lblRelatorioNovoNumero.setFont(FonteUtils.carregarLatoBlack(18f));
+        lblRelatorioNovoNumero.setForeground(new java.awt.Color(255, 255, 255));
+        lblRelatorioNovoNumero.setText("0,000");
+        getContentPane().add(lblRelatorioNovoNumero);
+        lblRelatorioNovoNumero.setBounds(170, 165, 210, 25);
+
+        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadastrarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnCadastrar);
         btnCadastrar.setBounds(570, 213, 35, 35);
 
@@ -1234,6 +1290,11 @@ public class TelaClienteTable extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnCadastrarActionPerformed
+        TelaAdicionarCliente popup = new TelaAdicionarCliente(this, usuarioLogado);
+        popup.setVisible(true);
+    }// GEN-LAST:event_btnCadastrarActionPerformed
+
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnLoginActionPerformed
         new TelaCliente(usuarioLogado, cliente).setVisible(true);
         this.dispose();
@@ -1351,6 +1412,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
     private javax.swing.JLabel lblBarraSuperior;
     private javax.swing.JLabel lblDataDeCadastro;
     private javax.swing.JLabel lblDivisorTela;
+    private javax.swing.JLabel lblFuncionarioDoMesNome;
     private javax.swing.JLabel lblFuncionarioDoMesTitulo;
     private javax.swing.JLabel lblIconeFuncionarioDoMes;
     private javax.swing.JLabel lblIconeRelatorioConcluido;
@@ -1360,9 +1422,15 @@ public class TelaClienteTable extends javax.swing.JFrame {
     private javax.swing.JLabel lblLogoTexto;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblPesquisarIcone;
+    private javax.swing.JLabel lblRelatorioConcluidoDescricao;
+    private javax.swing.JLabel lblRelatorioConcluidoNumero;
     private javax.swing.JLabel lblRelatorioConcluidoTitulo;
+    private javax.swing.JLabel lblRelatorioNovoDescricao;
+    private javax.swing.JLabel lblRelatorioNovoNumero;
     private javax.swing.JLabel lblRelatorioNovoTitulo;
     private javax.swing.JLabel lblRelatorioNovoTitulo1;
+    private javax.swing.JLabel lblRelatorioPendenteDescricao;
+    private javax.swing.JLabel lblRelatorioPendenteNumero;
     private javax.swing.JLabel lblRelatorioPendenteTitulo;
     private javax.swing.JLabel lblServico;
     private javax.swing.JLabel lblStatus;

@@ -646,7 +646,7 @@ public class TelaCliente extends javax.swing.JFrame {
         getContentPane().add(Background);
         Background.setBounds(0, 0, 1280, 711);
 
-        setSize(new java.awt.Dimension(1450, 750));
+        setSize(new java.awt.Dimension(1202, 660));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

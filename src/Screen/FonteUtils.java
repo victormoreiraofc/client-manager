@@ -147,6 +147,20 @@ public class FonteUtils {
             return new Font("SansSerif", Font.PLAIN, (int) tamanho);
         }
     }
+    
+    public static Font carregarLatoBlack(float tamanho) {
+        try {
+            File arquivoFonte = new File("src/resources/fonts/Lato-Black.ttf");
+            Font LatoBlack = Font.createFont(Font.TRUETYPE_FONT, arquivoFonte);
+            LatoBlack = LatoBlack.deriveFont(tamanho);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(LatoBlack);
+            return LatoBlack;
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+            return new Font("SansSerif", Font.PLAIN, (int) tamanho);
+        }
+    }
 
     public static Font carregarInterSemiBold(float tamanho) {
         try {
