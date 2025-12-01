@@ -361,7 +361,7 @@ public class TelaAdicionarCliente extends JDialog {
     }
 
     // =========================================================================
-    //                            MÉTODOS AUXILIARES DE UI
+    //                            MÉTODOS AUXILIARES DE UI
     // =========================================================================
     private JButton criarBotaoFechar() {
         JButton btnClose = new JButton() {
@@ -533,7 +533,7 @@ public class TelaAdicionarCliente extends JDialog {
     }
 
     // =========================================================================
-    //                                LÓGICA DO BLUR
+    //                                LÓGICA DO BLUR
     // =========================================================================
     // Métodos de BLUR mantidos.
     private void aplicarEfeitoDesfoqueFundo() {
@@ -593,20 +593,45 @@ public class TelaAdicionarCliente extends JDialog {
         return op.filter(imagemOriginal, null);
     }
 
-    // =========================================================================
-    //                                LÓGICA DE NEGÓCIO E VALIDAÇÃO
-    // =========================================================================
-    /**
-     * Realiza a validação dos campos Tipo de Pessoa e Situação do Serviço.
-     * Retorna true se ambos estiverem válidos, false caso contrário.
-     */
+    private String normalizarSituacaoServico(String input) {
+        if (input == null || input.trim().isEmpty()) return "";
+        String upperInput = input.trim().toUpperCase(); 
+        upperInput = upperInput.replaceAll("Í", "I");
+
+        switch (upperInput) {
+            case "PENDENTE":
+                return "Pendente"; // ENUM: 'Pendente'
+            case "EM ANDAMENTO":
+                return "Em andamento"; // ENUM: 'Em andamento'
+            case "CONCLUIDO":
+                return "Concluido"; // ENUM: 'Concluido'
+            default:
+                return input.trim(); 
+        }
+    }
+
+    private String normalizarTipoPessoa(String input) {
+        if (input == null || input.trim().isEmpty()) return "";
+        String upperInput = input.trim().toUpperCase().replaceAll("Í", "I"); 
+
+        switch (upperInput) {
+            case "FISICA":
+                return "Fisica"; // ENUM: 'Fisica'
+            case "JURIDICA":
+                return "Juridica"; // ENUM: 'Juridica'
+            case "NI":
+                return "NI"; // ENUM: 'NI'
+            default:
+                return input.trim();
+        }
+    }
+
     private boolean validarCamposCombo() {
         boolean camposValidos = true;
 
-        // 1. Tipo de Pessoa
         String tipoPessoa = txtTipoPessoa.getText().trim();
-        // Permite "Fisica" (sem acento) ou "Física"
-        boolean tipoPessoaValido = OPCOES_TIPO_PESSOA.contains(tipoPessoa.toUpperCase().replaceAll("Í", "I"));
+        String tipoPessoaUpper = tipoPessoa.toUpperCase().replaceAll("Í", "I");
+        boolean tipoPessoaValido = OPCOES_TIPO_PESSOA.contains(tipoPessoaUpper);
 
         if (tipoPessoa.isEmpty() || tipoPessoa.equals("Física, Jurídica ou NI") || !tipoPessoaValido) {
             setCampoBordaErro(txtTipoPessoa);
@@ -617,10 +642,9 @@ public class TelaAdicionarCliente extends JDialog {
             lblErroTipoPessoa.setText("");
         }
 
-        // 2. Situação do Serviço
         String situacaoServico = txtSituacaoServico.getText().trim();
-        // Remove espaços para aceitar "Em andamento"
-        boolean situacaoServicoValida = OPCOES_SITUACAO_SERVICO.contains(situacaoServico.toUpperCase().replaceAll("\\s", ""));
+        String situacaoServicoUpper = situacaoServico.toUpperCase().replaceAll("Í", "I"); 
+        boolean situacaoServicoValida = OPCOES_SITUACAO_SERVICO.contains(situacaoServicoUpper);
 
         if (situacaoServico.isEmpty() || situacaoServico.equals("Pendente, Em andamento ou Concluído") || !situacaoServicoValida) {
             setCampoBordaErro(txtSituacaoServico);
@@ -636,16 +660,17 @@ public class TelaAdicionarCliente extends JDialog {
 
     private void salvarCliente() {
 
-        // 1. Coleta e sanitização de dados.
-        // O trim() remove espaços em branco extras.
+        // 1. Validação dos campos 'combo'
+        if (!validarCamposCombo()) {
+            new NotificationToast(null, "Por favor, corrija os erros nos campos antes de continuar.").setVisible(true);
+            return;
+        }
+
         String nome = txtNomeCompleto.getText().trim();
         String servico = txtServico.getText().trim();
-        // A validação no validarCamposCombo() garante que estes campos estão com valores válidos.
-        String tipoPessoa = txtTipoPessoa.getText().trim().toUpperCase().replaceAll("Í", "I");
-        String situacaoServico = txtSituacaoServico.getText().trim().toUpperCase().replaceAll("\\s", "");
         String email = txtEmail.getText().trim();
-
-        // Tratamento de campos opcionais que podem conter o placeholder (usando os placeholders do seu arquivo).
+        String tipoPessoaFinal = normalizarTipoPessoa(txtTipoPessoa.getText());
+        String situacaoServicoFinal = normalizarSituacaoServico(txtSituacaoServico.getText());
         String telefone = txtTelefone.getText().trim();
         telefone = telefone.equals("999999999") ? "" : telefone;
 
@@ -655,40 +680,28 @@ public class TelaAdicionarCliente extends JDialog {
         String observacoes = txtObservacoes.getText().trim();
         observacoes = observacoes.equals("Observações sobre o cliente.") ? "" : observacoes;
 
-        // 2. Coleta de dados automáticos.
-        // O usuário logado é obrigatório para registrar a auditoria, mas garantimos um valor padrão.
         String usuario = usuarioLogado != null ? usuarioLogado.getUsuario() : "SISTEMA_NAO_LOGADO";
-        // Formato MySQL DATETIME: YYYY-MM-DD HH:MM:SS
         String dataCadastro = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-
-        // Validação dos campos 'combo' (Tipo de Pessoa e Situação do Serviço)
-        if (!validarCamposCombo()) {
-            // SUBSTITUIDO: JOptionPane por NotificationToast e mantido o return para não fechar a tela
-            new NotificationToast(null, "Por favor, corrija os erros nos campos antes de continuar.").setVisible(true);
-            return;
-        }
 
         // Validação dos campos obrigatórios remanescentes
         if (nome.isEmpty() || nome.equals("Nome Completo") || servico.isEmpty() || servico.equals("Qual foi o serviço prestado?")) {
-            // SUBSTITUIDO: JOptionPane por NotificationToast e mantido o return para não fechar a tela
             new NotificationToast(null, "Por favor, preencha todos os campos obrigatórios (*).").setVisible(true);
             return;
         }
 
         if (usuarioLogado != null) {
-            // Exemplo de uso da variável 'usuarioLogado'
             MDC.put("usuario_criador", usuarioLogado.getUsuario());
-            logger.info("Tentativa de criar cliente por: " + usuarioLogado.getUsuario());
+            //logger.info("Tentativa de criar cliente por: " + usuarioLogado.getUsuario());
         }
 
         try {
-            // Instancia o objeto Cliente (Assumindo que a classe Data.Cliente está disponível no pacote Data)
+            // Instancia o objeto Cliente
             Cliente cliente = new Cliente();
 
-            // Popula os dados do cliente (assumindo que Data.Cliente tem os setters correspondentes)
+            // Popula os dados do cliente com os valores normalizados
             cliente.setNome(nome);
-            cliente.setTipoPessoa(tipoPessoa);
-            cliente.setSituacaoServico(situacaoServico);
+            cliente.setTipoPessoa(tipoPessoaFinal); // <-- Usando o valor normalizado
+            cliente.setSituacaoServico(situacaoServicoFinal); // <-- Usando o valor normalizado
             cliente.setServico(servico);
             cliente.setTelefone(telefone);
             cliente.setEmail(email);
@@ -697,7 +710,7 @@ public class TelaAdicionarCliente extends JDialog {
             cliente.setDataCadastro(dataCadastro);
             cliente.setUsuario(usuario);
 
-            // Chama a função de registro no CTCONTAB, que fará a conexão com o banco de dados.
+            // Chama a função de registro no CTCONTAB
             CTCONTAB.registrarCliente(cliente);
 
             String msg = "Você cadastrou " + nome + " como novo cliente!";
@@ -711,11 +724,9 @@ public class TelaAdicionarCliente extends JDialog {
 
         } catch (ClassNotFoundException e) {
             logger.log(Level.SEVERE, "Erro de configuração: Driver do banco de dados não encontrado.", e);
-            // SUBSTITUIDO: Toast de erro, sem dispose()
             new NotificationToast(null, "Erro de configuração: Driver do banco de dados não encontrado.").setVisible(true);
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Erro SQL ao salvar cliente no banco de dados", e);
-            // SUBSTITUIDO: Toast de erro, sem dispose()
             new NotificationToast(null, "Erro ao tentar salvar cliente no banco de dados: " + e.getMessage()).setVisible(true);
         }
     }

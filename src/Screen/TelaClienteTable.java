@@ -40,6 +40,21 @@ import javax.swing.table.TableCellRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.imageio.ImageIO;
+import javax.swing.JButton;
+import javax.swing.JTable;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JCheckBox;
+import javax.swing.ImageIcon;
 
 public class TelaClienteTable extends javax.swing.JFrame {
 
@@ -49,6 +64,8 @@ public class TelaClienteTable extends javax.swing.JFrame {
     private List<Cliente> listaClientes;
     private Cliente cliente;
     private int mouseX, mouseY;
+    private int hoveredRow = -1;
+    private int hoveredColumn = -1;
 
     public TelaClienteTable(Usuario usuario) {
         this.usuarioLogado = usuario;
@@ -372,6 +389,35 @@ public class TelaClienteTable extends javax.swing.JFrame {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+
+        jTable1.addMouseMotionListener(
+                new java.awt.event.MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(java.awt.event.MouseEvent e
+            ) {
+                int row = jTable1.rowAtPoint(e.getPoint());
+                int col = jTable1.columnAtPoint(e.getPoint());
+
+                if (row != hoveredRow || col != hoveredColumn) {
+                    hoveredRow = row;
+                    hoveredColumn = col;
+                    jTable1.repaint();
+                }
+            }
+        }
+        );
+
+        jTable1.addMouseListener(
+                new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent e
+            ) {
+                hoveredRow = -1;
+                hoveredColumn = -1;
+                jTable1.repaint();
+            }
+        }
+        );
     }
 
     private void setIcon() {
@@ -580,32 +626,97 @@ public class TelaClienteTable extends javax.swing.JFrame {
         atualizarTabela(clientesFiltrados);
     }
 
-    class ButtonRenderer extends JButton implements TableCellRenderer {
+    private class CircleButton extends JButton {
 
-        public ButtonRenderer() {
-            setOpaque(false);
+        private Color normalColor;
+        private Color hoverColor;
+        private boolean isHovered;
+
+        public CircleButton(String iconPath, Color normal, Color hover) {
+            this.normalColor = normal;
+            this.hoverColor = hover;
+            this.isHovered = false;
+
+            setContentAreaFilled(false);
+            setFocusPainted(false);
+            setBorderPainted(false);
+
+            // Configura o Ícone 12x12
+            try {
+                java.net.URL url = getClass().getResource(iconPath);
+                if (url != null) {
+                    Image img = ImageIO.read(url).getScaledInstance(15, 15, Image.SCALE_SMOOTH);
+                    setIcon(new ImageIcon(img));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        public void setHovered(boolean hovered) {
+            this.isHovered = hovered;
         }
 
         @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-                int row, int column) {
-            setText("");
-            ImageIcon icon = new ImageIcon(getClass().getResource("/images/lupa-branca.png"));
-            ImageIcon icon2 = new ImageIcon(getClass().getResource("/images/edit-icon.png"));
-            ImageIcon icon3 = new ImageIcon(getClass().getResource("/images/fechar.png"));
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-            if (column == 5) {
-                setIcon(icon);
-                setBackground(new java.awt.Color(82, 113, 255));
-            } else if (column == 6) {
-                setIcon(icon2);
-                setBackground(new java.awt.Color(255, 222, 89));
-            } else if (column == 7) {
-                setIcon(icon3);
-                setBackground(new java.awt.Color(239, 65, 54));
+            // Verifica se está com o mouse em cima (pela variável ou pelo modelo do botão)
+            if (isHovered || getModel().isRollover()) {
+                g2.setColor(hoverColor);
+            } else {
+                g2.setColor(normalColor);
             }
 
-            return this;
+            // TAMANHO DO CÍRCULO: Aumentado para 36
+            int diameter = 36;
+
+            // Centraliza o círculo no espaço da célula
+            int x = (getWidth() - diameter) / 2;
+            int y = (getHeight() - diameter) / 2;
+
+            g2.fillOval(x, y, diameter, diameter);
+            g2.dispose();
+
+            super.paintComponent(g);
+        }
+    }
+
+    class ButtonRenderer implements TableCellRenderer {
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+
+            Color bgNormal, bgHover;
+            String iconName;
+
+            // Configuração das Cores exatas que você pediu
+            if (column == 5) { // Visualizar
+                bgNormal = Color.decode("#0E2A3A");
+                bgHover = Color.decode("#123446");
+                iconName = "/images/olho.png";
+            } else if (column == 6) { // Editar
+                bgNormal = Color.decode("#3A300E");
+                bgHover = Color.decode("#4A3B11");
+                iconName = "/images/lapis.png";
+            } else { // Deletar (Coluna 7)
+                bgNormal = Color.decode("#3C1414");
+                bgHover = Color.decode("#4A1A1A");
+                iconName = "/images/lixo.png";
+            }
+
+            CircleButton btn = new CircleButton(iconName, bgNormal, bgHover);
+            btn.setOpaque(false);
+
+            // Lógica Mágica: Verifica se o mouse está sobre esta linha/coluna específica
+            if (row == hoveredRow && column == hoveredColumn) {
+                btn.setHovered(true);
+            } else {
+                btn.setHovered(false);
+            }
+
+            return btn;
         }
     }
 
@@ -623,7 +734,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
 
     class ButtonEditor extends DefaultCellEditor {
 
-        private JButton button;
+        private CircleButton button;
         private String label;
         private String actionType;
         private int selectedRow;
@@ -631,42 +742,49 @@ public class TelaClienteTable extends javax.swing.JFrame {
         public ButtonEditor(JCheckBox checkBox, String actionType) {
             super(checkBox);
             this.actionType = actionType;
+        }
 
-            button = new JButton();
-            button.setOpaque(true);
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            label = value == null ? "" : value.toString();
+            selectedRow = row;
+
+            Color bgNormal, bgHover;
+            String iconName;
+
+            if (column == 5) { // Visualizar
+                bgNormal = Color.decode("#0E2A3A");
+                bgHover = Color.decode("#123446");
+                iconName = "/images/olho.png";
+                this.actionType = "Visualizar";
+            } else if (column == 6) { // Editar
+                bgNormal = Color.decode("#3A300E");
+                bgHover = Color.decode("#4A3B11");
+                iconName = "/images/lapis.png";
+                this.actionType = "Editar";
+            } else { // Deletar (Coluna 7)
+                bgNormal = Color.decode("#3C1414");
+                bgHover = Color.decode("#4A1A1A");
+                iconName = "/images/lixo.png";
+                this.actionType = "Excluir";
+            }
+
+            button = new CircleButton(iconName, bgNormal, bgHover);
+            button.setOpaque(false);
+
+            // No editor, o botão é um componente real, então habilitamos o rollover do Swing
+            button.getModel().setRollover(true);
 
             button.addActionListener(e -> {
+                fireEditingStopped();
                 if ("Excluir".equals(actionType)) {
                     excluirCliente(selectedRow);
                 } else if ("Editar".equals(actionType)) {
                     abrirTelaCliente(selectedRow);
+                } else if ("Visualizar".equals(actionType)) {
+                    abrirTelaCliente(selectedRow);
                 }
-                fireEditingStopped();
             });
-
-        }
-
-        @Override
-        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
-                int column) {
-            label = value == null ? "" : value.toString();
-            selectedRow = row;
-
-            button.setText("");
-            ImageIcon icon = new ImageIcon(getClass().getResource("/images/lupa-branca.png"));
-            ImageIcon icon2 = new ImageIcon(getClass().getResource("/images/edit-icon.png"));
-            ImageIcon icon3 = new ImageIcon(getClass().getResource("/images/fechar.png"));
-            button.setIcon(icon);
-            button.setIcon(icon2);
-            button.setIcon(icon3);
-
-            if (column == 5) {
-                button.setBackground(new java.awt.Color(82, 113, 255));
-            } else if (column == 6) {
-                button.setBackground(new java.awt.Color(255, 222, 89));
-            } else if (column == 7) {
-                button.setBackground(new java.awt.Color(239, 65, 54));
-            }
 
             return button;
         }
@@ -676,23 +794,30 @@ public class TelaClienteTable extends javax.swing.JFrame {
             return label;
         }
 
+        // ... Mantenha seus métodos abrirTelaCliente e excluirCliente aqui dentro ...
         private void abrirTelaCliente(int row) {
-            Cliente clienteSelecionado = listaClientes.get(row);
-            TelaCliente telaCliente = new TelaCliente(usuarioLogado, clienteSelecionado);
-            telaCliente.setVisible(true);
-            TelaClienteTable.this.dispose();
+            try {
+                if (row >= 0 && row < listaClientes.size()) {
+                    Cliente clienteSelecionado = listaClientes.get(row);
+                    TelaCliente telaCliente = new TelaCliente(usuarioLogado, clienteSelecionado);
+                    telaCliente.setVisible(true);
+                    TelaClienteTable.this.dispose();
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
 
         private void excluirCliente(int row) {
+            if (row < 0 || row >= listaClientes.size()) {
+                return;
+            }
             MDC.put("usuario", usuarioLogado.getUsuario());
             try {
                 Cliente cliente = listaClientes.get(row);
-
                 CTCONTAB.excluirRegistro("cliente", "ID", cliente.getId());
-
                 listaClientes.remove(row);
                 atualizarTabela(listaClientes);
-
                 MensagemUtil.exibirSucesso("Cliente excluído com sucesso!");
                 logger.info("excluiu o cliente [{}]", cliente.getNome());
             } catch (Exception e) {
@@ -724,6 +849,48 @@ public class TelaClienteTable extends javax.swing.JFrame {
         });
     }
 
+    private class PanelArredondadoComBorda extends javax.swing.JPanel {
+    private int cornerRadius;
+    private java.awt.Color backgroundColor;
+    private java.awt.Color borderColor;
+    private int borderThickness;
+
+    public PanelArredondadoComBorda(int radius, java.awt.Color bgColor, java.awt.Color bdColor, int bdThickness) {
+        super();
+        this.cornerRadius = radius;
+        this.backgroundColor = bgColor;
+        this.borderColor = bdColor;
+        this.borderThickness = bdThickness;
+        setOpaque(false); // Permite ver a forma arredondada
+    }
+
+    @Override
+    protected void paintComponent(java.awt.Graphics g) {
+        java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+        g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+
+        int width = getWidth();
+        int height = getHeight();
+        int thickness = borderThickness;
+        int radius = cornerRadius;
+        
+        // 1. Preenche o fundo (interno)
+        g2.setColor(backgroundColor);
+        g2.fillRoundRect(thickness, thickness, width - (thickness * 2), height - (thickness * 2), radius, radius);
+
+        // 2. Desenha a borda (externa)
+        g2.setStroke(new java.awt.BasicStroke(thickness));
+        g2.setColor(borderColor);
+        // Ajusta a área de desenho da borda para que o traço fique centrado na linha
+        g2.drawRoundRect(thickness / 2, thickness / 2, width - thickness, height - thickness, radius, radius);
+        
+        g2.dispose();
+        
+        // Desenha os componentes filhos por cima
+        super.paintComponent(g); 
+    }
+}
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
@@ -731,7 +898,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         lblFuncionarioDoMesNome = new javax.swing.JLabel();
@@ -741,8 +908,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         lblRelatorioPendenteDescricao = new javax.swing.JLabel();
         lblRelatorioNovoDescricao = new javax.swing.JLabel();
         lblRelatorioNovoNumero = new javax.swing.JLabel();
-        btnCadastrar = new Screen.RoundButton(
-                new javax.swing.ImageIcon(getClass().getResource("/images/Plus Icon.png")));
+        btnCadastrar = new javax.swing.JButton();
         lblRelatorioNovoTitulo1 = new javax.swing.JLabel();
         lblIconeFuncionarioDoMes = new javax.swing.JLabel();
         lblIconeRelatorioConcluido = new javax.swing.JLabel();
@@ -782,22 +948,20 @@ public class TelaClienteTable extends javax.swing.JFrame {
         lblBarraLateral = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        lblNome = new javax.swing.JLabel();
+        lblAcao = new javax.swing.JLabel();
+        lblDataDeCadastro = new javax.swing.JLabel();
         lblTipoDePessoa = new javax.swing.JLabel();
         lblStatus = new javax.swing.JLabel();
-        lblServico = new javax.swing.JLabel();
-        lblDataDeCadastro = new javax.swing.JLabel();
-        lblTipoDePessoa4 = new javax.swing.JLabel();
-        jSeparator4 = new javax.swing.JSeparator();
-        jSeparator2 = new javax.swing.JSeparator();
-        jSeparator3 = new javax.swing.JSeparator();
-        jSeparator5 = new javax.swing.JSeparator();
-        jSeparator7 = new javax.swing.JSeparator();
-        jSeparator6 = new javax.swing.JSeparator();
-        jPanel1 = new javax.swing.JPanel();
+        lblNome = new javax.swing.JLabel();
+        lblID = new javax.swing.JLabel();
+java.awt.Color COR_FUNDO = java.awt.Color.decode("#162842");
+java.awt.Color COR_BORDA = java.awt.Color.decode("#2A3E61");
+int RAIO_BORDA = 30;
+int ESPESSURA_BORDA = 3;
+
+JPanelBackground = new PanelArredondadoComBorda(RAIO_BORDA, COR_FUNDO, COR_BORDA, ESPESSURA_BORDA);
         lblPesquisarIcone = new javax.swing.JLabel();
         txtLogin = new javax.swing.JTextField();
-        btnLogin = new javax.swing.JButton();
         Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -846,6 +1010,9 @@ public class TelaClienteTable extends javax.swing.JFrame {
         getContentPane().add(lblRelatorioNovoNumero);
         lblRelatorioNovoNumero.setBounds(170, 165, 210, 25);
 
+        btnCadastrar.setBackground(new java.awt.Color(28, 46, 74));
+        btnCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Plus Icon.png"))); // NOI18N
+        btnCadastrar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCadastrarActionPerformed(evt);
@@ -861,20 +1028,17 @@ public class TelaClienteTable extends javax.swing.JFrame {
         lblRelatorioNovoTitulo1.setBounds(100, 100, 210, 20);
 
         lblIconeFuncionarioDoMes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblIconeFuncionarioDoMes.setIcon(
-                new javax.swing.ImageIcon(getClass().getResource("/images/Registered Employee of the Month Icon.png"))); // NOI18N
+        lblIconeFuncionarioDoMes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Registered Employee of the Month Icon.png"))); // NOI18N
         getContentPane().add(lblIconeFuncionarioDoMes);
         lblIconeFuncionarioDoMes.setBounds(1155, 155, 20, 20);
 
         lblIconeRelatorioConcluido.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblIconeRelatorioConcluido
-                .setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Report Sucess Icon.png"))); // NOI18N
+        lblIconeRelatorioConcluido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Report Sucess Icon.png"))); // NOI18N
         getContentPane().add(lblIconeRelatorioConcluido);
         lblIconeRelatorioConcluido.setBounds(805, 155, 20, 20);
 
         lblIconeRelatorioPendente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblIconeRelatorioPendente
-                .setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Report Pendent Icon.png"))); // NOI18N
+        lblIconeRelatorioPendente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Report Pendent Icon.png"))); // NOI18N
         getContentPane().add(lblIconeRelatorioPendente);
         lblIconeRelatorioPendente.setBounds(466, 155, 20, 20);
 
@@ -1120,21 +1284,22 @@ public class TelaClienteTable extends javax.swing.JFrame {
         jTable1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jTable1.setForeground(new java.awt.Color(255, 255, 255));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][] {
-                        { null, null, null, null, null, null, null, null },
-                        { null, null, null, null, null, null, null, null },
-                        { null, null, null, null, null, null, null, null },
-                        { null, null, null, null, null, null, null, null }
-                },
-                new String[] {
-                        "NOME", "TIPO DE PESSOA", "STATUS", "SERVIÇO", "DATA DE CADASTRO", "AÇÃO 1", "AÇÃO 2", "AÇÃO 3"
-                }) {
-            boolean[] canEdit = new boolean[] {
-                    false, false, false, false, false, true, true, true
+            new Object [][] {
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "NOME", "TIPO DE PESSOA", "STATUS", "SERVIÇO", "DATA DE CADASTRO", "AÇÃO 1", "AÇÃO 2", "AÇÃO 3"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
+                return canEdit [columnIndex];
             }
         });
         jTable1.setGridColor(new java.awt.Color(115, 115, 115));
@@ -1157,98 +1322,63 @@ public class TelaClienteTable extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(120, 340, 1100, 370);
+        jScrollPane1.setBounds(130, 300, 1250, 380);
         jTable1.setOpaque(false);
         ((DefaultTableCellRenderer) jTable1.getDefaultRenderer(Object.class)).setOpaque(false);
         jScrollPane1.setOpaque(false);
         jScrollPane1.getViewport().setOpaque(false);
 
-        lblNome.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblNome.setForeground(new java.awt.Color(186, 186, 186));
-        lblNome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblNome.setText("NOME");
-        lblNome.setToolTipText("");
-        getContentPane().add(lblNome);
-        lblNome.setBounds(130, 290, 160, 20);
+        lblAcao.setFont(FonteUtils.carregarLato(12f));
+        lblAcao.setForeground(new java.awt.Color(168, 178, 195));
+        lblAcao.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblAcao.setText("AÇÕES");
+        lblAcao.setToolTipText("");
+        getContentPane().add(lblAcao);
+        lblAcao.setBounds(1150, 280, 110, 16);
 
-        lblTipoDePessoa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblTipoDePessoa.setForeground(new java.awt.Color(186, 186, 186));
-        lblTipoDePessoa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTipoDePessoa.setText("TIPOS DE PESSOA");
-        lblTipoDePessoa.setToolTipText("");
-        getContentPane().add(lblTipoDePessoa);
-        lblTipoDePessoa.setBounds(320, 290, 150, 20);
-
-        lblStatus.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblStatus.setForeground(new java.awt.Color(186, 186, 186));
-        lblStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblStatus.setText("STATUS");
-        lblStatus.setToolTipText("");
-        getContentPane().add(lblStatus);
-        lblStatus.setBounds(500, 290, 160, 20);
-
-        lblServico.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblServico.setForeground(new java.awt.Color(186, 186, 186));
-        lblServico.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblServico.setText("SERVIÇO");
-        lblServico.setToolTipText("");
-        getContentPane().add(lblServico);
-        lblServico.setBounds(700, 290, 150, 20);
-
-        lblDataDeCadastro.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblDataDeCadastro.setForeground(new java.awt.Color(186, 186, 186));
-        lblDataDeCadastro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblDataDeCadastro.setFont(FonteUtils.carregarLato(12f));
+        lblDataDeCadastro.setForeground(new java.awt.Color(168, 178, 195));
+        lblDataDeCadastro.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblDataDeCadastro.setText("DATA DE CADASTRO");
         lblDataDeCadastro.setToolTipText("");
         getContentPane().add(lblDataDeCadastro);
-        lblDataDeCadastro.setBounds(880, 310, 160, 20);
+        lblDataDeCadastro.setBounds(800, 280, 170, 16);
 
-        lblTipoDePessoa4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblTipoDePessoa4.setForeground(new java.awt.Color(186, 186, 186));
-        lblTipoDePessoa4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTipoDePessoa4.setText("AÇÕES");
-        lblTipoDePessoa4.setToolTipText("");
-        getContentPane().add(lblTipoDePessoa4);
-        lblTipoDePessoa4.setBounds(1070, 310, 160, 20);
+        lblTipoDePessoa.setFont(FonteUtils.carregarLato(12f));
+        lblTipoDePessoa.setForeground(new java.awt.Color(168, 178, 195));
+        lblTipoDePessoa.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTipoDePessoa.setText("TIPO DE PESSOA");
+        lblTipoDePessoa.setToolTipText("");
+        getContentPane().add(lblTipoDePessoa);
+        lblTipoDePessoa.setBounds(600, 280, 110, 16);
 
-        jSeparator4.setBackground(new java.awt.Color(115, 115, 115));
-        jSeparator4.setForeground(new java.awt.Color(115, 115, 115));
-        getContentPane().add(jSeparator4);
-        jSeparator4.setBounds(120, 340, 1100, 30);
+        lblStatus.setFont(FonteUtils.carregarLato(12f));
+        lblStatus.setForeground(new java.awt.Color(168, 178, 195));
+        lblStatus.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblStatus.setText("STATUS");
+        lblStatus.setToolTipText("");
+        getContentPane().add(lblStatus);
+        lblStatus.setBounds(450, 280, 110, 16);
 
-        jSeparator2.setBackground(new java.awt.Color(115, 115, 115));
-        jSeparator2.setForeground(new java.awt.Color(115, 115, 115));
-        jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        getContentPane().add(jSeparator2);
-        jSeparator2.setBounds(280, 310, 3, 400);
+        lblNome.setFont(FonteUtils.carregarLato(12f));
+        lblNome.setForeground(new java.awt.Color(168, 178, 195));
+        lblNome.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblNome.setText("NOME");
+        lblNome.setToolTipText("");
+        getContentPane().add(lblNome);
+        lblNome.setBounds(220, 280, 110, 16);
 
-        jSeparator3.setBackground(new java.awt.Color(115, 115, 115));
-        jSeparator3.setForeground(new java.awt.Color(115, 115, 115));
-        jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        getContentPane().add(jSeparator3);
-        jSeparator3.setBounds(480, 310, 3, 400);
+        lblID.setFont(FonteUtils.carregarLato(12f));
+        lblID.setForeground(new java.awt.Color(168, 178, 195));
+        lblID.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblID.setText("ID");
+        lblID.setToolTipText("");
+        getContentPane().add(lblID);
+        lblID.setBounds(140, 280, 110, 16);
 
-        jSeparator5.setBackground(new java.awt.Color(115, 115, 115));
-        jSeparator5.setForeground(new java.awt.Color(115, 115, 115));
-        jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        getContentPane().add(jSeparator5);
-        jSeparator5.setBounds(680, 310, 60, 400);
-
-        jSeparator7.setBackground(new java.awt.Color(115, 115, 115));
-        jSeparator7.setForeground(new java.awt.Color(115, 115, 115));
-        jSeparator7.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        getContentPane().add(jSeparator7);
-        jSeparator7.setBounds(1050, 310, 3, 400);
-
-        jSeparator6.setBackground(new java.awt.Color(115, 115, 115));
-        jSeparator6.setForeground(new java.awt.Color(115, 115, 115));
-        jSeparator6.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        getContentPane().add(jSeparator6);
-        jSeparator6.setBounds(870, 310, 10, 400);
-
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255, 15));
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(120, 310, 1100, 400);
+        JPanelBackground.setBackground(new java.awt.Color(22, 40, 66));
+        getContentPane().add(JPanelBackground);
+        JPanelBackground.setBounds(100, 260, 1310, 450);
 
         lblPesquisarIcone.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPesquisarIcone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/procurar.png"))); // NOI18N
@@ -1259,8 +1389,9 @@ public class TelaClienteTable extends javax.swing.JFrame {
         txtLogin.setFont(FonteUtils.carregarLato(14f));
         txtLogin.setForeground(new java.awt.Color(142, 162, 189));
         txtLogin.setBorder(javax.swing.BorderFactory.createCompoundBorder(
-                javax.swing.BorderFactory.createLineBorder(new java.awt.Color(42, 62, 97), 3),
-                javax.swing.BorderFactory.createEmptyBorder(0, 30, 0, 0)));
+            javax.swing.BorderFactory.createLineBorder(new java.awt.Color(42, 62, 97), 3),
+            javax.swing.BorderFactory.createEmptyBorder(0, 30, 0, 0)
+        ));
         txtLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtLoginActionPerformed(evt);
@@ -1269,18 +1400,6 @@ public class TelaClienteTable extends javax.swing.JFrame {
         getContentPane().add(txtLogin);
         txtLogin.setBounds(100, 210, 460, 40);
         addPlaceholder(txtLogin, "Buscar");
-
-        btnLogin.setBackground(new java.awt.Color(194, 166, 40));
-        btnLogin.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        btnLogin.setForeground(new java.awt.Color(255, 255, 255));
-        btnLogin.setText("Cadastrar");
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnLogin);
-        btnLogin.setBounds(1080, 330, 140, 30);
 
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Dashboard Background.png"))); // NOI18N
         getContentPane().add(Background);
@@ -1376,6 +1495,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
+    private javax.swing.JPanel JPanelBackground;
     private javax.swing.JPanel JPanelFuncionarioDoMes;
     private javax.swing.JPanel JPanelRelatorioConcluido;
     private javax.swing.JPanel JPanelRelatorioNovo;
@@ -1388,32 +1508,26 @@ public class TelaClienteTable extends javax.swing.JFrame {
     private javax.swing.JButton btnDashboard;
     private javax.swing.JButton btnFecharTela;
     private javax.swing.JButton btnInfo;
-    private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnMaximizarTela;
     private javax.swing.JButton btnMinimizarTela;
     private javax.swing.JButton btnNotificacoes;
     private javax.swing.JButton btnRelatorios;
     private javax.swing.JButton btnTarefas;
     private javax.swing.JButton btnUserIcon;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelFuncionarioDoMesIconeQuadrado;
     private javax.swing.JPanel jPanelRelatorioConcluidoIconeQuadrado;
     private javax.swing.JPanel jPanelRelatorioNovoIconeQuadrado;
     private javax.swing.JPanel jPanelRelatorioPendenteIconeQuadrado;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JSeparator jSeparator6;
-    private javax.swing.JSeparator jSeparator7;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblAcao;
     private javax.swing.JLabel lblBarraLateral;
     private javax.swing.JLabel lblBarraSuperior;
     private javax.swing.JLabel lblDataDeCadastro;
     private javax.swing.JLabel lblDivisorTela;
     private javax.swing.JLabel lblFuncionarioDoMesNome;
     private javax.swing.JLabel lblFuncionarioDoMesTitulo;
+    private javax.swing.JLabel lblID;
     private javax.swing.JLabel lblIconeFuncionarioDoMes;
     private javax.swing.JLabel lblIconeRelatorioConcluido;
     private javax.swing.JLabel lblIconeRelatorioNovo;
@@ -1432,10 +1546,8 @@ public class TelaClienteTable extends javax.swing.JFrame {
     private javax.swing.JLabel lblRelatorioPendenteDescricao;
     private javax.swing.JLabel lblRelatorioPendenteNumero;
     private javax.swing.JLabel lblRelatorioPendenteTitulo;
-    private javax.swing.JLabel lblServico;
     private javax.swing.JLabel lblStatus;
     private javax.swing.JLabel lblTipoDePessoa;
-    private javax.swing.JLabel lblTipoDePessoa4;
     private javax.swing.JLabel lblTituloPagina;
     private javax.swing.JLabel lblUserIcon;
     private javax.swing.JTextField txtLogin;
