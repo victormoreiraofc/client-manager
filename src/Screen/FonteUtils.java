@@ -49,6 +49,20 @@ public class FonteUtils {
             return new Font("SansSerif", Font.PLAIN, (int) tamanho);
         }
     }
+    
+        public static Font carregarRobotoMedium(float tamanho) {
+        try {
+            File arquivoFonte = new File("src/resources/fonts/Roboto-Medium.ttf");
+            Font RobotoMedium = Font.createFont(Font.TRUETYPE_FONT, arquivoFonte);
+            RobotoMedium = RobotoMedium.deriveFont(tamanho);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(RobotoMedium);
+            return RobotoMedium;
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+            return new Font("SansSerif", Font.PLAIN, (int) tamanho);
+        }
+    }
 
     public static Font carregarRaleway(float tamanho) {
         try {

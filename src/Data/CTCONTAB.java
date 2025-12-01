@@ -539,4 +539,58 @@ public class CTCONTAB {
             }
         }
     }
+
+    // 1. Cria uma nova notificação no banco
+    public static void criarNotificacao(String usuarioLogin, String mensagem) throws SQLException, ClassNotFoundException {
+        conectado = conectar();
+        String sql = "INSERT INTO notificacoes (usuario_login, mensagem, data_criacao) VALUES (?, ?, NOW())";
+        try (PreparedStatement st = conectado.prepareStatement(sql)) {
+            st.setString(1, usuarioLogin);
+            st.setString(2, mensagem);
+            st.executeUpdate();
+        }
+    }
+
+// 2. Conta quantas não foram lidas (para a bolinha vermelha)
+    public static int contarNotificacoesNaoLidas(String usuarioLogin) throws SQLException, ClassNotFoundException {
+        conectado = conectar();
+        String sql = "SELECT COUNT(*) AS total FROM notificacoes WHERE usuario_login = ? AND lida = FALSE";
+        try (PreparedStatement st = conectado.prepareStatement(sql)) {
+            st.setString(1, usuarioLogin);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("total");
+            }
+        }
+        return 0;
+    }
+
+// 3. Busca as últimas 3 notificações
+    public static List<String[]> buscarUltimasNotificacoes(String usuarioLogin) throws SQLException, ClassNotFoundException {
+        conectado = conectar();
+        List<String[]> lista = new ArrayList<>();
+        String sql = "SELECT id, mensagem, lida FROM notificacoes WHERE usuario_login = ? ORDER BY data_criacao DESC LIMIT 3";
+        try (PreparedStatement st = conectado.prepareStatement(sql)) {
+            st.setString(1, usuarioLogin);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                lista.add(new String[]{
+                    String.valueOf(rs.getInt("id")),
+                    rs.getString("mensagem"),
+                    rs.getBoolean("lida") ? "1" : "0"
+                });
+            }
+        }
+        return lista;
+    }
+
+// 4. Marca como lida ao clicar no sino
+    public static void marcarTodasComoLidas(String usuarioLogin) throws SQLException, ClassNotFoundException {
+        conectado = conectar();
+        String sql = "UPDATE notificacoes SET lida = TRUE WHERE usuario_login = ? AND lida = FALSE";
+        try (PreparedStatement st = conectado.prepareStatement(sql)) {
+            st.setString(1, usuarioLogin);
+            st.executeUpdate();
+        }
+    }
 }

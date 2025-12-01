@@ -3,8 +3,8 @@ package screen;
 import Data.Usuario;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder; 
-import javax.swing.border.CompoundBorder; 
+import javax.swing.border.LineBorder;
+import javax.swing.border.CompoundBorder;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 import java.awt.event.*;
@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 // Imports adicionados para a função de salvar no banco de dados
-import Data.CTCONTAB; 
+import Data.CTCONTAB;
 import Data.Cliente; // Assumido que esta classe está disponível no pacote Data
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -62,7 +62,7 @@ public class TelaAdicionarCliente extends JDialog {
     // Método para centralizar a inicialização do JDialog
     private void inicializarUI() {
         // AJUSTE FINAL: Altura reduzida para 600px.
-        setSize(900, 630); 
+        setSize(900, 630);
         setLocationRelativeTo(parentFrame);
         setUndecorated(true);
         setResizable(false);
@@ -101,20 +101,19 @@ public class TelaAdicionarCliente extends JDialog {
         };
 
         // AJUSTE: Mantido EmptyBorder mínimo para que o JPanel preencha quase todo o JDialog
-        panel.setBorder(new EmptyBorder(2, 2, 2, 2)); 
+        panel.setBorder(new EmptyBorder(2, 2, 2, 2));
         panel.setLayout(new GridBagLayout());
-        
+
         // Adiciona o painel principal ao content pane do JDialog com BorderLayout
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(panel, BorderLayout.CENTER);
 
-
         GridBagConstraints gbc = new GridBagConstraints();
         int paddingHorizontal = 25;
         // Padding vertical entre label e campo (mantido em 6)
-        int paddingVerticalLabel = 6; 
+        int paddingVerticalLabel = 6;
         // Padding vertical abaixo dos campos com erro (mantido em 10)
-        int paddingVerticalField = 10; 
+        int paddingVerticalField = 10;
 
         // --- Título e Botão Fechar (ROW 0) ---
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -122,7 +121,7 @@ public class TelaAdicionarCliente extends JDialog {
         gbc.gridwidth = 2; // Ocupa as 2 colunas principais
         gbc.weightx = 1;
         // AJUSTE: Padding superior de 5 e inferior de 8 (para o título)
-        gbc.insets = new Insets(5, paddingHorizontal, 8, 15); 
+        gbc.insets = new Insets(5, paddingHorizontal, 8, 15);
         gbc.gridy = 0;
 
         JPanel headerPanel = new JPanel(new GridBagLayout());
@@ -201,16 +200,16 @@ public class TelaAdicionarCliente extends JDialog {
         txtTipoPessoa = criarCampoTexto();
         addPlaceholder(txtTipoPessoa, "Física, Jurídica ou NI"); // Placeholder atualizado
         panel.add(txtTipoPessoa, gbc);
-        
+
         // COL 1: Situação do Serviço (Field)
         gbc.gridx = 1;
         gbc.insets = new Insets(2, 10, 0, paddingHorizontal); // Zero de padding inferior temporário
         txtSituacaoServico = criarCampoTexto();
         addPlaceholder(txtSituacaoServico, "Pendente, Em andamento ou Concluído"); // Placeholder atualizado
         panel.add(txtSituacaoServico, gbc);
-        
+
         gbc.gridy++;
-        
+
         // COL 0: Erro Tipo de Pessoa (Label)
         gbc.gridx = 0;
         gbc.insets = new Insets(2, paddingHorizontal, paddingVerticalField, 10);
@@ -222,8 +221,7 @@ public class TelaAdicionarCliente extends JDialog {
         gbc.insets = new Insets(2, 10, paddingVerticalField, paddingHorizontal);
         lblErroSituacaoServico = criarLabelErro();
         panel.add(lblErroSituacaoServico, gbc);
-        
-        
+
         // ----------------------------------------------------------------------
         // --- Voltar para 1 coluna completa ---
         // ----------------------------------------------------------------------
@@ -278,7 +276,7 @@ public class TelaAdicionarCliente extends JDialog {
         panel.add(lblObservacoes, gbc);
 
         // AJUSTE: Padding inferior reduzido de 8 para 5
-        gbc.insets = new Insets(2, paddingHorizontal, 5, paddingHorizontal); 
+        gbc.insets = new Insets(2, paddingHorizontal, 5, paddingHorizontal);
         gbc.gridy++;
         txtObservacoes = criarCampoTextArea();
         addPlaceholderTextArea(txtObservacoes, "Observações sobre o cliente.");
@@ -287,7 +285,7 @@ public class TelaAdicionarCliente extends JDialog {
 
         // --- PAINEL DE BOTÕES (ROW 8) ---
         // AJUSTE: Padding inferior reduzido de 3 para 1
-        gbc.insets = new Insets(5, 15, 1, 15); 
+        gbc.insets = new Insets(5, 15, 1, 15);
         gbc.gridy++;
 
         JPanel botoesWrapper = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -448,7 +446,7 @@ public class TelaAdicionarCliente extends JDialog {
             }
         });
     }
-    
+
     // Sobrecarga para JTextArea
     private void addPlaceholderTextArea(JTextArea area, String placeholder) {
         area.setText(placeholder);
@@ -477,7 +475,7 @@ public class TelaAdicionarCliente extends JDialog {
         label.setForeground(new Color(168, 178, 195));
         label.setFont(FonteUtils.carregarRobotoSemiBold(13f));
     }
-    
+
     private JLabel criarLabelErro() {
         JLabel lbl = new JLabel("");
         lbl.setForeground(new Color(255, 100, 100)); // Vermelho Suave
@@ -504,7 +502,7 @@ public class TelaAdicionarCliente extends JDialog {
         txt.setCaretColor(Color.WHITE);
         return txt;
     }
-    
+
     private void setCampoBordaNormal(JTextField txt) {
         txt.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(50, 70, 100)), // Borda padrão
@@ -598,19 +596,18 @@ public class TelaAdicionarCliente extends JDialog {
     // =========================================================================
     //                                LÓGICA DE NEGÓCIO E VALIDAÇÃO
     // =========================================================================
-    
     /**
      * Realiza a validação dos campos Tipo de Pessoa e Situação do Serviço.
      * Retorna true se ambos estiverem válidos, false caso contrário.
      */
     private boolean validarCamposCombo() {
         boolean camposValidos = true;
-        
+
         // 1. Tipo de Pessoa
         String tipoPessoa = txtTipoPessoa.getText().trim();
         // Permite "Fisica" (sem acento) ou "Física"
         boolean tipoPessoaValido = OPCOES_TIPO_PESSOA.contains(tipoPessoa.toUpperCase().replaceAll("Í", "I"));
-        
+
         if (tipoPessoa.isEmpty() || tipoPessoa.equals("Física, Jurídica ou NI") || !tipoPessoaValido) {
             setCampoBordaErro(txtTipoPessoa);
             lblErroTipoPessoa.setText("Valor inválido. Use: Fisica, Juridica ou NI.");
@@ -619,12 +616,12 @@ public class TelaAdicionarCliente extends JDialog {
             setCampoBordaNormal(txtTipoPessoa);
             lblErroTipoPessoa.setText("");
         }
-        
+
         // 2. Situação do Serviço
         String situacaoServico = txtSituacaoServico.getText().trim();
         // Remove espaços para aceitar "Em andamento"
-        boolean situacaoServicoValida = OPCOES_SITUACAO_SERVICO.contains(situacaoServico.toUpperCase().replaceAll("\\s", "")); 
-        
+        boolean situacaoServicoValida = OPCOES_SITUACAO_SERVICO.contains(situacaoServico.toUpperCase().replaceAll("\\s", ""));
+
         if (situacaoServico.isEmpty() || situacaoServico.equals("Pendente, Em andamento ou Concluído") || !situacaoServicoValida) {
             setCampoBordaErro(txtSituacaoServico);
             lblErroSituacaoServico.setText("Valor inválido. Use: Pendente, Em andamento ou Concluido.");
@@ -633,48 +630,48 @@ public class TelaAdicionarCliente extends JDialog {
             setCampoBordaNormal(txtSituacaoServico);
             lblErroSituacaoServico.setText("");
         }
-        
+
         return camposValidos;
     }
 
-
     private void salvarCliente() {
-        
+
         // 1. Coleta e sanitização de dados.
         // O trim() remove espaços em branco extras.
         String nome = txtNomeCompleto.getText().trim();
         String servico = txtServico.getText().trim();
         // A validação no validarCamposCombo() garante que estes campos estão com valores válidos.
-        String tipoPessoa = txtTipoPessoa.getText().trim().toUpperCase().replaceAll("Í", "I"); 
-        String situacaoServico = txtSituacaoServico.getText().trim().toUpperCase().replaceAll("\\s", ""); 
+        String tipoPessoa = txtTipoPessoa.getText().trim().toUpperCase().replaceAll("Í", "I");
+        String situacaoServico = txtSituacaoServico.getText().trim().toUpperCase().replaceAll("\\s", "");
         String email = txtEmail.getText().trim();
-        
+
         // Tratamento de campos opcionais que podem conter o placeholder (usando os placeholders do seu arquivo).
         String telefone = txtTelefone.getText().trim();
         telefone = telefone.equals("999999999") ? "" : telefone;
-        
+
         String celular = txtCelular.getText().trim();
         celular = celular.equals("999999999") ? "" : celular;
-        
+
         String observacoes = txtObservacoes.getText().trim();
         observacoes = observacoes.equals("Observações sobre o cliente.") ? "" : observacoes;
-        
+
         // 2. Coleta de dados automáticos.
         // O usuário logado é obrigatório para registrar a auditoria, mas garantimos um valor padrão.
         String usuario = usuarioLogado != null ? usuarioLogado.getUsuario() : "SISTEMA_NAO_LOGADO";
         // Formato MySQL DATETIME: YYYY-MM-DD HH:MM:SS
         String dataCadastro = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
-
         // Validação dos campos 'combo' (Tipo de Pessoa e Situação do Serviço)
         if (!validarCamposCombo()) {
-            JOptionPane.showMessageDialog(this, "Por favor, corrija os erros nos campos antes de continuar.");
+            // SUBSTITUIDO: JOptionPane por NotificationToast e mantido o return para não fechar a tela
+            new NotificationToast(null, "Por favor, corrija os erros nos campos antes de continuar.").setVisible(true);
             return;
         }
-        
+
         // Validação dos campos obrigatórios remanescentes
         if (nome.isEmpty() || nome.equals("Nome Completo") || servico.isEmpty() || servico.equals("Qual foi o serviço prestado?")) {
-            JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos obrigatórios (*).");
+            // SUBSTITUIDO: JOptionPane por NotificationToast e mantido o return para não fechar a tela
+            new NotificationToast(null, "Por favor, preencha todos os campos obrigatórios (*).").setVisible(true);
             return;
         }
 
@@ -687,7 +684,7 @@ public class TelaAdicionarCliente extends JDialog {
         try {
             // Instancia o objeto Cliente (Assumindo que a classe Data.Cliente está disponível no pacote Data)
             Cliente cliente = new Cliente();
-            
+
             // Popula os dados do cliente (assumindo que Data.Cliente tem os setters correspondentes)
             cliente.setNome(nome);
             cliente.setTipoPessoa(tipoPessoa);
@@ -699,20 +696,27 @@ public class TelaAdicionarCliente extends JDialog {
             cliente.setObservacoes(observacoes);
             cliente.setDataCadastro(dataCadastro);
             cliente.setUsuario(usuario);
-            
+
             // Chama a função de registro no CTCONTAB, que fará a conexão com o banco de dados.
             CTCONTAB.registrarCliente(cliente);
 
-            logger.info("Cliente " + nome + " adicionado com sucesso ao banco de dados.");
-            JOptionPane.showMessageDialog(this, "Cliente " + nome + " adicionado com sucesso!");
+            String msg = "Você cadastrou " + nome + " como novo cliente!";
+            CTCONTAB.criarNotificacao("admin", msg); // Salva no histórico
+
+            // Sucesso: Exibe o toast e fecha a janela (dispose)
+            NotificationToast toast = new NotificationToast(null, msg);
+            toast.setVisible(true);
+
             dispose();
 
         } catch (ClassNotFoundException e) {
             logger.log(Level.SEVERE, "Erro de configuração: Driver do banco de dados não encontrado.", e);
-            JOptionPane.showMessageDialog(this, "Erro de configuração: Driver do banco de dados não encontrado.");
+            // SUBSTITUIDO: Toast de erro, sem dispose()
+            new NotificationToast(null, "Erro de configuração: Driver do banco de dados não encontrado.").setVisible(true);
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "Erro SQL ao salvar cliente no banco de dados", e);
-            JOptionPane.showMessageDialog(this, "Erro ao tentar salvar cliente no banco de dados: " + e.getMessage());
+            // SUBSTITUIDO: Toast de erro, sem dispose()
+            new NotificationToast(null, "Erro ao tentar salvar cliente no banco de dados: " + e.getMessage()).setVisible(true);
         }
     }
 }

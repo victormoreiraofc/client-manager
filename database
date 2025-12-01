@@ -66,3 +66,12 @@ CREATE TABLE auditoria (
     acao TEXT NOT NULL,
     data_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE notificacoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_login VARCHAR(100),
+    mensagem TEXT NOT NULL,
+    lida BOOLEAN DEFAULT FALSE,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    INDEX (usuario_login)
+);
