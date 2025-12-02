@@ -3,9 +3,10 @@ package Screen;
 import Data.CTCONTAB;
 import Data.Cliente;
 import Data.Usuario;
-import Screen.FonteUtils; // Ajuste se seu pacote for 'Screen' ou 'screen' (no seu código varia)
+import Screen.FonteUtils;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.Border; 
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 import java.awt.event.*;
@@ -29,8 +30,8 @@ public class PopupExclusao extends JDialog {
         this.usuarioLogado = usuarioLogado;
         this.clienteParaExcluir = cliente;
 
-        // Tamanho similar ao da imagem enviada
-        setSize(600, 200);
+        // Altura mantida em 180
+        setSize(600, 180); 
         setLocationRelativeTo(parent);
         setUndecorated(true);
         setResizable(false);
@@ -66,8 +67,9 @@ public class PopupExclusao extends JDialog {
                 g2.dispose();
             }
         };
+        // Padding para centralizar o bloco de conteúdo verticalmente
         panel.setLayout(new GridBagLayout());
-        panel.setBorder(new EmptyBorder(20, 20, 20, 20));
+        panel.setBorder(new EmptyBorder(20, 20, 20, 20)); 
         getContentPane().add(panel);
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -75,51 +77,59 @@ public class PopupExclusao extends JDialog {
         gbc.weightx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         
-       // Espaçamento horizontal idêntico à TelaAdicionarCliente
         int paddingHorizontal = 25;
 
-        // --- ROW 0: HEADER (Título e Fechar) ---
-        gbc.gridy = 0; gbc.gridx = 0; gbc.gridwidth = 2;
-        // Insets idênticos para posicionar o 'X' corretamente
-        gbc.insets = new Insets(2, paddingHorizontal, 8, paddingHorizontal);
+        // --- ROW 0: BOTÃO FECHAR (X) ---
+        gbc.gridy = 0; 
+        gbc.gridx = 0; 
+        gbc.gridwidth = 2; 
+        gbc.anchor = GridBagConstraints.NORTHEAST; 
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.insets = new Insets(0, paddingHorizontal, 5, paddingHorizontal);
         
-         JPanel headerPanel = new JPanel(new GridBagLayout());
-        headerPanel.setOpaque(false);
+        JButton btnClose = criarBotaoFechar();
+        panel.add(btnClose, gbc);
 
-        GridBagConstraints gbcHeader = new GridBagConstraints();
-
-        gbcHeader.gridx = 0;
-        gbcHeader.weightx = 1.0;
-        gbcHeader.fill = GridBagConstraints.HORIZONTAL;
-
+        // --- ROW 1: MENSAGEM ---
+        gbc.gridy = 1; 
+        gbc.gridx = 0; 
+        gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.NONE; 
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.weighty = 1.0; 
+        gbc.insets = new Insets(0, 0, 0, 0); 
+        
         JLabel lblMsg = new JLabel("Você tem certeza que deseja deletar esse cliente?");
         lblMsg.setFont(FonteUtils.carregarRobotoExtraBold(18f));
         lblMsg.setForeground(new java.awt.Color(236, 235, 235));
-        headerPanel.add(lblMsg, gbcHeader);
+        panel.add(lblMsg, gbc);
 
-        gbcHeader.gridx = 1;
-        gbcHeader.weightx = 0;
-        gbcHeader.fill = GridBagConstraints.NONE;
-        JButton btnClose = criarBotaoFechar();
-        headerPanel.add(btnClose, gbcHeader);
-
-        panel.add(headerPanel, gbc);
-        
-        // --- PAINEL DE BOTÕES (ROW 8) ---
-        // AJUSTE: Padding inferior reduzido de 3 para 1
-        gbc.insets = new Insets(5, 15, 1, 15);
-        gbc.gridy++;
+        // --- ROW 2: PAINEL DE BOTÕES ---
+        gbc.gridy = 2;
+        gbc.gridx = 0;
+        gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weighty = 0;
+        gbc.insets = new Insets(0, 15, 0, 15);
 
         JPanel botoesWrapper = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         botoesWrapper.setOpaque(false);
 
-        JPanel botoes = new JPanel(new FlowLayout(FlowLayout.RIGHT, 12, 0));
+        // Espaçamento de 10 pixels entre os botões (mantido)
+        JPanel botoes = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0)); 
         botoes.setOpaque(false);
 
         // ==========================================
         // BOTÃO CANCELAR
         // ==========================================
         JButton btnCancelar = new JButton("Cancelar") {
+            // Mantemos o padding alto para garantir o espaço físico
+            @Override
+            public Border getBorder() {
+                // Mantém 8px de padding à esquerda
+                return new EmptyBorder(0, 8, 0, 0); 
+            }
+            
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
@@ -136,7 +146,14 @@ public class PopupExclusao extends JDialog {
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 g2.setColor(new Color(65, 85, 115));
                 g2.setStroke(new BasicStroke(1f));
-                g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 12, 12);
+                
+                int x = 1; // ALTERAÇÃO CHAVE: Desloca o desenho da borda 1 pixel para a direita
+                int y = 1; // Desloca o desenho da borda 1 pixel para baixo (para o canto inferior também)
+                int w = getWidth() - 2; // Reduz a largura e altura para compensar o deslocamento
+                int h = getHeight() - 2;
+                
+                // Desenha a borda deslocada
+                g2.drawRoundRect(x, y, w, h, 12, 12);
                 g2.dispose();
             }
         };
@@ -147,9 +164,9 @@ public class PopupExclusao extends JDialog {
         btnCancelar.addActionListener(e -> dispose());
 
         // ==========================================
-        // BOTÃO CRIAR CLIENTE
+        // BOTÃO EXCLUIR
         // ==========================================
-        JButton btnCriarCliente = new JButton("Excluir") {
+        JButton btnExcluir = new JButton("Excluir") {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
@@ -166,13 +183,13 @@ public class PopupExclusao extends JDialog {
             }
         };
 
-        configurarEstiloBotao(btnCriarCliente);
-        btnCriarCliente.setPreferredSize(new Dimension(145, 35));
-        btnCriarCliente.setForeground(new Color(20, 30, 50));
-        btnCriarCliente.addActionListener(e -> confirmarExclusao());
+        configurarEstiloBotao(btnExcluir);
+        btnExcluir.setPreferredSize(new Dimension(145, 35));
+        btnExcluir.setForeground(new Color(20, 30, 50));
+        btnExcluir.addActionListener(e -> confirmarExclusao());
 
         botoes.add(btnCancelar);
-        botoes.add(btnCriarCliente);
+        botoes.add(btnExcluir);
         botoesWrapper.add(botoes);
         panel.add(botoesWrapper, gbc);
 
@@ -183,13 +200,13 @@ public class PopupExclusao extends JDialog {
     }
 
 
- private JButton criarBotaoFechar() {
+    private JButton criarBotaoFechar() {
         JButton btnClose = new JButton() {
             private final Color defaultColor = new Color(28, 46, 74);
             private final Color borderColor = new Color(42, 62, 97);
 
             {
-                setPreferredSize(new Dimension(35, 35));
+                setPreferredSize(new Dimension(30, 30)); 
                 setOpaque(false);
                 setContentAreaFilled(false);
                 setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -204,7 +221,7 @@ public class PopupExclusao extends JDialog {
 
                 int w = getWidth();
                 int h = getHeight();
-                int arco = 12;
+                int arco = 10;
 
                 g2.setColor(defaultColor);
                 g2.fillRoundRect(0, 0, w, h, arco, arco);
@@ -215,7 +232,7 @@ public class PopupExclusao extends JDialog {
 
                 g2.setColor(new Color(168, 178, 195));
                 g2.setStroke(new BasicStroke(1.5f));
-                int padding = 12;
+                int padding = 9; 
 
                 g2.drawLine(padding, padding, w - padding, h - padding);
                 g2.drawLine(w - padding, padding, padding, h - padding);
@@ -233,7 +250,6 @@ public class PopupExclusao extends JDialog {
         try {
             CTCONTAB.excluirRegistro("cliente", "ID", clienteParaExcluir.getId());
             
-            // Auditoria/Notificação
             if (usuarioLogado != null) {
                 CTCONTAB.registrarAuditoria(usuarioLogado.getUsuario(), "Excluiu o cliente: " + clienteParaExcluir.getNome());
             }
@@ -241,16 +257,13 @@ public class PopupExclusao extends JDialog {
             this.excluiu = true;
             dispose();
             
-            // Popup de Sucesso (Toast)
-            //new NotificationToast(null, "Cliente deletado com sucesso!").setVisible(true);
-            
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Erro ao excluir: " + e.getMessage());
         }
     }
     
-     private void configurarEstiloBotao(JButton btn) {
+    private void configurarEstiloBotao(JButton btn) {
         btn.setUI(new BasicButtonUI());
         btn.setOpaque(false);
         btn.setContentAreaFilled(false);
@@ -260,7 +273,6 @@ public class PopupExclusao extends JDialog {
         btn.setFont(FonteUtils.carregarRalewayMedium(13f));
     }
 
-    // --- Métodos de Blur (Padrão do seu projeto) ---
     private void aplicarEfeitoDesfoqueFundo() {
         if (parentFrame != null) {
             glassPaneOriginal = parentFrame.getGlassPane();

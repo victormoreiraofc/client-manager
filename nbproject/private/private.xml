@@ -5,10 +5,13 @@
         <group>
             <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/Data/CTCONTAB.java</file>
             <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/Screen/TelaClienteTable.java</file>
-            <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/Screen/TelaAdicionarCliente.java</file>
             <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/Data/Cliente.java</file>
             <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/Data/ClienteInfo.java</file>
             <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/Screen/FonteUtils.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/Screen/TelaAdicionarCliente.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/Screen/PopupExclusao.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/Screen/TelaVisualizarCliente.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/Screen/TelaEditarCliente.java</file>
         </group>
     </open-files>
 </project-private>

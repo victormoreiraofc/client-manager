@@ -42,7 +42,7 @@ public class TelaAdicionarCliente extends JDialog {
     private Usuario usuarioLogado;
     private JFrame parentFrame;
     private Component glassPaneOriginal;
-
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaAdicionarCliente.class.getName());
 
     private static final Set<String> OPCOES_TIPO_PESSOA = new HashSet<>(Arrays.asList("FISICA", "JURIDICA", "NI"));

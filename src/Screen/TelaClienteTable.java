@@ -87,6 +87,8 @@ public class TelaClienteTable extends javax.swing.JFrame {
     private int hoveredRow = -1;
     private int hoveredColumn = -1;
 
+    private java.awt.Point pontoInicial;
+
     public TelaClienteTable(Usuario usuario) {
         this.usuarioLogado = usuario;
         initComponents();
@@ -413,28 +415,28 @@ public class TelaClienteTable extends javax.swing.JFrame {
 
         jTable1.addMouseMotionListener(
                 new java.awt.event.MouseMotionAdapter() {
-                    @Override
-                    public void mouseMoved(java.awt.event.MouseEvent e) {
-                        int row = jTable1.rowAtPoint(e.getPoint());
-                        int col = jTable1.columnAtPoint(e.getPoint());
+            @Override
+            public void mouseMoved(java.awt.event.MouseEvent e) {
+                int row = jTable1.rowAtPoint(e.getPoint());
+                int col = jTable1.columnAtPoint(e.getPoint());
 
-                        if (row != hoveredRow || col != hoveredColumn) {
-                            hoveredRow = row;
-                            hoveredColumn = col;
-                            jTable1.repaint();
-                        }
-                    }
-                });
+                if (row != hoveredRow || col != hoveredColumn) {
+                    hoveredRow = row;
+                    hoveredColumn = col;
+                    jTable1.repaint();
+                }
+            }
+        });
 
         jTable1.addMouseListener(
                 new java.awt.event.MouseAdapter() {
-                    @Override
-                    public void mouseExited(java.awt.event.MouseEvent e) {
-                        hoveredRow = -1;
-                        hoveredColumn = -1;
-                        jTable1.repaint();
-                    }
-                });
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent e) {
+                hoveredRow = -1;
+                hoveredColumn = -1;
+                jTable1.repaint();
+            }
+        });
     }
 
     private void setIcon() {
@@ -571,7 +573,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
     private void exibirMensagemCarregando() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-        model.addRow(new Object[] { "Carregando...", "", "", "", "", "" });
+        model.addRow(new Object[]{"Carregando...", "", "", "", "", ""});
     }
 
     private void carregarClientesAssincrono() {
@@ -597,7 +599,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
     private void exibirMensagemErro() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-        model.addRow(new Object[] { "Erro ao carregar dados.", "", "", "", "", "" });
+        model.addRow(new Object[]{"Erro ao carregar dados.", "", "", "", "", ""});
     }
 
     public class TableRender extends DefaultTableCellRenderer {
@@ -790,15 +792,15 @@ public class TelaClienteTable extends javax.swing.JFrame {
                 e.printStackTrace();
             }
 
-            model.addRow(new Object[] {
-                    cliente.getId(),
-                    cliente.getNome(),
-                    cliente.getSituacaoServico(),
-                    cliente.getTipoPessoa(),
-                    dataFormatada,
-                    "Visualizar",
-                    "Editar",
-                    "Excluir"
+            model.addRow(new Object[]{
+                cliente.getId(),
+                cliente.getNome(),
+                cliente.getSituacaoServico(),
+                cliente.getTipoPessoa(),
+                dataFormatada,
+                "Visualizar",
+                "Editar",
+                "Excluir"
             });
         }
     }
@@ -908,43 +910,70 @@ public class TelaClienteTable extends javax.swing.JFrame {
             }
             return null; // Retorna null se não achar (o botão ficará vazio mas sem erro)
         }
+// Dentro da classe ButtonRenderer (na TelaClienteTable.java)
+
+        private Color getCorNormal(String tipo) {
+            if (tipo.equalsIgnoreCase("Visualizar")) {
+                return Color.decode("#0E2A3A");
+            }
+            if (tipo.equalsIgnoreCase("Editar")) {
+                return Color.decode("#3A300E");
+            }
+            return Color.decode("#3C1414");
+        }
+
+        private Color getCorHover(String tipo) {
+            if (tipo.equalsIgnoreCase("Visualizar")) {
+                return Color.decode("#123446");
+            }
+            if (tipo.equalsIgnoreCase("Editar")) {
+                return Color.decode("#4A3B11");
+            }
+            return Color.decode("#4A1A1A");
+        }
+        // Método corrigido para a classe ButtonRenderer (na TelaClienteTable.java)
 
         @Override
-        public Component getTableCellRendererComponent(JTable table, Object value,
-                boolean isSelected, boolean hasFocus, int row, int column) {
-
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             removeAll();
             this.currentRow = row;
-            // Verifica se é a última coluna visível
             this.isLastColumn = (column == table.getColumnCount() - 1);
-
             Color bgNormal, bgHover;
             Image iconeAtual;
+            String tipo;
 
-            // Lógica de seleção do botão baseada na coluna
-            if (column == 5) { // Visualizar
-                bgNormal = Color.decode("#0E2A3A");
-                bgHover = Color.decode("#123446");
+            // Lógica para determinar o tipo de botão (Visualizar, Editar, Excluir)
+            if (column == table.getColumnModel().getColumnIndex("AÇÃO 1")) { // Visualizar
+                tipo = "Visualizar";
+                bgNormal = getCorNormal(tipo);
+                bgHover = getCorHover(tipo);
                 iconeAtual = imgVisualizar;
-            } else if (column == 6) { // Editar
-                bgNormal = Color.decode("#3A300E");
-                bgHover = Color.decode("#4A3B11");
+            } else if (column == table.getColumnModel().getColumnIndex("AÇÃO 2")) { // Editar
+                tipo = "Editar";
+                bgNormal = getCorNormal(tipo);
+                bgHover = getCorHover(tipo);
                 iconeAtual = imgEditar;
-            } else { // Excluir (Assume que é o resto)
-                bgNormal = Color.decode("#3C1414");
-                bgHover = Color.decode("#4A1A1A");
+            } else { // Excluir
+                tipo = "Excluir";
+                bgNormal = getCorNormal(tipo);
+                bgHover = getCorHover(tipo);
                 iconeAtual = imgExcluir;
             }
 
-            // Passa a IMAGEM JÁ CARREGADA para o botão
+            // Cria o botão
+            // CircleButton é uma classe que estende JButton e faz o desenho circular (snippet 9)
             button = new CircleButton(iconeAtual, bgNormal, bgHover);
 
-            // Verifica hover (se as variáveis globais existirem na sua classe principal)
-            // button.setHover(row == hoveredRow && column == hoveredColumn);
-            // Força tamanho quadrado
-            button.setPreferredSize(new Dimension(32, 32));
+            // >>> CORREÇÃO DO HOVER <<<
+            // Verifica se a célula atual (row, column) é a célula que está sob o mouse
+            if (row == TelaClienteTable.this.hoveredRow && column == TelaClienteTable.this.hoveredColumn) {
+                button.setHover(true); // Ativa o estado de hover no CircleButton
+            } else {
+                button.setHover(false); // Desativa (usa cor normal)
+            }
+            // >>> FIM DA CORREÇÃO <<<
 
-            add(button);
+            add(button, new java.awt.GridBagConstraints());
             return this;
         }
 
@@ -1064,17 +1093,17 @@ public class TelaClienteTable extends javax.swing.JFrame {
 
             button = new CircleButton(imgIcone, getCorNormal(tipo), getCorHover(tipo));
             button.setPreferredSize(new Dimension(32, 32));
-            
+
             // --- AQUI ESTÁ A LÓGICA DE CLIQUE ATUALIZADA ---
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // Para a edição para liberar a tabela
-                    fireEditingStopped(); 
-                    
+                    fireEditingStopped();
+
                     // Recupera o ID da linha selecionada (Coluna 0 é o ID)
                     // Atenção: currentRow é atualizado no getTableCellEditorComponent
-                    Object idObj = jTable1.getValueAt(currentRow, 0); 
+                    Object idObj = jTable1.getValueAt(currentRow, 0);
                     int idCliente = Integer.parseInt(idObj.toString());
 
                     // Encontra o objeto Cliente na lista baseado no ID
@@ -1088,22 +1117,27 @@ public class TelaClienteTable extends javax.swing.JFrame {
                         }
                     }
 
-                    if (clienteSelecionado == null) return;
+                    if (clienteSelecionado == null) {
+                        return;
+                    }
 
                     // Redireciona para a ação correta
                     if (tipo.equalsIgnoreCase("Visualizar")) {
-                        new TelaVisualizarCliente(TelaClienteTable.this, usuarioLogado, clienteSelecionado).setVisible(true);
-                        
+                        new TelaVisualizarCliente(TelaClienteTable.this, usuarioLogado, clienteSelecionado)
+                                .setVisible(true);
+
                     } else if (tipo.equalsIgnoreCase("Editar")) {
-                        TelaEditarCliente telaEdit = new TelaEditarCliente(TelaClienteTable.this, usuarioLogado, clienteSelecionado);
+                        TelaEditarCliente telaEdit = new TelaEditarCliente(TelaClienteTable.this, usuarioLogado,
+                                clienteSelecionado);
                         telaEdit.setVisible(true);
                         // Se salvou, recarrega a tabela
                         if (telaEdit.isSalvou()) {
                             carregarClientesAssincrono();
                         }
-                        
+
                     } else if (tipo.equalsIgnoreCase("Excluir")) {
-                        PopupExclusao popup = new PopupExclusao(TelaClienteTable.this, usuarioLogado, clienteSelecionado);
+                        PopupExclusao popup = new PopupExclusao(TelaClienteTable.this, usuarioLogado,
+                                clienteSelecionado);
                         popup.setVisible(true);
                         // Se excluiu, recarrega a tabela
                         if (popup.isExcluiu()) {
@@ -1117,33 +1151,47 @@ public class TelaClienteTable extends javax.swing.JFrame {
         }
 
         @Override
-        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
+                int column) {
             this.currentRow = row;
             this.isLastColumn = (column == table.getColumnCount() - 1);
             return panel;
         }
 
         private Color getCorNormal(String tipo) {
-            if (tipo.equalsIgnoreCase("Visualizar")) return Color.decode("#0E2A3A");
-            if (tipo.equalsIgnoreCase("Editar")) return Color.decode("#3A300E");
+            if (tipo.equalsIgnoreCase("Visualizar")) {
+                return Color.decode("#0E2A3A");
+            }
+            if (tipo.equalsIgnoreCase("Editar")) {
+                return Color.decode("#3A300E");
+            }
             return Color.decode("#3C1414");
         }
 
         private Color getCorHover(String tipo) {
-            if (tipo.equalsIgnoreCase("Visualizar")) return Color.decode("#123446");
-            if (tipo.equalsIgnoreCase("Editar")) return Color.decode("#4A3B11");
+            if (tipo.equalsIgnoreCase("Visualizar")) {
+                return Color.decode("#123446");
+            }
+            if (tipo.equalsIgnoreCase("Editar")) {
+                return Color.decode("#4A3B11");
+            }
             return Color.decode("#4A1A1A");
         }
 
         private Image carregarImagem(String path) {
             try {
                 URL url = getClass().getResource(path);
-                if (url == null && path.startsWith("/")) url = getClass().getResource(path.substring(1));
-                if (url != null) return new ImageIcon(url).getImage();
-            } catch (Exception e) {}
+                if (url == null && path.startsWith("/")) {
+                    url = getClass().getResource(path.substring(1));
+                }
+                if (url != null) {
+                    return new ImageIcon(url).getImage();
+                }
+            } catch (Exception e) {
+            }
             return null;
         }
-    
+
         // ... Mantenha seus métodos abrirTelaCliente e excluirCliente aqui dentro ...
         private void abrirTelaCliente(int row) {
             try {
@@ -1669,6 +1717,42 @@ public class TelaClienteTable extends javax.swing.JFrame {
 
                 }
             }
+
+            @Override
+            public void mouseDragged(java.awt.event.MouseEvent e) {
+                // Verifica se o ponto inicial foi registrado (o usuário clicou e está
+                // arrastando)
+                if (pontoInicial == null) {
+                    return;
+                }
+
+                // 1. Pega o Viewport (a "janela" de visualização) do JScrollPane
+                javax.swing.JViewport viewPort = jScrollPane1.getViewport();
+
+                // 2. Pega a posição atual da tabela dentro do Viewport
+                java.awt.Point viewPoint = viewPort.getViewPosition();
+
+                // 3. Calcula o deslocamento (quanto o mouse se moveu)
+                // O ponto inicial menos o ponto atual inverte a direção, fazendo o conteúdo se
+                // mover
+                // na direção oposta ao arraste, como se estivesse puxando
+                int deltaX = pontoInicial.x - e.getX();
+                int deltaY = pontoInicial.y - e.getY();
+
+                // 4. Atualiza a posição de visualização
+                viewPoint.x += deltaX;
+                viewPoint.y += deltaY;
+
+                // 5. Limita a nova posição para que não ultrapasse o topo/fim do conteúdo
+                int maxX = jTable1.getWidth() - viewPort.getWidth();
+                int maxY = jTable1.getHeight() - viewPort.getHeight();
+
+                viewPoint.x = Math.max(0, Math.min(viewPoint.x, maxX));
+                viewPoint.y = Math.max(0, Math.min(viewPoint.y, maxY));
+
+                // 6. Define a nova posição, o que causa a rolagem
+                viewPort.setViewPosition(viewPoint);
+            }
         });
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -1676,6 +1760,12 @@ public class TelaClienteTable extends javax.swing.JFrame {
                 hoveredRow = -1;
                 hoveredColumn = -1;
                 jTable1.repaint();
+            }
+
+            @Override
+            public void mousePressed(java.awt.event.MouseEvent e) {
+                // Armazena a posição inicial do clique do mouse dentro da tabela
+                pontoInicial = e.getPoint();
             }
         });
         jTable1.setRowHeight(50);
@@ -1704,6 +1794,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         jScrollPane1.setBorder(null);
         jScrollPane1.setViewportBorder(null);
         jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
 
         getContentPane().add(jScrollPane1);
         jScrollPane1.setBounds(130, 300, 1250, 380);
