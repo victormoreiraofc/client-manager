@@ -1237,36 +1237,6 @@ private void carregarDadosRelatorios() {
             return null;
         }
 
-        // ... Mantenha seus métodos abrirTelaCliente e excluirCliente aqui dentro ...
-        private void abrirTelaCliente(int row) {
-            try {
-                if (row >= 0 && row < listaClientes.size()) {
-                    Cliente clienteSelecionado = listaClientes.get(row);
-                    TelaCliente telaCliente = new TelaCliente(usuarioLogado, clienteSelecionado);
-                    telaCliente.setVisible(true);
-                    TelaClienteTable.this.dispose();
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-
-        private void excluirCliente(int row) {
-            if (row < 0 || row >= listaClientes.size()) {
-                return;
-            }
-            MDC.put("usuario", usuarioLogado.getUsuario());
-            try {
-                Cliente cliente = listaClientes.get(row);
-                CTCONTAB.excluirRegistro("cliente", "ID", cliente.getId());
-                listaClientes.remove(row);
-                atualizarTabela(listaClientes);
-                MensagemUtil.exibirSucesso("Cliente excluído com sucesso!");
-                logger.info("excluiu o cliente [{}]", cliente.getNome());
-            } catch (Exception e) {
-                MensagemUtil.exibirErro("Erro ao excluir cliente!");
-            }
-        }
     }
 
     private void addPlaceholder(JTextField field, String placeholder) {

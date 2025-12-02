@@ -1062,8 +1062,8 @@ jPanelBackground5.add(g6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        new TelaCliente(usuarioLogado, cliente).setVisible(true);
-        this.dispose();
+        TelaAdicionarCliente popup = new TelaAdicionarCliente(this, usuarioLogado);
+        popup.setVisible(true);
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDashboardActionPerformed
