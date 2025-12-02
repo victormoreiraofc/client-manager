@@ -761,6 +761,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         setPadding(2, paddingPadrao); // STATUS
         setPadding(3, paddingPadrao); // TIPO
         setPadding(4, paddingPadrao); // DATA
+
     }
 
     private void setPadding(int colIndex, int padding) {
@@ -1070,7 +1071,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
             // Configura o botão
             button = new CircleButton(imgIcone, getCorNormal(tipo), getCorHover(tipo));
             button.setPreferredSize(new Dimension(32, 32));
-
+            
             // Adiciona a ação do clique
             button.addActionListener(new ActionListener() {
                 @Override
@@ -1238,7 +1239,8 @@ public class TelaClienteTable extends javax.swing.JFrame {
         lblRelatorioPendenteDescricao = new javax.swing.JLabel();
         lblRelatorioNovoDescricao = new javax.swing.JLabel();
         lblRelatorioNovoNumero = new javax.swing.JLabel();
-        btnCadastrar = new javax.swing.JButton();
+        btnCadastrar = new Screen.RoundButton(
+                new javax.swing.ImageIcon(getClass().getResource("/images/Plus Icon.png")));
         lblRelatorioNovoTitulo1 = new javax.swing.JLabel();
         lblIconeFuncionarioDoMes = new javax.swing.JLabel();
         lblIconeRelatorioConcluido = new javax.swing.JLabel();
@@ -1284,7 +1286,12 @@ public class TelaClienteTable extends javax.swing.JFrame {
         lblStatus = new javax.swing.JLabel();
         lblNome = new javax.swing.JLabel();
         lblID = new javax.swing.JLabel();
-        JPanelBackground = new javax.swing.JPanel();
+        java.awt.Color COR_FUNDO = java.awt.Color.decode("#162842"); // Fundo: #162842
+        java.awt.Color COR_BORDA = java.awt.Color.decode("#2A3E61"); // Borda: #2A3E61
+        int RAIO_BORDA = 30; // Raio dos cantos (ajuste se precisar)
+        int ESPESSURA_BORDA = 3; // Espessura da borda em pixels
+
+        JPanelBackground = new PanelArredondadoComBorda(RAIO_BORDA, COR_FUNDO, COR_BORDA, ESPESSURA_BORDA);
         lblPesquisarIcone = new javax.swing.JLabel();
         txtLogin = new javax.swing.JTextField();
         Background = new javax.swing.JLabel();
@@ -1335,9 +1342,6 @@ public class TelaClienteTable extends javax.swing.JFrame {
         getContentPane().add(lblRelatorioNovoNumero);
         lblRelatorioNovoNumero.setBounds(170, 165, 210, 25);
 
-        btnCadastrar.setBackground(new java.awt.Color(28, 46, 74));
-        btnCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Plus Icon.png"))); // NOI18N
-        btnCadastrar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCadastrarActionPerformed(evt);
@@ -1735,8 +1739,6 @@ public class TelaClienteTable extends javax.swing.JFrame {
         getContentPane().add(lblID);
         lblID.setBounds(140, 280, 110, 16);
 
-        JPanelBackground.setBackground(new java.awt.Color(22, 40, 66));
-        JPanelBackground.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(42, 62, 97), 3));
         getContentPane().add(JPanelBackground);
         JPanelBackground.setBounds(100, 260, 1310, 450);
 

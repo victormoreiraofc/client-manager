@@ -1,6 +1,5 @@
 screen.TelaAlterarUsuario$3
 screen.TelaAlterarUsuario$4
-screen.TelaAlterarUsuario$5$1
 screen.TelaAlterarUsuario$1
 screen.TelaAlterarUsuario$2
 screen.TelaAlterarUsuario

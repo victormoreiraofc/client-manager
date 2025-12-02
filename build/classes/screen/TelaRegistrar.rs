@@ -3,7 +3,6 @@ screen.TelaRegistrar$11
 screen.TelaRegistrar$10
 screen.TelaRegistrar$17
 screen.TelaRegistrar$16
-screen.TelaRegistrar$19
 screen.TelaRegistrar$18
 screen.TelaRegistrar$8
 screen.TelaRegistrar$13

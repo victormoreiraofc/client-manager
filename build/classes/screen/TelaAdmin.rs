@@ -5,12 +5,14 @@ screen.TelaAdmin$8
 screen.TelaAdmin$9
 screen.TelaAdmin$20
 screen.TelaAdmin$1
-screen.TelaAdmin$24
+screen.TelaAdmin$13
 screen.TelaAdmin$2
-screen.TelaAdmin$23
+screen.TelaAdmin$12
 screen.TelaAdmin$3
+screen.TelaAdmin$11
 screen.TelaAdmin$22
 screen.TelaAdmin$4
+screen.TelaAdmin$10
 screen.TelaAdmin$21
 screen.TelaAdmin$17
 screen.TelaAdmin$16
@@ -18,10 +20,4 @@ screen.TelaAdmin$15
 screen.TelaAdmin$14
 screen.TelaAdmin$19
 screen.TelaAdmin$18
-screen.TelaAdmin$13
-screen.TelaAdmin$12
-screen.TelaAdmin$11
-screen.TelaAdmin$10
-screen.TelaAdmin$26
-screen.TelaAdmin$25
 screen.TelaAdmin

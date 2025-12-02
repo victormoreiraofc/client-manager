@@ -1,14 +1,18 @@
-screen.TelaClienteTable$ButtonEditor
 screen.TelaClienteTable$8
+screen.TelaClienteTable$TableRender
+screen.TelaClienteTable$ButtonEditor
 screen.TelaClienteTable$9
 screen.TelaClienteTable
 screen.TelaClienteTable$ButtonRenderer
+screen.TelaClienteTable$ButtonEditor$2
+screen.TelaClienteTable$ButtonEditor$1
 screen.TelaClienteTable$28
 screen.TelaClienteTable$29
 screen.TelaClienteTable$26
 screen.TelaClienteTable$27
 screen.TelaClienteTable$24
 screen.TelaClienteTable$25
+screen.TelaClienteTable$CircleButton
 screen.TelaClienteTable$22
 screen.TelaClienteTable$23
 screen.TelaClienteTable$20
@@ -20,6 +24,7 @@ screen.TelaClienteTable$4
 screen.TelaClienteTable$5
 screen.TelaClienteTable$6
 screen.TelaClienteTable$7
+screen.TelaClienteTable$PanelArredondadoComBorda
 screen.TelaClienteTable$19
 screen.TelaClienteTable$17
 screen.TelaClienteTable$18
@@ -29,7 +34,4 @@ screen.TelaClienteTable$13
 screen.TelaClienteTable$14
 screen.TelaClienteTable$11
 screen.TelaClienteTable$12
-screen.TelaClienteTable$31
 screen.TelaClienteTable$10
-screen.TelaClienteTable$32
-screen.TelaClienteTable$30
