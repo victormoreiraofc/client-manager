@@ -175,6 +175,21 @@ public class FonteUtils {
             return new Font("SansSerif", Font.PLAIN, (int) tamanho);
         }
     }
+    
+    public static Font carregarLatoBold(float tamanho) {
+        try {
+            File arquivoFonte = new File("src/resources/fonts/Lato-Bold.ttf");
+            Font LatoBold = Font.createFont(Font.TRUETYPE_FONT, arquivoFonte);
+            LatoBold = LatoBold.deriveFont(tamanho);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(LatoBold);
+            return LatoBold;
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+            return new Font("SansSerif", Font.PLAIN, (int) tamanho);
+        }
+    }
+
 
     public static Font carregarInterSemiBold(float tamanho) {
         try {

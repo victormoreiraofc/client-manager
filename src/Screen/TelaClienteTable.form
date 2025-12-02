@@ -738,6 +738,9 @@
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="null"/>
+        </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
@@ -764,10 +767,10 @@
             </Property>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="8" rowCount="4">
+                <Column editable="false" title="ID" type="java.lang.Object"/>
                 <Column editable="false" title="NOME" type="java.lang.Object"/>
-                <Column editable="false" title="TIPO DE PESSOA" type="java.lang.Object"/>
                 <Column editable="false" title="STATUS" type="java.lang.Object"/>
-                <Column editable="false" title="SERVI&#xc7;O" type="java.lang.Object"/>
+                <Column editable="false" title="TIPO DE PESSOA" type="java.lang.Object"/>
                 <Column editable="false" title="DATA DE CADASTRO" type="java.lang.Object"/>
                 <Column editable="true" title="A&#xc7;&#xc3;O 1" type="java.lang.Object"/>
                 <Column editable="true" title="A&#xc7;&#xc3;O 2" type="java.lang.Object"/>

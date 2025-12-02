@@ -7,6 +7,7 @@ import Data.PermissaoUtil;
 import Data.Usuario;
 import Screen.FonteUtils;
 import Screen.MensagemUtil;
+import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -46,6 +47,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.imageio.ImageIO;
@@ -55,6 +57,21 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
 import javax.swing.ImageIcon;
+import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
+import javax.swing.table.TableColumn;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridBagLayout;
+import java.awt.RenderingHints;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.URL;
+import javax.swing.SwingUtilities;
 
 public class TelaClienteTable extends javax.swing.JFrame {
 
@@ -73,6 +90,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         adicionarListenerDeBusca();
         exibirMensagemCarregando();
         carregarClientesAssincrono();
+        aplicarPaddingNasColunas();
         setUndecorated(true);
         PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
         IconUtil.setIcon(usuarioLogado, lblUserIcon);
@@ -392,32 +410,28 @@ public class TelaClienteTable extends javax.swing.JFrame {
 
         jTable1.addMouseMotionListener(
                 new java.awt.event.MouseMotionAdapter() {
-            @Override
-            public void mouseMoved(java.awt.event.MouseEvent e
-            ) {
-                int row = jTable1.rowAtPoint(e.getPoint());
-                int col = jTable1.columnAtPoint(e.getPoint());
+                    @Override
+                    public void mouseMoved(java.awt.event.MouseEvent e) {
+                        int row = jTable1.rowAtPoint(e.getPoint());
+                        int col = jTable1.columnAtPoint(e.getPoint());
 
-                if (row != hoveredRow || col != hoveredColumn) {
-                    hoveredRow = row;
-                    hoveredColumn = col;
-                    jTable1.repaint();
-                }
-            }
-        }
-        );
+                        if (row != hoveredRow || col != hoveredColumn) {
+                            hoveredRow = row;
+                            hoveredColumn = col;
+                            jTable1.repaint();
+                        }
+                    }
+                });
 
         jTable1.addMouseListener(
                 new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseExited(java.awt.event.MouseEvent e
-            ) {
-                hoveredRow = -1;
-                hoveredColumn = -1;
-                jTable1.repaint();
-            }
-        }
-        );
+                    @Override
+                    public void mouseExited(java.awt.event.MouseEvent e) {
+                        hoveredRow = -1;
+                        hoveredColumn = -1;
+                        jTable1.repaint();
+                    }
+                });
     }
 
     private void setIcon() {
@@ -554,7 +568,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
     private void exibirMensagemCarregando() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-        model.addRow(new Object[]{"Carregando...", "", "", "", "", ""});
+        model.addRow(new Object[] { "Carregando...", "", "", "", "", "" });
     }
 
     private void carregarClientesAssincrono() {
@@ -580,15 +594,187 @@ public class TelaClienteTable extends javax.swing.JFrame {
     private void exibirMensagemErro() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-        model.addRow(new Object[]{"Erro ao carregar dados.", "", "", "", "", ""});
+        model.addRow(new Object[] { "Erro ao carregar dados.", "", "", "", "", "" });
+    }
+
+    public class TableRender extends DefaultTableCellRenderer {
+
+        private int padding;
+        private int alignment;
+
+        // Variáveis de estado para o desenho
+        private int currentRow;
+        private boolean isFirstColumn;
+        private boolean isLastColumn;
+
+        public TableRender(int padding, int alignment) {
+            this.padding = padding;
+            this.alignment = alignment;
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int row, int column) {
+            // 1. Configuração básica do texto
+            super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+            // 2. CAPTURA O ESTADO DA CÉLULA
+            this.currentRow = row;
+
+            // Verifica se é a primeira coluna visível
+            this.isFirstColumn = (column == 0);
+
+            // Verifica se é a última coluna visível (IMPORTANTE: A coluna de ações deve ser
+            // a última)
+            this.isLastColumn = (column == table.getColumnCount() - 1);
+
+            // 3. Configurações visuais
+            setBorder(BorderFactory.createEmptyBorder(0, padding, 0, 0));
+            setHorizontalAlignment(alignment);
+            setOpaque(false); // Transparente para desenharmos manualmente
+
+            // 4. Cores do Texto (Sua lógica original)
+            if (!isSelected) {
+                int modelColumn = table.convertColumnIndexToModel(column);
+                String texto = (value != null) ? value.toString() : "";
+
+                if (modelColumn == 0 || modelColumn == 4) {
+                    setForeground(Color.decode("#A8B2C3"));
+                } else if (modelColumn == 2) {
+                    switch (texto) {
+                        case "Pendente":
+                            setForeground(Color.decode("#EB5757"));
+                            break;
+                        case "Concluido":
+                        case "Concluído":
+                            setForeground(Color.decode("#27AE60"));
+                            break;
+                        case "Em andamento":
+                            setForeground(Color.decode("#F2C94C"));
+                            break;
+                        default:
+                            setForeground(Color.WHITE);
+                    }
+                } else {
+                    setForeground(Color.WHITE);
+                }
+            } else {
+                setForeground(Color.WHITE);
+            }
+
+            return this;
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            // --- DEFINIÇÃO DAS CORES ---
+            Color corFundo = (currentRow % 2 == 0) ? Color.decode("#162842") : Color.decode("#1C2E4A");
+            Color corBorda = Color.decode("#2D9CDB");
+
+            // --- GEOMETRIA DO DESENHO (O TRUQUE DA CONTINUIDADE) ---
+            int w = getWidth();
+            int h = getHeight();
+            int arc = 25; // Raio do arredondamento (Aumentei para ficar mais visível)
+            int gapY = 6; // Espaço vertical entre as linhas (o "respiro")
+
+            // A altura do desenho é a altura da célula menos o espaço
+            int drawH = h - gapY;
+            int drawY = gapY / 2; // Centraliza verticalmente
+
+            // Lógica de "Extensão":
+            // Esticamos o retângulo para fora da célula nas direções que não queremos borda
+            // arredondada.
+            int xDraw = 0;
+            int wDraw = w;
+
+            if (isFirstColumn && isLastColumn) {
+                // Se só tiver 1 coluna, desenha o cartão inteiro
+                xDraw = 1;
+                wDraw = w - 2;
+            } else if (isFirstColumn) {
+                // Primeira coluna: Começa normal (1), estica muito para a direita (w + arc)
+                xDraw = 1;
+                wDraw = w + arc;
+            } else if (isLastColumn) {
+                // Última coluna: Começa muito antes da esquerda (-arc), termina normal (w - 1)
+                xDraw = -arc;
+                wDraw = w + arc;
+            } else {
+                // Colunas do meio: Começa antes (-arc) e termina depois (w + arc)
+                // Isso esconde as bordas laterais
+                xDraw = -arc;
+                wDraw = w + (arc * 2);
+            }
+
+            // 1. Pinta o Fundo
+            g2.setColor(corFundo);
+            g2.fillRoundRect(xDraw, drawY, wDraw, drawH, arc, arc);
+
+            // 2. Pinta a Borda
+            g2.setColor(corBorda);
+            g2.setStroke(new BasicStroke(1f)); // Borda fina
+            g2.drawRoundRect(xDraw, drawY, wDraw, drawH, arc, arc);
+
+            g2.dispose();
+
+            // 3. Desenha o texto por cima de tudo
+            super.paintComponent(g);
+        }
+    }
+
+    private void aplicarPaddingNasColunas() {
+        jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+
+        int xDoTituloID = 20; // Exemplo: Onde começa o label "ID"
+        int xDoTituloNome = 100; // Exemplo: Onde começa o label "NOME"
+        int xDoTituloStatus = 330; // Exemplo: Onde começa o label "STATUS"
+        int xDoTituloTipo = 480; // Exemplo: Onde começa o label "TIPO DE PESSOA"
+        int xDoTituloData = 680; // Exemplo: Onde começa o label "DATA DE CADASTRO"
+        int xDoTituloAcoes = 1030;
+
+        int larguraId = xDoTituloNome - xDoTituloID;
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(larguraId);
+
+        int larguraNome = xDoTituloStatus - xDoTituloNome;
+        jTable1.getColumnModel().getColumn(1).setPreferredWidth(larguraNome);
+
+        int larguraStatus = xDoTituloTipo - xDoTituloStatus;
+        jTable1.getColumnModel().getColumn(2).setPreferredWidth(larguraStatus);
+
+        int larguraTipo = xDoTituloData - xDoTituloTipo;
+        jTable1.getColumnModel().getColumn(3).setPreferredWidth(larguraTipo);
+
+        int larguraData = xDoTituloAcoes - xDoTituloData;
+        jTable1.getColumnModel().getColumn(4).setPreferredWidth(larguraData);
+
+        if (jTable1.getColumnCount() > 5) {
+            jTable1.getColumnModel().getColumn(5).setPreferredWidth(150);
+        }
+
+        int paddingPadrao = 10;
+
+        setPadding(0, paddingPadrao); // ID
+        setPadding(1, paddingPadrao); // NOME
+        setPadding(2, paddingPadrao); // STATUS
+        setPadding(3, paddingPadrao); // TIPO
+        setPadding(4, paddingPadrao); // DATA
+    }
+
+    private void setPadding(int colIndex, int padding) {
+        TableRender renderer = new TableRender(padding, SwingConstants.LEFT);
+        jTable1.getColumnModel().getColumn(colIndex).setCellRenderer(renderer);
     }
 
     private void atualizarTabela(List<Cliente> clientes) {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        aplicarPaddingNasColunas();
         model.setRowCount(0);
 
         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy 'às' HH:mm");
 
         for (Cliente cliente : clientes) {
             String dataFormatada = "Data Inválida";
@@ -600,15 +786,15 @@ public class TelaClienteTable extends javax.swing.JFrame {
                 e.printStackTrace();
             }
 
-            model.addRow(new Object[]{
-                cliente.getNome(),
-                cliente.getTipoPessoa(),
-                cliente.getSituacaoServico(),
-                cliente.getServico(),
-                dataFormatada,
-                "Visualizar",
-                "Editar",
-                "Excluir"
+            model.addRow(new Object[] {
+                    cliente.getId(),
+                    cliente.getNome(),
+                    cliente.getSituacaoServico(),
+                    cliente.getTipoPessoa(),
+                    dataFormatada,
+                    "Visualizar",
+                    "Editar",
+                    "Excluir"
             });
         }
     }
@@ -626,35 +812,31 @@ public class TelaClienteTable extends javax.swing.JFrame {
         atualizarTabela(clientesFiltrados);
     }
 
-    private class CircleButton extends JButton {
+    public class CircleButton extends JButton {
 
-        private Color normalColor;
-        private Color hoverColor;
-        private boolean isHovered;
+        private Color colorNormal;
+        private Color colorHover;
+        private Color currentColor;
+        private Image image; // Recebe a imagem já carregada
 
-        public CircleButton(String iconPath, Color normal, Color hover) {
-            this.normalColor = normal;
-            this.hoverColor = hover;
-            this.isHovered = false;
+        // Construtor agora recebe a IMAGE, não o caminho String
+        public CircleButton(Image img, Color normal, Color hover) {
+            this.image = img;
+            this.colorNormal = normal;
+            this.colorHover = hover;
+            this.currentColor = normal;
 
             setContentAreaFilled(false);
             setFocusPainted(false);
             setBorderPainted(false);
+            setOpaque(false);
 
-            // Configura o Ícone 12x12
-            try {
-                java.net.URL url = getClass().getResource(iconPath);
-                if (url != null) {
-                    Image img = ImageIO.read(url).getScaledInstance(15, 15, Image.SCALE_SMOOTH);
-                    setIcon(new ImageIcon(img));
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            setPreferredSize(new Dimension(32, 32));
         }
 
-        public void setHovered(boolean hovered) {
-            this.isHovered = hovered;
+        public void setHover(boolean isHover) {
+            this.currentColor = isHover ? colorHover : colorNormal;
+            repaint();
         }
 
         @Override
@@ -662,61 +844,147 @@ public class TelaClienteTable extends javax.swing.JFrame {
             Graphics2D g2 = (Graphics2D) g.create();
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-            // Verifica se está com o mouse em cima (pela variável ou pelo modelo do botão)
-            if (isHovered || getModel().isRollover()) {
-                g2.setColor(hoverColor);
-            } else {
-                g2.setColor(normalColor);
+            int w = getWidth();
+            int h = getHeight();
+            int d = Math.min(w, h); // Diâmetro
+            int x = (w - d) / 2;
+            int y = (h - d) / 2;
+
+            // 1. Desenha o fundo circular
+            g2.setColor(currentColor);
+            g2.fillOval(x, y, d, d);
+
+            // 2. Desenha a imagem centralizada
+            if (image != null) {
+                // Centraliza a imagem 16x16 no centro do botão
+                int imgX = x + (d - 16) / 2;
+                int imgY = y + (d - 16) / 2;
+                g2.drawImage(image, imgX, imgY, 16, 16, this);
             }
 
-            // TAMANHO DO CÍRCULO: Aumentado para 36
-            int diameter = 36;
-
-            // Centraliza o círculo no espaço da célula
-            int x = (getWidth() - diameter) / 2;
-            int y = (getHeight() - diameter) / 2;
-
-            g2.fillOval(x, y, diameter, diameter);
             g2.dispose();
-
-            super.paintComponent(g);
         }
     }
 
-    class ButtonRenderer implements TableCellRenderer {
+    class ButtonRenderer extends javax.swing.JPanel implements TableCellRenderer {
+
+        // Cache das imagens para não carregar toda hora
+        private Image imgVisualizar;
+        private Image imgEditar;
+        private Image imgExcluir;
+
+        private CircleButton button;
+        private int currentRow;
+        private boolean isLastColumn;
+
+        public ButtonRenderer() {
+            setLayout(new GridBagLayout());
+            setOpaque(false);
+
+            // --- CARREGAMENTO ÚNICO DAS IMAGENS ---
+            imgVisualizar = carregarImagem("/images/olho.png");
+            imgEditar = carregarImagem("/images/lapis.png");
+            imgExcluir = carregarImagem("/images/lixo.png");
+        }
+
+        // Método auxiliar seguro para carregar imagem
+        private Image carregarImagem(String path) {
+            try {
+                // Tenta carregar com o caminho exato
+                java.net.URL url = getClass().getResource(path);
+                if (url == null && path.startsWith("/")) {
+                    // Tenta sem a barra inicial se falhar
+                    url = getClass().getResource(path.substring(1));
+                }
+                if (url != null) {
+                    return new ImageIcon(url).getImage();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null; // Retorna null se não achar (o botão ficará vazio mas sem erro)
+        }
 
         @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int row, int column) {
+
+            removeAll();
+            this.currentRow = row;
+            // Verifica se é a última coluna visível
+            this.isLastColumn = (column == table.getColumnCount() - 1);
 
             Color bgNormal, bgHover;
-            String iconName;
+            Image iconeAtual;
 
-            // Configuração das Cores exatas que você pediu
+            // Lógica de seleção do botão baseada na coluna
             if (column == 5) { // Visualizar
                 bgNormal = Color.decode("#0E2A3A");
                 bgHover = Color.decode("#123446");
-                iconName = "/images/olho.png";
+                iconeAtual = imgVisualizar;
             } else if (column == 6) { // Editar
                 bgNormal = Color.decode("#3A300E");
                 bgHover = Color.decode("#4A3B11");
-                iconName = "/images/lapis.png";
-            } else { // Deletar (Coluna 7)
+                iconeAtual = imgEditar;
+            } else { // Excluir (Assume que é o resto)
                 bgNormal = Color.decode("#3C1414");
                 bgHover = Color.decode("#4A1A1A");
-                iconName = "/images/lixo.png";
+                iconeAtual = imgExcluir;
             }
 
-            CircleButton btn = new CircleButton(iconName, bgNormal, bgHover);
-            btn.setOpaque(false);
+            // Passa a IMAGEM JÁ CARREGADA para o botão
+            button = new CircleButton(iconeAtual, bgNormal, bgHover);
 
-            // Lógica Mágica: Verifica se o mouse está sobre esta linha/coluna específica
-            if (row == hoveredRow && column == hoveredColumn) {
-                btn.setHovered(true);
+            // Verifica hover (se as variáveis globais existirem na sua classe principal)
+            // button.setHover(row == hoveredRow && column == hoveredColumn);
+            // Força tamanho quadrado
+            button.setPreferredSize(new Dimension(32, 32));
+
+            add(button);
+            return this;
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+            // Cores
+            Color corFundo = (currentRow % 2 == 0) ? Color.decode("#162842") : Color.decode("#1C2E4A");
+            Color corBorda = Color.decode("#2D9CDB");
+
+            int w = getWidth(); // Largura total disponível na célula
+            int h = getHeight();
+            int arc = 20;
+            int gapY = 4;
+            int drawH = h - gapY;
+            int drawY = gapY / 2;
+
+            int xDraw = -arc; // Começa escondido na esquerda
+            int wDraw;
+
+            if (isLastColumn) {
+                // --- CORREÇÃO DO PREENCHIMENTO ---
+                // Se for a última coluna, estica até a largura total (w) + a sobra da esquerda
+                // (arc)
+                // O -1 é para garantir que a borda fique dentro do pixel de pintura
+                wDraw = w + arc - 1;
             } else {
-                btn.setHovered(false);
+                // Colunas do meio esticam para os dois lados
+                wDraw = w + (arc * 2);
             }
 
-            return btn;
+            // 1. Fundo
+            g2.setColor(corFundo);
+            g2.fillRoundRect(xDraw, drawY, wDraw, drawH, arc, arc);
+
+            // 2. Borda
+            g2.setColor(corBorda);
+            g2.setStroke(new BasicStroke(1f));
+            g2.drawRoundRect(xDraw, drawY, wDraw, drawH, arc, arc);
+
+            g2.dispose();
+            super.paintComponent(g);
         }
     }
 
@@ -732,66 +1000,126 @@ public class TelaClienteTable extends javax.swing.JFrame {
         jTable1.getColumnModel().getColumn(7).setPreferredWidth(62);
     }
 
-    class ButtonEditor extends DefaultCellEditor {
+    public class ButtonEditor extends DefaultCellEditor {
 
+        private String tipo; // "Visualizar", "Editar" ou "Excluir"
         private CircleButton button;
-        private String label;
-        private String actionType;
-        private int selectedRow;
+        private javax.swing.JPanel panel;
 
-        public ButtonEditor(JCheckBox checkBox, String actionType) {
+        // Variáveis de estado para o desenho do fundo
+        private int currentRow;
+        private boolean isLastColumn;
+
+        // Cache de imagens
+        private Image imgIcone;
+
+        // CONSTRUTOR ANTIGO RESTAURADO: Recebe o CheckBox e o Tipo
+        public ButtonEditor(JCheckBox checkBox, String tipo) {
             super(checkBox);
-            this.actionType = actionType;
-        }
+            this.tipo = tipo;
 
-        @Override
-        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-            label = value == null ? "" : value.toString();
-            selectedRow = row;
-
-            Color bgNormal, bgHover;
-            String iconName;
-
-            if (column == 5) { // Visualizar
-                bgNormal = Color.decode("#0E2A3A");
-                bgHover = Color.decode("#123446");
-                iconName = "/images/olho.png";
-                this.actionType = "Visualizar";
-            } else if (column == 6) { // Editar
-                bgNormal = Color.decode("#3A300E");
-                bgHover = Color.decode("#4A3B11");
-                iconName = "/images/lapis.png";
-                this.actionType = "Editar";
-            } else { // Deletar (Coluna 7)
-                bgNormal = Color.decode("#3C1414");
-                bgHover = Color.decode("#4A1A1A");
-                iconName = "/images/lixo.png";
-                this.actionType = "Excluir";
+            // Carrega a imagem correspondente ao TIPO apenas uma vez
+            String iconPath = "";
+            if (tipo.equalsIgnoreCase("Visualizar")) {
+                iconPath = "/images/olho.png";
+            } else if (tipo.equalsIgnoreCase("Editar")) {
+                iconPath = "/images/lapis.png";
+            } else { // Excluir
+                iconPath = "/images/lixo.png";
             }
+            this.imgIcone = carregarImagem(iconPath);
 
-            button = new CircleButton(iconName, bgNormal, bgHover);
-            button.setOpaque(false);
+            // Painel que desenha o fundo azul contínuo
+            panel = new javax.swing.JPanel() {
+                @Override
+                protected void paintComponent(Graphics g) {
+                    Graphics2D g2 = (Graphics2D) g.create();
+                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-            // No editor, o botão é um componente real, então habilitamos o rollover do Swing
-            button.getModel().setRollover(true);
+                    // Cores do Fundo (Intercalado)
+                    Color corFundo = (currentRow % 2 == 0) ? Color.decode("#162842") : Color.decode("#1C2E4A");
+                    Color corBorda = Color.decode("#2D9CDB");
 
-            button.addActionListener(e -> {
-                fireEditingStopped();
-                if ("Excluir".equals(actionType)) {
-                    excluirCliente(selectedRow);
-                } else if ("Editar".equals(actionType)) {
-                    abrirTelaCliente(selectedRow);
-                } else if ("Visualizar".equals(actionType)) {
-                    abrirTelaCliente(selectedRow);
+                    int w = getWidth();
+                    int h = getHeight();
+                    int arc = 20;
+                    int gapY = 4;
+                    int drawH = h - gapY;
+                    int drawY = gapY / 2;
+
+                    // Lógica da Borda (Última coluna fecha o desenho)
+                    int xDraw = -arc;
+                    int wDraw = isLastColumn ? (w + arc - 1) : (w + (arc * 2));
+
+                    // Pinta Fundo
+                    g2.setColor(corFundo);
+                    g2.fillRoundRect(xDraw, drawY, wDraw, drawH, arc, arc);
+
+                    // Pinta Borda
+                    g2.setColor(corBorda);
+                    g2.setStroke(new BasicStroke(1f));
+                    g2.drawRoundRect(xDraw, drawY, wDraw, drawH, arc, arc);
+
+                    g2.dispose();
+                    super.paintComponent(g); // Desenha o botão por cima
+                }
+            };
+            panel.setLayout(new GridBagLayout());
+            panel.setOpaque(false);
+
+            // Configura o botão
+            button = new CircleButton(imgIcone, getCorNormal(tipo), getCorHover(tipo));
+            button.setPreferredSize(new Dimension(32, 32));
+
+            // Adiciona a ação do clique
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    fireEditingStopped(); // Para a edição da tabela
+                    System.out.println("Botão clicado: " + tipo);
                 }
             });
 
-            return button;
+            panel.add(button);
         }
 
         @Override
-        public Object getCellEditorValue() {
-            return label;
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
+                int column) {
+            this.currentRow = row;
+            // Verifica dinamicamente se é a última coluna para fechar a borda
+            this.isLastColumn = (column == table.getColumnCount() - 1);
+
+            return panel;
+        }
+
+        // Métodos auxiliares de Cor
+        private Color getCorNormal(String tipo) {
+            if (tipo.equalsIgnoreCase("Visualizar"))
+                return Color.decode("#0E2A3A");
+            if (tipo.equalsIgnoreCase("Editar"))
+                return Color.decode("#3A300E");
+            return Color.decode("#3C1414"); // Excluir
+        }
+
+        private Color getCorHover(String tipo) {
+            if (tipo.equalsIgnoreCase("Visualizar"))
+                return Color.decode("#123446");
+            if (tipo.equalsIgnoreCase("Editar"))
+                return Color.decode("#4A3B11");
+            return Color.decode("#4A1A1A"); // Excluir
+        }
+
+        private Image carregarImagem(String path) {
+            try {
+                URL url = getClass().getResource(path);
+                if (url == null && path.startsWith("/"))
+                    url = getClass().getResource(path.substring(1));
+                if (url != null)
+                    return new ImageIcon(url).getImage();
+            } catch (Exception e) {
+            }
+            return null;
         }
 
         // ... Mantenha seus métodos abrirTelaCliente e excluirCliente aqui dentro ...
@@ -850,46 +1178,47 @@ public class TelaClienteTable extends javax.swing.JFrame {
     }
 
     private class PanelArredondadoComBorda extends javax.swing.JPanel {
-    private int cornerRadius;
-    private java.awt.Color backgroundColor;
-    private java.awt.Color borderColor;
-    private int borderThickness;
 
-    public PanelArredondadoComBorda(int radius, java.awt.Color bgColor, java.awt.Color bdColor, int bdThickness) {
-        super();
-        this.cornerRadius = radius;
-        this.backgroundColor = bgColor;
-        this.borderColor = bdColor;
-        this.borderThickness = bdThickness;
-        setOpaque(false); // Permite ver a forma arredondada
+        private int cornerRadius;
+        private java.awt.Color backgroundColor;
+        private java.awt.Color borderColor;
+        private int borderThickness;
+
+        public PanelArredondadoComBorda(int radius, java.awt.Color bgColor, java.awt.Color bdColor, int bdThickness) {
+            super();
+            this.cornerRadius = radius;
+            this.backgroundColor = bgColor;
+            this.borderColor = bdColor;
+            this.borderThickness = bdThickness;
+            setOpaque(false); // Permite ver a forma arredondada
+        }
+
+        @Override
+        protected void paintComponent(java.awt.Graphics g) {
+            java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+            g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+
+            int width = getWidth();
+            int height = getHeight();
+            int thickness = borderThickness;
+            int radius = cornerRadius;
+
+            // 1. Preenche o fundo (interno)
+            g2.setColor(backgroundColor);
+            g2.fillRoundRect(thickness, thickness, width - (thickness * 2), height - (thickness * 2), radius, radius);
+
+            // 2. Desenha a borda (externa)
+            g2.setStroke(new java.awt.BasicStroke(thickness));
+            g2.setColor(borderColor);
+            // Ajusta a área de desenho da borda para que o traço fique centrado na linha
+            g2.drawRoundRect(thickness / 2, thickness / 2, width - thickness, height - thickness, radius, radius);
+
+            g2.dispose();
+
+            // Desenha os componentes filhos por cima
+            super.paintComponent(g);
+        }
     }
-
-    @Override
-    protected void paintComponent(java.awt.Graphics g) {
-        java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
-        g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
-
-        int width = getWidth();
-        int height = getHeight();
-        int thickness = borderThickness;
-        int radius = cornerRadius;
-        
-        // 1. Preenche o fundo (interno)
-        g2.setColor(backgroundColor);
-        g2.fillRoundRect(thickness, thickness, width - (thickness * 2), height - (thickness * 2), radius, radius);
-
-        // 2. Desenha a borda (externa)
-        g2.setStroke(new java.awt.BasicStroke(thickness));
-        g2.setColor(borderColor);
-        // Ajusta a área de desenho da borda para que o traço fique centrado na linha
-        g2.drawRoundRect(thickness / 2, thickness / 2, width - thickness, height - thickness, radius, radius);
-        
-        g2.dispose();
-        
-        // Desenha os componentes filhos por cima
-        super.paintComponent(g); 
-    }
-}
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
@@ -898,7 +1227,8 @@ public class TelaClienteTable extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         lblFuncionarioDoMesNome = new javax.swing.JLabel();
@@ -954,12 +1284,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         lblStatus = new javax.swing.JLabel();
         lblNome = new javax.swing.JLabel();
         lblID = new javax.swing.JLabel();
-java.awt.Color COR_FUNDO = java.awt.Color.decode("#162842");
-java.awt.Color COR_BORDA = java.awt.Color.decode("#2A3E61");
-int RAIO_BORDA = 30;
-int ESPESSURA_BORDA = 3;
-
-JPanelBackground = new PanelArredondadoComBorda(RAIO_BORDA, COR_FUNDO, COR_BORDA, ESPESSURA_BORDA);
+        JPanelBackground = new javax.swing.JPanel();
         lblPesquisarIcone = new javax.swing.JLabel();
         txtLogin = new javax.swing.JTextField();
         Background = new javax.swing.JLabel();
@@ -1028,17 +1353,20 @@ JPanelBackground = new PanelArredondadoComBorda(RAIO_BORDA, COR_FUNDO, COR_BORDA
         lblRelatorioNovoTitulo1.setBounds(100, 100, 210, 20);
 
         lblIconeFuncionarioDoMes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblIconeFuncionarioDoMes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Registered Employee of the Month Icon.png"))); // NOI18N
+        lblIconeFuncionarioDoMes.setIcon(
+                new javax.swing.ImageIcon(getClass().getResource("/images/Registered Employee of the Month Icon.png"))); // NOI18N
         getContentPane().add(lblIconeFuncionarioDoMes);
         lblIconeFuncionarioDoMes.setBounds(1155, 155, 20, 20);
 
         lblIconeRelatorioConcluido.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblIconeRelatorioConcluido.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Report Sucess Icon.png"))); // NOI18N
+        lblIconeRelatorioConcluido
+                .setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Report Sucess Icon.png"))); // NOI18N
         getContentPane().add(lblIconeRelatorioConcluido);
         lblIconeRelatorioConcluido.setBounds(805, 155, 20, 20);
 
         lblIconeRelatorioPendente.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblIconeRelatorioPendente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Report Pendent Icon.png"))); // NOI18N
+        lblIconeRelatorioPendente
+                .setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Report Pendent Icon.png"))); // NOI18N
         getContentPane().add(lblIconeRelatorioPendente);
         lblIconeRelatorioPendente.setBounds(466, 155, 20, 20);
 
@@ -1281,31 +1609,60 @@ JPanelBackground = new PanelArredondadoComBorda(RAIO_BORDA, COR_FUNDO, COR_BORDA
 
         jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jTable1.setFont(FonteUtils.carregarLatoBold(12f)); // NOI18N
         jTable1.setForeground(new java.awt.Color(255, 255, 255));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "NOME", "TIPO DE PESSOA", "STATUS", "SERVIÇO", "DATA DE CADASTRO", "AÇÃO 1", "AÇÃO 2", "AÇÃO 3"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true, true, true
+                new Object[][] {
+                        { null, null, null, null, null, null, null, null },
+                        { null, null, null, null, null, null, null, null },
+                        { null, null, null, null, null, null, null, null },
+                        { null, null, null, null, null, null, null, null }
+                },
+                new String[] {
+                        "ID", "NOME", "STATUS", "TIPO DE PESSOA", "DATA DE CADASTRO", "AÇÃO 1", "AÇÃO 2", "AÇÃO 3"
+                }) {
+            boolean[] canEdit = new boolean[] {
+                    false, false, false, false, false, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
-        jTable1.setGridColor(new java.awt.Color(115, 115, 115));
+        jTable1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                int row = jTable1.rowAtPoint(evt.getPoint());
+                int col = jTable1.columnAtPoint(evt.getPoint());
+                if (row != hoveredRow || col != hoveredColumn) {
+
+                    hoveredRow = row;
+
+                    hoveredColumn = col;
+
+                    jTable1.repaint();
+
+                }
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                hoveredRow = -1;
+                hoveredColumn = -1;
+                jTable1.repaint();
+            }
+        });
         jTable1.setRowHeight(50);
+        jTable1.setShowHorizontalLines(false);
+        jTable1.setShowVerticalLines(false);
+        jTable1.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        jTable1.setFocusable(false);
+        jTable1.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer());
+        jTable1.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer());
+        jTable1.getColumnModel().getColumn(7).setCellRenderer(new ButtonRenderer());
         jTable1.getColumn("AÇÃO 1").setCellRenderer(new ButtonRenderer());
-        jTable1.getColumn("AÇÃO 1").setCellEditor(new ButtonEditor(new JCheckBox(), "Editar"));
+        jTable1.getColumn("AÇÃO 1").setCellEditor(new ButtonEditor(new JCheckBox(), "Visualizar"));
 
         jTable1.getColumn("AÇÃO 2").setCellRenderer(new ButtonRenderer());
         jTable1.getColumn("AÇÃO 2").setCellEditor(new ButtonEditor(new JCheckBox(), "Editar"));
@@ -1317,8 +1674,10 @@ JPanelBackground = new PanelArredondadoComBorda(RAIO_BORDA, COR_FUNDO, COR_BORDA
 
         ajustarLarguraColunas();
         jTable1.setRowSelectionAllowed(false);
-        jTable1.setShowHorizontalLines(true);
         jTable1.setTableHeader(null);
+        jTable1.setBorder(null);
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setViewportBorder(null);
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
@@ -1377,6 +1736,7 @@ JPanelBackground = new PanelArredondadoComBorda(RAIO_BORDA, COR_FUNDO, COR_BORDA
         lblID.setBounds(140, 280, 110, 16);
 
         JPanelBackground.setBackground(new java.awt.Color(22, 40, 66));
+        JPanelBackground.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(42, 62, 97), 3));
         getContentPane().add(JPanelBackground);
         JPanelBackground.setBounds(100, 260, 1310, 450);
 
@@ -1389,9 +1749,8 @@ JPanelBackground = new PanelArredondadoComBorda(RAIO_BORDA, COR_FUNDO, COR_BORDA
         txtLogin.setFont(FonteUtils.carregarLato(14f));
         txtLogin.setForeground(new java.awt.Color(142, 162, 189));
         txtLogin.setBorder(javax.swing.BorderFactory.createCompoundBorder(
-            javax.swing.BorderFactory.createLineBorder(new java.awt.Color(42, 62, 97), 3),
-            javax.swing.BorderFactory.createEmptyBorder(0, 30, 0, 0)
-        ));
+                javax.swing.BorderFactory.createLineBorder(new java.awt.Color(42, 62, 97), 3),
+                javax.swing.BorderFactory.createEmptyBorder(0, 30, 0, 0)));
         txtLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtLoginActionPerformed(evt);
