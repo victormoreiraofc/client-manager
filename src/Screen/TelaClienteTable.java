@@ -72,6 +72,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 import javax.swing.SwingUtilities;
+import Screen.TelaVisualizarCliente; // Exemplo caso o pacote varie
+import Screen.TelaEditarCliente;
+import Screen.PopupExclusao;
 
 public class TelaClienteTable extends javax.swing.JFrame {
 
@@ -1014,12 +1017,10 @@ public class TelaClienteTable extends javax.swing.JFrame {
         // Cache de imagens
         private Image imgIcone;
 
-        // CONSTRUTOR ANTIGO RESTAURADO: Recebe o CheckBox e o Tipo
         public ButtonEditor(JCheckBox checkBox, String tipo) {
             super(checkBox);
             this.tipo = tipo;
 
-            // Carrega a imagem correspondente ao TIPO apenas uma vez
             String iconPath = "";
             if (tipo.equalsIgnoreCase("Visualizar")) {
                 iconPath = "/images/olho.png";
@@ -1030,14 +1031,12 @@ public class TelaClienteTable extends javax.swing.JFrame {
             }
             this.imgIcone = carregarImagem(iconPath);
 
-            // Painel que desenha o fundo azul contínuo
             panel = new javax.swing.JPanel() {
                 @Override
                 protected void paintComponent(Graphics g) {
                     Graphics2D g2 = (Graphics2D) g.create();
                     g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-                    // Cores do Fundo (Intercalado)
                     Color corFundo = (currentRow % 2 == 0) ? Color.decode("#162842") : Color.decode("#1C2E4A");
                     Color corBorda = Color.decode("#2D9CDB");
 
@@ -1048,36 +1047,69 @@ public class TelaClienteTable extends javax.swing.JFrame {
                     int drawH = h - gapY;
                     int drawY = gapY / 2;
 
-                    // Lógica da Borda (Última coluna fecha o desenho)
                     int xDraw = -arc;
                     int wDraw = isLastColumn ? (w + arc - 1) : (w + (arc * 2));
 
-                    // Pinta Fundo
                     g2.setColor(corFundo);
                     g2.fillRoundRect(xDraw, drawY, wDraw, drawH, arc, arc);
-
-                    // Pinta Borda
                     g2.setColor(corBorda);
                     g2.setStroke(new BasicStroke(1f));
                     g2.drawRoundRect(xDraw, drawY, wDraw, drawH, arc, arc);
-
                     g2.dispose();
-                    super.paintComponent(g); // Desenha o botão por cima
+                    super.paintComponent(g);
                 }
             };
             panel.setLayout(new GridBagLayout());
             panel.setOpaque(false);
 
-            // Configura o botão
             button = new CircleButton(imgIcone, getCorNormal(tipo), getCorHover(tipo));
             button.setPreferredSize(new Dimension(32, 32));
             
-            // Adiciona a ação do clique
+            // --- AQUI ESTÁ A LÓGICA DE CLIQUE ATUALIZADA ---
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    fireEditingStopped(); // Para a edição da tabela
-                    System.out.println("Botão clicado: " + tipo);
+                    // Para a edição para liberar a tabela
+                    fireEditingStopped(); 
+                    
+                    // Recupera o ID da linha selecionada (Coluna 0 é o ID)
+                    // Atenção: currentRow é atualizado no getTableCellEditorComponent
+                    Object idObj = jTable1.getValueAt(currentRow, 0); 
+                    int idCliente = Integer.parseInt(idObj.toString());
+
+                    // Encontra o objeto Cliente na lista baseado no ID
+                    Cliente clienteSelecionado = null;
+                    if (listaClientes != null) {
+                        for (Cliente c : listaClientes) {
+                            if (c.getId() == idCliente) {
+                                clienteSelecionado = c;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (clienteSelecionado == null) return;
+
+                    // Redireciona para a ação correta
+                    if (tipo.equalsIgnoreCase("Visualizar")) {
+                        new TelaVisualizarCliente(TelaClienteTable.this, usuarioLogado, clienteSelecionado).setVisible(true);
+                        
+                    } else if (tipo.equalsIgnoreCase("Editar")) {
+                        TelaEditarCliente telaEdit = new TelaEditarCliente(TelaClienteTable.this, usuarioLogado, clienteSelecionado);
+                        telaEdit.setVisible(true);
+                        // Se salvou, recarrega a tabela
+                        if (telaEdit.isSalvou()) {
+                            carregarClientesAssincrono();
+                        }
+                        
+                    } else if (tipo.equalsIgnoreCase("Excluir")) {
+                        PopupExclusao popup = new PopupExclusao(TelaClienteTable.this, usuarioLogado, clienteSelecionado);
+                        popup.setVisible(true);
+                        // Se excluiu, recarrega a tabela
+                        if (popup.isExcluiu()) {
+                            carregarClientesAssincrono();
+                        }
+                    }
                 }
             });
 
@@ -1085,44 +1117,33 @@ public class TelaClienteTable extends javax.swing.JFrame {
         }
 
         @Override
-        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
-                int column) {
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
             this.currentRow = row;
-            // Verifica dinamicamente se é a última coluna para fechar a borda
             this.isLastColumn = (column == table.getColumnCount() - 1);
-
             return panel;
         }
 
-        // Métodos auxiliares de Cor
         private Color getCorNormal(String tipo) {
-            if (tipo.equalsIgnoreCase("Visualizar"))
-                return Color.decode("#0E2A3A");
-            if (tipo.equalsIgnoreCase("Editar"))
-                return Color.decode("#3A300E");
-            return Color.decode("#3C1414"); // Excluir
+            if (tipo.equalsIgnoreCase("Visualizar")) return Color.decode("#0E2A3A");
+            if (tipo.equalsIgnoreCase("Editar")) return Color.decode("#3A300E");
+            return Color.decode("#3C1414");
         }
 
         private Color getCorHover(String tipo) {
-            if (tipo.equalsIgnoreCase("Visualizar"))
-                return Color.decode("#123446");
-            if (tipo.equalsIgnoreCase("Editar"))
-                return Color.decode("#4A3B11");
-            return Color.decode("#4A1A1A"); // Excluir
+            if (tipo.equalsIgnoreCase("Visualizar")) return Color.decode("#123446");
+            if (tipo.equalsIgnoreCase("Editar")) return Color.decode("#4A3B11");
+            return Color.decode("#4A1A1A");
         }
 
         private Image carregarImagem(String path) {
             try {
                 URL url = getClass().getResource(path);
-                if (url == null && path.startsWith("/"))
-                    url = getClass().getResource(path.substring(1));
-                if (url != null)
-                    return new ImageIcon(url).getImage();
-            } catch (Exception e) {
-            }
+                if (url == null && path.startsWith("/")) url = getClass().getResource(path.substring(1));
+                if (url != null) return new ImageIcon(url).getImage();
+            } catch (Exception e) {}
             return null;
         }
-
+    
         // ... Mantenha seus métodos abrirTelaCliente e excluirCliente aqui dentro ...
         private void abrirTelaCliente(int row) {
             try {
