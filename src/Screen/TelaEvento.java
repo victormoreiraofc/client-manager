@@ -1,5 +1,13 @@
 package screen;
 
+
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.awt.Color;
+import javax.swing.JOptionPane;
+
+
 import Data.CTCONTAB;
 import Data.IconUtil;
 import Data.PermissaoUtil;
@@ -67,7 +75,7 @@ public class TelaEvento extends javax.swing.JFrame {
         MDC.put("usuario", usuarioLogado.getUsuario());
 
         try {
-            String evento = txtTitulo.getText();
+            String evento = txtTarefa.getText();
             String dataInicio = txtDataInicial.getText();
             String dataFinal = txtDataFinal.getText();
             String horarioInicial = txtHorarioInicial.getText();
@@ -182,9 +190,8 @@ public class TelaEvento extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
         btnLogin = new javax.swing.JButton();
-        txtTitulo = new javax.swing.JTextField();
+        txtTarefa = new javax.swing.JTextField();
         btnLogin1 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         txtDataFinal = new javax.swing.JTextField();
@@ -192,14 +199,18 @@ public class TelaEvento extends javax.swing.JFrame {
         lblAte = new javax.swing.JLabel();
         txtDataInicial = new javax.swing.JTextField();
         txtHorarioInicial = new javax.swing.JTextField();
-        lblFusoHorario = new javax.swing.JLabel();
-        jSeparator2 = new javax.swing.JSeparator();
-        jLabel6 = new javax.swing.JLabel();
         txtDescricaoEvento = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         txtLocalEvento = new javax.swing.JTextField();
-        jSeparator3 = new javax.swing.JSeparator();
+        lblEventoEReuniao = new javax.swing.JLabel();
+        lblTarefa = new javax.swing.JLabel();
+        txtTitulo1 = new javax.swing.JTextField();
+        checkboxInicio = new java.awt.Checkbox();
+        checkbox2 = new java.awt.Checkbox();
+        lblAte1 = new javax.swing.JLabel();
+        lblAte2 = new javax.swing.JLabel();
+        lblAte3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jlibLogo2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -308,21 +319,21 @@ public class TelaEvento extends javax.swing.JFrame {
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete-icon.png"))); // NOI18N
         jPanel1.add(jLabel13);
-        jLabel13.setBounds(1010, 10, 40, 40);
+        jLabel13.setBounds(1020, 10, 30, 30);
 
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save-icon.png"))); // NOI18N
         jPanel1.add(jLabel14);
-        jLabel14.setBounds(1050, 10, 40, 40);
+        jLabel14.setBounds(1060, 10, 30, 30);
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fechar.png"))); // NOI18N
         jPanel1.add(jLabel5);
-        jLabel5.setBounds(1090, 10, 40, 40);
+        jLabel5.setBounds(1100, 10, 30, 30);
 
         jButton3.setBackground(new java.awt.Color(84, 84, 84));
         jPanel1.add(jButton3);
-        jButton3.setBounds(1010, 10, 40, 40);
+        jButton3.setBounds(1020, 10, 30, 30);
 
         jButton2.setBackground(new java.awt.Color(126, 217, 87));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -331,21 +342,16 @@ public class TelaEvento extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton2);
-        jButton2.setBounds(1050, 10, 40, 40);
+        jButton2.setBounds(1060, 10, 30, 30);
 
         jLabel4.setBackground(new java.awt.Color(153, 153, 0));
         jLabel4.setFont(new java.awt.Font("Segoe UI Black", 1, 20)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(205, 168, 16));
-        jLabel4.setText("Cadastrar Evento");
+        jLabel4.setText("Criar um novo evento");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(20, 10, 250, 40);
+        jLabel4.setBounds(20, 10, 240, 30);
 
-        jSeparator1.setBackground(new java.awt.Color(115, 115, 115));
-        jSeparator1.setForeground(new java.awt.Color(115, 115, 115));
-        jPanel1.add(jSeparator1);
-        jSeparator1.setBounds(0, 60, 1140, 30);
-
-        btnLogin.setBackground(new java.awt.Color(84, 84, 84));
+        btnLogin.setBackground(new java.awt.Color(0, 0, 102));
         btnLogin.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         btnLogin.setForeground(new java.awt.Color(255, 255, 255));
         btnLogin.setText("Cancelar");
@@ -355,38 +361,33 @@ public class TelaEvento extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnLogin);
-        btnLogin.setBounds(780, 490, 170, 40);
+        btnLogin.setBounds(770, 550, 170, 40);
 
-        txtTitulo.setBackground(new java.awt.Color(4, 21, 57));
-        txtTitulo.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        txtTitulo.setForeground(new java.awt.Color(115, 115, 115));
-        txtTitulo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
-        txtTitulo.addActionListener(new java.awt.event.ActionListener() {
+        txtTarefa.setBackground(new java.awt.Color(4, 21, 57));
+        txtTarefa.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        txtTarefa.setForeground(new java.awt.Color(115, 115, 115));
+        txtTarefa.setText("O que irão fazer durante o evento ?");
+        txtTarefa.setToolTipText("RARARARAR");
+        txtTarefa.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
+        txtTarefa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTituloActionPerformed(evt);
+                txtTarefaActionPerformed(evt);
             }
         });
-        jPanel1.add(txtTitulo);
-        txtTitulo.setBounds(20, 80, 560, 40);
-        addPlaceholder(txtTitulo, "  Digite o título do evento");
-        addPlaceholder(txtDataInicial, " 01/01/2025");
-        addPlaceholder(txtDataFinal, " 01/01/2025");
-        addPlaceholder(txtHorarioInicial, " 00:00");
-        addPlaceholder(txtHorarioFinal, " 00:00");
-        addPlaceholder(txtDescricaoEvento, "  O que será feito no evento?");
-        addPlaceholder(txtLocalEvento, "  Onde será o evento?");
+        jPanel1.add(txtTarefa);
+        txtTarefa.setBounds(30, 130, 560, 30);
 
-        btnLogin1.setBackground(new java.awt.Color(194, 166, 40));
+        btnLogin1.setBackground(new java.awt.Color(0, 102, 153));
         btnLogin1.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         btnLogin1.setForeground(new java.awt.Color(255, 255, 255));
-        btnLogin1.setText("Criar");
+        btnLogin1.setText("Criar Evento");
         btnLogin1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLogin1ActionPerformed(evt);
             }
         });
         jPanel1.add(btnLogin1);
-        btnLogin1.setBounds(950, 490, 170, 40);
+        btnLogin1.setBounds(950, 550, 170, 40);
 
         jButton1.setBackground(new java.awt.Color(239, 65, 54));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -395,12 +396,13 @@ public class TelaEvento extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton1);
-        jButton1.setBounds(1090, 10, 40, 40);
+        jButton1.setBounds(1100, 10, 30, 30);
 
         txtDataFinal.setBackground(new java.awt.Color(4, 21, 57));
         txtDataFinal.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         txtDataFinal.setForeground(new java.awt.Color(115, 115, 115));
         txtDataFinal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtDataFinal.setText("  __/__/____                  ");
         txtDataFinal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
         txtDataFinal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -408,12 +410,13 @@ public class TelaEvento extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtDataFinal);
-        txtDataFinal.setBounds(230, 130, 110, 40);
+        txtDataFinal.setBounds(250, 200, 170, 30);
 
         txtHorarioFinal.setBackground(new java.awt.Color(4, 21, 57));
         txtHorarioFinal.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         txtHorarioFinal.setForeground(new java.awt.Color(115, 115, 115));
         txtHorarioFinal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtHorarioFinal.setText("__:__                     ");
         txtHorarioFinal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
         txtHorarioFinal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -421,19 +424,20 @@ public class TelaEvento extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtHorarioFinal);
-        txtHorarioFinal.setBounds(350, 130, 50, 40);
+        txtHorarioFinal.setBounds(710, 200, 150, 30);
 
         lblAte.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblAte.setForeground(new java.awt.Color(255, 255, 255));
         lblAte.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblAte.setText("até");
+        lblAte.setText("Hora de encerramento*");
         jPanel1.add(lblAte);
-        lblAte.setBounds(190, 140, 40, 30);
+        lblAte.setBounds(700, 170, 150, 30);
 
         txtDataInicial.setBackground(new java.awt.Color(4, 21, 57));
         txtDataInicial.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         txtDataInicial.setForeground(new java.awt.Color(115, 115, 115));
         txtDataInicial.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtDataInicial.setText("          __/__/____                         ");
         txtDataInicial.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
         txtDataInicial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -441,12 +445,13 @@ public class TelaEvento extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtDataInicial);
-        txtDataInicial.setBounds(20, 130, 110, 40);
+        txtDataInicial.setBounds(30, 200, 170, 30);
 
         txtHorarioInicial.setBackground(new java.awt.Color(4, 21, 57));
         txtHorarioInicial.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         txtHorarioInicial.setForeground(new java.awt.Color(115, 115, 115));
         txtHorarioInicial.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtHorarioInicial.setText("__:__                ");
         txtHorarioInicial.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
         txtHorarioInicial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -454,30 +459,12 @@ public class TelaEvento extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtHorarioInicial);
-        txtHorarioInicial.setBounds(140, 130, 50, 40);
-
-        lblFusoHorario.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblFusoHorario.setForeground(new java.awt.Color(255, 255, 255));
-        lblFusoHorario.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblFusoHorario.setText("(GMT-03:00) Horário Padrão de Brasília - São Paulo");
-        jPanel1.add(lblFusoHorario);
-        lblFusoHorario.setBounds(410, 140, 300, 30);
-
-        jSeparator2.setBackground(new java.awt.Color(115, 115, 115));
-        jSeparator2.setForeground(new java.awt.Color(115, 115, 115));
-        jPanel1.add(jSeparator2);
-        jSeparator2.setBounds(0, 260, 1140, 30);
-
-        jLabel6.setBackground(new java.awt.Color(153, 153, 0));
-        jLabel6.setFont(new java.awt.Font("Segoe UI Black", 1, 20)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(205, 168, 16));
-        jLabel6.setText("Detalhes do Evento");
-        jPanel1.add(jLabel6);
-        jLabel6.setBounds(20, 210, 250, 40);
+        txtHorarioInicial.setBounds(500, 200, 130, 30);
 
         txtDescricaoEvento.setBackground(new java.awt.Color(4, 21, 57));
         txtDescricaoEvento.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         txtDescricaoEvento.setForeground(new java.awt.Color(115, 115, 115));
+        txtDescricaoEvento.setText("Adicione uma descrição. Descreva o evento ou a reunião que vaia contecer. \n\n\n\n\n\n\n\n\n\n\n\n\n\n"); // NOI18N
         txtDescricaoEvento.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
         txtDescricaoEvento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -485,23 +472,24 @@ public class TelaEvento extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtDescricaoEvento);
-        txtDescricaoEvento.setBounds(20, 300, 1100, 40);
+        txtDescricaoEvento.setBounds(30, 390, 1090, 150);
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Descrição do Evento");
         jPanel1.add(jLabel11);
-        jLabel11.setBounds(20, 270, 150, 30);
+        jLabel11.setBounds(30, 350, 150, 30);
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Local do Evento");
+        jLabel12.setText("Local ");
         jPanel1.add(jLabel12);
-        jLabel12.setBounds(20, 340, 120, 30);
+        jLabel12.setBounds(30, 270, 120, 30);
 
         txtLocalEvento.setBackground(new java.awt.Color(4, 21, 57));
         txtLocalEvento.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         txtLocalEvento.setForeground(new java.awt.Color(115, 115, 115));
+        txtLocalEvento.setText("Local do evento");
         txtLocalEvento.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
         txtLocalEvento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -509,15 +497,75 @@ public class TelaEvento extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtLocalEvento);
-        txtLocalEvento.setBounds(20, 370, 450, 40);
+        txtLocalEvento.setBounds(30, 300, 450, 40);
 
-        jSeparator3.setBackground(new java.awt.Color(115, 115, 115));
-        jSeparator3.setForeground(new java.awt.Color(115, 115, 115));
-        jPanel1.add(jSeparator3);
-        jSeparator3.setBounds(0, 200, 1140, 30);
+        lblEventoEReuniao.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblEventoEReuniao.setForeground(new java.awt.Color(255, 255, 255));
+        lblEventoEReuniao.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblEventoEReuniao.setText("Evento ou Reunião *");
+        jPanel1.add(lblEventoEReuniao);
+        lblEventoEReuniao.setBounds(30, 40, 120, 30);
+
+        lblTarefa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblTarefa.setForeground(new java.awt.Color(255, 255, 255));
+        lblTarefa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTarefa.setText("Tarefa*");
+        jPanel1.add(lblTarefa);
+        lblTarefa.setBounds(20, 100, 60, 30);
+
+        txtTitulo1.setBackground(new java.awt.Color(4, 21, 57));
+        txtTitulo1.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        txtTitulo1.setForeground(new java.awt.Color(115, 115, 115));
+        txtTitulo1.setText("Nome do Evento ou da reunião");
+        txtTitulo1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84), 3));
+        txtTitulo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTitulo1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtTitulo1);
+        txtTitulo1.setBounds(30, 70, 560, 30);
+        addPlaceholder(txtTarefa, "  Digite o título do evento");
+        addPlaceholder(txtDataInicial, " 01/01/2025");
+        addPlaceholder(txtDataFinal, " 01/01/2025");
+        addPlaceholder(txtHorarioInicial, " 00:00");
+        addPlaceholder(txtHorarioFinal, " 00:00");
+        addPlaceholder(txtDescricaoEvento, "  O que será feito no evento?");
+        addPlaceholder(txtLocalEvento, "  Onde será o evento?");
+
+        checkboxInicio.setForeground(new java.awt.Color(255, 255, 255));
+        checkboxInicio.setLabel("     Informar o Inicio*");
+        jPanel1.add(checkboxInicio);
+        checkboxInicio.setBounds(30, 240, 140, 20);
+
+        checkbox2.setForeground(new java.awt.Color(255, 255, 255));
+        checkbox2.setLabel("    Informar Término*");
+        jPanel1.add(checkbox2);
+        checkbox2.setBounds(250, 240, 140, 20);
+
+        lblAte1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblAte1.setForeground(new java.awt.Color(255, 255, 255));
+        lblAte1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblAte1.setText("Data inicio*");
+        jPanel1.add(lblAte1);
+        lblAte1.setBounds(0, 170, 120, 30);
+
+        lblAte2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblAte2.setForeground(new java.awt.Color(255, 255, 255));
+        lblAte2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblAte2.setText("Data limite*");
+        jPanel1.add(lblAte2);
+        lblAte2.setBounds(220, 170, 120, 30);
+
+        lblAte3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblAte3.setForeground(new java.awt.Color(255, 255, 255));
+        lblAte3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblAte3.setText("Hora*");
+        jPanel1.add(lblAte3);
+        lblAte3.setBounds(460, 170, 120, 30);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(110, 100, 1140, 540);
+        jPanel1.setBounds(110, 70, 1140, 600);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/azul.png"))); // NOI18N
         getContentPane().add(jLabel2);
@@ -558,9 +606,9 @@ public class TelaEvento extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtHorarioInicialActionPerformed
 
-    private void txtTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTituloActionPerformed
+    private void txtTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTarefaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtTituloActionPerformed
+    }//GEN-LAST:event_txtTarefaActionPerformed
 
     private void txtDataFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataFinalActionPerformed
         // TODO add your handling code here:
@@ -576,6 +624,24 @@ public class TelaEvento extends javax.swing.JFrame {
 
     private void btnLogin1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogin1ActionPerformed
         salvarEventoNoBanco();
+
+        try {
+
+            LocalDate dataInicial = LocalDate.parse(txtDataInicial.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            LocalDate dataFinal = LocalDate.parse(txtDataFinal.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+            TelaEventoTable telaCalendario = new TelaEventoTable(usuarioLogado);
+            telaCalendario.setVisible(true);
+
+            telaCalendario.pintarDiasComEvento(dataInicial, dataFinal);
+
+            this.dispose();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erro ao atualizar calendário: " + e.getMessage());
+        }
+
+        
     }//GEN-LAST:event_btnLogin1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -630,6 +696,10 @@ public class TelaEvento extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnAdministracaoActionPerformed
 
+    private void txtTitulo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTitulo1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTitulo1ActionPerformed
+
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -662,6 +732,8 @@ public class TelaEvento extends javax.swing.JFrame {
     private javax.swing.JButton btnNotificacoes;
     private javax.swing.JButton btnRelatorios;
     private javax.swing.JButton btnTarefas;
+    private java.awt.Checkbox checkbox2;
+    private java.awt.Checkbox checkboxInicio;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -674,16 +746,16 @@ public class TelaEvento extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JLabel jlibLogo2;
     private javax.swing.JLabel lblAte;
+    private javax.swing.JLabel lblAte1;
+    private javax.swing.JLabel lblAte2;
+    private javax.swing.JLabel lblAte3;
     private javax.swing.JLabel lblCTCONTAB;
     private javax.swing.JLabel lblContabilidade;
-    private javax.swing.JLabel lblFusoHorario;
+    private javax.swing.JLabel lblEventoEReuniao;
+    private javax.swing.JLabel lblTarefa;
     private javax.swing.JLabel lblUserIcon;
     private javax.swing.JTextField txtDataFinal;
     private javax.swing.JTextField txtDataInicial;
@@ -691,6 +763,7 @@ public class TelaEvento extends javax.swing.JFrame {
     private javax.swing.JTextField txtHorarioFinal;
     private javax.swing.JTextField txtHorarioInicial;
     private javax.swing.JTextField txtLocalEvento;
-    private javax.swing.JTextField txtTitulo;
+    private javax.swing.JTextField txtTarefa;
+    private javax.swing.JTextField txtTitulo1;
     // End of variables declaration//GEN-END:variables
 }

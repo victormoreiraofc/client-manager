@@ -27,6 +27,15 @@ public class TelaEventoTable extends javax.swing.JFrame {
         this.anoAtual = LocalDate.now().getYear();
         this.mesAtual = LocalDate.now().getMonthValue();
         initComponents();
+
+        ///// MÉTODO NOVOOOOO ESCONDER BOTÕES AO INICIAR /////
+        // Essas linhas deixam os botões do topo ocultos quando a tela for aberta.
+        btnEventoCriar.setVisible(false);
+        btnPassado.setVisible(false);
+        btnFuturo.setVisible(false);
+        // Se quiser esconder também o botão "+ Novo Evento" do canto direito, descomente a linha abaixo:
+        // btnCriarEvento.setVisible(false);
+
         PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
         IconUtil.setIcon(usuarioLogado, lblUserIcon);
         criarCalendario();
@@ -248,6 +257,92 @@ public class TelaEventoTable extends javax.swing.JFrame {
         }
 
         diaPanel.add(eventosPanel, BorderLayout.CENTER);
+        
+        // --- Início do clique no painel do dia ---
+        diaPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                java.util.List<Event> eventosDoDia = new java.util.ArrayList<>();
+                for (Event ev : eventos) {
+                    LocalDate dataEvento = null;
+                    if (ev.getStart() != null) {
+                        if (ev.getStart().getDate() != null) {
+                            dataEvento = LocalDate.parse(ev.getStart().getDate().toString());
+                        } else if (ev.getStart().getDateTime() != null) {
+                            dataEvento = Instant.ofEpochMilli(ev.getStart().getDateTime().getValue())
+                                    .atZone(ZoneId.systemDefault()).toLocalDate();
+                        }
+                    }
+                    if (dataEvento != null && dataEvento.equals(dataAtual)) {
+                        eventosDoDia.add(ev);
+                    }
+                }
+
+                if (eventosDoDia.isEmpty()) {
+                    JOptionPane.showMessageDialog(TelaEventoTable.this, "Nenhum evento neste dia.", "Calendário", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+
+                if (eventosDoDia.size() == 1) {
+                    exibirDetalhesEvento(eventosDoDia.get(0));
+                    return;
+                }
+
+                // mais de 1 evento: mostrar lista para escolher
+                JDialog listDialog = new JDialog(TelaEventoTable.this, "Eventos em " + dataAtual.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), true);
+                DefaultListModel<String> listModel = new DefaultListModel<>();
+                for (Event ev : eventosDoDia) {
+                    String horario = "";
+                    if (ev.getStart() != null && ev.getStart().getDateTime() != null) {
+                        Instant inst = Instant.ofEpochMilli(ev.getStart().getDateTime().getValue());
+                        horario = DateTimeFormatter.ofPattern("HH:mm").format(inst.atZone(ZoneId.systemDefault()).toLocalTime()) + " - ";
+                    }
+                    listModel.addElement(horario + (ev.getSummary() != null ? ev.getSummary() : "(Sem título)"));
+                }
+                JList<String> jList = new JList<>(listModel);
+                jList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                JScrollPane scroll = new JScrollPane(jList);
+                scroll.setPreferredSize(new Dimension(420, 160));
+
+                JButton btnAbrir = new JButton("Abrir");
+                btnAbrir.addActionListener(ae -> {
+                    int idx = jList.getSelectedIndex();
+                    if (idx >= 0) {
+                        listDialog.dispose();
+                        exibirDetalhesEvento(eventosDoDia.get(idx));
+                    } else {
+                        JOptionPane.showMessageDialog(listDialog, "Selecione um evento.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    }
+                });
+
+                jList.addMouseListener(new java.awt.event.MouseAdapter() {
+                    public void mouseClicked(java.awt.event.MouseEvent e) {
+                        if (e.getClickCount() == 2) {
+                            int idx = jList.locationToIndex(e.getPoint());
+                            if (idx >= 0) {
+                                listDialog.dispose();
+                                exibirDetalhesEvento(eventosDoDia.get(idx));
+                            }
+                        }
+                    }
+                });
+
+                JPanel p = new JPanel(new BorderLayout());
+                p.add(scroll, BorderLayout.CENTER);
+                JPanel south = new JPanel(new FlowLayout(FlowLayout.CENTER));
+                south.add(btnAbrir);
+                JButton btnFechar = new JButton("Fechar");
+                btnFechar.addActionListener(ae -> listDialog.dispose());
+                south.add(btnFechar);
+                p.add(south, BorderLayout.SOUTH);
+
+                listDialog.add(p);
+                listDialog.pack();
+                listDialog.setLocationRelativeTo(TelaEventoTable.this);
+                listDialog.setVisible(true);
+            }
+        });
+// --- Fim do clique no painel do dia ---
         return diaPanel;
     }
 
@@ -430,6 +525,28 @@ public class TelaEventoTable extends javax.swing.JFrame {
         lblDataCalendario.setText(dataFormatada);
     }
 
+    //////Adicionadooo métedooooooooooooo////////
+    public void pintarDiasComEvento(LocalDate dataInicial, LocalDate dataFinal) {
+        Component[] dias = calendarPanel.getComponents();
+        for (Component c : dias) {
+            if (c instanceof JPanel panel) {
+                for (Component inner : panel.getComponents()) {
+                    if (inner instanceof JLabel label) {
+                        try {
+                            int dia = Integer.parseInt(label.getText());
+                            LocalDate data = LocalDate.of(anoAtual, mesAtual, dia);
+                            if (!data.isBefore(dataInicial) && !data.isAfter(dataFinal)) {
+                                panel.setBorder(BorderFactory.createMatteBorder(0, 0, 4, 0, new Color(0, 200, 0))); // traço verde
+                            }
+                        } catch (NumberFormatException ignore) {
+                        }
+                    }
+                }
+            }
+        }
+        calendarPanel.repaint();
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -446,17 +563,20 @@ public class TelaEventoTable extends javax.swing.JFrame {
         lblContabilidade = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
-        jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         lblDataCalendario = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnCriarEvento = new javax.swing.JButton();
+        btnEventoCriar = new javax.swing.JButton();
+        btnPassado = new javax.swing.JButton();
+        btnFuturo = new javax.swing.JButton();
         lblMes = new javax.swing.JLabel();
         lblMesAnterior = new javax.swing.JLabel();
         lblProximoMes = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
         lblLogo = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         lblUserIcon = new javax.swing.JLabel();
@@ -465,6 +585,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
         Background = new javax.swing.JLabel();
         btnSetaDireita = new javax.swing.JButton();
         btnSetaEsquerda = new javax.swing.JButton();
+        jPanel6 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CT Contab Manager");
@@ -567,10 +688,6 @@ public class TelaEventoTable extends javax.swing.JFrame {
         getContentPane().add(jSeparator2);
         jSeparator2.setBounds(311, 205, 3, 432);
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255, 12));
-        getContentPane().add(jPanel3);
-        jPanel3.setBounds(310, 200, 930, 440);
-
         jPanel4.setBackground(new java.awt.Color(255, 255, 255, 15));
         getContentPane().add(jPanel4);
         jPanel4.setBounds(90, 210, 200, 250);
@@ -616,6 +733,36 @@ public class TelaEventoTable extends javax.swing.JFrame {
         getContentPane().add(btnCriarEvento);
         btnCriarEvento.setBounds(1100, 100, 140, 40);
 
+        btnEventoCriar.setBackground(new java.awt.Color(0, 0, 102));
+        btnEventoCriar.setText("Novo Evento");
+        btnEventoCriar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEventoCriarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnEventoCriar);
+        btnEventoCriar.setBounds(960, 70, 98, 23);
+
+        btnPassado.setBackground(new java.awt.Color(0, 0, 102));
+        btnPassado.setText("Mês Passado");
+        btnPassado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPassadoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnPassado);
+        btnPassado.setBounds(1070, 70, 98, 23);
+
+        btnFuturo.setBackground(new java.awt.Color(0, 0, 102));
+        btnFuturo.setText("Futuro Mês");
+        btnFuturo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFuturoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnFuturo);
+        btnFuturo.setBounds(1180, 70, 90, 23);
+
         lblMes.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
         lblMes.setForeground(new java.awt.Color(205, 168, 16));
         lblMes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -629,11 +776,15 @@ public class TelaEventoTable extends javax.swing.JFrame {
 
         lblProximoMes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/seta-redondaD.png"))); // NOI18N
         getContentPane().add(lblProximoMes);
-        lblProximoMes.setBounds(920, 10, 120, 70);
+        lblProximoMes.setBounds(900, 10, 120, 70);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255, 15));
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255, 12));
+        jPanel1.add(jPanel3);
+
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(310, 130, 930, 510);
+        jPanel1.setBounds(310, 140, 930, 510);
 
         lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo.png"))); // NOI18N
         getContentPane().add(lblLogo);
@@ -668,13 +819,18 @@ public class TelaEventoTable extends javax.swing.JFrame {
         btnSetaEsquerda.setText("jButton1");
         getContentPane().add(btnSetaEsquerda);
         btnSetaEsquerda.setBounds(390, 10, 70, 70);
+        getContentPane().add(jPanel6);
+        jPanel6.setBounds(990, 20, 160, 310);
 
         setSize(new java.awt.Dimension(1450, 750));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCriarEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarEventoActionPerformed
-        new TelaEvento(usuarioLogado).setVisible(true);
+        ///// MÉTODO NOVO: MOSTRAR OS BOTÕES QUANDO CLICA NO + NOVO EVENTO /////
+        btnEventoCriar.setVisible(true);
+        btnPassado.setVisible(true);
+        btnFuturo.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCriarEventoActionPerformed
 
@@ -713,6 +869,32 @@ public class TelaEventoTable extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnAdministracaoActionPerformed
 
+    private void btnPassadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPassadoActionPerformed
+        if (mesAtual == 1) {
+            mesAtual = 12;
+            anoAtual--;
+        } else {
+            mesAtual--;
+        }
+        atualizarCalendario(anoAtual, mesAtual);
+        atualizarMiniCalendario(anoAtual, mesAtual);
+    }//GEN-LAST:event_btnPassadoActionPerformed
+
+    private void btnEventoCriarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEventoCriarActionPerformed
+        new TelaEvento(usuarioLogado).setVisible(true);
+    }//GEN-LAST:event_btnEventoCriarActionPerformed
+
+    private void btnFuturoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFuturoActionPerformed
+        if (mesAtual == 12) {
+            mesAtual = 1;
+            anoAtual++;
+        } else {
+            mesAtual++;
+        }
+        atualizarCalendario(anoAtual, mesAtual);
+        atualizarMiniCalendario(anoAtual, mesAtual);
+    }//GEN-LAST:event_btnFuturoActionPerformed
+
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -740,8 +922,11 @@ public class TelaEventoTable extends javax.swing.JFrame {
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnConfiguracoes;
     private javax.swing.JButton btnCriarEvento;
+    private javax.swing.JButton btnEventoCriar;
+    private javax.swing.JButton btnFuturo;
     private javax.swing.JButton btnHome;
     private javax.swing.JButton btnNotificacoes;
+    private javax.swing.JButton btnPassado;
     private javax.swing.JButton btnRelatorios;
     private javax.swing.JButton btnSetaDireita;
     private javax.swing.JButton btnSetaEsquerda;
@@ -753,6 +938,7 @@ public class TelaEventoTable extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
