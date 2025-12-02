@@ -593,4 +593,52 @@ public class CTCONTAB {
             st.executeUpdate();
         }
     }
+
+    // NOVO: Clientes Pendentes do Mês (lblRelatorioPendenteNumero)
+    public static int clientesPendentesDoMes() throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) AS total FROM cliente WHERE SituacaoServico = 'Pendente' AND MONTH(DataCadastro) = MONTH(CURRENT_DATE()) AND YEAR(DataCadastro) = YEAR(CURRENT_DATE())");
+        ResultSet resultado = st.executeQuery();
+
+        int totalClientes = 0;
+        if (resultado.next()) {
+            totalClientes = resultado.getInt("total");
+        }
+        return totalClientes;
+    }
+
+// NOVO: Clientes Concluídos do Mês (lblRelatorioConcluidoNumero)
+    public static int clientesConcluidosDoMes() throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) AS total FROM cliente WHERE SituacaoServico = 'Concluido' AND MONTH(DataCadastro) = MONTH(CURRENT_DATE()) AND YEAR(DataCadastro) = YEAR(CURRENT_DATE())");
+        ResultSet resultado = st.executeQuery();
+
+        int totalClientes = 0;
+        if (resultado.next()) {
+            totalClientes = resultado.getInt("total");
+        }
+        return totalClientes;
+    }
+
+// NOVO: Funcionário que mais registrou clientes no mês (lblFuncionarioDoMesNome)
+    public static String funcionarioMaisClientesDoMes() throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        // A coluna 'Usuario' na tabela cliente é a chave estrangeira para o usuário cadastrante
+        String sql = "SELECT Usuario, COUNT(*) AS total_clientes "
+                + "FROM cliente "
+                + "WHERE MONTH(DataCadastro) = MONTH(CURRENT_DATE()) AND YEAR(DataCadastro) = YEAR(CURRENT_DATE()) "
+                + "GROUP BY Usuario "
+                + "ORDER BY total_clientes DESC "
+                + "LIMIT 1";
+
+        PreparedStatement st = conectado.prepareStatement(sql);
+        ResultSet resultado = st.executeQuery();
+
+        String funcionarioNome = "N/A";
+        if (resultado.next()) {
+            // Retorna o nome de usuário (login)
+            funcionarioNome = resultado.getString("Usuario");
+        }
+        return funcionarioNome;
+    }
 }

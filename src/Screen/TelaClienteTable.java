@@ -17,11 +17,15 @@ import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
 import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
@@ -71,6 +75,8 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
+import java.sql.SQLException;
+
 import javax.swing.SwingUtilities;
 import Screen.TelaVisualizarCliente; // Exemplo caso o pacote varie
 import Screen.TelaEditarCliente;
@@ -94,6 +100,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         initComponents();
         adicionarListenerDeBusca();
         exibirMensagemCarregando();
+        carregarDadosRelatorios();
         carregarClientesAssincrono();
         aplicarPaddingNasColunas();
         setUndecorated(true);
@@ -550,6 +557,44 @@ public class TelaClienteTable extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }
+
+    // Coloque este método antes ou depois do construtor, mas dentro da classe TelaClienteTable
+private void carregarDadosRelatorios() {
+    // 1. Configuração de Formato: Usa o padrão brasileiro (ponto para milhar, vírgula para decimal)
+    // para formatar números grandes (ex: 1.000, 10.000).
+    DecimalFormatSymbols symbols = new DecimalFormatSymbols(new Locale("pt", "BR"));
+    symbols.setGroupingSeparator('.');
+    symbols.setDecimalSeparator(',');
+    DecimalFormat df = new DecimalFormat("#,##0.000", symbols);
+    
+    try {
+        double novos = (double) Data.CTCONTAB.novosclientesdomes() / 1000.0;
+        lblRelatorioNovoNumero.setText(df.format(novos));
+
+        double pendentes = (double) Data.CTCONTAB.clientesPendentesDoMes() / 1000.0;
+        lblRelatorioPendenteNumero.setText(df.format(pendentes));
+
+        double concluidos = (double) Data.CTCONTAB.clientesConcluidosDoMes() / 1000.0;
+        lblRelatorioConcluidoNumero.setText(df.format(concluidos));
+
+        String funcionario = Data.CTCONTAB.funcionarioMaisClientesDoMes(); 
+        
+        if (funcionario.equals("N/A")) {
+             lblFuncionarioDoMesNome.setText("Nenhum registro");
+        } else {
+             lblFuncionarioDoMesNome.setText(funcionario);
+        }
+
+    } catch (ClassNotFoundException | SQLException e) {
+        logger.error("Erro ao carregar dados dos relatórios: {}", e.getMessage(), e); 
+        
+        // Define valores de erro
+        lblRelatorioNovoNumero.setText("0");
+        lblRelatorioPendenteNumero.setText("0");
+        lblRelatorioConcluidoNumero.setText("0");
+        lblFuncionarioDoMesNome.setText("Erro de Conexão");
+    }
+}
 
     private void adicionarListenerDeBusca() {
         txtLogin.getDocument().addDocumentListener(new DocumentListener() {
@@ -1450,25 +1495,25 @@ public class TelaClienteTable extends javax.swing.JFrame {
 
         lblFuncionarioDoMesTitulo.setFont(FonteUtils.carregarRalewayMedium(12f));
         lblFuncionarioDoMesTitulo.setForeground(new java.awt.Color(168, 178, 195));
-        lblFuncionarioDoMesTitulo.setText("Funcionário Relator do Mês");
+        lblFuncionarioDoMesTitulo.setText("Funcionário cadastrante do mês");
         getContentPane().add(lblFuncionarioDoMesTitulo);
         lblFuncionarioDoMesTitulo.setBounds(1200, 140, 210, 20);
 
         lblRelatorioConcluidoTitulo.setFont(FonteUtils.carregarRalewayMedium(12f));
         lblRelatorioConcluidoTitulo.setForeground(new java.awt.Color(168, 178, 195));
-        lblRelatorioConcluidoTitulo.setText("Total de Relatórios Concluidos");
+        lblRelatorioConcluidoTitulo.setText("Total de Serviços Concluidos");
         getContentPane().add(lblRelatorioConcluidoTitulo);
         lblRelatorioConcluidoTitulo.setBounds(850, 140, 210, 20);
 
         lblRelatorioPendenteTitulo.setFont(FonteUtils.carregarRalewayMedium(12f));
         lblRelatorioPendenteTitulo.setForeground(new java.awt.Color(168, 178, 195));
-        lblRelatorioPendenteTitulo.setText("Total de Relatórios Pendentes");
+        lblRelatorioPendenteTitulo.setText("Total de Serviços Pendentes");
         getContentPane().add(lblRelatorioPendenteTitulo);
         lblRelatorioPendenteTitulo.setBounds(510, 140, 210, 20);
 
         lblRelatorioNovoTitulo.setFont(FonteUtils.carregarRalewayMedium(12f));
         lblRelatorioNovoTitulo.setForeground(new java.awt.Color(168, 178, 195));
-        lblRelatorioNovoTitulo.setText("Total de Relatórios Novos");
+        lblRelatorioNovoTitulo.setText("Total de Clientes Novos");
         getContentPane().add(lblRelatorioNovoTitulo);
         lblRelatorioNovoTitulo.setBounds(170, 140, 210, 20);
 
