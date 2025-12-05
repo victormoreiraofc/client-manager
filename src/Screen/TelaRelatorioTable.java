@@ -49,7 +49,6 @@ import java.awt.event.ActionListener;
 import java.net.URL;
 import java.sql.SQLException;
 
-
 public class TelaRelatorioTable extends javax.swing.JFrame {
 
     private static final Logger logger = LoggerFactory.getLogger(TelaRelatorioTable.class);
@@ -304,7 +303,6 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
-        // Icones dos Quadrados
         try {
             java.net.URL url = getClass().getResource("/images/New Report Icon.png");
             if (url == null) {
@@ -528,20 +526,19 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
     }
 
     private void carregarDadosRelatoriosDaTela() {
-        // 1. Configuração de Formato: Padrão brasileiro
         DecimalFormatSymbols symbols = new DecimalFormatSymbols(new Locale("pt", "BR"));
         symbols.setGroupingSeparator('.');
         symbols.setDecimalSeparator(',');
-         DecimalFormat df = new DecimalFormat("#,##0.000", symbols);
+        DecimalFormat df = new DecimalFormat("#,##0.000", symbols);
 
         try {
             double totalGeral = (double) Data.CTCONTAB.totalRelatoriosRegistrados() / 1000.0;
             lblRelatorioNovoNumero.setText(df.format(totalGeral));
 
-             double pendentes = (double) Data.CTCONTAB.relatoriosPendentes() / 1000.0;
+            double pendentes = (double) Data.CTCONTAB.relatoriosPendentes() / 1000.0;
             lblRelatorioPendenteNumero.setText(df.format(pendentes));
 
-             double concluidos = (double) Data.CTCONTAB.relatoriosConcluidos() / 1000.0;
+            double concluidos = (double) Data.CTCONTAB.relatoriosConcluidos() / 1000.0;
             lblRelatorioConcluidoNumero.setText(df.format(concluidos));
 
             String relator = CTCONTAB.funcionarioRelatorDoMes();
@@ -555,7 +552,6 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         } catch (ClassNotFoundException | SQLException e) {
             logger.error("Erro ao carregar dados dos relatórios: {}", e.getMessage(), e);
 
-            // Define valores de erro
             lblRelatorioNovoNumero.setText("0");
             lblRelatorioPendenteNumero.setText("0");
             lblRelatorioConcluidoNumero.setText("0");
@@ -619,8 +615,6 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
 
         private int padding;
         private int alignment;
-
-        // Variáveis de estado para o desenho
         private int currentRow;
         private boolean isFirstColumn;
         private boolean isLastColumn;
@@ -633,25 +627,16 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
                 boolean isSelected, boolean hasFocus, int row, int column) {
-            // 1. Configuração básica do texto
             super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-            // 2. CAPTURA O ESTADO DA CÉLULA
             this.currentRow = row;
-
-            // Verifica se é a primeira coluna visível
             this.isFirstColumn = (column == 0);
-
-            // Verifica se é a última coluna visível (IMPORTANTE: A coluna de ações deve ser
-            // a última)
             this.isLastColumn = (column == table.getColumnCount() - 1);
 
-            // 3. Configurações visuais
             setBorder(BorderFactory.createEmptyBorder(0, padding, 0, 0));
             setHorizontalAlignment(alignment);
-            setOpaque(false); // Transparente para desenharmos manualmente
+            setOpaque(false);
 
-            // 4. Cores do Texto (Sua lógica original)
             if (!isSelected) {
                 int modelColumn = table.convertColumnIndexToModel(column);
                 String texto = (value != null) ? value.toString() : "";
@@ -688,57 +673,38 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
             Graphics2D g2 = (Graphics2D) g.create();
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-            // --- DEFINIÇÃO DAS CORES ---
             Color corFundo = (currentRow % 2 == 0) ? Color.decode("#162842") : Color.decode("#1C2E4A");
             Color corBorda = Color.decode("#2D9CDB");
 
-            // --- GEOMETRIA DO DESENHO (O TRUQUE DA CONTINUIDADE) ---
             int w = getWidth();
             int h = getHeight();
-            int arc = 25; // Raio do arredondamento (Aumentei para ficar mais visível)
-            int gapY = 6; // Espaço vertical entre as linhas (o "respiro")
-
-            // A altura do desenho é a altura da célula menos o espaço
+            int arc = 25;
+            int gapY = 6;
             int drawH = h - gapY;
-            int drawY = gapY / 2; // Centraliza verticalmente
-
-            // Lógica de "Extensão":
-            // Esticamos o retângulo para fora da célula nas direções que não queremos borda
-            // arredondada.
+            int drawY = gapY / 2;
             int xDraw = 0;
             int wDraw = w;
 
             if (isFirstColumn && isLastColumn) {
-                // Se só tiver 1 coluna, desenha o cartão inteiro
                 xDraw = 1;
                 wDraw = w - 2;
             } else if (isFirstColumn) {
-                // Primeira coluna: Começa normal (1), estica muito para a direita (w + arc)
                 xDraw = 1;
                 wDraw = w + arc;
             } else if (isLastColumn) {
-                // Última coluna: Começa muito antes da esquerda (-arc), termina normal (w - 1)
                 xDraw = -arc;
                 wDraw = w + arc;
             } else {
-                // Colunas do meio: Começa antes (-arc) e termina depois (w + arc)
-                // Isso esconde as bordas laterais
                 xDraw = -arc;
                 wDraw = w + (arc * 2);
             }
 
-            // 1. Pinta o Fundo
             g2.setColor(corFundo);
             g2.fillRoundRect(xDraw, drawY, wDraw, drawH, arc, arc);
-
-            // 2. Pinta a Borda
             g2.setColor(corBorda);
-            g2.setStroke(new BasicStroke(1f)); // Borda fina
+            g2.setStroke(new BasicStroke(1f));
             g2.drawRoundRect(xDraw, drawY, wDraw, drawH, arc, arc);
-
             g2.dispose();
-
-            // 3. Desenha o texto por cima de tudo
             super.paintComponent(g);
         }
     }
@@ -746,10 +712,10 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
     private void aplicarPaddingNasColunas() {
         jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
 
-        int xDoTituloID = 20; // Exemplo: Onde começa o label "ID"
-        int xDoTituloNome = 100; // Exemplo: Onde começa o label "NOME"
-        int xDoTituloStatus = 480; // Exemplo: Onde começa o label "STATUS"
-        int xDoTituloData = 680; // Exemplo: Onde começa o label "DATA DE CADASTRO"
+        int xDoTituloID = 20;
+        int xDoTituloNome = 100;
+        int xDoTituloStatus = 480;
+        int xDoTituloData = 680;
         int xDoTituloAcoes = 1030;
 
         int larguraId = xDoTituloNome - xDoTituloID;
@@ -770,11 +736,11 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
 
         int paddingPadrao = 10;
 
-        setPadding(0, paddingPadrao); // ID
-        setPadding(1, paddingPadrao); // NOME
-        setPadding(2, paddingPadrao); // STATUS
-        setPadding(3, paddingPadrao); // DATA
-        setPadding(4, paddingPadrao); // AÇOES
+        setPadding(0, paddingPadrao);
+        setPadding(1, paddingPadrao);
+        setPadding(2, paddingPadrao);
+        setPadding(3, paddingPadrao);
+        setPadding(4, paddingPadrao);
 
     }
 
@@ -830,9 +796,8 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         private Color colorNormal;
         private Color colorHover;
         private Color currentColor;
-        private Image image; // Recebe a imagem já carregada
+        private Image image;
 
-        // Construtor agora recebe a IMAGE, não o caminho String
         public CircleButton(Image img, Color normal, Color hover) {
             this.image = img;
             this.colorNormal = normal;
@@ -859,17 +824,14 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
 
             int w = getWidth();
             int h = getHeight();
-            int d = Math.min(w, h); // Diâmetro
+            int d = Math.min(w, h);
             int x = (w - d) / 2;
             int y = (h - d) / 2;
 
-            // 1. Desenha o fundo circular
             g2.setColor(currentColor);
             g2.fillOval(x, y, d, d);
 
-            // 2. Desenha a imagem centralizada
             if (image != null) {
-                // Centraliza a imagem 16x16 no centro do botão
                 int imgX = x + (d - 16) / 2;
                 int imgY = y + (d - 16) / 2;
                 g2.drawImage(image, imgX, imgY, 16, 16, this);
@@ -881,11 +843,9 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
 
     class ButtonRenderer extends javax.swing.JPanel implements TableCellRenderer {
 
-        // Cache das imagens para não carregar toda hora
         private Image imgVisualizar;
         private Image imgEditar;
         private Image imgExcluir;
-
         private CircleButton button;
         private int currentRow;
         private boolean isLastColumn;
@@ -894,7 +854,6 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
             setLayout(new GridBagLayout());
             setOpaque(false);
 
-            // --- CARREGAMENTO ÚNICO DAS IMAGENS ---
             imgVisualizar = carregarImagem("/images/olho.png");
             imgEditar = carregarImagem("/images/lapis.png");
             imgExcluir = carregarImagem("/images/lixo.png");
@@ -910,10 +869,9 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
                     return new ImageIcon(url).getImage();
                 }
             } catch (Exception e) {
-                // Isso é importante! Se der erro, ele imprime uma mensagem.
                 System.err.println("Erro ao carregar imagem para ButtonRenderer: " + path + " - " + e.getMessage());
             }
-            return null; // Retorna null se não carregar
+            return null;
         }
 
         private Color getCorNormal(String tipo) {
@@ -935,7 +893,6 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
             }
             return Color.decode("#4A1A1A");
         }
-        // Método corrigido para a classe ButtonRenderer (na TelaClienteTable.java)
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -946,36 +903,30 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
             Image iconeAtual;
             String tipo;
 
-            // Lógica para determinar o tipo de botão (Visualizar, Editar, Excluir)
-            if (column == table.getColumnModel().getColumnIndex("AÇÃO 1")) { // Visualizar
+            if (column == table.getColumnModel().getColumnIndex("AÇÃO 1")) {
                 tipo = "Visualizar";
                 bgNormal = getCorNormal(tipo);
                 bgHover = getCorHover(tipo);
                 iconeAtual = imgVisualizar;
-            } else if (column == table.getColumnModel().getColumnIndex("AÇÃO 2")) { // Editar
+            } else if (column == table.getColumnModel().getColumnIndex("AÇÃO 2")) {
                 tipo = "Editar";
                 bgNormal = getCorNormal(tipo);
                 bgHover = getCorHover(tipo);
                 iconeAtual = imgEditar;
-            } else { // Excluir
+            } else {
                 tipo = "Excluir";
                 bgNormal = getCorNormal(tipo);
                 bgHover = getCorHover(tipo);
                 iconeAtual = imgExcluir;
             }
 
-            // Cria o botão
-            // CircleButton é uma classe que estende JButton e faz o desenho circular (snippet 9)
             button = new CircleButton(iconeAtual, bgNormal, bgHover);
 
-            // >>> CORREÇÃO DO HOVER <<<
-            // Verifica se a célula atual (row, column) é a célula que está sob o mouse
             if (row == TelaRelatorioTable.this.hoveredRow && column == TelaRelatorioTable.this.hoveredColumn) {
-                button.setHover(true); // Ativa o estado de hover no CircleButton
+                button.setHover(true);
             } else {
-                button.setHover(false); // Desativa (usa cor normal)
+                button.setHover(false);
             }
-            // >>> FIM DA CORREÇÃO <<<
 
             add(button, new java.awt.GridBagConstraints());
             return this;
@@ -990,36 +941,27 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
             Color corFundo = (currentRow % 2 == 0) ? Color.decode("#162842") : Color.decode("#1C2E4A");
             Color corBorda = Color.decode("#2D9CDB");
 
-            int w = getWidth(); // Largura total disponível na célula
+            int w = getWidth();
             int h = getHeight();
             int arc = 20;
             int gapY = 4;
             int drawH = h - gapY;
             int drawY = gapY / 2;
 
-            int xDraw = -arc; // Começa escondido na esquerda
+            int xDraw = -arc;
             int wDraw;
 
             if (isLastColumn) {
-                // --- CORREÇÃO DO PREENCHIMENTO ---
-                // Se for a última coluna, estica até a largura total (w) + a sobra da esquerda
-                // (arc)
-                // O -1 é para garantir que a borda fique dentro do pixel de pintura
                 wDraw = w + arc - 1;
             } else {
-                // Colunas do meio esticam para os dois lados
                 wDraw = w + (arc * 2);
             }
 
-            // 1. Fundo
             g2.setColor(corFundo);
             g2.fillRoundRect(xDraw, drawY, wDraw, drawH, arc, arc);
-
-            // 2. Borda
             g2.setColor(corBorda);
             g2.setStroke(new BasicStroke(1f));
             g2.drawRoundRect(xDraw, drawY, wDraw, drawH, arc, arc);
-
             g2.dispose();
             super.paintComponent(g);
         }
@@ -1039,15 +981,11 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
 
     public class ButtonEditor extends DefaultCellEditor {
 
-        private String tipo; // "Visualizar", "Editar" ou "Excluir"
+        private String tipo;
         private CircleButton button;
         private javax.swing.JPanel panel;
-
-        // Variáveis de estado para o desenho do fundo
         private int currentRow;
         private boolean isLastColumn;
-
-        // Cache de imagens
         private Image imgIcone;
 
         public ButtonEditor(JCheckBox checkBox, String tipo) {
@@ -1059,7 +997,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
                 iconPath = "/images/olho.png";
             } else if (tipo.equalsIgnoreCase("Editar")) {
                 iconPath = "/images/lapis.png";
-            } else { // Excluir
+            } else {
                 iconPath = "/images/lixo.png";
             }
             this.imgIcone = carregarImagem(iconPath);
@@ -1098,19 +1036,12 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
             button = new CircleButton(imgIcone, getCorNormal(tipo), getCorHover(tipo));
             button.setPreferredSize(new Dimension(32, 32));
 
-            // --- AQUI ESTÁ A LÓGICA DE CLIQUE ATUALIZADA ---
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    // Para a edição para liberar a tabela
-                    //fireEditingStopped();
-
-                    // Recupera o ID da linha selecionada (Coluna 0 é o ID)
-                    // Atenção: currentRow é atualizado no getTableCellEditorComponent
                     Object idObj = jTable1.getValueAt(currentRow, 0);
                     int idCliente = Integer.parseInt(idObj.toString());
 
-                    // Encontra o objeto Cliente na lista baseado no ID
                     Relatorio relatorioSelecionado = null;
                     if (listarRelatorios != null) {
                         for (Relatorio c : listarRelatorios) {
@@ -1125,30 +1056,12 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
                         return;
                     }
 
-                    // Redireciona para a ação correta
                     if (tipo.equalsIgnoreCase("Visualizar")) {
-                        // new TelaVisualizarCliente(TelaClienteTable.this, usuarioLogado,
-                        // clienteSelecionado)
-                        //.setVisible(true);
 
                     } else if (tipo.equalsIgnoreCase("Editar")) {
-                        // TelaEditarCliente telaEdit = new TelaEditarCliente(TelaClienteTable.this,
-                        // usuarioLogado,
-                        // clienteSelecionado);
-                        // telaEdit.setVisible(true);
-                        // Se salvou, recarrega a tabela
-                        // if (telaEdit.isSalvou()) {
-                        // carregarRelatoriosAssincrono();
-                        // }
 
                     } else if (tipo.equalsIgnoreCase("Excluir")) {
-                        // PopupExclusao popup = new PopupExclusao(TelaClienteTable.this, usuarioLogado,
-                        // clienteSelecionado);
-                        // popup.setVisible(true);
-                        // Se excluiu, recarrega a tabela
-                        // if (popup.isExcluiu()) {
-                        // carregarRelatoriosAssincrono();
-                        // }
+
                     }
                 }
             });
@@ -1236,7 +1149,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
             this.backgroundColor = bgColor;
             this.borderColor = bdColor;
             this.borderThickness = bdThickness;
-            setOpaque(false); // Permite ver a forma arredondada
+            setOpaque(false);
         }
 
         @Override
@@ -1249,19 +1162,12 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
             int thickness = borderThickness;
             int radius = cornerRadius;
 
-            // 1. Preenche o fundo (interno)
             g2.setColor(backgroundColor);
             g2.fillRoundRect(thickness, thickness, width - (thickness * 2), height - (thickness * 2), radius, radius);
-
-            // 2. Desenha a borda (externa)
             g2.setStroke(new java.awt.BasicStroke(thickness));
             g2.setColor(borderColor);
-            // Ajusta a área de desenho da borda para que o traço fique centrado na linha
             g2.drawRoundRect(thickness / 2, thickness / 2, width - thickness, height - thickness, radius, radius);
-
             g2.dispose();
-
-            // Desenha os componentes filhos por cima
             super.paintComponent(g);
         }
     }

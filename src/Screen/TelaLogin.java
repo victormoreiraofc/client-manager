@@ -297,8 +297,8 @@ public class TelaLogin extends javax.swing.JFrame {
                 setBorder(BorderFactory.createEmptyBorder(2, 10, 2, 10));
                 return c; // Retorna o componente do Renderer
             }
-        }); 
-        
+        });
+
         cmbLinguagens.setUI(new javax.swing.plaf.basic.BasicComboBoxUI() {
             @Override
             protected javax.swing.JButton createArrowButton() {

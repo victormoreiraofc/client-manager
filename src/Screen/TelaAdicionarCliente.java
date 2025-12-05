@@ -17,13 +17,11 @@ import Screen.FonteUtils;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-// Imports adicionados para a função de salvar no banco de dados
 import Data.CTCONTAB;
-import Data.Cliente; // Assumido que esta classe está disponível no pacote Data
+import Data.Cliente;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-// Fim dos imports adicionados
 
 public class TelaAdicionarCliente extends JDialog {
 
@@ -59,9 +57,7 @@ public class TelaAdicionarCliente extends JDialog {
         this(parent, null);
     }
 
-    // Método para centralizar a inicialização do JDialog
     private void inicializarUI() {
-        // AJUSTE FINAL: Altura reduzida para 600px.
         setSize(900, 630);
         setLocationRelativeTo(parentFrame);
         setUndecorated(true);
@@ -78,7 +74,6 @@ public class TelaAdicionarCliente extends JDialog {
 
         setBackground(new Color(0, 0, 0, 0));
 
-        // --- PAINEL PRINCIPAL (Fundo arredondado e borda) ---
         JPanel panel = new JPanel() {
             private final int ARCO = 20;
 
@@ -86,41 +81,30 @@ public class TelaAdicionarCliente extends JDialog {
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-                // Fundo Escuro (Cor 28, 46, 74)
                 g2.setColor(new Color(28, 46, 74));
                 g2.fillRoundRect(0, 0, getWidth(), getHeight(), ARCO, ARCO);
-
-                // Borda Sutil (Cor 42, 62, 97)
                 g2.setColor(new Color(42, 62, 97));
                 g2.setStroke(new BasicStroke(1f));
                 g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, ARCO, ARCO);
-
                 g2.dispose();
             }
         };
 
-        // AJUSTE: Mantido EmptyBorder mínimo para que o JPanel preencha quase todo o JDialog
         panel.setBorder(new EmptyBorder(2, 2, 2, 2));
         panel.setLayout(new GridBagLayout());
 
-        // Adiciona o painel principal ao content pane do JDialog com BorderLayout
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(panel, BorderLayout.CENTER);
 
         GridBagConstraints gbc = new GridBagConstraints();
         int paddingHorizontal = 25;
-        // Padding vertical entre label e campo (mantido em 6)
         int paddingVerticalLabel = 6;
-        // Padding vertical abaixo dos campos com erro (mantido em 10)
         int paddingVerticalField = 10;
 
-        // --- Título e Botão Fechar (ROW 0) ---
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
-        gbc.gridwidth = 2; // Ocupa as 2 colunas principais
+        gbc.gridwidth = 2;
         gbc.weightx = 1;
-        // AJUSTE: Padding superior de 5 e inferior de 8 (para o título)
         gbc.insets = new Insets(5, paddingHorizontal, 8, 15);
         gbc.gridy = 0;
 
@@ -146,7 +130,6 @@ public class TelaAdicionarCliente extends JDialog {
 
         panel.add(headerPanel, gbc);
 
-        // --- ROW 1: Nome Completo (Label + Field) ---
         gbc.gridwidth = 2;
         gbc.insets = new Insets(paddingVerticalLabel, paddingHorizontal, 2, paddingHorizontal);
         gbc.gridy = 1;
@@ -160,7 +143,6 @@ public class TelaAdicionarCliente extends JDialog {
         addPlaceholder(txtNomeCompleto, "Nome Completo");
         panel.add(txtNomeCompleto, gbc);
 
-        // --- ROW 2: Serviço (Label + Field) ---
         gbc.insets = new Insets(paddingVerticalLabel, paddingHorizontal, 2, paddingHorizontal);
         gbc.gridy++;
         JLabel lblServico = new JLabel("Serviço*");
@@ -173,10 +155,6 @@ public class TelaAdicionarCliente extends JDialog {
         addPlaceholder(txtServico, "Qual foi o serviço prestado?");
         panel.add(txtServico, gbc);
 
-        // ----------------------------------------------------------------------
-        // --- ROW 3: Tipo de Pessoa (COL 0) e Situação do Serviço (COL 1) ---
-        // ----------------------------------------------------------------------
-        // COL 0: Tipo de Pessoa (Label)
         gbc.gridwidth = 1;
         gbc.gridx = 0;
         gbc.insets = new Insets(paddingVerticalLabel, paddingHorizontal, 2, 10);
@@ -185,7 +163,6 @@ public class TelaAdicionarCliente extends JDialog {
         configurarLabel(lblTipoPessoa);
         panel.add(lblTipoPessoa, gbc);
 
-        // COL 1: Situação do Serviço (Label)
         gbc.gridx = 1;
         gbc.insets = new Insets(paddingVerticalLabel, 10, 2, paddingHorizontal);
         JLabel lblSituacaoServico = new JLabel("Situação do Serviço*");
@@ -194,14 +171,12 @@ public class TelaAdicionarCliente extends JDialog {
 
         gbc.gridy++;
 
-        // COL 0: Tipo de Pessoa (Field)
         gbc.gridx = 0;
         gbc.insets = new Insets(2, paddingHorizontal, 0, 10); // Zero de padding inferior temporário
         txtTipoPessoa = criarCampoTexto();
         addPlaceholder(txtTipoPessoa, "Física, Jurídica ou NI"); // Placeholder atualizado
         panel.add(txtTipoPessoa, gbc);
 
-        // COL 1: Situação do Serviço (Field)
         gbc.gridx = 1;
         gbc.insets = new Insets(2, 10, 0, paddingHorizontal); // Zero de padding inferior temporário
         txtSituacaoServico = criarCampoTexto();
@@ -210,26 +185,20 @@ public class TelaAdicionarCliente extends JDialog {
 
         gbc.gridy++;
 
-        // COL 0: Erro Tipo de Pessoa (Label)
         gbc.gridx = 0;
         gbc.insets = new Insets(2, paddingHorizontal, paddingVerticalField, 10);
         lblErroTipoPessoa = criarLabelErro();
         panel.add(lblErroTipoPessoa, gbc);
 
-        // COL 1: Erro Situação do Serviço (Label)
         gbc.gridx = 1;
         gbc.insets = new Insets(2, 10, paddingVerticalField, paddingHorizontal);
         lblErroSituacaoServico = criarLabelErro();
         panel.add(lblErroSituacaoServico, gbc);
 
-        // ----------------------------------------------------------------------
-        // --- Voltar para 1 coluna completa ---
-        // ----------------------------------------------------------------------
         gbc.gridx = 0;
         gbc.gridwidth = 2;
         gbc.weightx = 1;
 
-        // --- ROW 4: Email (Label + Field) ---
         gbc.insets = new Insets(4, paddingHorizontal, 2, paddingHorizontal);
         gbc.gridy++;
         JLabel lblEmail = new JLabel("Email*");
@@ -242,7 +211,6 @@ public class TelaAdicionarCliente extends JDialog {
         addPlaceholder(txtEmail, "emaildousuario@gmail.com");
         panel.add(txtEmail, gbc);
 
-        // --- ROW 5: Telefone (Label + Field) ---
         gbc.insets = new Insets(4, paddingHorizontal, 2, paddingHorizontal);
         gbc.gridy++;
         JLabel lblTelefone = new JLabel("Telefone");
@@ -255,7 +223,6 @@ public class TelaAdicionarCliente extends JDialog {
         addPlaceholder(txtTelefone, "999999999");
         panel.add(txtTelefone, gbc);
 
-        // --- ROW 6: Celular (Label + Field) ---
         gbc.insets = new Insets(4, paddingHorizontal, 2, paddingHorizontal);
         gbc.gridy++;
         JLabel lblCelular = new JLabel("Celular");
@@ -268,14 +235,12 @@ public class TelaAdicionarCliente extends JDialog {
         addPlaceholder(txtCelular, "999999999");
         panel.add(txtCelular, gbc);
 
-        // --- ROW 7: Observações (Label + TextArea) ---
         gbc.insets = new Insets(4, paddingHorizontal, 2, paddingHorizontal);
         gbc.gridy++;
         JLabel lblObservacoes = new JLabel("Observações");
         configurarLabel(lblObservacoes);
         panel.add(lblObservacoes, gbc);
 
-        // AJUSTE: Padding inferior reduzido de 8 para 5
         gbc.insets = new Insets(2, paddingHorizontal, 5, paddingHorizontal);
         gbc.gridy++;
         txtObservacoes = criarCampoTextArea();
@@ -283,8 +248,6 @@ public class TelaAdicionarCliente extends JDialog {
         txtObservacoes.setPreferredSize(new Dimension(txtObservacoes.getPreferredSize().width, 70));
         panel.add(txtObservacoes, gbc);
 
-        // --- PAINEL DE BOTÕES (ROW 8) ---
-        // AJUSTE: Padding inferior reduzido de 3 para 1
         gbc.insets = new Insets(5, 15, 1, 15);
         gbc.gridy++;
 
@@ -294,9 +257,6 @@ public class TelaAdicionarCliente extends JDialog {
         JPanel botoes = new JPanel(new FlowLayout(FlowLayout.RIGHT, 12, 0));
         botoes.setOpaque(false);
 
-        // ==========================================
-        // BOTÃO CANCELAR
-        // ==========================================
         JButton btnCancelar = new JButton("Cancelar") {
             @Override
             protected void paintComponent(Graphics g) {
@@ -324,9 +284,6 @@ public class TelaAdicionarCliente extends JDialog {
         btnCancelar.setForeground(new Color(200, 200, 200));
         btnCancelar.addActionListener(e -> dispose());
 
-        // ==========================================
-        // BOTÃO CRIAR CLIENTE
-        // ==========================================
         JButton btnCriarCliente = new JButton("Criar Cliente") {
             @Override
             protected void paintComponent(Graphics g) {
@@ -340,7 +297,6 @@ public class TelaAdicionarCliente extends JDialog {
 
             @Override
             protected void paintBorder(Graphics g) {
-                // Sem borda
             }
         };
 
@@ -354,15 +310,11 @@ public class TelaAdicionarCliente extends JDialog {
         botoesWrapper.add(botoes);
         panel.add(botoesWrapper, gbc);
 
-        // ESC fecha a janela
         panel.registerKeyboardAction(e -> dispose(),
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
                 JComponent.WHEN_IN_FOCUSED_WINDOW);
     }
 
-    // =========================================================================
-    //                            MÉTODOS AUXILIARES DE UI
-    // =========================================================================
     private JButton criarBotaoFechar() {
         JButton btnClose = new JButton() {
             private final Color defaultColor = new Color(28, 46, 74);
@@ -427,14 +379,12 @@ public class TelaAdicionarCliente extends JDialog {
                     field.setText(placeholder);
                     field.setForeground(Color.GRAY);
                 }
-                // Garante que a borda volta ao normal ao perder o foco
                 if (field.getBorder() instanceof CompoundBorder) {
                     CompoundBorder border = (CompoundBorder) field.getBorder();
                     if (border.getOutsideBorder() instanceof LineBorder) {
                         LineBorder lineBorder = (LineBorder) border.getOutsideBorder();
                         if (lineBorder.getLineColor().equals(Color.RED)) {
                             setCampoBordaNormal(field);
-                            // Se for campo de combo, também limpa o erro
                             if (field == txtTipoPessoa) {
                                 lblErroTipoPessoa.setText("");
                             } else if (field == txtSituacaoServico) {
@@ -447,7 +397,6 @@ public class TelaAdicionarCliente extends JDialog {
         });
     }
 
-    // Sobrecarga para JTextArea
     private void addPlaceholderTextArea(JTextArea area, String placeholder) {
         area.setText(placeholder);
         area.setForeground(Color.GRAY);
@@ -505,14 +454,14 @@ public class TelaAdicionarCliente extends JDialog {
 
     private void setCampoBordaNormal(JTextField txt) {
         txt.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(50, 70, 100)), // Borda padrão
+                BorderFactory.createLineBorder(new Color(50, 70, 100)),
                 BorderFactory.createEmptyBorder(8, 10, 8, 10)
         ));
     }
 
     private void setCampoBordaErro(JTextField txt) {
         txt.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(Color.RED), // Borda vermelha de erro
+                BorderFactory.createLineBorder(Color.RED),
                 BorderFactory.createEmptyBorder(8, 10, 8, 10)
         ));
     }
@@ -532,10 +481,6 @@ public class TelaAdicionarCliente extends JDialog {
         return area;
     }
 
-    // =========================================================================
-    //                                LÓGICA DO BLUR
-    // =========================================================================
-    // Métodos de BLUR mantidos.
     private void aplicarEfeitoDesfoqueFundo() {
         if (parentFrame != null) {
             glassPaneOriginal = parentFrame.getGlassPane();
@@ -600,11 +545,11 @@ public class TelaAdicionarCliente extends JDialog {
 
         switch (upperInput) {
             case "PENDENTE":
-                return "Pendente"; // ENUM: 'Pendente'
+                return "Pendente";
             case "EM ANDAMENTO":
-                return "Em andamento"; // ENUM: 'Em andamento'
+                return "Em andamento";
             case "CONCLUIDO":
-                return "Concluido"; // ENUM: 'Concluido'
+                return "Concluido";
             default:
                 return input.trim(); 
         }
@@ -616,11 +561,11 @@ public class TelaAdicionarCliente extends JDialog {
 
         switch (upperInput) {
             case "FISICA":
-                return "Fisica"; // ENUM: 'Fisica'
+                return "Fisica";
             case "JURIDICA":
-                return "Juridica"; // ENUM: 'Juridica'
+                return "Juridica";
             case "NI":
-                return "NI"; // ENUM: 'NI'
+                return "NI";
             default:
                 return input.trim();
         }
@@ -660,7 +605,6 @@ public class TelaAdicionarCliente extends JDialog {
 
     private void salvarCliente() {
 
-        // 1. Validação dos campos 'combo'
         if (!validarCamposCombo()) {
             new NotificationToast(null, "Por favor, corrija os erros nos campos antes de continuar.").setVisible(true);
             return;
@@ -683,7 +627,6 @@ public class TelaAdicionarCliente extends JDialog {
         String usuario = usuarioLogado != null ? usuarioLogado.getUsuario() : "SISTEMA_NAO_LOGADO";
         String dataCadastro = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
-        // Validação dos campos obrigatórios remanescentes
         if (nome.isEmpty() || nome.equals("Nome Completo") || servico.isEmpty() || servico.equals("Qual foi o serviço prestado?")) {
             new NotificationToast(null, "Por favor, preencha todos os campos obrigatórios (*).").setVisible(true);
             return;
@@ -691,17 +634,14 @@ public class TelaAdicionarCliente extends JDialog {
 
         if (usuarioLogado != null) {
             MDC.put("usuario_criador", usuarioLogado.getUsuario());
-            //logger.info("Tentativa de criar cliente por: " + usuarioLogado.getUsuario());
         }
 
         try {
-            // Instancia o objeto Cliente
             Cliente cliente = new Cliente();
 
-            // Popula os dados do cliente com os valores normalizados
             cliente.setNome(nome);
-            cliente.setTipoPessoa(tipoPessoaFinal); // <-- Usando o valor normalizado
-            cliente.setSituacaoServico(situacaoServicoFinal); // <-- Usando o valor normalizado
+            cliente.setTipoPessoa(tipoPessoaFinal);
+            cliente.setSituacaoServico(situacaoServicoFinal);
             cliente.setServico(servico);
             cliente.setTelefone(telefone);
             cliente.setEmail(email);
@@ -710,13 +650,11 @@ public class TelaAdicionarCliente extends JDialog {
             cliente.setDataCadastro(dataCadastro);
             cliente.setUsuario(usuario);
 
-            // Chama a função de registro no CTCONTAB
             CTCONTAB.registrarCliente(cliente);
 
             String msg = "Você cadastrou " + nome + " como novo cliente!";
-            CTCONTAB.criarNotificacao("admin", msg); // Salva no histórico
+            CTCONTAB.criarNotificacao("admin", msg);
 
-            // Sucesso: Exibe o toast e fecha a janela (dispose)
             NotificationToast toast = new NotificationToast(null, msg);
             toast.setVisible(true);
 

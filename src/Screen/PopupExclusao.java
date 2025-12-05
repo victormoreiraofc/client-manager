@@ -30,7 +30,6 @@ public class PopupExclusao extends JDialog {
         this.usuarioLogado = usuarioLogado;
         this.clienteParaExcluir = cliente;
 
-        // Altura mantida em 180
         setSize(600, 180); 
         setLocationRelativeTo(parent);
         setUndecorated(true);
@@ -67,7 +66,6 @@ public class PopupExclusao extends JDialog {
                 g2.dispose();
             }
         };
-        // Padding para centralizar o bloco de conteúdo verticalmente
         panel.setLayout(new GridBagLayout());
         panel.setBorder(new EmptyBorder(20, 20, 20, 20)); 
         getContentPane().add(panel);
@@ -79,7 +77,6 @@ public class PopupExclusao extends JDialog {
         
         int paddingHorizontal = 25;
 
-        // --- ROW 0: BOTÃO FECHAR (X) ---
         gbc.gridy = 0; 
         gbc.gridx = 0; 
         gbc.gridwidth = 2; 
@@ -90,7 +87,6 @@ public class PopupExclusao extends JDialog {
         JButton btnClose = criarBotaoFechar();
         panel.add(btnClose, gbc);
 
-        // --- ROW 1: MENSAGEM ---
         gbc.gridy = 1; 
         gbc.gridx = 0; 
         gbc.gridwidth = 2;
@@ -104,7 +100,6 @@ public class PopupExclusao extends JDialog {
         lblMsg.setForeground(new java.awt.Color(236, 235, 235));
         panel.add(lblMsg, gbc);
 
-        // --- ROW 2: PAINEL DE BOTÕES ---
         gbc.gridy = 2;
         gbc.gridx = 0;
         gbc.gridwidth = 2;
@@ -115,18 +110,12 @@ public class PopupExclusao extends JDialog {
         JPanel botoesWrapper = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         botoesWrapper.setOpaque(false);
 
-        // Espaçamento de 10 pixels entre os botões (mantido)
         JPanel botoes = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0)); 
         botoes.setOpaque(false);
 
-        // ==========================================
-        // BOTÃO CANCELAR
-        // ==========================================
         JButton btnCancelar = new JButton("Cancelar") {
-            // Mantemos o padding alto para garantir o espaço físico
             @Override
             public Border getBorder() {
-                // Mantém 8px de padding à esquerda
                 return new EmptyBorder(0, 8, 0, 0); 
             }
             
@@ -147,12 +136,11 @@ public class PopupExclusao extends JDialog {
                 g2.setColor(new Color(65, 85, 115));
                 g2.setStroke(new BasicStroke(1f));
                 
-                int x = 1; // ALTERAÇÃO CHAVE: Desloca o desenho da borda 1 pixel para a direita
-                int y = 1; // Desloca o desenho da borda 1 pixel para baixo (para o canto inferior também)
-                int w = getWidth() - 2; // Reduz a largura e altura para compensar o deslocamento
+                int x = 1;
+                int y = 1;
+                int w = getWidth() - 2;
                 int h = getHeight() - 2;
                 
-                // Desenha a borda deslocada
                 g2.drawRoundRect(x, y, w, h, 12, 12);
                 g2.dispose();
             }
@@ -163,9 +151,6 @@ public class PopupExclusao extends JDialog {
         btnCancelar.setForeground(new Color(200, 200, 200));
         btnCancelar.addActionListener(e -> dispose());
 
-        // ==========================================
-        // BOTÃO EXCLUIR
-        // ==========================================
         JButton btnExcluir = new JButton("Excluir") {
             @Override
             protected void paintComponent(Graphics g) {
@@ -179,7 +164,6 @@ public class PopupExclusao extends JDialog {
 
             @Override
             protected void paintBorder(Graphics g) {
-                // Sem borda
             }
         };
 
@@ -193,7 +177,6 @@ public class PopupExclusao extends JDialog {
         botoesWrapper.add(botoes);
         panel.add(botoesWrapper, gbc);
 
-        // ESC fecha a janela
         panel.registerKeyboardAction(e -> dispose(),
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
                 JComponent.WHEN_IN_FOCUSED_WINDOW);

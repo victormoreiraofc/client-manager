@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.List;
 import java.util.ArrayList;
-import Data.Usuario;
 import java.util.Date;
 
 public class CTCONTAB {
@@ -543,7 +542,6 @@ public class CTCONTAB {
         }
     }
 
-    // 1. Cria uma nova notificação no banco
     public static void criarNotificacao(String usuarioLogin, String mensagem) throws SQLException, ClassNotFoundException {
         conectado = conectar();
         String sql = "INSERT INTO notificacoes (usuario_login, mensagem, data_criacao) VALUES (?, ?, NOW())";
@@ -554,40 +552,6 @@ public class CTCONTAB {
         }
     }
 
-// 2. Conta quantas não foram lidas (para a bolinha vermelha)
-    public static int contarNotificacoesNaoLidas(String usuarioLogin) throws SQLException, ClassNotFoundException {
-        conectado = conectar();
-        String sql = "SELECT COUNT(*) AS total FROM notificacoes WHERE usuario_login = ? AND lida = FALSE";
-        try (PreparedStatement st = conectado.prepareStatement(sql)) {
-            st.setString(1, usuarioLogin);
-            ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-                return rs.getInt("total");
-            }
-        }
-        return 0;
-    }
-
-// 3. Busca as últimas 3 notificações
-    public static List<String[]> buscarUltimasNotificacoes(String usuarioLogin) throws SQLException, ClassNotFoundException {
-        conectado = conectar();
-        List<String[]> lista = new ArrayList<>();
-        String sql = "SELECT id, mensagem, lida FROM notificacoes WHERE usuario_login = ? ORDER BY data_criacao DESC LIMIT 3";
-        try (PreparedStatement st = conectado.prepareStatement(sql)) {
-            st.setString(1, usuarioLogin);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                lista.add(new String[]{
-                    String.valueOf(rs.getInt("id")),
-                    rs.getString("mensagem"),
-                    rs.getBoolean("lida") ? "1" : "0"
-                });
-            }
-        }
-        return lista;
-    }
-
-// 4. Marca como lida ao clicar no sino
     public static void marcarTodasComoLidas(String usuarioLogin) throws SQLException, ClassNotFoundException {
         conectado = conectar();
         String sql = "UPDATE notificacoes SET lida = TRUE WHERE usuario_login = ? AND lida = FALSE";
@@ -597,7 +561,6 @@ public class CTCONTAB {
         }
     }
 
-    // NOVO: Clientes Pendentes do Mês (lblRelatorioPendenteNumero)
     public static int clientesPendentesDoMes() throws ClassNotFoundException, SQLException {
         conectado = conectar();
         PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) AS total FROM cliente WHERE SituacaoServico = 'Pendente' AND MONTH(DataCadastro) = MONTH(CURRENT_DATE()) AND YEAR(DataCadastro) = YEAR(CURRENT_DATE())");
@@ -610,7 +573,6 @@ public class CTCONTAB {
         return totalClientes;
     }
 
-// NOVO: Clientes Concluídos do Mês (lblRelatorioConcluidoNumero)
     public static int clientesConcluidosDoMes() throws ClassNotFoundException, SQLException {
         conectado = conectar();
         PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) AS total FROM cliente WHERE SituacaoServico = 'Concluido' AND MONTH(DataCadastro) = MONTH(CURRENT_DATE()) AND YEAR(DataCadastro) = YEAR(CURRENT_DATE())");
@@ -623,10 +585,8 @@ public class CTCONTAB {
         return totalClientes;
     }
 
-// NOVO: Funcionário que mais registrou clientes no mês (lblFuncionarioDoMesNome)
     public static String funcionarioMaisClientesDoMes() throws ClassNotFoundException, SQLException {
         conectado = conectar();
-        // A coluna 'Usuario' na tabela cliente é a chave estrangeira para o usuário cadastrante
         String sql = "SELECT Usuario, COUNT(*) AS total_clientes "
                 + "FROM cliente "
                 + "WHERE MONTH(DataCadastro) = MONTH(CURRENT_DATE()) AND YEAR(DataCadastro) = YEAR(CURRENT_DATE()) "
@@ -645,10 +605,8 @@ public class CTCONTAB {
         return funcionarioNome;
     }
 
-// NOVO: Funcionário que mais registrou clientes no mês (lblFuncionarioDoMesNome)
     public static String funcionarioMaisRelatoriosDoMes() throws ClassNotFoundException, SQLException {
         conectado = conectar();
-        // A coluna 'Usuario' na tabela cliente é a chave estrangeira para o usuário cadastrante
         String sql = "SELECT Usuario, COUNT(*) AS total_relatorio "
                 + "FROM relatorio "
                 + "WHERE MONTH(DataCadastro) = MONTH(CURRENT_DATE()) AND YEAR(DataCadastro) = YEAR(CURRENT_DATE()) "
@@ -740,7 +698,6 @@ public class CTCONTAB {
         return usuarioNome;
     }
 
-    // Total de Relatórios Registrados (Usado para "Relatórios Novos")
     public static int totalRelatoriosRegistrados() throws ClassNotFoundException, SQLException {
         conectado = conectar();
         PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) AS total FROM relatorio");
@@ -752,7 +709,6 @@ public class CTCONTAB {
         return total;
     }
 
-// Total de Relatórios Pendentes
     public static int relatoriosPendentes() throws ClassNotFoundException, SQLException {
         conectado = conectar();
         PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) AS total FROM relatorio WHERE StatusRelatorio = 'Pendente'");
@@ -764,7 +720,6 @@ public class CTCONTAB {
         return total;
     }
 
-// Total de Relatórios Concluídos
     public static int relatoriosConcluidos() throws ClassNotFoundException, SQLException {
         conectado = conectar();
         PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) AS total FROM relatorio WHERE StatusRelatorio = 'Concluido'");
@@ -776,11 +731,9 @@ public class CTCONTAB {
         return total;
     }
 
-// NOVO: Funcionário que mais registrou Relatórios no Mês
     public static String funcionarioRelatorDoMes() throws ClassNotFoundException, SQLException {
         conectado = conectar();
 
-        // ATENÇÃO: A coluna 'usuario' deve existir na tabela 'relatorio' para esta consulta funcionar.
         String sql = "SELECT usuario, COUNT(*) AS total_relatorios "
                 + "FROM relatorio "
                 + "WHERE MONTH(DataCadastro) = MONTH(CURRENT_DATE()) AND YEAR(DataCadastro) = YEAR(CURRENT_DATE()) "

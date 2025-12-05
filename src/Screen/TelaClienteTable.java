@@ -79,7 +79,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         IconUtil.setIcon(usuarioLogado, lblUserIcon);
         setIcon();
         setResizable(false);
-        
+
         addHoverLabel(btnDashboard, "Dashboard");
         addHoverLabel(btnCalendario, "Calendário");
         addHoverLabel(btnClientes, "Clientes");
@@ -307,7 +307,6 @@ public class TelaClienteTable extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
-        // Icones dos Quadrados
         try {
             java.net.URL url = getClass().getResource("/images/New Report Icon.png");
             if (url == null) {
@@ -531,42 +530,42 @@ public class TelaClienteTable extends javax.swing.JFrame {
     }
 
     // Coloque este método antes ou depois do construtor, mas dentro da classe TelaClienteTable
-private void carregarDadosRelatorios() {
-    // 1. Configuração de Formato: Usa o padrão brasileiro (ponto para milhar, vírgula para decimal)
-    // para formatar números grandes (ex: 1.000, 10.000).
-    DecimalFormatSymbols symbols = new DecimalFormatSymbols(new Locale("pt", "BR"));
-    symbols.setGroupingSeparator('.');
-    symbols.setDecimalSeparator(',');
-    DecimalFormat df = new DecimalFormat("#,##0.000", symbols);
-    
-    try {
-        double novos = (double) Data.CTCONTAB.novosclientesdomes() / 1000.0;
-        lblRelatorioNovoNumero.setText(df.format(novos));
+    private void carregarDadosRelatorios() {
+        // 1. Configuração de Formato: Usa o padrão brasileiro (ponto para milhar, vírgula para decimal)
+        // para formatar números grandes (ex: 1.000, 10.000).
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(new Locale("pt", "BR"));
+        symbols.setGroupingSeparator('.');
+        symbols.setDecimalSeparator(',');
+        DecimalFormat df = new DecimalFormat("#,##0.000", symbols);
 
-        double pendentes = (double) Data.CTCONTAB.clientesPendentesDoMes() / 1000.0;
-        lblRelatorioPendenteNumero.setText(df.format(pendentes));
+        try {
+            double novos = (double) Data.CTCONTAB.novosclientesdomes() / 1000.0;
+            lblRelatorioNovoNumero.setText(df.format(novos));
 
-        double concluidos = (double) Data.CTCONTAB.clientesConcluidosDoMes() / 1000.0;
-        lblRelatorioConcluidoNumero.setText(df.format(concluidos));
+            double pendentes = (double) Data.CTCONTAB.clientesPendentesDoMes() / 1000.0;
+            lblRelatorioPendenteNumero.setText(df.format(pendentes));
 
-        String funcionario = Data.CTCONTAB.funcionarioMaisClientesDoMes(); 
-        
-        if (funcionario.equals("N/A")) {
-             lblFuncionarioDoMesNome.setText("Nenhum registro");
-        } else {
-             lblFuncionarioDoMesNome.setText(funcionario);
+            double concluidos = (double) Data.CTCONTAB.clientesConcluidosDoMes() / 1000.0;
+            lblRelatorioConcluidoNumero.setText(df.format(concluidos));
+
+            String funcionario = Data.CTCONTAB.funcionarioMaisClientesDoMes();
+
+            if (funcionario.equals("N/A")) {
+                lblFuncionarioDoMesNome.setText("Nenhum registro");
+            } else {
+                lblFuncionarioDoMesNome.setText(funcionario);
+            }
+
+        } catch (ClassNotFoundException | SQLException e) {
+            logger.error("Erro ao carregar dados dos relatórios: {}", e.getMessage(), e);
+
+            // Define valores de erro
+            lblRelatorioNovoNumero.setText("0");
+            lblRelatorioPendenteNumero.setText("0");
+            lblRelatorioConcluidoNumero.setText("0");
+            lblFuncionarioDoMesNome.setText("Erro de Conexão");
         }
-
-    } catch (ClassNotFoundException | SQLException e) {
-        logger.error("Erro ao carregar dados dos relatórios: {}", e.getMessage(), e); 
-        
-        // Define valores de erro
-        lblRelatorioNovoNumero.setText("0");
-        lblRelatorioPendenteNumero.setText("0");
-        lblRelatorioConcluidoNumero.setText("0");
-        lblFuncionarioDoMesNome.setText("Erro de Conexão");
     }
-}
 
     private void adicionarListenerDeBusca() {
         txtLogin.getDocument().addDocumentListener(new DocumentListener() {

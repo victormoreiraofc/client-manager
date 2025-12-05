@@ -38,8 +38,6 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
 import javax.swing.ImageIcon;
-//import javax.xml.crypto.Data;
-
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -81,7 +79,7 @@ public class TelaAdminTable extends javax.swing.JFrame {
         IconUtil.setIcon(usuarioLogado, lblUserIcon);
         setIcon();
         setResizable(false);
-        
+
         addHoverLabel(btnDashboard, "Dashboard");
         addHoverLabel(btnCalendario, "Calendário");
         addHoverLabel(btnClientes, "Clientes");
@@ -309,7 +307,6 @@ public class TelaAdminTable extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
-        // Icones dos Quadrados
         try {
             java.net.URL url = getClass().getResource("/images/New Report Icon.png");
             if (url == null) {
@@ -532,7 +529,7 @@ public class TelaAdminTable extends javax.swing.JFrame {
         }
     }
 
-private void carregarDadosRelatorios() {
+    private void carregarDadosRelatorios() {
 
         DecimalFormatSymbols symbols = new DecimalFormatSymbols(new Locale("pt", "BR"));
         symbols.setGroupingSeparator('.');
@@ -708,18 +705,15 @@ private void carregarDadosRelatorios() {
                 wDraw = w + (arc * 2);
             }
 
-            // 1. Pinta o Fundo
             g2.setColor(corFundo);
             g2.fillRoundRect(xDraw, drawY, wDraw, drawH, arc, arc);
 
-            // 2. Pinta a Borda
             g2.setColor(corBorda);
-            g2.setStroke(new BasicStroke(1f)); // Borda fina
+            g2.setStroke(new BasicStroke(1f));
             g2.drawRoundRect(xDraw, drawY, wDraw, drawH, arc, arc);
 
             g2.dispose();
 
-            // 3. Desenha o texto por cima de tudo
             super.paintComponent(g);
         }
     }
@@ -727,11 +721,11 @@ private void carregarDadosRelatorios() {
     private void aplicarPaddingNasColunas() {
         jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
 
-        int xDoTituloID = 20; // Exemplo: Onde começa o label "ID"
-        int xDoTituloNome = 100; // Exemplo: Onde começa o label "NOME"
-        int xDoTituloStatus = 330; // Exemplo: Onde começa o label "STATUS"
-        int xDoTituloTipo = 480; // Exemplo: Onde começa o label "TIPO DE PESSOA"
-        int xDoTituloData = 680; // Exemplo: Onde começa o label "DATA DE CADASTRO"
+        int xDoTituloID = 20;
+        int xDoTituloNome = 100;
+        int xDoTituloStatus = 330;
+        int xDoTituloTipo = 480;
+        int xDoTituloData = 680;
         int xDoTituloAcoes = 1030;
 
         int larguraId = xDoTituloNome - xDoTituloID;
@@ -755,11 +749,11 @@ private void carregarDadosRelatorios() {
 
         int paddingPadrao = 10;
 
-        setPadding(0, paddingPadrao); // ID
-        setPadding(1, paddingPadrao); // NOME
-        setPadding(2, paddingPadrao); // STATUS
-        setPadding(3, paddingPadrao); // TIPO
-        setPadding(4, paddingPadrao); // DATA
+        setPadding(0, paddingPadrao);
+        setPadding(1, paddingPadrao);
+        setPadding(2, paddingPadrao);
+        setPadding(3, paddingPadrao);
+        setPadding(4, paddingPadrao);
 
     }
 
@@ -817,9 +811,8 @@ private void carregarDadosRelatorios() {
         private Color colorNormal;
         private Color colorHover;
         private Color currentColor;
-        private Image image; // Recebe a imagem já carregada
+        private Image image;
 
-        // Construtor agora recebe a IMAGE, não o caminho String
         public CircleButton(Image img, Color normal, Color hover) {
             this.image = img;
             this.colorNormal = normal;
@@ -846,17 +839,14 @@ private void carregarDadosRelatorios() {
 
             int w = getWidth();
             int h = getHeight();
-            int d = Math.min(w, h); // Diâmetro
+            int d = Math.min(w, h);
             int x = (w - d) / 2;
             int y = (h - d) / 2;
 
-            // 1. Desenha o fundo circular
             g2.setColor(currentColor);
             g2.fillOval(x, y, d, d);
 
-            // 2. Desenha a imagem centralizada
             if (image != null) {
-                // Centraliza a imagem 16x16 no centro do botão
                 int imgX = x + (d - 16) / 2;
                 int imgY = y + (d - 16) / 2;
                 g2.drawImage(image, imgX, imgY, 16, 16, this);
@@ -868,7 +858,6 @@ private void carregarDadosRelatorios() {
 
     class ButtonRenderer extends javax.swing.JPanel implements TableCellRenderer {
 
-        // Cache das imagens para não carregar toda hora
         private Image imgVisualizar;
         private Image imgEditar;
         private Image imgExcluir;
@@ -881,19 +870,15 @@ private void carregarDadosRelatorios() {
             setLayout(new GridBagLayout());
             setOpaque(false);
 
-            // --- CARREGAMENTO ÚNICO DAS IMAGENS ---
             imgVisualizar = carregarImagem("/images/Promote Icon.png");
             imgEditar = carregarImagem("/images/Demote Icon.png");
             imgExcluir = carregarImagem("/images/lixo.png");
         }
 
-        // Método auxiliar seguro para carregar imagem
         private Image carregarImagem(String path) {
             try {
-                // Tenta carregar com o caminho exato
                 java.net.URL url = getClass().getResource(path);
                 if (url == null && path.startsWith("/")) {
-                    // Tenta sem a barra inicial se falhar
                     url = getClass().getResource(path.substring(1));
                 }
                 if (url != null) {
@@ -902,9 +887,8 @@ private void carregarDadosRelatorios() {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return null; // Retorna null se não achar (o botão ficará vazio mas sem erro)
+            return null;
         }
-// Dentro da classe ButtonRenderer (na TelaAdminTable.java)
 
         private Color getCorNormal(String tipo) {
             if (tipo.equalsIgnoreCase("Visualizar")) {
@@ -925,7 +909,6 @@ private void carregarDadosRelatorios() {
             }
             return Color.decode("#4A1A1A");
         }
-        // Método corrigido para a classe ButtonRenderer (na TelaAdminTable.java)
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -936,36 +919,30 @@ private void carregarDadosRelatorios() {
             Image iconeAtual;
             String tipo;
 
-            // Lógica para determinar o tipo de botão (Visualizar, Editar, Excluir)
-            if (column == table.getColumnModel().getColumnIndex("AÇÃO 1")) { // Visualizar
+            if (column == table.getColumnModel().getColumnIndex("AÇÃO 1")) {
                 tipo = "Visualizar";
                 bgNormal = getCorNormal(tipo);
                 bgHover = getCorHover(tipo);
                 iconeAtual = imgVisualizar;
-            } else if (column == table.getColumnModel().getColumnIndex("AÇÃO 2")) { // Editar
+            } else if (column == table.getColumnModel().getColumnIndex("AÇÃO 2")) {
                 tipo = "Editar";
                 bgNormal = getCorNormal(tipo);
                 bgHover = getCorHover(tipo);
                 iconeAtual = imgEditar;
-            } else { // Excluir
+            } else {
                 tipo = "Excluir";
                 bgNormal = getCorNormal(tipo);
                 bgHover = getCorHover(tipo);
                 iconeAtual = imgExcluir;
             }
 
-            // Cria o botão
-            // CircleButton é uma classe que estende JButton e faz o desenho circular (snippet 9)
             button = new CircleButton(iconeAtual, bgNormal, bgHover);
 
-            // >>> CORREÇÃO DO HOVER <<<
-            // Verifica se a célula atual (row, column) é a célula que está sob o mouse
             if (row == TelaAdminTable.this.hoveredRow && column == TelaAdminTable.this.hoveredColumn) {
-                button.setHover(true); // Ativa o estado de hover no CircleButton
+                button.setHover(true);
             } else {
-                button.setHover(false); // Desativa (usa cor normal)
+                button.setHover(false);
             }
-            // >>> FIM DA CORREÇÃO <<<
 
             add(button, new java.awt.GridBagConstraints());
             return this;
@@ -980,32 +957,25 @@ private void carregarDadosRelatorios() {
             Color corFundo = (currentRow % 2 == 0) ? Color.decode("#162842") : Color.decode("#1C2E4A");
             Color corBorda = Color.decode("#2D9CDB");
 
-            int w = getWidth(); // Largura total disponível na célula
+            int w = getWidth();
             int h = getHeight();
             int arc = 20;
             int gapY = 4;
             int drawH = h - gapY;
             int drawY = gapY / 2;
 
-            int xDraw = -arc; // Começa escondido na esquerda
+            int xDraw = -arc;
             int wDraw;
 
             if (isLastColumn) {
-                // --- CORREÇÃO DO PREENCHIMENTO ---
-                // Se for a última coluna, estica até a largura total (w) + a sobra da esquerda
-                // (arc)
-                // O -1 é para garantir que a borda fique dentro do pixel de pintura
                 wDraw = w + arc - 1;
             } else {
-                // Colunas do meio esticam para os dois lados
                 wDraw = w + (arc * 2);
             }
 
-            // 1. Fundo
             g2.setColor(corFundo);
             g2.fillRoundRect(xDraw, drawY, wDraw, drawH, arc, arc);
 
-            // 2. Borda
             g2.setColor(corBorda);
             g2.setStroke(new BasicStroke(1f));
             g2.drawRoundRect(xDraw, drawY, wDraw, drawH, arc, arc);
@@ -1029,15 +999,11 @@ private void carregarDadosRelatorios() {
 
     public class ButtonEditor extends DefaultCellEditor {
 
-        private String tipo; // "Visualizar", "Editar" ou "Excluir"
+        private String tipo;
         private CircleButton button;
         private javax.swing.JPanel panel;
-
-        // Variáveis de estado para o desenho do fundo
         private int currentRow;
         private boolean isLastColumn;
-
-        // Cache de imagens
         private Image imgIcone;
 
         public ButtonEditor(JCheckBox checkBox, String tipo) {
@@ -1049,7 +1015,7 @@ private void carregarDadosRelatorios() {
                 iconPath = "/images/Promote Icon.png";
             } else if (tipo.equalsIgnoreCase("Editar")) {
                 iconPath = "/images/Demote Icon.png";
-            } else { // Excluir
+            } else {
                 iconPath = "/images/lixo.png";
             }
             this.imgIcone = carregarImagem(iconPath);
@@ -1088,19 +1054,14 @@ private void carregarDadosRelatorios() {
             button = new CircleButton(imgIcone, getCorNormal(tipo), getCorHover(tipo));
             button.setPreferredSize(new Dimension(32, 32));
 
-            // --- AQUI ESTÁ A LÓGICA DE CLIQUE ATUALIZADA ---
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    // Para a edição para liberar a tabela
                     fireEditingStopped();
 
-                    // Recupera o ID da linha selecionada (Coluna 0 é o ID)
-                    // Atenção: currentRow é atualizado no getTableCellEditorComponent
                     Object idObj = jTable1.getValueAt(currentRow, 0);
                     int idCliente = Integer.parseInt(idObj.toString());
 
-                    // Encontra o objeto Cliente na lista baseado no ID
                     Cliente clienteSelecionado = null;
                     if (listaClientes != null) {
                         for (Cliente c : listaClientes) {
@@ -1115,7 +1076,6 @@ private void carregarDadosRelatorios() {
                         return;
                     }
 
-                    // Redireciona para a ação correta
                     if (tipo.equalsIgnoreCase("Visualizar")) {
                         new TelaVisualizarCliente(TelaAdminTable.this, usuarioLogado, clienteSelecionado)
                                 .setVisible(true);
@@ -1124,7 +1084,6 @@ private void carregarDadosRelatorios() {
                         TelaEditarCliente telaEdit = new TelaEditarCliente(TelaAdminTable.this, usuarioLogado,
                                 clienteSelecionado);
                         telaEdit.setVisible(true);
-                        // Se salvou, recarrega a tabela
                         if (telaEdit.isSalvou()) {
                             carregarClientesAssincrono();
                         }
@@ -1133,7 +1092,6 @@ private void carregarDadosRelatorios() {
                         PopupExclusao popup = new PopupExclusao(TelaAdminTable.this, usuarioLogado,
                                 clienteSelecionado);
                         popup.setVisible(true);
-                        // Se excluiu, recarrega a tabela
                         if (popup.isExcluiu()) {
                             carregarClientesAssincrono();
                         }
@@ -1224,7 +1182,7 @@ private void carregarDadosRelatorios() {
             this.backgroundColor = bgColor;
             this.borderColor = bdColor;
             this.borderThickness = bdThickness;
-            setOpaque(false); // Permite ver a forma arredondada
+            setOpaque(false);
         }
 
         @Override
@@ -1237,19 +1195,13 @@ private void carregarDadosRelatorios() {
             int thickness = borderThickness;
             int radius = cornerRadius;
 
-            // 1. Preenche o fundo (interno)
             g2.setColor(backgroundColor);
             g2.fillRoundRect(thickness, thickness, width - (thickness * 2), height - (thickness * 2), radius, radius);
-
-            // 2. Desenha a borda (externa)
             g2.setStroke(new java.awt.BasicStroke(thickness));
             g2.setColor(borderColor);
-            // Ajusta a área de desenho da borda para que o traço fique centrado na linha
             g2.drawRoundRect(thickness / 2, thickness / 2, width - thickness, height - thickness, radius, radius);
-
             g2.dispose();
 
-            // Desenha os componentes filhos por cima
             super.paintComponent(g);
         }
     }
@@ -1319,10 +1271,10 @@ private void carregarDadosRelatorios() {
         lblStatus = new javax.swing.JLabel();
         lblNome = new javax.swing.JLabel();
         lblID = new javax.swing.JLabel();
-        java.awt.Color COR_FUNDO = java.awt.Color.decode("#162842"); // Fundo: #162842
-        java.awt.Color COR_BORDA = java.awt.Color.decode("#2A3E61"); // Borda: #2A3E61
-        int RAIO_BORDA = 30; // Raio dos cantos (ajuste se precisar)
-        int ESPESSURA_BORDA = 3; // Espessura da borda em pixels
+        java.awt.Color COR_FUNDO = java.awt.Color.decode("#162842");
+        java.awt.Color COR_BORDA = java.awt.Color.decode("#2A3E61");
+        int RAIO_BORDA = 30;
+        int ESPESSURA_BORDA = 3;
 
         JPanelBackground = new PanelArredondadoComBorda(RAIO_BORDA, COR_FUNDO, COR_BORDA, ESPESSURA_BORDA);
         lblPesquisarIcone = new javax.swing.JLabel();
@@ -1684,37 +1636,23 @@ private void carregarDadosRelatorios() {
 
             @Override
             public void mouseDragged(java.awt.event.MouseEvent e) {
-                // Verifica se o ponto inicial foi registrado (o usuário clicou e está
-                // arrastando)
                 if (pontoInicial == null) {
                     return;
                 }
 
-                // 1. Pega o Viewport (a "janela" de visualização) do JScrollPane
                 javax.swing.JViewport viewPort = jScrollPane1.getViewport();
-
-                // 2. Pega a posição atual da tabela dentro do Viewport
                 java.awt.Point viewPoint = viewPort.getViewPosition();
-
-                // 3. Calcula o deslocamento (quanto o mouse se moveu)
-                // O ponto inicial menos o ponto atual inverte a direção, fazendo o conteúdo se
-                // mover
-                // na direção oposta ao arraste, como se estivesse puxando
                 int deltaX = pontoInicial.x - e.getX();
                 int deltaY = pontoInicial.y - e.getY();
 
-                // 4. Atualiza a posição de visualização
                 viewPoint.x += deltaX;
                 viewPoint.y += deltaY;
 
-                // 5. Limita a nova posição para que não ultrapasse o topo/fim do conteúdo
                 int maxX = jTable1.getWidth() - viewPort.getWidth();
                 int maxY = jTable1.getHeight() - viewPort.getHeight();
 
                 viewPoint.x = Math.max(0, Math.min(viewPoint.x, maxX));
                 viewPoint.y = Math.max(0, Math.min(viewPoint.y, maxY));
-
-                // 6. Define a nova posição, o que causa a rolagem
                 viewPort.setViewPosition(viewPoint);
             }
         });
@@ -1728,7 +1666,6 @@ private void carregarDadosRelatorios() {
 
             @Override
             public void mousePressed(java.awt.event.MouseEvent e) {
-                // Armazena a posição inicial do clique do mouse dentro da tabela
                 pontoInicial = e.getPoint();
             }
         });
@@ -1906,7 +1843,7 @@ private void carregarDadosRelatorios() {
     }// GEN-LAST:event_btnCalendarioActionPerformed
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnClientesActionPerformed
-        new TelaAdminTable(usuarioLogado).setVisible(true);
+        new TelaClienteTable(usuarioLogado).setVisible(true);
         this.dispose();
     }// GEN-LAST:event_btnClientesActionPerformed
 

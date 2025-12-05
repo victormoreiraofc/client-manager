@@ -10,7 +10,7 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
-import Data.IconUtil; // Adicionado para carregar o ícone
+import Data.IconUtil;
 
 public class TelaVisualizarCliente extends JDialog {
 
@@ -25,7 +25,6 @@ public class TelaVisualizarCliente extends JDialog {
         this.usuarioLogado = usuario;
         this.clienteVisualizar = cliente;
 
-        // Altura reduzida para 570 (para remover o buraco dos botões)
         setSize(900, 570);
         setLocationRelativeTo(parent);
         setUndecorated(true);
@@ -44,7 +43,6 @@ public class TelaVisualizarCliente extends JDialog {
     }
 
     private void inicializarUI() {
-        // --- PAINEL PRINCIPAL ---
         JPanel panel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -67,12 +65,10 @@ public class TelaVisualizarCliente extends JDialog {
         int paddingHorizontal = 25;
         int paddingVerticalLabel = 6;
 
-        // --- ROW 0: Título e Fechar ---
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridwidth = 2;
         gbc.weightx = 1;
-        // CORREÇÃO DE POSICIONAMENTO: Margem da direita igual à da esquerda (25)
         gbc.insets = new Insets(5, paddingHorizontal, 8, paddingHorizontal);
         gbc.gridy = 0;
 
@@ -98,7 +94,6 @@ public class TelaVisualizarCliente extends JDialog {
 
         panel.add(headerPanel, gbc);
 
-        // --- ROW 1: Nome Completo ---
         gbc.gridwidth = 2;
         gbc.insets = new Insets(paddingVerticalLabel, paddingHorizontal, 2, paddingHorizontal);
         gbc.gridy = 1;
@@ -108,7 +103,6 @@ public class TelaVisualizarCliente extends JDialog {
         gbc.gridy++;
         panel.add(criarCampoTextoLeitura(clienteVisualizar.getNome()), gbc);
 
-        // --- ROW 2: Serviço ---
         gbc.insets = new Insets(paddingVerticalLabel, paddingHorizontal, 2, paddingHorizontal);
         gbc.gridy++;
         panel.add(createLabel("Serviço"), gbc);
@@ -117,37 +111,30 @@ public class TelaVisualizarCliente extends JDialog {
         gbc.gridy++;
         panel.add(criarCampoTextoLeitura(clienteVisualizar.getServico()), gbc);
 
-        // --- ROW 3: Tipo de Pessoa (Col 0) e Situação (Col 1) ---
         gbc.gridy++;
         gbc.gridwidth = 1;
 
-        // Label Tipo
         gbc.gridx = 0;
         gbc.insets = new Insets(paddingVerticalLabel, paddingHorizontal, 2, 10);
         panel.add(createLabel("Tipo de Pessoa"), gbc);
 
-        // Label Situação
         gbc.gridx = 1;
         gbc.insets = new Insets(paddingVerticalLabel, 10, 2, paddingHorizontal);
         panel.add(createLabel("Situação do Serviço"), gbc);
 
         gbc.gridy++;
 
-        // Campo Tipo
         gbc.gridx = 0;
         gbc.insets = new Insets(2, paddingHorizontal, 5, 10);
         panel.add(criarCampoTextoLeitura(clienteVisualizar.getTipoPessoa()), gbc);
 
-        // Campo Situação
         gbc.gridx = 1;
         gbc.insets = new Insets(2, 10, 5, paddingHorizontal);
         panel.add(criarCampoTextoLeitura(clienteVisualizar.getSituacaoServico()), gbc);
 
-        // Volta width 2
         gbc.gridwidth = 2;
         gbc.gridx = 0;
 
-        // --- ROW 4: Email ---
         gbc.insets = new Insets(4, paddingHorizontal, 2, paddingHorizontal);
         gbc.gridy++;
         panel.add(createLabel("Email"), gbc);
@@ -156,7 +143,6 @@ public class TelaVisualizarCliente extends JDialog {
         gbc.gridy++;
         panel.add(criarCampoTextoLeitura(clienteVisualizar.getEmail()), gbc);
 
-        // --- ROW 5: Telefone ---
         gbc.insets = new Insets(4, paddingHorizontal, 2, paddingHorizontal);
         gbc.gridy++;
         panel.add(createLabel("Telefone"), gbc);
@@ -165,7 +151,6 @@ public class TelaVisualizarCliente extends JDialog {
         gbc.gridy++;
         panel.add(criarCampoTextoLeitura(clienteVisualizar.getTelefone()), gbc);
 
-        // --- ROW 6: Celular ---
         gbc.insets = new Insets(4, paddingHorizontal, 2, paddingHorizontal);
         gbc.gridy++;
         panel.add(createLabel("Celular"), gbc);
@@ -174,7 +159,6 @@ public class TelaVisualizarCliente extends JDialog {
         gbc.gridy++;
         panel.add(criarCampoTextoLeitura(clienteVisualizar.getCelular()), gbc);
 
-        // --- ROW 7: Observações ---
         gbc.insets = new Insets(4, paddingHorizontal, 2, paddingHorizontal);
         gbc.gridy++;
         panel.add(createLabel("Observações"), gbc);
@@ -189,7 +173,6 @@ public class TelaVisualizarCliente extends JDialog {
         scrollObs.getViewport().setOpaque(false);
         panel.add(scrollObs, gbc);
 
-        // Apenas o ESC fecha
         panel.registerKeyboardAction(e -> dispose(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_IN_FOCUSED_WINDOW);
     }
 
@@ -238,7 +221,6 @@ public class TelaVisualizarCliente extends JDialog {
         return btnClose;
     }
 
-    // --- Helpers de UI (Inalterados) ---
     private JLabel createLabel(String text) {
         JLabel l = new JLabel(text);
         l.setForeground(new Color(168, 178, 195));
@@ -274,7 +256,6 @@ public class TelaVisualizarCliente extends JDialog {
         return t;
     }
 
-    // --- Blur Helpers (Inalterados) ---
     private void aplicarEfeitoDesfoqueFundo() {
         if (parentFrame != null) {
             glassPaneOriginal = parentFrame.getGlassPane();

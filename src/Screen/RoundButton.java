@@ -1,4 +1,4 @@
-package Screen; // coloque seu package correto
+package Screen;
 
 import java.awt.*;
 import javax.swing.*;
@@ -17,7 +17,6 @@ public class RoundButton extends JButton {
         setBorderPainted(false);
         setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        // Hover listener
         addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -37,16 +36,11 @@ public class RoundButton extends JButton {
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-        // Cores
         g2.setColor(hovering ? hoverColor : fillColor);
         g2.fillOval(0, 0, getWidth()-1, getHeight()-1);
-
-        // Borda
         g2.setStroke(new BasicStroke(2));
         g2.setColor(borderColor);
         g2.drawOval(1, 1, getWidth()-3, getHeight()-3);
-
         super.paintComponent(g);  
         g2.dispose();
     }
