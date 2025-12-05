@@ -1,6 +1,8 @@
 package Data;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Date;
 
 public class Usuario implements Serializable {
 
@@ -9,6 +11,7 @@ public class Usuario implements Serializable {
     private String email;
     private String senha;
     private String permissao;
+    private Date created_at;
     private byte[] imagem;
 
     public Usuario() {
@@ -60,6 +63,14 @@ public class Usuario implements Serializable {
 
     public void setImagem(byte[] imagem) {
         this.imagem = imagem;
+    }
+
+    public Date getCreatedAt() {
+        return created_at;
+    }
+
+    public void setCreatedAt(Date created_at) {
+        this.created_at = created_at;
     }
 
 }

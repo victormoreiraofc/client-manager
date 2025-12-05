@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.List;
 import java.util.ArrayList;
+import Data.Usuario;
+import java.util.Date;
 
 public class CTCONTAB {
 
@@ -207,8 +209,8 @@ public class CTCONTAB {
     }
 
     public static void registrarRelatorio(Relatorio relatorio) throws ClassNotFoundException, SQLException {
-        String sql = "INSERT INTO relatorio (NomeRelatorio, Descrição, StatusRelatorio, DataCadastro) "
-                + "VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO relatorio (NomeRelatorio, Descrição, StatusRelatorio, DataCadastro, usuario) "
+                + "VALUES (?, ?, ?, ?, ?)"; // Adicionado um '?' a mais
 
         conectado = conectar();
         PreparedStatement st = conectado.prepareStatement(sql);
@@ -216,6 +218,7 @@ public class CTCONTAB {
         st.setString(2, relatorio.getDescricao());
         st.setString(3, relatorio.getStatusRelatorio());
         st.setString(4, relatorio.getDataCadastro());
+        st.setString(5, relatorio.getUsuario()); // <-- Assumindo que a classe Relatorio tem getUsuario()
 
         st.executeUpdate();
     }
@@ -638,6 +641,159 @@ public class CTCONTAB {
         if (resultado.next()) {
             // Retorna o nome de usuário (login)
             funcionarioNome = resultado.getString("Usuario");
+        }
+        return funcionarioNome;
+    }
+
+// NOVO: Funcionário que mais registrou clientes no mês (lblFuncionarioDoMesNome)
+    public static String funcionarioMaisRelatoriosDoMes() throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        // A coluna 'Usuario' na tabela cliente é a chave estrangeira para o usuário cadastrante
+        String sql = "SELECT Usuario, COUNT(*) AS total_relatorio "
+                + "FROM relatorio "
+                + "WHERE MONTH(DataCadastro) = MONTH(CURRENT_DATE()) AND YEAR(DataCadastro) = YEAR(CURRENT_DATE()) "
+                + "GROUP BY Usuario "
+                + "ORDER BY total_relatorio DESC "
+                + "LIMIT 1";
+
+        PreparedStatement st = conectado.prepareStatement(sql);
+        ResultSet resultado = st.executeQuery();
+
+        String funcionarioNome = "N/A";
+        if (resultado.next()) {
+            funcionarioNome = resultado.getString("Usuario");
+        }
+        return funcionarioNome;
+    }
+
+    public static List<Usuario> getAllUsuarios() throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        String sql = "SELECT id, usuario, email, Permissao, created_at FROM usuarios ORDER BY id";
+        PreparedStatement st = conectado.prepareStatement(sql);
+        ResultSet resultado = st.executeQuery();
+
+        List<Usuario> usuarios = new ArrayList<>();
+        while (resultado.next()) {
+            Usuario user = new Usuario();
+            user.setId(resultado.getInt("id"));
+            user.setUsuario(resultado.getString("usuario"));
+            user.setEmail(resultado.getString("email"));
+            user.setPermissao(resultado.getString("Permissao"));
+
+            java.sql.Timestamp timestamp = resultado.getTimestamp("created_at");
+
+            if (timestamp != null) {
+                user.setCreatedAt(new Date(timestamp.getTime()));
+            } else {
+                user.setCreatedAt(null);
+            }
+
+            usuarios.add(user);
+        }
+        return usuarios;
+    }
+
+    public static boolean updatePermissaoUsuario(int userId, String novaPermissao) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        String sql = "UPDATE usuarios SET Permissao = ? WHERE id = ?";
+        PreparedStatement st = conectado.prepareStatement(sql);
+        st.setString(1, novaPermissao);
+        st.setInt(2, userId);
+        int linhasAfetadas = st.executeUpdate();
+        return linhasAfetadas > 0;
+    }
+
+    public static boolean deleteUsuario(int userId) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+
+        String sql = "DELETE FROM usuarios WHERE id = ?";
+        PreparedStatement st = conectado.prepareStatement(sql);
+        st.setInt(1, userId);
+        int linhasAfetadas = st.executeUpdate();
+        return linhasAfetadas > 0;
+    }
+
+    public static int tarefaTotalRegis() throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) AS total FROM tarefa");
+        ResultSet resultado = st.executeQuery();
+
+        int total = 0;
+        if (resultado.next()) {
+            total = resultado.getInt("total");
+        }
+
+        return total;
+    }
+
+    public static String ultimoUsuarioRegistrado() throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        String sql = "SELECT usuario FROM usuarios ORDER BY created_at DESC LIMIT 1";
+
+        PreparedStatement st = conectado.prepareStatement(sql);
+        ResultSet resultado = st.executeQuery();
+
+        String usuarioNome = "N/A";
+        if (resultado.next()) {
+            usuarioNome = resultado.getString("usuario");
+        }
+        return usuarioNome;
+    }
+
+    // Total de Relatórios Registrados (Usado para "Relatórios Novos")
+    public static int totalRelatoriosRegistrados() throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) AS total FROM relatorio");
+        ResultSet resultado = st.executeQuery();
+        int total = 0;
+        if (resultado.next()) {
+            total = resultado.getInt("total");
+        }
+        return total;
+    }
+
+// Total de Relatórios Pendentes
+    public static int relatoriosPendentes() throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) AS total FROM relatorio WHERE StatusRelatorio = 'Pendente'");
+        ResultSet resultado = st.executeQuery();
+        int total = 0;
+        if (resultado.next()) {
+            total = resultado.getInt("total");
+        }
+        return total;
+    }
+
+// Total de Relatórios Concluídos
+    public static int relatoriosConcluidos() throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) AS total FROM relatorio WHERE StatusRelatorio = 'Concluido'");
+        ResultSet resultado = st.executeQuery();
+        int total = 0;
+        if (resultado.next()) {
+            total = resultado.getInt("total");
+        }
+        return total;
+    }
+
+// NOVO: Funcionário que mais registrou Relatórios no Mês
+    public static String funcionarioRelatorDoMes() throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+
+        // ATENÇÃO: A coluna 'usuario' deve existir na tabela 'relatorio' para esta consulta funcionar.
+        String sql = "SELECT usuario, COUNT(*) AS total_relatorios "
+                + "FROM relatorio "
+                + "WHERE MONTH(DataCadastro) = MONTH(CURRENT_DATE()) AND YEAR(DataCadastro) = YEAR(CURRENT_DATE()) "
+                + "GROUP BY usuario "
+                + "ORDER BY total_relatorios DESC "
+                + "LIMIT 1";
+
+        PreparedStatement st = conectado.prepareStatement(sql);
+        ResultSet resultado = st.executeQuery();
+
+        String funcionarioNome = "N/A";
+        if (resultado.next()) {
+            funcionarioNome = resultado.getString("usuario");
         }
         return funcionarioNome;
     }

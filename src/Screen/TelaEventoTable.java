@@ -831,7 +831,6 @@ public class TelaEventoTable extends javax.swing.JFrame {
         btnEventoCriar.setVisible(true);
         btnPassado.setVisible(true);
         btnFuturo.setVisible(true);
-        this.dispose();
     }//GEN-LAST:event_btnCriarEventoActionPerformed
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed

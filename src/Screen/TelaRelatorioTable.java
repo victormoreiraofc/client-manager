@@ -1,40 +1,25 @@
 package screen;
 
-import Data.Cliente;
 import Data.CTCONTAB;
 import Data.IconUtil;
 import Data.PermissaoUtil;
 import Data.Relatorio;
 import Data.Usuario;
 import Screen.FonteUtils;
-import Screen.MensagemUtil;
-import java.awt.BasicStroke;
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
 import javax.swing.BorderFactory;
-import javax.swing.DefaultCellEditor;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
@@ -42,29 +27,16 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
 import javax.swing.ImageIcon;
-import javax.swing.SwingUtilities;
-import javax.swing.border.Border;
-import javax.swing.table.TableColumn;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -72,16 +44,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagLayout;
 import java.awt.RenderingHints;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 import java.sql.SQLException;
 
-import javax.swing.SwingUtilities;
-import Screen.TelaVisualizarCliente; // Exemplo caso o pacote varie
-import Screen.TelaEditarCliente;
-import Screen.PopupExclusao;
 
 public class TelaRelatorioTable extends javax.swing.JFrame {
 
@@ -103,8 +70,8 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         exibirMensagemCarregando();
         carregarRelatoriosAssincrono();
         adicionarListenerDeBusca();
+        carregarDadosRelatoriosDaTela();
         aplicarPaddingNasColunas();
-        carregarDadosRelatorios();
         setUndecorated(true);
         PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
         IconUtil.setIcon(usuarioLogado, lblUserIcon);
@@ -244,15 +211,15 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         }
 
         try {
-            java.net.URL url = getClass().getResource("/images/Client Icon Active.png");
+            java.net.URL url = getClass().getResource("/images/Client Icon.png");
             if (url == null) {
                 System.err.println(
-                        "Imagem não encontrada. Verifique: /images/Client Icon Active.png ou src/images/Client Icon Active.png");
+                        "Imagem não encontrada. Verifique: /images/Client Icon.png ou src/images/Client Icon.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
                 btnClientes.setIcon(new javax.swing.ImageIcon(img));
-                aplicarHoverIcon(btnClientes, "/images/Client Icon Active.png", "/images/Client Icon Hover.png", 22,
+                aplicarHoverIcon(btnClientes, "/images/Client Icon.png", "/images/Client Icon Hover.png", 22,
                         22);
             }
         } catch (Exception ex) {
@@ -291,15 +258,15 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         }
 
         try {
-            java.net.URL url = getClass().getResource("/images/Report Icon.png");
+            java.net.URL url = getClass().getResource("/images/Report Icon Active.png");
             if (url == null) {
                 System.err.println(
-                        "Imagem não encontrada. Verifique: /images/Report Icon.png ou src/images/Report Icon.png");
+                        "Imagem não encontrada. Verifique: /images/Report Icon Active.png ou src/images/Report Icon.png");
             } else {
                 java.awt.Image img = javax.imageio.ImageIO.read(url)
                         .getScaledInstance(22, 22, java.awt.Image.SCALE_SMOOTH);
                 btnRelatorios.setIcon(new javax.swing.ImageIcon(img));
-                aplicarHoverIcon(btnRelatorios, "/images/Report Icon.png", "/images/Report Icon  Hover.png", 22, 22);
+                aplicarHoverIcon(btnRelatorios, "/images/Report Icon Active.png", "/images/Report Icon  Hover.png", 22, 22);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -424,28 +391,28 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
 
         jTable1.addMouseMotionListener(
                 new java.awt.event.MouseMotionAdapter() {
-                    @Override
-                    public void mouseMoved(java.awt.event.MouseEvent e) {
-                        int row = jTable1.rowAtPoint(e.getPoint());
-                        int col = jTable1.columnAtPoint(e.getPoint());
+            @Override
+            public void mouseMoved(java.awt.event.MouseEvent e) {
+                int row = jTable1.rowAtPoint(e.getPoint());
+                int col = jTable1.columnAtPoint(e.getPoint());
 
-                        if (row != hoveredRow || col != hoveredColumn) {
-                            hoveredRow = row;
-                            hoveredColumn = col;
-                            jTable1.repaint();
-                        }
-                    }
-                });
+                if (row != hoveredRow || col != hoveredColumn) {
+                    hoveredRow = row;
+                    hoveredColumn = col;
+                    jTable1.repaint();
+                }
+            }
+        });
 
         jTable1.addMouseListener(
                 new java.awt.event.MouseAdapter() {
-                    @Override
-                    public void mouseExited(java.awt.event.MouseEvent e) {
-                        hoveredRow = -1;
-                        hoveredColumn = -1;
-                        jTable1.repaint();
-                    }
-                });
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent e) {
+                hoveredRow = -1;
+                hoveredColumn = -1;
+                jTable1.repaint();
+            }
+        });
     }
 
     private void setIcon() {
@@ -560,33 +527,29 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         }
     }
 
-    // Coloque este método antes ou depois do construtor, mas dentro da classe
-    // TelaClienteTable
-    private void carregarDadosRelatorios() {
-        // 1. Configuração de Formato: Usa o padrão brasileiro (ponto para milhar,
-        // vírgula para decimal)
-        // para formatar números grandes (ex: 1.000, 10.000).
+    private void carregarDadosRelatoriosDaTela() {
+        // 1. Configuração de Formato: Padrão brasileiro
         DecimalFormatSymbols symbols = new DecimalFormatSymbols(new Locale("pt", "BR"));
         symbols.setGroupingSeparator('.');
         symbols.setDecimalSeparator(',');
-        DecimalFormat df = new DecimalFormat("#,##0.000", symbols);
+         DecimalFormat df = new DecimalFormat("#,##0.000", symbols);
 
         try {
-            double novos = (double) Data.CTCONTAB.novosclientesdomes() / 1000.0;
-            lblRelatorioNovoNumero.setText(df.format(novos));
+            double totalGeral = (double) Data.CTCONTAB.totalRelatoriosRegistrados() / 1000.0;
+            lblRelatorioNovoNumero.setText(df.format(totalGeral));
 
-            double pendentes = (double) Data.CTCONTAB.clientesPendentesDoMes() / 1000.0;
+             double pendentes = (double) Data.CTCONTAB.relatoriosPendentes() / 1000.0;
             lblRelatorioPendenteNumero.setText(df.format(pendentes));
 
-            double concluidos = (double) Data.CTCONTAB.clientesConcluidosDoMes() / 1000.0;
+             double concluidos = (double) Data.CTCONTAB.relatoriosConcluidos() / 1000.0;
             lblRelatorioConcluidoNumero.setText(df.format(concluidos));
 
-            String funcionario = Data.CTCONTAB.funcionarioMaisClientesDoMes();
+            String relator = CTCONTAB.funcionarioRelatorDoMes();
 
-            if (funcionario.equals("N/A")) {
-                lblFuncionarioDoMesNome.setText("Nenhum registro");
+            if (relator.equals("N/A") || relator.isEmpty()) {
+                lblFuncionarioDoMesNome.setText("Nenhum Relator");
             } else {
-                lblFuncionarioDoMesNome.setText(funcionario);
+                lblFuncionarioDoMesNome.setText(relator);
             }
 
         } catch (ClassNotFoundException | SQLException e) {
@@ -622,7 +585,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
     private void exibirMensagemCarregando() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-        model.addRow(new Object[] { "Carregando...", "", "", "" });
+        model.addRow(new Object[]{"Carregando...", "", "", ""});
     }
 
     private void carregarRelatoriosAssincrono() {
@@ -649,7 +612,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
     private void exibirMensagemErro() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
-        model.addRow(new Object[] { "Erro ao carregar dados.", "", "", "" });
+        model.addRow(new Object[]{"Erro ao carregar dados.", "", "", ""});
     }
 
     public class TableRender extends DefaultTableCellRenderer {
@@ -785,7 +748,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
 
         int xDoTituloID = 20; // Exemplo: Onde começa o label "ID"
         int xDoTituloNome = 100; // Exemplo: Onde começa o label "NOME"
-        int xDoTituloStatus = 400; // Exemplo: Onde começa o label "STATUS"
+        int xDoTituloStatus = 480; // Exemplo: Onde começa o label "STATUS"
         int xDoTituloData = 680; // Exemplo: Onde começa o label "DATA DE CADASTRO"
         int xDoTituloAcoes = 1030;
 
@@ -836,14 +799,15 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
                 dataFormatada = "Data inválida";
             }
 
-            model.addRow(new Object[] {
-                    relatorio.getId(),
-                    relatorio.getNomeRelatorio(),
-                    relatorio.getStatusRelatorio(),
-                    dataFormatada,
-                    "Visualizar",
-                    "Editar",
-                    "Excluir"
+            model.addRow(new Object[]{
+                relatorio.getId(),
+                relatorio.getNomeRelatorio(),
+                relatorio.getStatusRelatorio(),
+                dataFormatada,
+                "",
+                "Visualizar",
+                "Editar",
+                "Excluir"
             });
         }
     }
@@ -936,24 +900,21 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
             imgExcluir = carregarImagem("/images/lixo.png");
         }
 
-        // Método auxiliar seguro para carregar imagem
         private Image carregarImagem(String path) {
             try {
-                // Tenta carregar com o caminho exato
                 java.net.URL url = getClass().getResource(path);
                 if (url == null && path.startsWith("/")) {
-                    // Tenta sem a barra inicial se falhar
                     url = getClass().getResource(path.substring(1));
                 }
                 if (url != null) {
                     return new ImageIcon(url).getImage();
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                // Isso é importante! Se der erro, ele imprime uma mensagem.
+                System.err.println("Erro ao carregar imagem para ButtonRenderer: " + path + " - " + e.getMessage());
             }
-            return null; // Retorna null se não achar (o botão ficará vazio mas sem erro)
+            return null; // Retorna null se não carregar
         }
-        // Dentro da classe ButtonRenderer (na TelaClienteTable.java)
 
         private Color getCorNormal(String tipo) {
             if (tipo.equalsIgnoreCase("Visualizar")) {
@@ -977,8 +938,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         // Método corrigido para a classe ButtonRenderer (na TelaClienteTable.java)
 
         @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-                int row, int column) {
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             removeAll();
             this.currentRow = row;
             this.isLastColumn = (column == table.getColumnCount() - 1);
@@ -1005,8 +965,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
             }
 
             // Cria o botão
-            // CircleButton é uma classe que estende JButton e faz o desenho circular
-            // (snippet 9)
+            // CircleButton é uma classe que estende JButton e faz o desenho circular (snippet 9)
             button = new CircleButton(iconeAtual, bgNormal, bgHover);
 
             // >>> CORREÇÃO DO HOVER <<<
@@ -1144,7 +1103,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // Para a edição para liberar a tabela
-                    fireEditingStopped();
+                    //fireEditingStopped();
 
                     // Recupera o ID da linha selecionada (Coluna 0 é o ID)
                     // Atenção: currentRow é atualizado no getTableCellEditorComponent
@@ -1170,7 +1129,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
                     if (tipo.equalsIgnoreCase("Visualizar")) {
                         // new TelaVisualizarCliente(TelaClienteTable.this, usuarioLogado,
                         // clienteSelecionado)
-                        // .setVisible(true);
+                        //.setVisible(true);
 
                     } else if (tipo.equalsIgnoreCase("Editar")) {
                         // TelaEditarCliente telaEdit = new TelaEditarCliente(TelaClienteTable.this,
@@ -1773,7 +1732,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
 
         lblTituloPagina.setForeground(new java.awt.Color(255, 255, 255));
         lblTituloPagina.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTituloPagina.setText("CLIENTES");
+        lblTituloPagina.setText("RELATÓRIOS");
         lblTituloPagina.setFont(FonteUtils.carregarRoboto(13f));
         getContentPane().add(lblTituloPagina);
         lblTituloPagina.setBounds(0, 3, 1440, 20);
@@ -1886,6 +1845,60 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnMinimizarTelaMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnMinimizarTelaMouseClicked
+        setState(javax.swing.JFrame.ICONIFIED);
+    }// GEN-LAST:event_btnMinimizarTelaMouseClicked
+
+    private void lblBarraSuperiorMousePressed(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblBarraSuperiorMousePressed
+        mouseX = evt.getX();
+        mouseY = evt.getY();
+    }// GEN-LAST:event_lblBarraSuperiorMousePressed
+
+    private void lblBarraSuperiorMouseDragged(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblBarraSuperiorMouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        setLocation(x - mouseX, y - mouseY);
+    }// GEN-LAST:event_lblBarraSuperiorMouseDragged
+
+    private void btnFecharTelaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnFecharTelaActionPerformed
+        System.exit(0);
+    }// GEN-LAST:event_btnFecharTelaActionPerformed
+
+    private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnDashboardActionPerformed
+        new TelaMenu(usuarioLogado).setVisible(true);
+        this.dispose();
+    }// GEN-LAST:event_btnDashboardActionPerformed
+
+    private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnCalendarioActionPerformed
+        new TelaEventoTable(usuarioLogado).setVisible(true);
+        this.dispose();
+    }// GEN-LAST:event_btnCalendarioActionPerformed
+
+    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnClientesActionPerformed
+        new TelaClienteTable(usuarioLogado).setVisible(true);
+        this.dispose();
+    }// GEN-LAST:event_btnClientesActionPerformed
+
+    private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnRelatoriosActionPerformed
+        new TelaRelatorioTable(usuarioLogado).setVisible(true);
+        this.dispose();
+    }// GEN-LAST:event_btnRelatoriosActionPerformed
+
+    private void btnTarefasActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnTarefasActionPerformed
+        new TelaTarefaTable(usuarioLogado).setVisible(true);
+        this.dispose();
+    }// GEN-LAST:event_btnTarefasActionPerformed
+
+    private void btnConfiguracoesActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnConfiguracoesActionPerformed
+        new TelaConfiguracao(usuarioLogado).setVisible(true);
+        this.dispose();
+    }// GEN-LAST:event_btnConfiguracoesActionPerformed
+
+    private void btnAdministracaoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAdministracaoActionPerformed
+        new TelaAdminTable(usuarioLogado).setVisible(true);
+        this.dispose();
+    }// GEN-LAST:event_btnAdministracaoActionPerformed
+
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnCadastrarActionPerformed
         // TODO add your handling code here:
     }// GEN-LAST:event_btnCadastrarActionPerformed
@@ -1893,18 +1906,6 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
     private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnInfoActionPerformed
         // TODO add your handling code here:
     }// GEN-LAST:event_btnInfoActionPerformed
-
-    private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnCalendarioActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_btnCalendarioActionPerformed
-
-    private void btnConfiguracoesActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnConfiguracoesActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_btnConfiguracoesActionPerformed
-
-    private void btnMinimizarTelaMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnMinimizarTelaMouseClicked
-        // TODO add your handling code here:
-    }// GEN-LAST:event_btnMinimizarTelaMouseClicked
 
     private void btnMinimizarTelaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnMinimizarTelaActionPerformed
         // TODO add your handling code here:
@@ -1917,38 +1918,6 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
     private void btnUserIconActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnUserIconActionPerformed
         // TODO add your handling code here:
     }// GEN-LAST:event_btnUserIconActionPerformed
-
-    private void btnTarefasActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnTarefasActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_btnTarefasActionPerformed
-
-    private void btnAdministracaoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAdministracaoActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_btnAdministracaoActionPerformed
-
-    private void btnFecharTelaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnFecharTelaActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_btnFecharTelaActionPerformed
-
-    private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnDashboardActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_btnDashboardActionPerformed
-
-    private void btnRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnRelatoriosActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_btnRelatoriosActionPerformed
-
-    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnClientesActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_btnClientesActionPerformed
-
-    private void lblBarraSuperiorMouseDragged(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblBarraSuperiorMouseDragged
-        // TODO add your handling code here:
-    }// GEN-LAST:event_lblBarraSuperiorMouseDragged
-
-    private void lblBarraSuperiorMousePressed(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_lblBarraSuperiorMousePressed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_lblBarraSuperiorMousePressed
 
     private void txtLoginActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_txtLoginActionPerformed
         // TODO add your handling code here:

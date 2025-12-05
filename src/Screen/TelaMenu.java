@@ -30,8 +30,6 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-
-
 public class TelaMenu extends javax.swing.JFrame {
 
     private Usuario usuarioLogado;
@@ -42,40 +40,29 @@ public class TelaMenu extends javax.swing.JFrame {
     public TelaMenu(Usuario usuario) {
         this.usuarioLogado = usuario;
         initComponents();
- // ===============================
-//   MINI GRÁFICOS DOS 6 CARDS
-// ===============================
+        ChartPanel g1 = criarMiniGrafico(new Color(0, 200, 255), "Clientes Mensais");
+        g1.setOpaque(false);
+        jPanelBackground.add(g1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 172, 86));
 
-// CLIENTES MENSAIS (jPanelBackground)
-ChartPanel g1 = criarMiniGrafico(new Color(0, 200, 255), "Clientes Mensais");
-g1.setOpaque(false);
-jPanelBackground.add(g1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 172, 86));
+        ChartPanel g2 = criarMiniGrafico(new Color(0, 150, 255), "Total de Clientes");
+        g2.setOpaque(false);
+        jPanelBackground1.add(g2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 172, 86));
 
-// TOTAL DE CLIENTES (jPanelBackground1)
-ChartPanel g2 = criarMiniGrafico(new Color(0, 150, 255), "Total de Clientes");
-g2.setOpaque(false);
-jPanelBackground1.add(g2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 172, 86));
+        ChartPanel g3 = criarMiniGrafico(new Color(255, 180, 0), "Tarefas Pendentes");
+        g3.setOpaque(false);
+        jPanelBackground2.add(g3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 172, 86));
 
-// TAREFAS PENDENTES (jPanelBackground2)
-ChartPanel g3 = criarMiniGrafico(new Color(255, 180, 0), "Tarefas Pendentes");
-g3.setOpaque(false);
-jPanelBackground2.add(g3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 172, 86));
+        ChartPanel g4 = criarMiniGrafico(new Color(180, 100, 255), "Total de Relatórios");
+        g4.setOpaque(false);
+        jPanelBackground3.add(g4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 172, 86));
 
-// TOTAL DE RELATÓRIOS (jPanelBackground3)
-ChartPanel g4 = criarMiniGrafico(new Color(180, 100, 255), "Total de Relatórios");
-g4.setOpaque(false);
-jPanelBackground3.add(g4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 172, 86));
+        ChartPanel g5 = criarMiniGrafico(new Color(255, 80, 80), "Tarefas não Realizadas");
+        g5.setOpaque(false);
+        jPanelBackground4.add(g5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 172, 86));
 
-// TAREFAS NÃO REALIZADAS (jPanelBackground4)
-ChartPanel g5 = criarMiniGrafico(new Color(255, 80, 80), "Tarefas não Realizadas");
-g5.setOpaque(false);
-jPanelBackground4.add(g5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 172, 86));
-
-// TAREFAS FINALIZADAS (jPanelBackground5)
-ChartPanel g6 = criarMiniGrafico(new Color(80, 255, 160), "Tarefas Finalizadas");
-g6.setOpaque(false);
-jPanelBackground5.add(g6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 172, 86));
-
+        ChartPanel g6 = criarMiniGrafico(new Color(80, 255, 160), "Tarefas Finalizadas");
+        g6.setOpaque(false);
+        jPanelBackground5.add(g6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 172, 86));
 
         addHoverLabel(btnDashboard, "Dashboard");
         addHoverLabel(btnCalendario, "Calendário");
@@ -284,56 +271,52 @@ jPanelBackground5.add(g6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 
         salvarFonteOriginal();
         carregarDadosSimultaneamente();
         exibirMensagemCarregando();
-        setUndecorated(true); // Remove a barra superior.
+        setUndecorated(true);
         PermissaoUtil.aplicarPermissao(usuarioLogado, btnAdministracao);
         IconUtil.setIcon(usuarioLogado, lblUserIcon);
         setIcon();
-        setResizable(false); // Impede o redimencionamento da tela.
+        setResizable(false);
     }
+
     private ChartPanel criarMiniGrafico(Color cor, String titulo) {
 
-    DefaultCategoryDataset ds = new DefaultCategoryDataset();
-    ds.addValue(10, titulo, "Jan");
-    ds.addValue(14, titulo, "Fev");
-    ds.addValue(8,  titulo, "Mar");
-    ds.addValue(18, titulo, "Abr");
-    ds.addValue(15, titulo, "Mai");
+        DefaultCategoryDataset ds = new DefaultCategoryDataset();
+        ds.addValue(10, titulo, "Jan");
+        ds.addValue(14, titulo, "Fev");
+        ds.addValue(8, titulo, "Mar");
+        ds.addValue(18, titulo, "Abr");
+        ds.addValue(15, titulo, "Mai");
 
         JFreeChart chart = ChartFactory.createLineChart(
-            null, null, null, ds,
-            PlotOrientation.VERTICAL,
-            false, false, false
-    );
+                null, null, null, ds,
+                PlotOrientation.VERTICAL,
+                false, false, false
+        );
 
-    // FUNDO 100% TRANSPARENTE
-    chart.setBackgroundPaint(new Color(0, 0, 0, 0));
+        chart.setBackgroundPaint(new Color(0, 0, 0, 0));
 
-    CategoryPlot p = chart.getCategoryPlot();
-    p.setBackgroundPaint(new Color(0, 0, 0, 0));  // fundo do plot transparente
-    p.setOutlineVisible(false);
+        CategoryPlot p = chart.getCategoryPlot();
+        p.setBackgroundPaint(new Color(0, 0, 0, 0));
+        p.setOutlineVisible(false);
 
-    // remove eixos e linhas
-    p.getRangeAxis().setVisible(false);
-    p.getDomainAxis().setVisible(false);
-    p.setRangeGridlinesVisible(false);
-    p.setDomainGridlinesVisible(false);
+        p.getRangeAxis().setVisible(false);
+        p.getDomainAxis().setVisible(false);
+        p.setRangeGridlinesVisible(false);
+        p.setDomainGridlinesVisible(false);
 
-    // configura linha
-    LineAndShapeRenderer r = (LineAndShapeRenderer) p.getRenderer();
-    r.setSeriesPaint(0, cor);
-    r.setSeriesStroke(0, new BasicStroke(2f));
-    r.setDefaultShapesVisible(false);
+        LineAndShapeRenderer r = (LineAndShapeRenderer) p.getRenderer();
+        r.setSeriesPaint(0, cor);
+        r.setSeriesStroke(0, new BasicStroke(2f));
+        r.setDefaultShapesVisible(false);
 
+        ChartPanel panel = new ChartPanel(chart);
+        panel.setOpaque(false);
+        panel.setBackground(new Color(0, 0, 0, 0));
+        panel.setMouseWheelEnabled(false);
+        panel.setPopupMenu(null);
 
-    ChartPanel panel = new ChartPanel(chart);
-    panel.setOpaque(false);
-    panel.setBackground(new Color(0, 0, 0, 0));
-    panel.setMouseWheelEnabled(false);
-    panel.setPopupMenu(null);
-
-    return panel;
-}
-
+        return panel;
+    }
 
     private void addHoverLabel(JButton botao, String texto) {
         JLabel label = new JLabel(texto, SwingConstants.CENTER) {
@@ -341,14 +324,14 @@ jPanelBackground5.add(g6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(new Color(7, 30, 70)); // fundo azul escuro
-                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15); // cantos arredondados
+                g2.setColor(new Color(7, 30, 70));
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
                 super.paintComponent(g2);
                 g2.dispose();
             }
         };
 
-        label.setOpaque(false); // importante pra deixar o fundo transparente pro desenho funcionar
+        label.setOpaque(false);
         label.setForeground(Color.WHITE);
         label.setFont(FonteUtils.carregarSofiaSansBlack(13f));
         label.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -379,13 +362,11 @@ jPanelBackground5.add(g6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 
             int largura,
             int altura) {
         try {
-            // Ícone normal
             java.net.URL urlNormal = getClass().getResource(caminhoNormal);
             java.awt.Image imgNormal = javax.imageio.ImageIO.read(urlNormal)
                     .getScaledInstance(largura, altura, java.awt.Image.SCALE_SMOOTH);
             javax.swing.ImageIcon iconNormal = new javax.swing.ImageIcon(imgNormal);
 
-            // Ícone de hover
             java.net.URL urlHover = getClass().getResource(caminhoHover);
             java.awt.Image imgHover = javax.imageio.ImageIO.read(urlHover)
                     .getScaledInstance(largura, altura, java.awt.Image.SCALE_SMOOTH);
@@ -940,7 +921,7 @@ jPanelBackground5.add(g6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 
         lblLogoTexto.setBounds(80, 35, 176, 46);
 
         lblTituloPagina.setForeground(new java.awt.Color(255, 255, 255));
-        lblTituloPagina.setText("Dashboard");
+        lblTituloPagina.setText("DASHBOARD");
         lblTituloPagina.setFont(FonteUtils.carregarRoboto(13f));
         getContentPane().add(lblTituloPagina);
         lblTituloPagina.setBounds(720, 3, 120, 20);

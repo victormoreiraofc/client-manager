@@ -19,20 +19,17 @@ public class TelaLoadingOverview extends JFrame {
     
 
     public TelaLoadingOverview() {
-        // ----- WINDOW CONFIG -----
         setTitle("Loading");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(true);
         setSize(1450, 750);
         setLocationRelativeTo(null);
 
-        // ----- MAIN PANEL -----
         backgroundColor = new JPanel();
         backgroundColor.setBackground(new Color(11, 26, 53));
-        backgroundColor.setLayout(new GridBagLayout()); // center all contents
+        backgroundColor.setLayout(new GridBagLayout());
         getContentPane().add(backgroundColor);
 
-        // ----- COMPONENTS -----
         rotatingLogo = new RotatingLogo("/images/Logo Icon.png");
         didYouKnow = new JLabel("VOCÊ SABIA QUE");
         didYouKnow.setFont(FonteUtils.carregarSofiaSansBlack(10f));
@@ -41,14 +38,12 @@ public class TelaLoadingOverview extends JFrame {
        setupFontAndColors();
         setupLoadingText();
 
-        // ----- LAYOUT (center vertically + horizontally) -----
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.NONE;
-        gbc.insets = new Insets(10, 0, 10, 0); // vertical spacing between elements
+        gbc.insets = new Insets(10, 0, 10, 0);
 
-        // A wrapper panel allows vertical stacking centered
         JPanel contentPanel = new JPanel();
         contentPanel.setOpaque(false);
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
@@ -74,19 +69,15 @@ public class TelaLoadingOverview extends JFrame {
 
     private void setupFontAndColors() {
     try {
-        // Configura JLabel
         didYouKnow.setForeground(Color.decode("#AB8D10"));
 
-        // Configura JTextPane
         loadingText.setOpaque(false);
         loadingText.setBorder(null);
         loadingText.setEditable(false);
 
-        // Define a fonte desejada
         Font customFont = FonteUtils.carregarSofiaSansBold(12f);
         loadingText.setFont(customFont);
 
-        // Agora define os estilos corretamente
         StyledDocument doc = loadingText.getStyledDocument();
         SimpleAttributeSet attrs = new SimpleAttributeSet();
         StyleConstants.setFontFamily(attrs, customFont.getFamily());

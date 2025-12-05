@@ -4,12 +4,14 @@ public class Relatorio {
 
     private int id;
     private String nomeRelatorio;
+    private String usuario;
     private String descricao;
     private String statusRelatorio;
     private String dataCadastro;
 
     public Relatorio(int id, String nomeRelatorio, String descricao, String statusRelatorio, String dataCadastro) {
         this.id = id;
+        this.usuario = usuario;
         this.nomeRelatorio = nomeRelatorio;
         this.descricao = descricao;
         this.statusRelatorio = statusRelatorio;
@@ -57,5 +59,13 @@ public class Relatorio {
 
     public void setDataCadastro(String dataCadastro) {
         this.dataCadastro = dataCadastro;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 }
