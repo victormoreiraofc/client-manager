@@ -97,7 +97,7 @@ public class TelaLogin extends javax.swing.JFrame {
         }
 
         setUndecorated(true);
-        configurarLinguagens(); // Novo: Adicionado para popular o ComboBox
+        configurarLinguagens();
         atualizarTextos();
         carregarCredenciais();
         jlibErroLogin.setVisible(false);
@@ -195,12 +195,11 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void configurarLinguagens() {
         cmbLinguagens.removeAllItems();
-        // Formato: "Nome de Exibição:código_país"
         cmbLinguagens.addItem("Português:pt_BR");
         cmbLinguagens.addItem("English:en_US");
-        cmbLinguagens.addItem("Español:es_LA"); // Exemplo de outro idioma
-
-        // Seleciona o item que corresponde à Locale atual do Manager
+        cmbLinguagens.addItem("Español:es_LA");
+        cmbLinguagens.addItem("Deutsch:de_DE");
+        
         Locale currentLocale = I18nManager.getCurrentLocale();
         String currentLocaleTag = currentLocale.getLanguage() + "_" + currentLocale.getCountry();
 
@@ -319,7 +318,6 @@ public class TelaLogin extends javax.swing.JFrame {
                     e.printStackTrace();
                 }
 
-                // Estilização do Botão
                 button.setBorder(BorderFactory.createEmptyBorder());
                 button.setForeground(Color.WHITE);
                 button.setBackground(new Color(11, 26, 53));
@@ -837,20 +835,11 @@ public class TelaLogin extends javax.swing.JFrame {
     private void cmbLinguagensActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cmbLinguagensActionPerformed
         String selectedItem = (String) cmbLinguagens.getSelectedItem();
         if (selectedItem != null && selectedItem.contains(":")) {
-            // Extrai a tag da Locale (ex: "pt_BR")
             String localeString = selectedItem.split(":")[1];
             String[] parts = localeString.split("_");
-
-            // Cria a nova Locale (ex: new Locale("pt", "BR"))
             Locale newLocale = new Locale(parts[0], parts[1]);
-
-            // **DEFINE A NOVA LOCALE GLOBALMENTE**
             I18nManager.setLocale(newLocale);
-
-            // Atualiza todos os textos na tela atual
             atualizarTextos();
-
-            // Re-estiliza o ComboBox para garantir a renderização correta
             estilizarComboLinguagem();
         }
     }// GEN-LAST:event_cmbLinguagensActionPerformed
@@ -901,24 +890,20 @@ public class TelaLogin extends javax.swing.JFrame {
             TelaUpdateLoadingOverview splashUpdate = new TelaUpdateLoadingOverview();
             splashUpdate.setVisible(true);
 
-            // Create timer for the update screen (3 seconds, if you want to change its
-            // here).
             javax.swing.Timer timer = new javax.swing.Timer(3000, e -> {
-                splashUpdate.dispose(); // Close splashUpdate screen
+                splashUpdate.dispose();
                 TelaLoadingOverview splashLoading = new TelaLoadingOverview();
                 splashLoading.setVisible(true);
 
-                // Create a second timer for the loading screen (3.5 seconds, if you want to
-                // change its here).
                 javax.swing.Timer timer2 = new javax.swing.Timer(3500, e2 -> {
                     splashLoading.dispose();
                     new TelaLogin().setVisible(true);
                 });
-                timer2.setRepeats(false); // Run only once
-                timer2.start(); // Start the timer
+                timer2.setRepeats(false);
+                timer2.start();
             });
-            timer.setRepeats(false); // Run only once
-            timer.start(); // Start the timer
+            timer.setRepeats(false);
+            timer.start();
         });
     }
 
