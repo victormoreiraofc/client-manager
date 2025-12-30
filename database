@@ -7,6 +7,7 @@ CREATE TABLE usuarios (
     cargo VARCHAR(50) NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
+    idioma VARCHAR(10) DEFAULT 'pt_BR',
     Imagem BLOB,
     Permissao ENUM('NULL', 'ADM', 'SUPER_ADM') NOT NULL DEFAULT 'NULL',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -46,8 +47,14 @@ CREATE TABLE relatorio (
     NomeRelatorio VARCHAR(255) NOT NULL,
     Descrição TEXT NOT NULL,
     StatusRelatorio ENUM ('Pendente','Em andamento','Concluido') NOT NULL,
-    DataCadastro DATE NOT NULL
+    DataCadastro DATE NOT NULL,
+    usuario VARCHAR(255) NOT NULL,
+    CONSTRAINT fk_relatorio_usuario FOREIGN KEY (usuario) REFERENCES usuarios(usuario) ON UPDATE CASCADE
 );
+
+ALTER TABLE relatorio ADD COLUMN usuario VARCHAR(255) NOT NULL;
+
+ALTER TABLE relatorio ADD CONSTRAINT fk_relatorio_usuario FOREIGN KEY (usuario) REFERENCES usuarios(usuario) ON UPDATE CASCADE;
 
 CREATE TABLE agenda (
     ID INT PRIMARY KEY AUTO_INCREMENT,

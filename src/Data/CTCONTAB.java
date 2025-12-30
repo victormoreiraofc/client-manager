@@ -750,4 +750,13 @@ public class CTCONTAB {
         }
         return funcionarioNome;
     }
+
+    public static void atualizarIdiomaUsuario(String email, String novoIdioma) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        String sql = "UPDATE usuarios SET idioma = ? WHERE email = ?";
+        PreparedStatement st = conectado.prepareStatement(sql);
+        st.setString(1, novoIdioma);
+        st.setString(2, email);
+        st.executeUpdate();
+    }
 }

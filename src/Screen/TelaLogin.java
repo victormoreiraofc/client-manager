@@ -197,9 +197,14 @@ public class TelaLogin extends javax.swing.JFrame {
         cmbLinguagens.removeAllItems();
         cmbLinguagens.addItem("Português:pt_BR");
         cmbLinguagens.addItem("English:en_US");
-        cmbLinguagens.addItem("Español:es_LA");
+        cmbLinguagens.addItem("Español:es_ES");
         cmbLinguagens.addItem("Deutsch:de_DE");
-        
+        cmbLinguagens.addItem("Français:fr_FR");
+        cmbLinguagens.addItem("Italiano:it_IT");
+        cmbLinguagens.addItem("日本語:ja_JP");
+        cmbLinguagens.addItem("한국어:ko_KR");
+        cmbLinguagens.addItem("中文:zh_CN");
+
         Locale currentLocale = I18nManager.getCurrentLocale();
         String currentLocaleTag = currentLocale.getLanguage() + "_" + currentLocale.getCountry();
 
@@ -211,7 +216,39 @@ public class TelaLogin extends javax.swing.JFrame {
         }
     }
 
+    private void aplicarFonteSistema(java.awt.Container container, boolean isAsiatico) {
+        for (java.awt.Component c : container.getComponents()) {
+
+            // Pegamos a fonte que já está no componente agora (tamanho e estilo)
+            Font fonteAtual = c.getFont();
+            int tamanho = fonteAtual.getSize();
+            int estilo = fonteAtual.getStyle();
+
+            // Decidimos a nova família: SansSerif para Ásia, Lato para o resto
+            // Se for asiático, usamos SansSerif. Se não, mantemos a Lato (ou a que você definiu no Design)
+            if (isAsiatico) {
+                c.setFont(new Font("SansSerif", estilo, tamanho));
+            } else {
+                // Aqui ele volta para a Lato mantendo o tamanho original do componente
+                // Se o componente for o título, ele continuará grande porque o 'tamanho' preserva isso
+                c.setFont(FonteUtils.carregarLato(tamanho).deriveFont(estilo));
+            }
+
+            // Se houver sub-componentes (painéis), continua a varredura
+            if (c instanceof java.awt.Container) {
+                aplicarFonteSistema((java.awt.Container) c, isAsiatico);
+            }
+        }
+    }
+
     private void atualizarTextos() {
+        Locale loc = I18nManager.getCurrentLocale();
+        String lang = loc.getLanguage();
+        boolean isAsiatico = lang.equals("ja") || lang.equals("ko") || lang.equals("zh");
+
+        // Aplica a troca de fonte em tudo, preservando os tamanhos do seu Design
+        aplicarFonteSistema(this.getContentPane(), isAsiatico);
+
         setTitle(I18nManager.getString("screen_login_windown_title"));
 
         jilbTitulo.setText(I18nManager.getString("screen_login_title_login"));
@@ -294,6 +331,12 @@ public class TelaLogin extends javax.swing.JFrame {
                 setForeground(Color.WHITE);
                 setFont(FonteUtils.carregarLato(13f));
                 setBorder(BorderFactory.createEmptyBorder(2, 10, 2, 10));
+
+                if (value != null && value.toString().matches(".*[\\u4e00-\\u9fa5\\u3040-\\u309f\\uac00-\\ud7af].*")) {
+                    c.setFont(new Font("SansSerif", Font.PLAIN, 13));
+                } else {
+                    c.setFont(FonteUtils.carregarLato(13f));
+                }
                 return c; // Retorna o componente do Renderer
             }
         });
@@ -833,14 +876,16 @@ public class TelaLogin extends javax.swing.JFrame {
     }// GEN-LAST:event_btnGoogleActionPerformed
 
     private void cmbLinguagensActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cmbLinguagensActionPerformed
-        String selectedItem = (String) cmbLinguagens.getSelectedItem();
-        if (selectedItem != null && selectedItem.contains(":")) {
-            String localeString = selectedItem.split(":")[1];
-            String[] parts = localeString.split("_");
-            Locale newLocale = new Locale(parts[0], parts[1]);
-            I18nManager.setLocale(newLocale);
-            atualizarTextos();
-            estilizarComboLinguagem();
+        Object selected = cmbLinguagens.getSelectedItem();
+        if (selected != null) {
+            String item = selected.toString();
+            if (item.contains(":")) {
+                String localeTag = item.split(":")[1];
+                String[] parts = localeTag.split("_");
+                I18nManager.setLocale(new Locale(parts[0], parts[1]));
+                atualizarTextos();
+                estilizarComboLinguagem();
+            }
         }
     }// GEN-LAST:event_cmbLinguagensActionPerformed
 
