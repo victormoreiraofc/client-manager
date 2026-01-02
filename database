@@ -52,10 +52,6 @@ CREATE TABLE relatorio (
     CONSTRAINT fk_relatorio_usuario FOREIGN KEY (usuario) REFERENCES usuarios(usuario) ON UPDATE CASCADE
 );
 
-ALTER TABLE relatorio ADD COLUMN usuario VARCHAR(255) NOT NULL;
-
-ALTER TABLE relatorio ADD CONSTRAINT fk_relatorio_usuario FOREIGN KEY (usuario) REFERENCES usuarios(usuario) ON UPDATE CASCADE;
-
 CREATE TABLE agenda (
     ID INT PRIMARY KEY AUTO_INCREMENT,
     Evento VARCHAR(255) NOT NULL,

@@ -8,21 +8,36 @@ import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import java.util.ResourceBundle.Control;
 import java.util.List;
+import java.util.prefs.Preferences;
 
 public class I18nManager {
 
     private static Locale currentLocale;
     private static ResourceBundle currentBundle;
 
+    private static Preferences prefs = Preferences.userNodeForPackage(I18nManager.class);
+
     static {
-        currentLocale = new Locale("pt", "BR");
+        String localSalvo = prefs.get("idioma_app", "pt_BR");
+        String[] p = localSalvo.split("_");
+        currentLocale = new Locale(p[0], p[1]);
         loadBundle();
     }
 
     public static void loadBundle() {
         try {
             currentBundle = ResourceBundle.getBundle("idioma", currentLocale, new DatControl());
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            System.err.println("Erro ao carregar tradução.");
+        }
+    }
+
+    public static void setLocale(Locale newLocale) {
+        if (newLocale != null && !newLocale.equals(currentLocale)) {
+            currentLocale = newLocale;
+            prefs.put("idioma_app", newLocale.toString());
+            loadBundle();
+        }
     }
 
     public static String getString(String key) {
@@ -33,13 +48,6 @@ public class I18nManager {
             return currentBundle.getString(key);
         } catch (Exception e) {
             return "[" + key + "]";
-        }
-    }
-
-    public static void setLocale(Locale newLocale) {
-        if (newLocale != null && !newLocale.equals(currentLocale)) {
-            currentLocale = newLocale;
-            loadBundle();
         }
     }
 

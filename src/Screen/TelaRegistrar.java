@@ -21,12 +21,15 @@ import javax.swing.BorderFactory;
 import java.awt.Color;
 import java.util.Locale;
 import javax.swing.JLabel;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JComponent;
+import Data.LayoutManager;
+import javax.swing.SwingConstants;
 
 public class TelaRegistrar extends javax.swing.JFrame {
 
     private static final Logger logger = LoggerFactory.getLogger(TelaRegistrar.class);
-
-    private ImageIcon globoIcone;
 
     public TelaRegistrar() {
         initComponents();
@@ -92,7 +95,7 @@ public class TelaRegistrar extends javax.swing.JFrame {
         }
 
         setUndecorated(true);
-        configurarLinguagens(); // Novo: Adicionado para popular o ComboBox
+        configurarLinguagens();
         atualizarTextos();
         jlibErroRegistro.setVisible(false);
         setIcon();
@@ -165,12 +168,16 @@ public class TelaRegistrar extends javax.swing.JFrame {
 
     private void configurarLinguagens() {
         cmbLinguagens.removeAllItems();
-        // Formato: "Nome de Exibição:código_país"
         cmbLinguagens.addItem("Português:pt_BR");
         cmbLinguagens.addItem("English:en_US");
-        cmbLinguagens.addItem("Español:es_LA"); // Exemplo de outro idioma
+        cmbLinguagens.addItem("Español:es_ES");
+        cmbLinguagens.addItem("Deutsch:de_DE");
+        cmbLinguagens.addItem("Français:fr_FR");
+        cmbLinguagens.addItem("Italiano:it_IT");
+        cmbLinguagens.addItem("日本語:ja_JP");
+        cmbLinguagens.addItem("한국어:ko_KR");
+        cmbLinguagens.addItem("中文:zh_CN");
 
-        // Seleciona o item que corresponde à Locale atual do Manager
         Locale currentLocale = I18nManager.getCurrentLocale();
         String currentLocaleTag = currentLocale.getLanguage() + "_" + currentLocale.getCountry();
 
@@ -182,126 +189,173 @@ public class TelaRegistrar extends javax.swing.JFrame {
         }
     }
 
-    private void atualizarTextos() {
-        // Altera o título da janela
-        setTitle(I18nManager.getString("screen_register_windown_title"));
+    private void aplicarFonteSistema(java.awt.Container container, boolean isAsiatico) {
+        for (java.awt.Component c : container.getComponents()) {
 
-        // Altera todos os JLabel e JButton usando o Manager
-        jilbTitulo.setText(I18nManager.getString("screen_register_title_register"));
-        jilbUsuario.setText(I18nManager.getString("screen_register_username"));
-        jilbEmail.setText(I18nManager.getString("screen_register_user_email"));
-        jilbSenha.setText(I18nManager.getString("screen_register_user_password"));
-        jilbSenha2.setText(I18nManager.getString("screen_register_confirm_password"));
-        chbLembre.setText(I18nManager.getString("screen_register_remindme"));
-        jilbAindaNaoTemConta.setText(I18nManager.getString("screen_register_didyouhaveaccont"));
-        jilbRegistreSe.setText(I18nManager.getString("screen_register_login"));
-        jilbCreditos.setText(I18nManager.getString("screen_register_credits"));
-        jilbTexto.setText(I18nManager.getString("screen_register_description"));
-        jilbTexto2.setText(I18nManager.getString("screen_register_description2"));
-        btnRegistrar.setText(I18nManager.getString("screen_register_register"));
+            Font fonteAtual = c.getFont();
+            int tamanho = fonteAtual.getSize();
+            int estilo = fonteAtual.getStyle();
+
+            if (isAsiatico) {
+                c.setFont(new Font("SansSerif", estilo, tamanho));
+            } else {
+                c.setFont(FonteUtils.carregarLato(tamanho).deriveFont(estilo));
+            }
+
+            if (c instanceof java.awt.Container) {
+                aplicarFonteSistema((java.awt.Container) c, isAsiatico);
+            }
+        }
+    }
+
+    private void atualizarTextos() {
+        Locale loc = I18nManager.getCurrentLocale();
+        String langTag = loc.toString();
+        boolean isAsiatico = loc.getLanguage().equals("ja") || loc.getLanguage().equals("ko") || loc.getLanguage().equals("zh");
+
+        aplicarFonteSistema(this.getContentPane(), isAsiatico);
+
+        setTitle(I18nManager.getString("auth.register.window_title"));
+        jilbTitulo.setText(I18nManager.getString("auth.register.header.title"));
+        jilbTexto.setText(I18nManager.getString("auth.register.header.description"));
+        jilbTexto2.setText(I18nManager.getString("auth.register.header.subtitle"));
+        jilbUsuario.setText(I18nManager.getString("auth.register.form.label.username"));
+        jilbEmail.setText(I18nManager.getString("auth.register.form.label.email"));
+        jilbSenha.setText(I18nManager.getString("auth.register.form.label.password"));
+        jilbSenha2.setText(I18nManager.getString("auth.register.form.label.confirm_password"));
+        chbLembre.setText(I18nManager.getString("auth.register.form.checkbox.remember"));
+        btnRegistrar.setText(I18nManager.getString("auth.register.form.button.submit"));
+        jilbAindaNaoTemConta.setText(I18nManager.getString("auth.register.footer.has_account"));
+        jilbRegistreSe.setText(I18nManager.getString("auth.register.footer.link.login"));
+        jilbCreditos.setText(I18nManager.getString("auth.register.footer.copyright"));
+        jlibErroRegistro.setText(I18nManager.getString("auth.register.feedback.error.invalid_data"));
+
+        Map<String, JComponent> compMap = new HashMap<>();
+        compMap.put("layout.register.header.title", jilbTitulo);
+        compMap.put("layout.register.header.description", jilbTexto);
+        compMap.put("layout.register.header.subtitle", jilbTexto2);
+        compMap.put("layout.register.form.label.username", jilbUsuario);
+        compMap.put("layout.register.form.field.username", txtUsuario);
+        compMap.put("layout.register.form.label.email", jilbEmail);
+        compMap.put("layout.register.form.field.email", txtEmail);
+        compMap.put("layout.register.form.label.password", jilbSenha);
+        compMap.put("layout.register.form.field.password", txtSenha);
+        compMap.put("layout.register.form.label.confirm_password", jilbSenha2);
+        compMap.put("layout.register.form.field.confirm_password", txtSenha2);
+        compMap.put("layout.register.form.show.password", chbMostrarSenha);
+        compMap.put("layout.register.form.checkbox.remember", chbLembre);
+        compMap.put("layout.register.form.button.submit", btnRegistrar);
+        compMap.put("layout.register.footer.has_account", jilbAindaNaoTemConta);
+        compMap.put("layout.register.footer.link.login", jilbRegistreSe);
+        compMap.put("layout.register.feedback.error.invalid_data", jlibErroRegistro);
+        compMap.put("layout.register.form.button.login", btnResgistrar);
+
+        LayoutManager.aplicarLayout(langTag, compMap);
+
+        this.getContentPane().revalidate();
+        this.getContentPane().repaint();
 
         if (txtEmail.getForeground().equals(Color.GRAY)) {
-            addPlaceholder(txtEmail, I18nManager.getString("screen_register_placeholder_email"));
+            addPlaceholder(txtEmail, I18nManager.getString("auth.register.form.placeholder.email"));
         }
-
-        jlibErroRegistro.setText(I18nManager.getString("screen_register_error_register"));
     }
 
     private void estilizarComboLinguagem() {
+        Locale loc = I18nManager.getCurrentLocale();
+        boolean isAsiatico = loc.getLanguage().equals("ja")
+                || loc.getLanguage().equals("ko")
+                || loc.getLanguage().equals("zh");
 
-        this.globoIcone = null;
-
-        try {
-            java.net.URL url = getClass().getResource("/images/Globe Icon.png");
-            if (url == null) {
-                System.err.println("Imagem não encontrada: /images/Globe Icon.png");
-            } else {
-                java.awt.Image img = javax.imageio.ImageIO.read(url)
-                        .getScaledInstance(14, 14, java.awt.Image.SCALE_SMOOTH);
-                this.globoIcone = new ImageIcon(img);
-            }
-        } catch (Exception e) {
-            System.err.println("Erro ao carregar o ícone do globo.");
-            e.printStackTrace();
-        }
-        
         UIManager.put("ComboBox.background", new Color(11, 26, 53));
         UIManager.put("ComboBox.foreground", Color.WHITE);
         UIManager.put("ComboBox.selectionBackground", new Color(30, 50, 80));
         UIManager.put("ComboBox.selectionForeground", Color.WHITE);
-        UIManager.put("ComboBox.buttonBackground", new Color(11, 26, 53));
-        UIManager.put("ComboBox.border", BorderFactory.createEmptyBorder());
 
-        cmbLinguagens.setFont(FonteUtils.carregarLato(13f));
-        cmbLinguagens.setForeground(Color.WHITE);
-        cmbLinguagens.setBackground(new Color(11, 26, 53));
-        cmbLinguagens.setOpaque(false);
-        cmbLinguagens.setBorder(null);
-        cmbLinguagens.setFocusable(false);
-
-        cmbLinguagens.setRenderer(new javax.swing.DefaultListCellRenderer() {
+        cmbLinguagens.setRenderer(new javax.swing.ListCellRenderer<String>() {
             @Override
             public java.awt.Component getListCellRendererComponent(
-                    javax.swing.JList<?> list, Object value, int index,
+                    javax.swing.JList<? extends String> list, String value, int index,
                     boolean isSelected, boolean cellHasFocus) {
 
-                java.awt.Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                // Painel para organizar: Bandeira na Esquerda, Texto no Centro
+                javax.swing.JPanel panel = new javax.swing.JPanel(new java.awt.BorderLayout());
+                panel.setBackground(isSelected ? new Color(30, 50, 80) : new Color(11, 26, 53));
 
-                if (c instanceof JLabel && value != null) {
-                    JLabel label = (JLabel) c;
-                    String fullString = value.toString();
-
-                    if (fullString.contains(":")) {
-                        String nomeExibicao = fullString.split(":")[0];
-                        label.setText(nomeExibicao);
-                    }
-
-                    label.setIcon(globoIcone);
-                    label.setIconTextGap(5);
-                    label.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-                    label.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+                if (value == null) {
+                    return panel;
                 }
 
-                setBackground(isSelected ? new Color(30, 50, 80) : new Color(11, 26, 53));
-                setForeground(Color.WHITE);
-                setFont(FonteUtils.carregarLato(13f));
-                setBorder(BorderFactory.createEmptyBorder(2, 10, 2, 10));
-                return c; // Retorna o componente do Renderer
+                String[] parts = value.split(":");
+                String nomeExibicao = parts[0];
+                String localeTag = parts.length > 1 ? parts[1] : "";
+
+                // 1. Ícone da Bandeira (Esquerda)
+                JLabel labelIcon = new JLabel();
+                try {
+                    // Procura por /images/flags/pt_BR.png etc.
+                    java.net.URL imgUrl = getClass().getResource("/images/flags/" + localeTag + ".png");
+                    if (imgUrl != null) {
+                        java.awt.Image img = javax.imageio.ImageIO.read(imgUrl)
+                                .getScaledInstance(18, 12, java.awt.Image.SCALE_SMOOTH);
+                        labelIcon.setIcon(new ImageIcon(img));
+                    }
+                } catch (Exception e) {
+                }
+
+                // Margem de 1px da borda esquerda conforme solicitado
+                labelIcon.setBorder(BorderFactory.createEmptyBorder(0, 1, 0, 5));
+                panel.add(labelIcon, java.awt.BorderLayout.WEST);
+
+                // 2. Texto do Idioma (Centro)
+                JLabel labelTexto = new JLabel(nomeExibicao, SwingConstants.CENTER);
+                labelTexto.setForeground(Color.WHITE);
+
+                // Aplica sistema isAsiatico
+                if (value.matches(".*[\\u4e00-\\u9fa5\\u3040-\\u309f\\uac00-\\ud7af].*") || isAsiatico) {
+                    labelTexto.setFont(new Font("SansSerif", Font.PLAIN, 12));
+                } else {
+                    labelTexto.setFont(FonteUtils.carregarLato(12f));
+                }
+
+                panel.add(labelTexto, java.awt.BorderLayout.CENTER);
+                panel.setBorder(BorderFactory.createEmptyBorder(2, 5, 2, 5));
+
+                return panel;
             }
         });
-        
+
         cmbLinguagens.setUI(new javax.swing.plaf.basic.BasicComboBoxUI() {
             @Override
-            protected javax.swing.JButton createArrowButton() {
-                javax.swing.JButton button = new javax.swing.JButton(); // Cria o botão sem texto
+            protected javax.swing.plaf.basic.ComboPopup createPopup() {
+                return new javax.swing.plaf.basic.BasicComboPopup(comboBox) {
+                    @Override
+                    protected javax.swing.JScrollPane createScroller() {
+                        javax.swing.JScrollPane scroller = new javax.swing.JScrollPane(list);
+                        scroller.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+                        scroller.getVerticalScrollBar().setPreferredSize(new java.awt.Dimension(0, 0));
+                        scroller.setBorder(null);
+                        return scroller;
+                    }
+                };
+            }
 
-                // Lógica para carregar o Ícone da Seta
+            @Override
+            protected javax.swing.JButton createArrowButton() {
+                javax.swing.JButton button = new javax.swing.JButton();
                 try {
                     java.net.URL url = getClass().getResource("/images/Angle Down Icon.png");
-
-                    if (url == null) {
-                        System.err.println("Ícone da seta não encontrado: /images/Angle Down Icon.png");
-                    } else {
+                    if (url != null) {
                         java.awt.Image img = javax.imageio.ImageIO.read(url)
-                                .getScaledInstance(12, 12, java.awt.Image.SCALE_SMOOTH);
+                                .getScaledInstance(10, 10, java.awt.Image.SCALE_SMOOTH);
                         button.setIcon(new javax.swing.ImageIcon(img));
                     }
                 } catch (Exception e) {
-                    System.err.println("Erro ao carregar o ícone da seta.");
-                    e.printStackTrace();
                 }
-
-                // Estilização do Botão
-                button.setBorder(BorderFactory.createEmptyBorder());
-                button.setForeground(Color.WHITE);
-                button.setBackground(new Color(11, 26, 53));
-                button.setFocusable(false);
+                button.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
                 button.setContentAreaFilled(false);
-                button.setOpaque(false);
-
                 return button;
             }
-        }); // FIM DO setUI
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -388,7 +442,7 @@ public class TelaRegistrar extends javax.swing.JFrame {
             }
         });
         getContentPane().add(cmbLinguagens);
-        cmbLinguagens.setBounds(200, 20, 180, 40);
+        cmbLinguagens.setBounds(250, 20, 130, 40);
 
         jilbTitulo.setFont(FonteUtils.carregarRalewayMedium(30f));
         jilbTitulo.setForeground(new java.awt.Color(255, 255, 255));
@@ -662,8 +716,9 @@ public class TelaRegistrar extends javax.swing.JFrame {
     }
 
     private void mostrarMensagemErro() {
-        jlibErroRegistro.setText("Seu e-mail, senha ou usuário estão incorretos.");
         jlibErroRegistro.setForeground(Color.RED);
+        jlibErroRegistro.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jlibErroRegistro.setFont(FonteUtils.carregarLato(13f));
         jlibErroRegistro.setVisible(true);
 
         txtUsuario.setBorder(javax.swing.BorderFactory.createCompoundBorder(

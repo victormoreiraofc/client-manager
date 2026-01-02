@@ -28,10 +28,12 @@ import Data.I18nManager;
 import java.util.Locale;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JComponent;
+import Data.LayoutManager;
 
 public class TelaLogin extends javax.swing.JFrame {
-
-    private ImageIcon globoIcone;
 
     public TelaLogin() {
         initComponents();
@@ -219,22 +221,16 @@ public class TelaLogin extends javax.swing.JFrame {
     private void aplicarFonteSistema(java.awt.Container container, boolean isAsiatico) {
         for (java.awt.Component c : container.getComponents()) {
 
-            // Pegamos a fonte que já está no componente agora (tamanho e estilo)
             Font fonteAtual = c.getFont();
             int tamanho = fonteAtual.getSize();
             int estilo = fonteAtual.getStyle();
 
-            // Decidimos a nova família: SansSerif para Ásia, Lato para o resto
-            // Se for asiático, usamos SansSerif. Se não, mantemos a Lato (ou a que você definiu no Design)
             if (isAsiatico) {
                 c.setFont(new Font("SansSerif", estilo, tamanho));
             } else {
-                // Aqui ele volta para a Lato mantendo o tamanho original do componente
-                // Se o componente for o título, ele continuará grande porque o 'tamanho' preserva isso
                 c.setFont(FonteUtils.carregarLato(tamanho).deriveFont(estilo));
             }
 
-            // Se houver sub-componentes (painéis), continua a varredura
             if (c instanceof java.awt.Container) {
                 aplicarFonteSistema((java.awt.Container) c, isAsiatico);
             }
@@ -243,134 +239,148 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void atualizarTextos() {
         Locale loc = I18nManager.getCurrentLocale();
-        String lang = loc.getLanguage();
-        boolean isAsiatico = lang.equals("ja") || lang.equals("ko") || lang.equals("zh");
+        String langTag = loc.toString();
+        boolean isAsiatico = loc.getLanguage().equals("ja") || loc.getLanguage().equals("ko") || loc.getLanguage().equals("zh");
 
-        // Aplica a troca de fonte em tudo, preservando os tamanhos do seu Design
         aplicarFonteSistema(this.getContentPane(), isAsiatico);
 
-        setTitle(I18nManager.getString("screen_login_windown_title"));
+        setTitle(I18nManager.getString("auth.login.window_title"));
+        jilbTitulo.setText(I18nManager.getString("auth.login.header.title"));
+        jilbTexto.setText(I18nManager.getString("auth.login.header.description"));
+        jilbTexto2.setText(I18nManager.getString("auth.login.header.subtitle"));
+        btnGoogle.setText(I18nManager.getString("auth.login.social.google"));
+        jilbTexto3.setText(I18nManager.getString("auth.login.divider.text"));
+        jilbEmailOuUsuario.setText(I18nManager.getString("auth.login.form.label.email"));
+        jilbSenha.setText(I18nManager.getString("auth.login.form.label.password"));
+        chbLembre.setText(I18nManager.getString("auth.login.form.checkbox.remember"));
+        jlibEsqueceuASenha.setText(I18nManager.getString("auth.login.form.link.forgot_password"));
+        btnLogin.setText(I18nManager.getString("auth.login.form.button.submit"));
+        jilbAindaNaoTemConta.setText(I18nManager.getString("auth.login.footer.not_registered"));
+        jilbRegistreSe.setText(I18nManager.getString("auth.login.footer.link.create_account"));
+        jilbCreditos.setText(I18nManager.getString("auth.login.footer.copyright"));
+        jlibErroLogin.setText(I18nManager.getString("auth.login.feedback.error.invalid_credentials"));
 
-        jilbTitulo.setText(I18nManager.getString("screen_login_title_login"));
-        jilbEmailOuUsuario.setText(I18nManager.getString("screen_login_email"));
-        jilbSenha.setText(I18nManager.getString("screen_login_password"));
-        jlibEsqueceuASenha.setText(I18nManager.getString("screen_login_forgot_password"));
-        jilbAindaNaoTemConta.setText(I18nManager.getString("screen_login_dont_have_an_account_yet"));
-        jilbRegistreSe.setText(I18nManager.getString("screen_login_register"));
-        jilbCreditos.setText(I18nManager.getString("screen_login_credits"));
-        jilbTexto.setText(I18nManager.getString("screen_login_description"));
-        jilbTexto2.setText(I18nManager.getString("screen_login_description2"));
-        jilbTexto3.setText(I18nManager.getString("screen_login_ordologinwithemail"));
-        chbLembre.setText(I18nManager.getString("screen_login_remindme"));
-        btnLogin.setText(I18nManager.getString("screen_login_login"));
-        btnGoogle.setText(I18nManager.getString("screen_login_google"));
-        jlibErroLogin.setText(I18nManager.getString("screen_login_error_login"));
+        Map<String, JComponent> compMap = new HashMap<>();
+        compMap.put("layout.login.header.title", jilbTitulo);
+        compMap.put("layout.login.header.description", jilbTexto);
+        compMap.put("layout.login.header.subtitle", jilbTexto2);
+        compMap.put("layout.login.divider.text", jilbTexto3);
+        compMap.put("layout.login.form.label.email", jilbEmailOuUsuario);
+        compMap.put("layout.login.form.label.password", jilbSenha);
+        compMap.put("layout.login.form.button.submit", btnLogin);
+        compMap.put("layout.login.footer.not_registered", jilbAindaNaoTemConta);
+        compMap.put("layout.login.footer.link.create_account", jilbRegistreSe);
+        compMap.put("layout.login.form.checkbox.remember", chbLembre);
+        compMap.put("layout.login.feedback.error.invalid_credentials", jlibErroLogin);
+        compMap.put("layout.login.line.right", jilbLinha4);
+        compMap.put("layout.login.line.left", jilbLinha3);
+        compMap.put("layout.login.social.google", btnGoogle);
+        compMap.put("layout.login.form.link.forgot_password", jlibEsqueceuASenha);
+        compMap.put("layout.login.form.placeholder.email", txtLogin);
+        compMap.put("layout.login.form.placeholder.password", txtSenha);
+        compMap.put("layout.login.form.show.password", chbMostrarSenha);
+        compMap.put("layout.login.form.button.register", btnResgistrar);
+
+        LayoutManager.aplicarLayout(langTag, compMap);
+
+        this.getContentPane().revalidate();
+        this.getContentPane().repaint();
 
         if (txtLogin.getForeground().equals(Color.GRAY)) {
-            addPlaceholder(txtLogin, I18nManager.getString("screen_login_placeholder_email"));
+            addPlaceholder(txtLogin, I18nManager.getString("auth.login.form.placeholder.email"));
         }
     }
 
     private void estilizarComboLinguagem() {
-
-        this.globoIcone = null;
-
-        try {
-            java.net.URL url = getClass().getResource("/images/Globe Icon.png");
-            if (url == null) {
-                System.err.println("Imagem não encontrada: /images/Globe Icon.png");
-            } else {
-                java.awt.Image img = javax.imageio.ImageIO.read(url)
-                        .getScaledInstance(14, 14, java.awt.Image.SCALE_SMOOTH);
-                this.globoIcone = new ImageIcon(img);
-            }
-        } catch (Exception e) {
-            System.err.println("Erro ao carregar o ícone do globo.");
-            e.printStackTrace();
-        }
+        Locale loc = I18nManager.getCurrentLocale();
+        boolean isAsiatico = loc.getLanguage().equals("ja")
+                || loc.getLanguage().equals("ko")
+                || loc.getLanguage().equals("zh");
 
         UIManager.put("ComboBox.background", new Color(11, 26, 53));
         UIManager.put("ComboBox.foreground", Color.WHITE);
         UIManager.put("ComboBox.selectionBackground", new Color(30, 50, 80));
         UIManager.put("ComboBox.selectionForeground", Color.WHITE);
-        UIManager.put("ComboBox.buttonBackground", new Color(11, 26, 53));
-        UIManager.put("ComboBox.border", BorderFactory.createEmptyBorder());
 
-        cmbLinguagens.setFont(FonteUtils.carregarLato(13f));
-        cmbLinguagens.setForeground(Color.WHITE);
-        cmbLinguagens.setBackground(new Color(11, 26, 53));
-        cmbLinguagens.setOpaque(false);
-        cmbLinguagens.setBorder(null);
-        cmbLinguagens.setFocusable(false);
-
-        cmbLinguagens.setRenderer(new javax.swing.DefaultListCellRenderer() {
+        cmbLinguagens.setRenderer(new javax.swing.ListCellRenderer<String>() {
             @Override
             public java.awt.Component getListCellRendererComponent(
-                    javax.swing.JList<?> list, Object value, int index,
+                    javax.swing.JList<? extends String> list, String value, int index,
                     boolean isSelected, boolean cellHasFocus) {
 
-                java.awt.Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                javax.swing.JPanel panel = new javax.swing.JPanel(new java.awt.BorderLayout());
+                panel.setBackground(isSelected ? new Color(30, 50, 80) : new Color(11, 26, 53));
 
-                if (c instanceof JLabel && value != null) {
-                    JLabel label = (JLabel) c;
-                    String fullString = value.toString();
+                if (value == null) {
+                    return panel;
+                }
 
-                    // Exibir apenas o Nome
-                    if (fullString.contains(":")) {
-                        String nomeExibicao = fullString.split(":")[0];
-                        label.setText(nomeExibicao);
+                String[] parts = value.split(":");
+                String nomeExibicao = parts[0];
+                String localeTag = parts.length > 1 ? parts[1] : "";
+
+                JLabel labelIcon = new JLabel();
+                try {
+                    java.net.URL imgUrl = getClass().getResource("/images/flags/" + localeTag + ".png");
+                    if (imgUrl != null) {
+                        java.awt.Image img = javax.imageio.ImageIO.read(imgUrl)
+                                .getScaledInstance(18, 12, java.awt.Image.SCALE_SMOOTH);
+                        labelIcon.setIcon(new ImageIcon(img));
                     }
-
-                    label.setIcon(globoIcone);
-                    label.setIconTextGap(5);
-                    label.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-                    label.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+                } catch (Exception e) {
                 }
 
-                setBackground(isSelected ? new Color(30, 50, 80) : new Color(11, 26, 53));
-                setForeground(Color.WHITE);
-                setFont(FonteUtils.carregarLato(13f));
-                setBorder(BorderFactory.createEmptyBorder(2, 10, 2, 10));
+                labelIcon.setBorder(BorderFactory.createEmptyBorder(0, 1, 0, 5));
+                panel.add(labelIcon, java.awt.BorderLayout.WEST);
 
-                if (value != null && value.toString().matches(".*[\\u4e00-\\u9fa5\\u3040-\\u309f\\uac00-\\ud7af].*")) {
-                    c.setFont(new Font("SansSerif", Font.PLAIN, 13));
+                JLabel labelTexto = new JLabel(nomeExibicao, SwingConstants.CENTER);
+                labelTexto.setForeground(Color.WHITE);
+
+                if (value.matches(".*[\\u4e00-\\u9fa5\\u3040-\\u309f\\uac00-\\ud7af].*") || isAsiatico) {
+                    labelTexto.setFont(new Font("SansSerif", Font.PLAIN, 12));
                 } else {
-                    c.setFont(FonteUtils.carregarLato(13f));
+                    labelTexto.setFont(FonteUtils.carregarLato(12f));
                 }
-                return c; // Retorna o componente do Renderer
+
+                panel.add(labelTexto, java.awt.BorderLayout.CENTER);
+                panel.setBorder(BorderFactory.createEmptyBorder(2, 5, 2, 5));
+
+                return panel;
             }
         });
 
         cmbLinguagens.setUI(new javax.swing.plaf.basic.BasicComboBoxUI() {
             @Override
+            protected javax.swing.plaf.basic.ComboPopup createPopup() {
+                return new javax.swing.plaf.basic.BasicComboPopup(comboBox) {
+                    @Override
+                    protected javax.swing.JScrollPane createScroller() {
+                        javax.swing.JScrollPane scroller = new javax.swing.JScrollPane(list);
+                        scroller.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+                        scroller.getVerticalScrollBar().setPreferredSize(new java.awt.Dimension(0, 0));
+                        scroller.setBorder(null);
+                        return scroller;
+                    }
+                };
+            }
+
+            @Override
             protected javax.swing.JButton createArrowButton() {
                 javax.swing.JButton button = new javax.swing.JButton();
-
                 try {
                     java.net.URL url = getClass().getResource("/images/Angle Down Icon.png");
-
-                    if (url == null) {
-                        System.err.println("Ícone da seta não encontrado: /images/Angle Down Icon.png");
-                    } else {
+                    if (url != null) {
                         java.awt.Image img = javax.imageio.ImageIO.read(url)
-                                .getScaledInstance(12, 12, java.awt.Image.SCALE_SMOOTH);
+                                .getScaledInstance(10, 10, java.awt.Image.SCALE_SMOOTH);
                         button.setIcon(new javax.swing.ImageIcon(img));
                     }
                 } catch (Exception e) {
-                    System.err.println("Erro ao carregar o ícone da seta.");
-                    e.printStackTrace();
                 }
-
-                button.setBorder(BorderFactory.createEmptyBorder());
-                button.setForeground(Color.WHITE);
-                button.setBackground(new Color(11, 26, 53));
-                button.setFocusable(false);
+                button.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
                 button.setContentAreaFilled(false);
-                button.setOpaque(false);
-
                 return button;
             }
-        }); // FIM DO setUI
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -459,7 +469,7 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
         getContentPane().add(cmbLinguagens);
-        cmbLinguagens.setBounds(200, 20, 180, 40);
+        cmbLinguagens.setBounds(250, 20, 130, 40);
 
         jlibErroLogin.setFont(FonteUtils.carregarLato(13f));
         jlibErroLogin.setForeground(new java.awt.Color(255, 0, 0));
@@ -715,20 +725,20 @@ public class TelaLogin extends javax.swing.JFrame {
             Usuario usuarioLogado = CTCONTAB.fazerLoginU(txtLogin.getText(), new String(txtSenha.getPassword()));
 
             if (usuarioLogado != null) {
-
                 txtLogin.setBorder(javax.swing.BorderFactory.createCompoundBorder(
                         javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84)),
                         javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0)));
                 txtSenha.setBorder(javax.swing.BorderFactory.createCompoundBorder(
                         javax.swing.BorderFactory.createLineBorder(new java.awt.Color(84, 84, 84)),
                         javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0)));
-
                 if (chbLembre.isSelected()) {
                     salvarCredenciais(txtLogin.getText(), new String(txtSenha.getPassword()));
                 }
 
-                dispose();
+                String idiomaAtualDaTela = I18nManager.getCurrentLocale().toString();
+                CTCONTAB.atualizarIdiomaUsuario(txtLogin.getText(), idiomaAtualDaTela);
                 new TelaMenu(usuarioLogado).setVisible(true);
+                dispose();
             } else {
                 mostrarMensagemErro();
             }
@@ -760,7 +770,6 @@ public class TelaLogin extends javax.swing.JFrame {
     }
 
     private void mostrarMensagemErro() {
-        jlibErroLogin.setText("Seu e-mail ou senha estão incorretos.");
         jlibErroLogin.setForeground(Color.RED);
         jlibErroLogin.setVisible(true);
 
@@ -814,7 +823,6 @@ public class TelaLogin extends javax.swing.JFrame {
     }// GEN-LAST:event_btnResgistrarActionPerformed
 
     private void chbLembreActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_chbLembreActionPerformed
-        // Já implementado no Login
     }// GEN-LAST:event_chbLembreActionPerformed
 
     private void txtSenhaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_txtSenhaActionPerformed
@@ -834,7 +842,6 @@ public class TelaLogin extends javax.swing.JFrame {
     }// GEN-LAST:event_txtLoginActionPerformed
 
     private void btnEsqueceuSenhaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnEsqueceuSenhaActionPerformed
-
     }// GEN-LAST:event_btnEsqueceuSenhaActionPerformed
 
     private void btnLoginMouseEntered(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnLoginMouseEntered

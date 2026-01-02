@@ -1,34 +1,99 @@
-# TelaLogin.java
-screen_login_windown_title=CT Contab Manager
-screen_login_title_login=Login
-screen_login_description=Toda a organização da sua contabilidade em um só lugar,
-screen_login_description2=totalmente digital.
-screen_login_google=Entrar com o Google
-screen_login_ordologinwithemail=ou faça login com o e-mail
-screen_login_email=E-mail
-screen_login_password=Senha
-screen_login_placeholder_email=email@exemplo.com
-screen_login_remindme=Lembre-me?
-screen_login_forgot_password=Esqueceu a senha?
-screen_login_login=Login
-screen_login_dont_have_an_account_yet=Não registrado ainda?
-screen_login_register=  Crie uma conta
-screen_login_credits=© 2025 CT Contab. Todos os direitos reservados.
-screen_login_error_login=Seu e-mail ou senha estão incorretos.
+# --- AUTHENTICATION MODULE (Login) ---
+auth.login.window_title=CT Contab Manager
+auth.login.header.title=Login
+auth.login.header.description=Toda a organização da sua contabilidade em um só lugar,
+auth.login.header.subtitle=totalmente digital.
 
-# TelaRegistrar.java
-screen_register_windown_title=CT Contab Manager
-screen_register_title_register=Registre-se
-screen_register_username=Usuário
-screen_register_user_email=E-mail
-screen_register_user_password=Senha
-screen_register_confirm_password=Confirme a Senha
-screen_register_remindme=Lembre-me?
-screen_register_didyouhaveaccont=Você já tem conta?
-screen_register_login=Login
-screen_register_credits=© 2025 CT Contab. Todos os direitos reservados.
-screen_register_description=Toda a organização da sua contabilidade em um só lugar,
-screen_register_description2=totalmente digital.
-screen_register_register=Registrar
-screen_register_placeholder_email=email@exemplo.com
-screen_register_error_register=Seu e-mail, senha ou usuário estão incorretos.
+# Social & Divider
+auth.login.social.google=Entrar com o Google
+auth.login.divider.text=ou faça login com o e-mail
+
+# Form Fields
+auth.login.form.label.email=E-mail
+auth.login.form.label.password=Senha
+auth.login.form.placeholder.email=email@exemplo.com
+
+# Form Actions
+auth.login.form.checkbox.remember=Lembre-me?
+auth.login.form.link.forgot_password=Esqueceu a senha?
+auth.login.form.button.submit=Login
+
+# Footer & Feedback
+auth.login.footer.not_registered=Não registrado ainda?
+auth.login.footer.link.create_account=  Crie uma conta
+auth.login.footer.copyright=© 2025 CT Contab. Todos os direitos reservados.
+auth.login.feedback.error.invalid_credentials=Seu e-mail ou senha estão incorretos.
+
+# --- REGISTRATION MODULE (Sign Up) ---
+auth.register.window_title=CT Contab Manager
+auth.register.header.title=Registre-se
+auth.register.header.description=Toda a organização da sua contabilidade em um só lugar,
+auth.register.header.subtitle=totalmente digital.
+
+# Form Fields
+auth.register.form.label.username=Usuário
+auth.register.form.label.email=E-mail
+auth.register.form.label.password=Senha
+auth.register.form.label.confirm_password=Confirme a Senha
+auth.register.form.placeholder.email=email@exemplo.com
+
+# Form Actions
+auth.register.form.checkbox.remember=Lembre-me?
+auth.register.form.button.submit=Registrar
+
+# Footer & Feedback
+auth.register.footer.has_account=Você já tem conta?
+auth.register.footer.link.login=Login
+auth.register.footer.copyright=© 2025 CT Contab. Todos os direitos reservados.
+auth.register.feedback.error.invalid_data=Seu e-mail, senha ou usuário estão incorretos.
+
+# --- DASHBOARD MODULE ---
+dashboard.header.title=DASHBOARD
+dashboard.banner.action.register=CADASTRAR NOVOS CLIENTES
+
+# Dashboard Cards
+# Novos Clientes
+dashboard.card.new_clients.header=Clientes Mensais
+dashboard.card.new_clients.title=Novos clientes neste mês.
+dashboard.card.new_clients.subtitle=Número bruto de novos clientes.
+dashboard.card.new_clients.description=Este painel mostra a quantidade total de novos clientes adquiridos no mês, permitindo acompanhar o crescimento do público.
+
+# Total de Clientes
+dashboard.card.total_clients.header=Total de Clientes
+dashboard.card.total_clients.title=Todos os clientes registrados.
+dashboard.card.total_clients.subtitle=Número bruto de clientes registrados.
+dashboard.card.total_clients.description=Este painel mostra o total acumulado de clientes cadastrados, permitindo acompanhar o crescimento da base ao longo do tempo.
+
+# Tarefas Pendentes
+dashboard.card.pending_tasks.header=Tarefas Pendentes
+dashboard.card.pending_tasks.title=Todas as tarefas pendentes.
+dashboard.card.pending_tasks.subtitle=Número bruto de tarefas aguardando.
+dashboard.card.pending_tasks.description=Este painel indica todas as tarefas que ainda estão pendentes, facilitando o controle das demandas que precisam ser concluídas.
+
+# Total de Relatórios
+dashboard.card.total_reports.header=Total de Relatórios
+dashboard.card.total_reports.title=Todos os relatórios feitos.
+dashboard.card.total_reports.subtitle=Número bruto de relatórios gerados.
+dashboard.card.total_reports.description=Aqui você acompanha quantos relatórios foram emitidos, permitindo analisar o volume de registros e atividades documentadas.
+
+# Tarefas Não Realizadas
+dashboard.card.unfinished_tasks.header=Tarefas não Realizadas
+dashboard.card.unfinished_tasks.title=Tarefas não realizadas.
+dashboard.card.unfinished_tasks.subtitle=Número bruto de tarefas não concluídas.
+dashboard.card.unfinished_tasks.description=Este painel mostra as tarefas que foram iniciadas mas não finalizadas, ajudando a identificar gargalos e priorizar ações.
+
+# Tarefas Finalizadas
+dashboard.card.completed_tasks.header=Tarefas Finalizadas
+dashboard.card.completed_tasks.title=Tarefas já finalizadas.
+dashboard.card.completed_tasks.subtitle=Número bruto de tarefas concluídas.
+dashboard.card.completed_tasks.description=Indica todas as tarefas já finalizadas, servindo como um termômetro da produtividade e do progresso das atividades.
+
+# --- SIDEBAR / NAVIGATION (Hovers & Labels) ---
+navigation.sidebar.help=Ajuda
+navigation.sidebar.dashboard=Dashboard
+navigation.sidebar.calendar=Calendário
+navigation.sidebar.clients=Clientes
+navigation.sidebar.reports=Relatórios
+navigation.sidebar.tasks=Tarefas
+navigation.sidebar.settings=Configuração
+navigation.sidebar.admin=Administração

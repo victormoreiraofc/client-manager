@@ -2,6 +2,7 @@ package screen;
 
 import Data.CTCONTAB;
 import Data.Cliente;
+import Data.I18nManager;
 import Data.IconUtil;
 import Data.Usuario;
 import Data.PermissaoUtil;
@@ -15,6 +16,7 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
@@ -40,6 +42,7 @@ public class TelaMenu extends javax.swing.JFrame {
     public TelaMenu(Usuario usuario) {
         this.usuarioLogado = usuario;
         initComponents();
+        atualizarTextos();
         ChartPanel g1 = criarMiniGrafico(new Color(0, 200, 255), "Clientes Mensais");
         g1.setOpaque(false);
         jPanelBackground.add(g1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 172, 86));
@@ -83,7 +86,7 @@ public class TelaMenu extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            btnFecharTela.setText("X"); // fallback
+            btnFecharTela.setText("X"); 
         }
 
         try {
@@ -97,7 +100,7 @@ public class TelaMenu extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            btnMaximizarTela.setText("[]"); // fallback
+            btnMaximizarTela.setText("[]"); 
         }
 
         try {
@@ -111,7 +114,7 @@ public class TelaMenu extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            btnMinimizarTela.setText("-"); // fallback
+            btnMinimizarTela.setText("-"); 
         }
 
         try {
@@ -125,7 +128,7 @@ public class TelaMenu extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            lblDivisorTela.setText("|"); // fallback
+            lblDivisorTela.setText("|");
         }
 
         try {
@@ -139,7 +142,7 @@ public class TelaMenu extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            btnInfo.setText("?"); // fallback
+            btnInfo.setText("?"); 
         }
 
         try {
@@ -559,6 +562,37 @@ public class TelaMenu extends javax.swing.JFrame {
             Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
             jlibVariavel.setText("Erro");
         }
+    }
+
+    private void aplicarFonteSistema(java.awt.Container container, boolean isAsiatico) {
+        for (java.awt.Component c : container.getComponents()) {
+
+            Font fonteAtual = c.getFont();
+            int tamanho = fonteAtual.getSize();
+            int estilo = fonteAtual.getStyle();
+
+            if (isAsiatico) {
+                c.setFont(new Font("SansSerif", estilo, tamanho));
+            } else {
+                c.setFont(FonteUtils.carregarLato(tamanho).deriveFont(estilo));
+            }
+
+            if (c instanceof java.awt.Container) {
+                aplicarFonteSistema((java.awt.Container) c, isAsiatico);
+            }
+        }
+    }
+
+    private void atualizarTextos() {
+        Locale loc = I18nManager.getCurrentLocale();
+        String lang = loc.getLanguage();
+        boolean isAsiatico = lang.equals("ja") || lang.equals("ko") || lang.equals("zh");
+
+        aplicarFonteSistema(this.getContentPane(), isAsiatico);
+
+        setTitle(I18nManager.getString("screen_login_windown_title"));
+
+        lbltextinho1.setText(I18nManager.getString("screen_login_title_login"));
     }
 
     @SuppressWarnings("unchecked")
