@@ -45,27 +45,27 @@ public class TelaMenu extends javax.swing.JFrame {
         atualizarTextos();
         ChartPanel g1 = criarMiniGrafico(new Color(0, 200, 255), "Clientes Mensais");
         g1.setOpaque(false);
-        jPanelBackground.add(g1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 172, 86));
+        jPanelBackground.add(g1, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 40, 172, 86));
 
         ChartPanel g2 = criarMiniGrafico(new Color(0, 150, 255), "Total de Clientes");
         g2.setOpaque(false);
-        jPanelBackground1.add(g2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 172, 86));
+        jPanelBackground1.add(g2, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 40, 172, 86));
 
         ChartPanel g3 = criarMiniGrafico(new Color(255, 180, 0), "Tarefas Pendentes");
         g3.setOpaque(false);
-        jPanelBackground2.add(g3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 172, 86));
+        jPanelBackground2.add(g3, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 40, 172, 86));
 
         ChartPanel g4 = criarMiniGrafico(new Color(180, 100, 255), "Total de Relatórios");
         g4.setOpaque(false);
-        jPanelBackground3.add(g4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 172, 86));
+        jPanelBackground3.add(g4, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 40, 172, 86));
 
         ChartPanel g5 = criarMiniGrafico(new Color(255, 80, 80), "Tarefas não Realizadas");
         g5.setOpaque(false);
-        jPanelBackground4.add(g5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 172, 86));
+        jPanelBackground4.add(g5, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 40, 172, 86));
 
         ChartPanel g6 = criarMiniGrafico(new Color(80, 255, 160), "Tarefas Finalizadas");
         g6.setOpaque(false);
-        jPanelBackground5.add(g6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 172, 86));
+        jPanelBackground5.add(g6, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 40, 172, 86));
 
         addHoverLabel(btnDashboard, "Dashboard");
         addHoverLabel(btnCalendario, "Calendário");
@@ -74,6 +74,9 @@ public class TelaMenu extends javax.swing.JFrame {
         addHoverLabel(btnTarefas, "Tarefas");
         addHoverLabel(btnConfiguracoes, "Configuração");
         addHoverLabel(btnAdministracao, "Administração");
+        addHoverLabel(btnNotificacoes, "Notificações");
+        addHoverLabel(btnInfo, "Ajuda");
+        addHoverLabel(btnUserIcon, usuarioLogado.getUsuario());
 
         try {
             java.net.URL url = getClass().getResource("/images/Close Icon.png");
@@ -86,7 +89,7 @@ public class TelaMenu extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            btnFecharTela.setText("X"); 
+            btnFecharTela.setText("X");
         }
 
         try {
@@ -100,7 +103,7 @@ public class TelaMenu extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            btnMaximizarTela.setText("[]"); 
+            btnMaximizarTela.setText("[]");
         }
 
         try {
@@ -114,7 +117,7 @@ public class TelaMenu extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            btnMinimizarTela.setText("-"); 
+            btnMinimizarTela.setText("-");
         }
 
         try {
@@ -142,7 +145,7 @@ public class TelaMenu extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            btnInfo.setText("?"); 
+            btnInfo.setText("?");
         }
 
         try {
@@ -271,6 +274,91 @@ public class TelaMenu extends javax.swing.JFrame {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+
+        try {
+            java.net.URL url = getClass().getResource("/images/Monthly Clients Icon.png");
+            if (url == null) {
+                System.err.println("Imagem não encontrada. Verifique: /images/Monthly Clients Icon.png ou src/images/Monthly Clients Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+                lblIconDashboard_1.setIcon(new javax.swing.ImageIcon(img));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            lblIconDashboard_1.setText("LOGO");
+        }
+
+        try {
+            java.net.URL url = getClass().getResource("/images/Total Clients Icon.png");
+            if (url == null) {
+                System.err.println("Imagem não encontrada. Verifique: /images/Total Clients Icon.png ou src/images/Total Clients Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+                lblIconDashboard_2.setIcon(new javax.swing.ImageIcon(img));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            lblIconDashboard_2.setText("LOGO");
+        }
+
+        try {
+            java.net.URL url = getClass().getResource("/images/Pending Tasks Icon.png");
+            if (url == null) {
+                System.err.println("Imagem não encontrada. Verifique: /images/Pending Tasks Icon.png ou src/images/Pending Tasks Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+                lblIconDashboard_3.setIcon(new javax.swing.ImageIcon(img));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            lblIconDashboard_3.setText("LOGO");
+        }
+
+        try {
+            java.net.URL url = getClass().getResource("/images/Total Reports Icon.png");
+            if (url == null) {
+                System.err.println("Imagem não encontrada. Verifique: /images/Total Reports Icon.png ou src/images/Total Reports Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+                lblIconDashboard_4.setIcon(new javax.swing.ImageIcon(img));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            lblIconDashboard_4.setText("LOGO");
+        }
+
+        try {
+            java.net.URL url = getClass().getResource("/images/Unfulfilled Tasks Icon.png");
+            if (url == null) {
+                System.err.println("Imagem não encontrada. Verifique: /images/Unfulfilled Tasks Icon.png ou src/images/Unfulfilled Tasks Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+                lblIconDashboard_5.setIcon(new javax.swing.ImageIcon(img));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            lblIconDashboard_5.setText("LOGO");
+        }
+
+        try {
+            java.net.URL url = getClass().getResource("/images/Report Completed Icon.png");
+            if (url == null) {
+                System.err.println("Imagem não encontrada. Verifique: /images/Report Completed Icon.png ou src/images/Report Completed Icon.png");
+            } else {
+                java.awt.Image img = javax.imageio.ImageIO.read(url)
+                        .getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+                lblIconDashboard_6.setIcon(new javax.swing.ImageIcon(img));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            lblIconDashboard_6.setText("LOGO");
+        }
+
         salvarFonteOriginal();
         carregarDadosSimultaneamente();
         exibirMensagemCarregando();
@@ -347,9 +435,22 @@ public class TelaMenu extends javax.swing.JFrame {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 label.setSize(label.getPreferredSize());
-                label.setLocation(botao.getX() + botao.getWidth() + 30, botao.getY() + (botao.getHeight() - label.getHeight()) / 2);
                 label.setVisible(true);
                 botao.getParent().repaint();
+
+                if (botao == btnUserIcon) {
+                    label.setLocation(
+                            botao.getParent().getWidth() - label.getWidth() - 10,
+                            botao.getY() + botao.getHeight() + 5);
+                } else if (botao == btnNotificacoes || botao == btnInfo) {
+                    label.setLocation(
+                            botao.getX() + (botao.getWidth() - label.getWidth()) / 2,
+                            botao.getY() + botao.getHeight() + 5);
+                } else {
+                    label.setLocation(
+                            botao.getX() + botao.getWidth() + 30,
+                            botao.getY() + (botao.getHeight() - label.getHeight()) / 2);
+                }
             }
 
             @Override
@@ -357,6 +458,7 @@ public class TelaMenu extends javax.swing.JFrame {
                 label.setVisible(false);
             }
         });
+
     }
 
     private void aplicarHoverIcon(javax.swing.JComponent componente,
@@ -498,69 +600,77 @@ public class TelaMenu extends javax.swing.JFrame {
         }.execute();
     }
 
+    private String formatarValorDashboard(int valor) {
+        if (valor > 99999) {
+            valor = 99999;
+        }
+
+        return String.format("%03d", valor);
+    }
+
     private void atualizarTotalClientes() {
         try {
             int total = CTCONTAB.clienteTotalRegis();
-            jlibVariavel1.setText(String.valueOf(total));
+            jlibVariavel1.setText(formatarValorDashboard(total));
             restaurarFonteOriginal();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
-            jlibVariavel1.setText("Erro");
+            jlibVariavel1.setText("000");
         }
     }
 
     private void tarefaPendentes() {
         try {
             int pendentes = CTCONTAB.tarefaPendentes();
-            jlibVariavel2.setText(String.valueOf(pendentes));
+            jlibVariavel2.setText(formatarValorDashboard(pendentes));
             restaurarFonteOriginal();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
-            jlibVariavel2.setText("Erro");
+            jlibVariavel2.setText("000");
         }
     }
 
     private void tarefasNaoRealizadas() {
         try {
             int andamento = CTCONTAB.serviçosNaoRealizados();
-            jlibVariavel4.setText(String.valueOf(andamento));
+            jlibVariavel4.setText(formatarValorDashboard(andamento));
             restaurarFonteOriginal();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
-            jlibVariavel4.setText("Erro");
+            jlibVariavel4.setText("000");
         }
     }
 
     private void tarefasRealizadas() {
         try {
             int concluido = CTCONTAB.serviçosRealizados();
-            jlibVariavel5.setText(String.valueOf(concluido));
+            jlibVariavel5.setText(formatarValorDashboard(concluido));
             restaurarFonteOriginal();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
-            jlibVariavel5.setText("Erro");
+            jlibVariavel5.setText("000");
         }
     }
 
     private void totalRelatorios() {
         try {
             int total = CTCONTAB.totalRelatorios();
-            jlibVariavel3.setText(String.valueOf(total));
+            jlibVariavel3.setText(formatarValorDashboard(total));
             restaurarFonteOriginal();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
-            jlibVariavel3.setText("Erro");
+            jlibVariavel3.setText("000");
         }
     }
 
     private void novosclientesdomes() {
         try {
             int total = CTCONTAB.novosclientesdomes();
-            jlibVariavel.setText(String.valueOf(total));
+            jlibVariavel.setText(formatarValorDashboard(total));
             restaurarFonteOriginal();
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
-            jlibVariavel.setText("Erro");
+            jlibVariavel.setText("000");
         }
     }
 
@@ -574,7 +684,6 @@ public class TelaMenu extends javax.swing.JFrame {
             if (isAsiatico) {
                 c.setFont(new Font("SansSerif", estilo, tamanho));
             } else {
-                c.setFont(FonteUtils.carregarLato(tamanho).deriveFont(estilo));
             }
 
             if (c instanceof java.awt.Container) {
@@ -590,9 +699,37 @@ public class TelaMenu extends javax.swing.JFrame {
 
         aplicarFonteSistema(this.getContentPane(), isAsiatico);
 
-        setTitle(I18nManager.getString("screen_login_windown_title"));
+        setTitle(I18nManager.getString("auth.login.window_title"));
 
-        lbltextinho1.setText(I18nManager.getString("screen_login_title_login"));
+        lblTituloPagina.setText(I18nManager.getString("dashboard.header.title"));
+        jlibCadastrarNovo.setText(I18nManager.getString("dashboard.banner.action.register"));
+        lblNovosClientesMes.setText(I18nManager.getString("dashboard.card.new_clients.header"));
+        jLabel2.setText(I18nManager.getString("dashboard.card.new_clients.title"));
+        jLabel1.setText(I18nManager.getString("dashboard.card.new_clients.subtitle"));
+        lbltextinho1.setText(I18nManager.getString("dashboard.card.new_clients.description"));
+        lblTotalClientes.setText(I18nManager.getString("dashboard.card.total_clients.header"));
+        jLabel4.setText(I18nManager.getString("dashboard.card.total_clients.title"));
+        jLabel6.setText(I18nManager.getString("dashboard.card.total_clients.subtitle"));
+        lbltextinho2.setText(I18nManager.getString("dashboard.card.total_clients.description"));
+        lblTarefasPendentes.setText(I18nManager.getString("dashboard.card.pending_tasks.header"));
+        jLabel5.setText(I18nManager.getString("dashboard.card.pending_tasks.title"));
+        jLabel7.setText(I18nManager.getString("dashboard.card.pending_tasks.subtitle"));
+        lbltextinho3.setText(I18nManager.getString("dashboard.card.pending_tasks.description"));
+        lblTotalVendas.setText(I18nManager.getString("dashboard.card.total_reports.header"));
+        jLabel8.setText(I18nManager.getString("dashboard.card.total_reports.title"));
+        jLabel9.setText(I18nManager.getString("dashboard.card.total_reports.subtitle"));
+        lbltextinho4.setText(I18nManager.getString("dashboard.card.total_reports.description"));
+        lblServicosNaoRealizados.setText(I18nManager.getString("dashboard.card.unfinished_tasks.header"));
+        jLabel10.setText(I18nManager.getString("dashboard.card.unfinished_tasks.title"));
+        jLabel11.setText(I18nManager.getString("dashboard.card.unfinished_tasks.subtitle"));
+        lbltextinho5.setText(I18nManager.getString("dashboard.card.unfinished_tasks.description"));
+        lblServicosFinalizados.setText(I18nManager.getString("dashboard.card.completed_tasks.header"));
+        jLabel12.setText(I18nManager.getString("dashboard.card.completed_tasks.title"));
+        jLabel13.setText(I18nManager.getString("dashboard.card.completed_tasks.subtitle"));
+        lbltextinho6.setText(I18nManager.getString("dashboard.card.completed_tasks.description"));
+
+        this.getContentPane().revalidate();
+        this.getContentPane().repaint();
     }
 
     @SuppressWarnings("unchecked")
@@ -604,46 +741,76 @@ public class TelaMenu extends javax.swing.JFrame {
         btnCadastrar = new javax.swing.JButton();
         jPanelBackground = new javax.swing.JPanel();
         lblNovosClientesMes = new javax.swing.JLabel();
-        jlibVariavel = new javax.swing.JLabel();
+        lblIconPorcent1 = new javax.swing.JLabel();
+        lblIconPorcent = new javax.swing.JLabel();
+        jlibVariavelPorcent1 = new javax.swing.JLabel();
+        jlibVariavelPorcent = new javax.swing.JLabel();
         lbltextinho1 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        lblIcon1 = new javax.swing.JLabel();
+        lblIconDashboard_1 = new javax.swing.JLabel();
+        JPanelIconBackground_1 = new javax.swing.JPanel();
+        jlibVariavel = new javax.swing.JLabel();
         jPanelBackground1 = new javax.swing.JPanel();
         jlibVariavel1 = new javax.swing.JLabel();
         lblTotalClientes = new javax.swing.JLabel();
         lbltextinho2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        lblIcon2 = new javax.swing.JLabel();
+        lblIconDashboard_2 = new javax.swing.JLabel();
+        JPanelIconBackground_2 = new javax.swing.JPanel();
+        lblIconPorcent2 = new javax.swing.JLabel();
+        lblIconPorcent3 = new javax.swing.JLabel();
+        jlibVariavelPorcent2 = new javax.swing.JLabel();
+        jlibVariavelPorcent3 = new javax.swing.JLabel();
         jPanelBackground2 = new javax.swing.JPanel();
         lblTarefasPendentes = new javax.swing.JLabel();
         jlibVariavel2 = new javax.swing.JLabel();
         lbltextinho3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        lblIcon3 = new javax.swing.JLabel();
+        lblIconDashboard_3 = new javax.swing.JLabel();
+        JPanelIconBackground_3 = new javax.swing.JPanel();
+        lblIconPorcent4 = new javax.swing.JLabel();
+        lblIconPorcent5 = new javax.swing.JLabel();
+        jlibVariavelPorcent4 = new javax.swing.JLabel();
+        jlibVariavelPorcent5 = new javax.swing.JLabel();
         jPanelBackground3 = new javax.swing.JPanel();
         lblTotalVendas = new javax.swing.JLabel();
         jlibVariavel3 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         lbltextinho4 = new javax.swing.JLabel();
-        lblIcon4 = new javax.swing.JLabel();
+        lblIconDashboard_4 = new javax.swing.JLabel();
+        JPanelIconBackground_4 = new javax.swing.JPanel();
+        lblIconPorcent6 = new javax.swing.JLabel();
+        lblIconPorcent7 = new javax.swing.JLabel();
+        jlibVariavelPorcent6 = new javax.swing.JLabel();
+        jlibVariavelPorcent7 = new javax.swing.JLabel();
         jPanelBackground4 = new javax.swing.JPanel();
         lblServicosNaoRealizados = new javax.swing.JLabel();
         jlibVariavel4 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         lbltextinho5 = new javax.swing.JLabel();
-        lblIcon5 = new javax.swing.JLabel();
+        lblIconDashboard_5 = new javax.swing.JLabel();
+        JPanelIconBackground_5 = new javax.swing.JPanel();
+        lblIconPorcent8 = new javax.swing.JLabel();
+        lblIconPorcent9 = new javax.swing.JLabel();
+        jlibVariavelPorcent8 = new javax.swing.JLabel();
+        jlibVariavelPorcent9 = new javax.swing.JLabel();
         jPanelBackground5 = new javax.swing.JPanel();
         jlibVariavel5 = new javax.swing.JLabel();
         lblServicosFinalizados = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         lbltextinho6 = new javax.swing.JLabel();
-        lblIcon6 = new javax.swing.JLabel();
+        lblIconDashboard_6 = new javax.swing.JLabel();
+        JPanelIconBackground_6 = new javax.swing.JPanel();
+        lblIconPorcent10 = new javax.swing.JLabel();
+        lblIconPorcent11 = new javax.swing.JLabel();
+        jlibVariavelPorcent10 = new javax.swing.JLabel();
+        jlibVariavelPorcent11 = new javax.swing.JLabel();
         btnDashboard = new javax.swing.JButton();
         btnFecharTela = new javax.swing.JButton();
         lblUserIcon = new javax.swing.JLabel();
@@ -652,6 +819,7 @@ public class TelaMenu extends javax.swing.JFrame {
         lblLogo = new javax.swing.JLabel();
         lblLogoTexto = new javax.swing.JLabel();
         lblTituloPagina = new javax.swing.JLabel();
+        btnUserIcon = new javax.swing.JButton();
         btnNotificacoes = new javax.swing.JButton();
         btnClientes = new javax.swing.JButton();
         btnCalendario = new javax.swing.JButton();
@@ -671,13 +839,14 @@ public class TelaMenu extends javax.swing.JFrame {
 
         jlibCadastrarNovo.setFont(FonteUtils.carregarRoboto(22f));
         jlibCadastrarNovo.setForeground(new java.awt.Color(255, 255, 255));
+        jlibCadastrarNovo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jlibCadastrarNovo.setText("CADASTRAR NOVOS CLIENTES");
         getContentPane().add(jlibCadastrarNovo);
-        jlibCadastrarNovo.setBounds(1080, 150, 340, 40);
+        jlibCadastrarNovo.setBounds(790, 150, 610, 40);
 
         jlibSeta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/seta-direita.png"))); // NOI18N
         getContentPane().add(jlibSeta);
-        jlibSeta.setBounds(1363, 240, 50, 40);
+        jlibSeta.setBounds(1370, 230, 50, 40);
 
         btnCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cadastrar-imagem.jpg"))); // NOI18N
         btnCadastrar.setContentAreaFilled(false);
@@ -694,22 +863,33 @@ public class TelaMenu extends javax.swing.JFrame {
 
         lblNovosClientesMes.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblNovosClientesMes.setForeground(new java.awt.Color(255, 255, 255));
-        lblNovosClientesMes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNovosClientesMes.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblNovosClientesMes.setText("Clientes Mensais");
         lblNovosClientesMes.setToolTipText("");
-        jPanelBackground.add(lblNovosClientesMes, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 0, 120, -1));
+        jPanelBackground.add(lblNovosClientesMes, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 5, 200, -1));
+        jPanelBackground.add(lblIconPorcent1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 185, 20, 20));
+        jPanelBackground.add(lblIconPorcent, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 65, 20, 20));
 
-        jlibVariavel.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
-        jlibVariavel.setForeground(new java.awt.Color(255, 255, 255));
-        jlibVariavel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlibVariavel.setText("000");
-        jlibVariavel.setPreferredSize(new java.awt.Dimension(55, 20));
-        jPanelBackground.add(jlibVariavel, new org.netbeans.lib.awtextra.AbsoluteConstraints(-93, 140, 250, 60));
+        jlibVariavelPorcent1.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        jlibVariavelPorcent1.setForeground(new java.awt.Color(255, 255, 255));
+        jlibVariavelPorcent1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jlibVariavelPorcent1.setText("0.000 %");
+        jlibVariavelPorcent1.setPreferredSize(new java.awt.Dimension(55, 20));
+        jPanelBackground.add(jlibVariavelPorcent1, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 190, 50, 10));
+
+        jlibVariavelPorcent.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jlibVariavelPorcent.setForeground(new java.awt.Color(255, 255, 255));
+        jlibVariavelPorcent.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jlibVariavelPorcent.setText("00%");
+        jlibVariavelPorcent.setPreferredSize(new java.awt.Dimension(55, 20));
+        jPanelBackground.add(jlibVariavelPorcent, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 50, 50));
 
         lbltextinho1.setFont(FonteUtils.carregarInterSemiBold(11f));
         lbltextinho1.setForeground(new java.awt.Color(156, 163, 175));
         lbltextinho1.setText("<html> Este painel mostra a quantidade total<br>  de novos clientes que adquirimos no<br> mês, permitindo acompanhar o crescimento do nosso público.  </html>");
-        jPanelBackground.add(lbltextinho1, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 220, 210, 80));
+        lbltextinho1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        lbltextinho1.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        jPanelBackground.add(lbltextinho1, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 225, 195, 90));
 
         jLabel1.setFont(FonteUtils.carregarInterSemiBold(11f));
         jLabel1.setForeground(new java.awt.Color(199, 199, 199));
@@ -719,10 +899,18 @@ public class TelaMenu extends javax.swing.JFrame {
         jLabel2.setFont(FonteUtils.carregarInterSemiBold(11f));
         jLabel2.setForeground(new java.awt.Color(199, 199, 199));
         jLabel2.setText("Novos clientes nesse mês");
-        jPanelBackground.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 126, 140, 20));
+        jPanelBackground.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 126, 200, 20));
+        jPanelBackground.add(lblIconDashboard_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 155, 40, 40));
 
-        lblIcon1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Icon Badge.png"))); // NOI18N
-        jPanelBackground.add(lblIcon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 50, -1));
+        JPanelIconBackground_1.setBackground(new java.awt.Color(0, 217, 255));
+        jPanelBackground.add(JPanelIconBackground_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 150, 50, 50));
+
+        jlibVariavel.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jlibVariavel.setForeground(new java.awt.Color(255, 255, 255));
+        jlibVariavel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jlibVariavel.setText("000");
+        jlibVariavel.setPreferredSize(new java.awt.Dimension(55, 20));
+        jPanelBackground.add(jlibVariavel, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 140, 150, 50));
 
         getContentPane().add(jPanelBackground);
         jPanelBackground.setBounds(110, 320, 208, 303);
@@ -730,35 +918,54 @@ public class TelaMenu extends javax.swing.JFrame {
         jPanelBackground1.setBackground(new java.awt.Color(255, 255, 255, 15));
         jPanelBackground1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jlibVariavel1.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
+        jlibVariavel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jlibVariavel1.setForeground(new java.awt.Color(255, 255, 255));
-        jlibVariavel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlibVariavel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jlibVariavel1.setText("000");
-        jPanelBackground1.add(jlibVariavel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-93, 140, 250, 60));
+        jPanelBackground1.add(jlibVariavel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 140, 150, 50));
 
         lblTotalClientes.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTotalClientes.setForeground(new java.awt.Color(255, 255, 255));
-        lblTotalClientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTotalClientes.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblTotalClientes.setText("Total de Clientes");
-        jPanelBackground1.add(lblTotalClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 0, 120, -1));
+        jPanelBackground1.add(lblTotalClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 5, 200, -1));
 
         lbltextinho2.setFont(FonteUtils.carregarInterSemiBold(11f));
         lbltextinho2.setForeground(new java.awt.Color(156, 163, 175));
         lbltextinho2.setText("<html>Este painel mostra o total acumulado<br> de clientes cadastrados, permitindo acompanhar o crescimento da<br>  base ao longo do tempo. </html>");
-        jPanelBackground1.add(lbltextinho2, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 220, 210, 80));
+        lbltextinho2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        lbltextinho2.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        jPanelBackground1.add(lbltextinho2, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 225, 195, 90));
 
         jLabel4.setFont(FonteUtils.carregarInterSemiBold(11f));
         jLabel4.setForeground(new java.awt.Color(199, 199, 199));
         jLabel4.setText("Todos os clientes registrados");
-        jPanelBackground1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 130, 160, -1));
+        jPanelBackground1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 130, 200, -1));
 
         jLabel6.setFont(FonteUtils.carregarInterSemiBold(11f));
         jLabel6.setForeground(new java.awt.Color(199, 199, 199));
         jLabel6.setText("Número bruto de clientes registrados");
         jPanelBackground1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 210, -1, -1));
+        jPanelBackground1.add(lblIconDashboard_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 155, 40, 40));
 
-        lblIcon2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Icon Badge1.png"))); // NOI18N
-        jPanelBackground1.add(lblIcon2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 50, -1));
+        JPanelIconBackground_2.setBackground(new java.awt.Color(79, 172, 255));
+        jPanelBackground1.add(JPanelIconBackground_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 150, 50, 50));
+        jPanelBackground1.add(lblIconPorcent2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 185, 20, 20));
+        jPanelBackground1.add(lblIconPorcent3, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 65, 20, 20));
+
+        jlibVariavelPorcent2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jlibVariavelPorcent2.setForeground(new java.awt.Color(255, 255, 255));
+        jlibVariavelPorcent2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jlibVariavelPorcent2.setText("00%");
+        jlibVariavelPorcent2.setPreferredSize(new java.awt.Dimension(55, 20));
+        jPanelBackground1.add(jlibVariavelPorcent2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 50, 50));
+
+        jlibVariavelPorcent3.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        jlibVariavelPorcent3.setForeground(new java.awt.Color(255, 255, 255));
+        jlibVariavelPorcent3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jlibVariavelPorcent3.setText("0.000 %");
+        jlibVariavelPorcent3.setPreferredSize(new java.awt.Dimension(55, 20));
+        jPanelBackground1.add(jlibVariavelPorcent3, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 190, 50, 10));
 
         getContentPane().add(jPanelBackground1);
         jPanelBackground1.setBounds(330, 320, 208, 303);
@@ -768,33 +975,52 @@ public class TelaMenu extends javax.swing.JFrame {
 
         lblTarefasPendentes.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTarefasPendentes.setForeground(new java.awt.Color(255, 255, 255));
-        lblTarefasPendentes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTarefasPendentes.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblTarefasPendentes.setText("Tarefas Pendentes");
-        jPanelBackground2.add(lblTarefasPendentes, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 0, -1, -1));
+        jPanelBackground2.add(lblTarefasPendentes, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 5, 200, -1));
 
-        jlibVariavel2.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
+        jlibVariavel2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jlibVariavel2.setForeground(new java.awt.Color(255, 255, 255));
-        jlibVariavel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlibVariavel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jlibVariavel2.setText("000");
-        jPanelBackground2.add(jlibVariavel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-93, 140, 250, 60));
+        jPanelBackground2.add(jlibVariavel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 140, 150, 50));
 
         lbltextinho3.setFont(FonteUtils.carregarInterSemiBold(11f));
         lbltextinho3.setForeground(new java.awt.Color(156, 163, 175));
         lbltextinho3.setText("<html>Este painel indica todas as tarefas que<br>  ainda estão pendentes, facilitando<br> o controle das demandas que<br>  precisam ser concluídas. </html>");
-        jPanelBackground2.add(lbltextinho3, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 220, 210, 80));
+        lbltextinho3.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        lbltextinho3.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        jPanelBackground2.add(lbltextinho3, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 225, 195, 90));
 
         jLabel5.setFont(FonteUtils.carregarInterSemiBold(11f));
         jLabel5.setForeground(new java.awt.Color(199, 199, 199));
         jLabel5.setText("Todas as tarefas pendentes");
-        jPanelBackground2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 130, 160, -1));
+        jPanelBackground2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 130, 200, -1));
 
         jLabel7.setFont(FonteUtils.carregarInterSemiBold(11f));
         jLabel7.setForeground(new java.awt.Color(199, 199, 199));
         jLabel7.setText("Todas as tarefas pendentes");
         jPanelBackground2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 210, -1, -1));
+        jPanelBackground2.add(lblIconDashboard_3, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 155, 40, 40));
 
-        lblIcon3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Icon Badge2.png"))); // NOI18N
-        jPanelBackground2.add(lblIcon3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 50, -1));
+        JPanelIconBackground_3.setBackground(new java.awt.Color(255, 183, 77));
+        jPanelBackground2.add(JPanelIconBackground_3, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 150, 50, 50));
+        jPanelBackground2.add(lblIconPorcent4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 185, 20, 20));
+        jPanelBackground2.add(lblIconPorcent5, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 65, 20, 20));
+
+        jlibVariavelPorcent4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jlibVariavelPorcent4.setForeground(new java.awt.Color(255, 255, 255));
+        jlibVariavelPorcent4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jlibVariavelPorcent4.setText("00%");
+        jlibVariavelPorcent4.setPreferredSize(new java.awt.Dimension(55, 20));
+        jPanelBackground2.add(jlibVariavelPorcent4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 50, 50));
+
+        jlibVariavelPorcent5.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        jlibVariavelPorcent5.setForeground(new java.awt.Color(255, 255, 255));
+        jlibVariavelPorcent5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jlibVariavelPorcent5.setText("0.000 %");
+        jlibVariavelPorcent5.setPreferredSize(new java.awt.Dimension(55, 20));
+        jPanelBackground2.add(jlibVariavelPorcent5, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 190, 50, 10));
 
         getContentPane().add(jPanelBackground2);
         jPanelBackground2.setBounds(550, 320, 208, 303);
@@ -804,20 +1030,20 @@ public class TelaMenu extends javax.swing.JFrame {
 
         lblTotalVendas.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTotalVendas.setForeground(new java.awt.Color(255, 255, 255));
-        lblTotalVendas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTotalVendas.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblTotalVendas.setText("Total de Relatórios");
-        jPanelBackground3.add(lblTotalVendas, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 0, -1, -1));
+        jPanelBackground3.add(lblTotalVendas, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 5, 200, -1));
 
-        jlibVariavel3.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
+        jlibVariavel3.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jlibVariavel3.setForeground(new java.awt.Color(255, 255, 255));
-        jlibVariavel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlibVariavel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jlibVariavel3.setText("000");
-        jPanelBackground3.add(jlibVariavel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(-93, 140, 250, 60));
+        jPanelBackground3.add(jlibVariavel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 140, 150, 50));
 
         jLabel8.setFont(FonteUtils.carregarInterSemiBold(11f));
         jLabel8.setForeground(new java.awt.Color(199, 199, 199));
         jLabel8.setText("Todas os relatórios feitos");
-        jPanelBackground3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 130, 160, -1));
+        jPanelBackground3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 130, 200, -1));
 
         jLabel9.setFont(FonteUtils.carregarInterSemiBold(11f));
         jLabel9.setForeground(new java.awt.Color(199, 199, 199));
@@ -827,10 +1053,29 @@ public class TelaMenu extends javax.swing.JFrame {
         lbltextinho4.setFont(FonteUtils.carregarInterSemiBold(11f));
         lbltextinho4.setForeground(new java.awt.Color(156, 163, 175));
         lbltextinho4.setText("<html>Aqui você acompanha quantos <br> relatórios foram emitidos,<br>  permitindo analisar o volume de<br>  registros e atividades documentadas. </html>");
-        jPanelBackground3.add(lbltextinho4, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 220, 210, 80));
+        lbltextinho4.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        lbltextinho4.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        jPanelBackground3.add(lbltextinho4, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 225, 195, 90));
+        jPanelBackground3.add(lblIconDashboard_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 155, 40, 40));
 
-        lblIcon4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Icon Badge3.png"))); // NOI18N
-        jPanelBackground3.add(lblIcon4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 50, -1));
+        JPanelIconBackground_4.setBackground(new java.awt.Color(186, 104, 200));
+        jPanelBackground3.add(JPanelIconBackground_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 150, 50, 50));
+        jPanelBackground3.add(lblIconPorcent6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 185, 20, 20));
+        jPanelBackground3.add(lblIconPorcent7, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 65, 20, 20));
+
+        jlibVariavelPorcent6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jlibVariavelPorcent6.setForeground(new java.awt.Color(255, 255, 255));
+        jlibVariavelPorcent6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jlibVariavelPorcent6.setText("00%");
+        jlibVariavelPorcent6.setPreferredSize(new java.awt.Dimension(55, 20));
+        jPanelBackground3.add(jlibVariavelPorcent6, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 50, 50));
+
+        jlibVariavelPorcent7.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        jlibVariavelPorcent7.setForeground(new java.awt.Color(255, 255, 255));
+        jlibVariavelPorcent7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jlibVariavelPorcent7.setText("0.000 %");
+        jlibVariavelPorcent7.setPreferredSize(new java.awt.Dimension(55, 20));
+        jPanelBackground3.add(jlibVariavelPorcent7, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 190, 50, 10));
 
         getContentPane().add(jPanelBackground3);
         jPanelBackground3.setBounds(770, 320, 208, 303);
@@ -840,20 +1085,20 @@ public class TelaMenu extends javax.swing.JFrame {
 
         lblServicosNaoRealizados.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblServicosNaoRealizados.setForeground(new java.awt.Color(255, 255, 255));
-        lblServicosNaoRealizados.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblServicosNaoRealizados.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblServicosNaoRealizados.setText("Tarefas não Realizadas");
-        jPanelBackground4.add(lblServicosNaoRealizados, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 0, -1, -1));
+        jPanelBackground4.add(lblServicosNaoRealizados, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 5, 200, -1));
 
-        jlibVariavel4.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
+        jlibVariavel4.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jlibVariavel4.setForeground(new java.awt.Color(255, 255, 255));
-        jlibVariavel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlibVariavel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jlibVariavel4.setText("000");
-        jPanelBackground4.add(jlibVariavel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(-93, 140, 250, 60));
+        jPanelBackground4.add(jlibVariavel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 140, 150, 50));
 
         jLabel10.setFont(FonteUtils.carregarInterSemiBold(11f));
         jLabel10.setForeground(new java.awt.Color(199, 199, 199));
         jLabel10.setText("Tarefas não realizadas");
-        jPanelBackground4.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 130, 160, -1));
+        jPanelBackground4.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 130, 200, -1));
 
         jLabel11.setFont(FonteUtils.carregarInterSemiBold(11f));
         jLabel11.setForeground(new java.awt.Color(199, 199, 199));
@@ -863,10 +1108,29 @@ public class TelaMenu extends javax.swing.JFrame {
         lbltextinho5.setFont(FonteUtils.carregarInterSemiBold(11f));
         lbltextinho5.setForeground(new java.awt.Color(156, 163, 175));
         lbltextinho5.setText("<html>Este painel mostra as tarefas<br>  que foram iniciadas mas não<br>  finalizadas, ajudando a identificar<br>  gargalos e priorizar ações. </html>");
-        jPanelBackground4.add(lbltextinho5, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 220, 210, 80));
+        lbltextinho5.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        lbltextinho5.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        jPanelBackground4.add(lbltextinho5, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 225, 195, 90));
+        jPanelBackground4.add(lblIconDashboard_5, new org.netbeans.lib.awtextra.AbsoluteConstraints(155, 155, 40, 40));
 
-        lblIcon5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Icon Badge4.png"))); // NOI18N
-        jPanelBackground4.add(lblIcon5, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 50, -1));
+        JPanelIconBackground_5.setBackground(new java.awt.Color(255, 82, 82));
+        jPanelBackground4.add(JPanelIconBackground_5, new org.netbeans.lib.awtextra.AbsoluteConstraints(145, 150, 50, 50));
+        jPanelBackground4.add(lblIconPorcent8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 185, 20, 20));
+        jPanelBackground4.add(lblIconPorcent9, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 65, 20, 20));
+
+        jlibVariavelPorcent8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jlibVariavelPorcent8.setForeground(new java.awt.Color(255, 255, 255));
+        jlibVariavelPorcent8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jlibVariavelPorcent8.setText("00%");
+        jlibVariavelPorcent8.setPreferredSize(new java.awt.Dimension(55, 20));
+        jPanelBackground4.add(jlibVariavelPorcent8, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 50, 50));
+
+        jlibVariavelPorcent9.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        jlibVariavelPorcent9.setForeground(new java.awt.Color(255, 255, 255));
+        jlibVariavelPorcent9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jlibVariavelPorcent9.setText("0.000 %");
+        jlibVariavelPorcent9.setPreferredSize(new java.awt.Dimension(55, 20));
+        jPanelBackground4.add(jlibVariavelPorcent9, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 190, 50, 10));
 
         getContentPane().add(jPanelBackground4);
         jPanelBackground4.setBounds(990, 320, 208, 303);
@@ -874,22 +1138,22 @@ public class TelaMenu extends javax.swing.JFrame {
         jPanelBackground5.setBackground(new java.awt.Color(255, 255, 255, 15));
         jPanelBackground5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jlibVariavel5.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
+        jlibVariavel5.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jlibVariavel5.setForeground(new java.awt.Color(255, 255, 255));
-        jlibVariavel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlibVariavel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jlibVariavel5.setText("000");
-        jPanelBackground5.add(jlibVariavel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(-93, 140, 250, 60));
+        jPanelBackground5.add(jlibVariavel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 140, 150, 50));
 
         lblServicosFinalizados.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblServicosFinalizados.setForeground(new java.awt.Color(255, 255, 255));
-        lblServicosFinalizados.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblServicosFinalizados.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblServicosFinalizados.setText("Tarefas Finalizadas");
-        jPanelBackground5.add(lblServicosFinalizados, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 0, -1, -1));
+        jPanelBackground5.add(lblServicosFinalizados, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 5, 200, -1));
 
         jLabel12.setFont(FonteUtils.carregarInterSemiBold(11f));
         jLabel12.setForeground(new java.awt.Color(199, 199, 199));
         jLabel12.setText("Tarefas já realizadas");
-        jPanelBackground5.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 130, 160, -1));
+        jPanelBackground5.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 130, 200, -1));
 
         jLabel13.setFont(FonteUtils.carregarInterSemiBold(11f));
         jLabel13.setForeground(new java.awt.Color(199, 199, 199));
@@ -899,10 +1163,29 @@ public class TelaMenu extends javax.swing.JFrame {
         lbltextinho6.setFont(FonteUtils.carregarInterSemiBold(11f));
         lbltextinho6.setForeground(new java.awt.Color(156, 163, 175));
         lbltextinho6.setText("<html>Indica todas as tarefas já finalizadas,<br> servindo como um termômetro da <br> produtividade e do progresso das atividades. </html>");
-        jPanelBackground5.add(lbltextinho6, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 220, 210, 80));
+        lbltextinho6.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        lbltextinho6.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        jPanelBackground5.add(lbltextinho6, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 225, 195, 90));
+        jPanelBackground5.add(lblIconDashboard_6, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 155, 40, 40));
 
-        lblIcon6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Icon Badge5.png"))); // NOI18N
-        jPanelBackground5.add(lblIcon6, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 50, -1));
+        JPanelIconBackground_6.setBackground(new java.awt.Color(58, 255, 92));
+        jPanelBackground5.add(JPanelIconBackground_6, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 50, 50));
+        jPanelBackground5.add(lblIconPorcent10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 185, 20, 20));
+        jPanelBackground5.add(lblIconPorcent11, new org.netbeans.lib.awtextra.AbsoluteConstraints(185, 65, 20, 20));
+
+        jlibVariavelPorcent10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jlibVariavelPorcent10.setForeground(new java.awt.Color(255, 255, 255));
+        jlibVariavelPorcent10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jlibVariavelPorcent10.setText("00%");
+        jlibVariavelPorcent10.setPreferredSize(new java.awt.Dimension(55, 20));
+        jPanelBackground5.add(jlibVariavelPorcent10, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 50, 50));
+
+        jlibVariavelPorcent11.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        jlibVariavelPorcent11.setForeground(new java.awt.Color(255, 255, 255));
+        jlibVariavelPorcent11.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jlibVariavelPorcent11.setText("0.000 %");
+        jlibVariavelPorcent11.setPreferredSize(new java.awt.Dimension(55, 20));
+        jPanelBackground5.add(jlibVariavelPorcent11, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 190, 50, 10));
 
         getContentPane().add(jPanelBackground5);
         jPanelBackground5.setBounds(1210, 320, 203, 303);
@@ -955,10 +1238,20 @@ public class TelaMenu extends javax.swing.JFrame {
         lblLogoTexto.setBounds(80, 35, 176, 46);
 
         lblTituloPagina.setForeground(new java.awt.Color(255, 255, 255));
-        lblTituloPagina.setText("DASHBOARD");
+        lblTituloPagina.setText("Dashboard");
         lblTituloPagina.setFont(FonteUtils.carregarRoboto(13f));
         getContentPane().add(lblTituloPagina);
         lblTituloPagina.setBounds(720, 3, 120, 20);
+
+        btnUserIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Administrative Icon.png"))); // NOI18N
+        btnUserIcon.setContentAreaFilled(false);
+        btnUserIcon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUserIconActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnUserIcon);
+        btnUserIcon.setBounds(1390, 30, 50, 50);
 
         btnNotificacoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Notification Bell.png"))); // NOI18N
         btnNotificacoes.setContentAreaFilled(false);
@@ -1147,9 +1440,19 @@ public class TelaMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnMaximizarTelaActionPerformed
 
+    private void btnUserIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserIconActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUserIconActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
+    private javax.swing.JPanel JPanelIconBackground_1;
+    private javax.swing.JPanel JPanelIconBackground_2;
+    private javax.swing.JPanel JPanelIconBackground_3;
+    private javax.swing.JPanel JPanelIconBackground_4;
+    private javax.swing.JPanel JPanelIconBackground_5;
+    private javax.swing.JPanel JPanelIconBackground_6;
     private javax.swing.JButton btnAdministracao;
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnCalendario;
@@ -1163,6 +1466,7 @@ public class TelaMenu extends javax.swing.JFrame {
     private javax.swing.JButton btnNotificacoes;
     private javax.swing.JButton btnRelatorios;
     private javax.swing.JButton btnTarefas;
+    private javax.swing.JButton btnUserIcon;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1189,15 +1493,39 @@ public class TelaMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jlibVariavel3;
     private javax.swing.JLabel jlibVariavel4;
     private javax.swing.JLabel jlibVariavel5;
+    private javax.swing.JLabel jlibVariavelPorcent;
+    private javax.swing.JLabel jlibVariavelPorcent1;
+    private javax.swing.JLabel jlibVariavelPorcent10;
+    private javax.swing.JLabel jlibVariavelPorcent11;
+    private javax.swing.JLabel jlibVariavelPorcent2;
+    private javax.swing.JLabel jlibVariavelPorcent3;
+    private javax.swing.JLabel jlibVariavelPorcent4;
+    private javax.swing.JLabel jlibVariavelPorcent5;
+    private javax.swing.JLabel jlibVariavelPorcent6;
+    private javax.swing.JLabel jlibVariavelPorcent7;
+    private javax.swing.JLabel jlibVariavelPorcent8;
+    private javax.swing.JLabel jlibVariavelPorcent9;
     private javax.swing.JLabel lblBarraLateral;
     private javax.swing.JLabel lblBarraSuperior;
     private javax.swing.JLabel lblDivisorTela;
-    private javax.swing.JLabel lblIcon1;
-    private javax.swing.JLabel lblIcon2;
-    private javax.swing.JLabel lblIcon3;
-    private javax.swing.JLabel lblIcon4;
-    private javax.swing.JLabel lblIcon5;
-    private javax.swing.JLabel lblIcon6;
+    private javax.swing.JLabel lblIconDashboard_1;
+    private javax.swing.JLabel lblIconDashboard_2;
+    private javax.swing.JLabel lblIconDashboard_3;
+    private javax.swing.JLabel lblIconDashboard_4;
+    private javax.swing.JLabel lblIconDashboard_5;
+    private javax.swing.JLabel lblIconDashboard_6;
+    private javax.swing.JLabel lblIconPorcent;
+    private javax.swing.JLabel lblIconPorcent1;
+    private javax.swing.JLabel lblIconPorcent10;
+    private javax.swing.JLabel lblIconPorcent11;
+    private javax.swing.JLabel lblIconPorcent2;
+    private javax.swing.JLabel lblIconPorcent3;
+    private javax.swing.JLabel lblIconPorcent4;
+    private javax.swing.JLabel lblIconPorcent5;
+    private javax.swing.JLabel lblIconPorcent6;
+    private javax.swing.JLabel lblIconPorcent7;
+    private javax.swing.JLabel lblIconPorcent8;
+    private javax.swing.JLabel lblIconPorcent9;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblLogoTexto;
     private javax.swing.JLabel lblNovosClientesMes;
