@@ -97,3 +97,26 @@ navigation.sidebar.reports=Relatórios
 navigation.sidebar.tasks=Tarefas
 navigation.sidebar.settings=Configuração
 navigation.sidebar.admin=Administração
+
+
+client.dialog.title=Adicionar um novo cliente
+client.label.fullname=Nome Completo*
+client.placeholder.fullname=Nome Completo
+client.label.service=Serviço*
+client.placeholder.service=Qual foi o serviço prestado?
+client.label.service_status=Tipo de Pessoa*
+client.placeholder.person_type_options=Física, Jurídica ou NI
+client.label.person_type=Situação do Serviço*
+client.placeholder.service_status_options=Pendente, Em andamento ou Concluído
+client.error.invalid_person_type=Valor inválido. Use: Fisica, Juridica ou NI.
+client.error.invalid_service_status=Valor inválido. Use: Pendente, Em andamento ou Concluido.
+client.label.email=Email*
+client.placeholder.email_example=emaildousuario@gmail.com
+client.label.phone=Telefone
+client.placeholder.phone_example=99999999
+client.label.mobile=Celular
+client.placeholder.phone_example=999999999
+client.label.observations=Observações
+client.placeholder.observations_hint=Observações sobre o cliente.
+common.button.cancel=Cancelar
+client.button.create=Criar Cliente

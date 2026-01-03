@@ -19,28 +19,23 @@ import java.util.HashSet;
 import java.util.Set;
 import Data.CTCONTAB;
 import Data.Cliente;
+import Data.I18nManager;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class TelaAdicionarCliente extends JDialog {
 
-    private JTextField txtNomeCompleto;
-    private JTextField txtServico;
-    private JTextField txtTipoPessoa;
-    private JTextField txtSituacaoServico;
-    private JTextField txtEmail;
-    private JTextField txtTelefone;
-    private JTextField txtCelular;
+    private JTextField txtNomeCompleto, txtServico, txtTipoPessoa, txtSituacaoServico, txtEmail, txtTelefone, txtCelular;
     private JTextArea txtObservacoes;
-
-    private JLabel lblErroTipoPessoa;
-    private JLabel lblErroSituacaoServico;
+    private JLabel lblTitulo, lblNomeCompleto, lblServico, lblTipoPessoa, lblSituacaoServico, lblErroTipoPessoa, lblErroSituacaoServico, lblEmail, lblTelefone, lblCelular, lblObservacoes;
+    private JButton btnCancelar, btnCriarCliente;
 
     private Usuario usuarioLogado;
     private JFrame parentFrame;
     private Component glassPaneOriginal;
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaAdicionarCliente.class.getName());
 
     private static final Set<String> OPCOES_TIPO_PESSOA = new HashSet<>(Arrays.asList("FISICA", "JURIDICA", "NI"));
@@ -51,6 +46,7 @@ public class TelaAdicionarCliente extends JDialog {
         this.parentFrame = parent;
         this.usuarioLogado = usuarioLogado;
         inicializarUI();
+        atualizarTextos();
     }
 
     public TelaAdicionarCliente(JFrame parent) {
@@ -117,7 +113,7 @@ public class TelaAdicionarCliente extends JDialog {
         gbcHeader.weightx = 1.0;
         gbcHeader.fill = GridBagConstraints.HORIZONTAL;
 
-        JLabel lblTitulo = new JLabel("Adicionar um novo cliente");
+        lblTitulo = new JLabel("Adicionar um novo cliente");
         lblTitulo.setFont(FonteUtils.carregarRobotoExtraBold(20f));
         lblTitulo.setForeground(new java.awt.Color(236, 235, 235));
         headerPanel.add(lblTitulo, gbcHeader);
@@ -133,7 +129,7 @@ public class TelaAdicionarCliente extends JDialog {
         gbc.gridwidth = 2;
         gbc.insets = new Insets(paddingVerticalLabel, paddingHorizontal, 2, paddingHorizontal);
         gbc.gridy = 1;
-        JLabel lblNomeCompleto = new JLabel("Nome Completo*");
+        lblNomeCompleto = new JLabel("Nome Completo*");
         configurarLabel(lblNomeCompleto);
         panel.add(lblNomeCompleto, gbc);
 
@@ -145,7 +141,7 @@ public class TelaAdicionarCliente extends JDialog {
 
         gbc.insets = new Insets(paddingVerticalLabel, paddingHorizontal, 2, paddingHorizontal);
         gbc.gridy++;
-        JLabel lblServico = new JLabel("Serviço*");
+        lblServico = new JLabel("Serviço*");
         configurarLabel(lblServico);
         panel.add(lblServico, gbc);
 
@@ -159,28 +155,28 @@ public class TelaAdicionarCliente extends JDialog {
         gbc.gridx = 0;
         gbc.insets = new Insets(paddingVerticalLabel, paddingHorizontal, 2, 10);
         gbc.gridy++;
-        JLabel lblTipoPessoa = new JLabel("Tipo de Pessoa*");
+        lblTipoPessoa = new JLabel("Tipo de Pessoa*");
         configurarLabel(lblTipoPessoa);
         panel.add(lblTipoPessoa, gbc);
 
         gbc.gridx = 1;
         gbc.insets = new Insets(paddingVerticalLabel, 10, 2, paddingHorizontal);
-        JLabel lblSituacaoServico = new JLabel("Situação do Serviço*");
+        lblSituacaoServico = new JLabel("Situação do Serviço*");
         configurarLabel(lblSituacaoServico);
         panel.add(lblSituacaoServico, gbc);
 
         gbc.gridy++;
 
         gbc.gridx = 0;
-        gbc.insets = new Insets(2, paddingHorizontal, 0, 10); // Zero de padding inferior temporário
+        gbc.insets = new Insets(2, paddingHorizontal, 0, 10);
         txtTipoPessoa = criarCampoTexto();
-        addPlaceholder(txtTipoPessoa, "Física, Jurídica ou NI"); // Placeholder atualizado
+        addPlaceholder(txtTipoPessoa, "Física, Jurídica ou NI");
         panel.add(txtTipoPessoa, gbc);
 
         gbc.gridx = 1;
-        gbc.insets = new Insets(2, 10, 0, paddingHorizontal); // Zero de padding inferior temporário
+        gbc.insets = new Insets(2, 10, 0, paddingHorizontal);
         txtSituacaoServico = criarCampoTexto();
-        addPlaceholder(txtSituacaoServico, "Pendente, Em andamento ou Concluído"); // Placeholder atualizado
+        addPlaceholder(txtSituacaoServico, "Pendente, Em andamento ou Concluído");
         panel.add(txtSituacaoServico, gbc);
 
         gbc.gridy++;
@@ -201,7 +197,7 @@ public class TelaAdicionarCliente extends JDialog {
 
         gbc.insets = new Insets(4, paddingHorizontal, 2, paddingHorizontal);
         gbc.gridy++;
-        JLabel lblEmail = new JLabel("Email*");
+        lblEmail = new JLabel("Email*");
         configurarLabel(lblEmail);
         panel.add(lblEmail, gbc);
 
@@ -213,7 +209,7 @@ public class TelaAdicionarCliente extends JDialog {
 
         gbc.insets = new Insets(4, paddingHorizontal, 2, paddingHorizontal);
         gbc.gridy++;
-        JLabel lblTelefone = new JLabel("Telefone");
+        lblTelefone = new JLabel("Telefone");
         configurarLabel(lblTelefone);
         panel.add(lblTelefone, gbc);
 
@@ -225,7 +221,7 @@ public class TelaAdicionarCliente extends JDialog {
 
         gbc.insets = new Insets(4, paddingHorizontal, 2, paddingHorizontal);
         gbc.gridy++;
-        JLabel lblCelular = new JLabel("Celular");
+        lblCelular = new JLabel("Celular");
         configurarLabel(lblCelular);
         panel.add(lblCelular, gbc);
 
@@ -237,7 +233,7 @@ public class TelaAdicionarCliente extends JDialog {
 
         gbc.insets = new Insets(4, paddingHorizontal, 2, paddingHorizontal);
         gbc.gridy++;
-        JLabel lblObservacoes = new JLabel("Observações");
+        lblObservacoes = new JLabel("Observações");
         configurarLabel(lblObservacoes);
         panel.add(lblObservacoes, gbc);
 
@@ -257,7 +253,7 @@ public class TelaAdicionarCliente extends JDialog {
         JPanel botoes = new JPanel(new FlowLayout(FlowLayout.RIGHT, 12, 0));
         botoes.setOpaque(false);
 
-        JButton btnCancelar = new JButton("Cancelar") {
+        btnCancelar = new JButton("Cancelar") {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
@@ -284,7 +280,7 @@ public class TelaAdicionarCliente extends JDialog {
         btnCancelar.setForeground(new Color(200, 200, 200));
         btnCancelar.addActionListener(e -> dispose());
 
-        JButton btnCriarCliente = new JButton("Criar Cliente") {
+        btnCriarCliente = new JButton("Criar Cliente") {
             @Override
             protected void paintComponent(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
@@ -427,7 +423,7 @@ public class TelaAdicionarCliente extends JDialog {
 
     private JLabel criarLabelErro() {
         JLabel lbl = new JLabel("");
-        lbl.setForeground(new Color(255, 100, 100)); // Vermelho Suave
+        lbl.setForeground(new Color(255, 100, 100));
         lbl.setFont(FonteUtils.carregarRobotoSemiBold(11f));
         return lbl;
     }
@@ -539,8 +535,10 @@ public class TelaAdicionarCliente extends JDialog {
     }
 
     private String normalizarSituacaoServico(String input) {
-        if (input == null || input.trim().isEmpty()) return "";
-        String upperInput = input.trim().toUpperCase(); 
+        if (input == null || input.trim().isEmpty()) {
+            return "";
+        }
+        String upperInput = input.trim().toUpperCase();
         upperInput = upperInput.replaceAll("Í", "I");
 
         switch (upperInput) {
@@ -551,13 +549,15 @@ public class TelaAdicionarCliente extends JDialog {
             case "CONCLUIDO":
                 return "Concluido";
             default:
-                return input.trim(); 
+                return input.trim();
         }
     }
 
     private String normalizarTipoPessoa(String input) {
-        if (input == null || input.trim().isEmpty()) return "";
-        String upperInput = input.trim().toUpperCase().replaceAll("Í", "I"); 
+        if (input == null || input.trim().isEmpty()) {
+            return "";
+        }
+        String upperInput = input.trim().toUpperCase().replaceAll("Í", "I");
 
         switch (upperInput) {
             case "FISICA":
@@ -588,7 +588,7 @@ public class TelaAdicionarCliente extends JDialog {
         }
 
         String situacaoServico = txtSituacaoServico.getText().trim();
-        String situacaoServicoUpper = situacaoServico.toUpperCase().replaceAll("Í", "I"); 
+        String situacaoServicoUpper = situacaoServico.toUpperCase().replaceAll("Í", "I");
         boolean situacaoServicoValida = OPCOES_SITUACAO_SERVICO.contains(situacaoServicoUpper);
 
         if (situacaoServico.isEmpty() || situacaoServico.equals("Pendente, Em andamento ou Concluído") || !situacaoServicoValida) {
@@ -667,5 +667,55 @@ public class TelaAdicionarCliente extends JDialog {
             logger.log(Level.SEVERE, "Erro SQL ao salvar cliente no banco de dados", e);
             new NotificationToast(null, "Erro ao tentar salvar cliente no banco de dados: " + e.getMessage()).setVisible(true);
         }
+    }
+
+    private void aplicarFonteSistema(java.awt.Container container, boolean isAsiatico) {
+        for (java.awt.Component c : container.getComponents()) {
+
+            Font fonteAtual = c.getFont();
+            int tamanho = fonteAtual.getSize();
+            int estilo = fonteAtual.getStyle();
+
+            if (isAsiatico) {
+                c.setFont(new Font("SansSerif", estilo, tamanho));
+            } else {}
+
+            if (c instanceof java.awt.Container) {
+                aplicarFonteSistema((java.awt.Container) c, isAsiatico);
+            }
+        }
+    }
+
+   private void atualizarTextos() {
+        Locale loc = I18nManager.getCurrentLocale();
+        String lang = loc.getLanguage();
+        boolean isAsiatico = lang.equals("ja") || lang.equals("ko") || lang.equals("zh");
+
+        aplicarFonteSistema(this.getContentPane(), isAsiatico);
+
+        lblTitulo.setText(I18nManager.getString("client.dialog.title"));
+        lblNomeCompleto.setText(I18nManager.getString("client.label.fullname"));
+        lblServico.setText(I18nManager.getString("client.label.service"));
+        lblTipoPessoa.setText(I18nManager.getString("client.label.person_type"));
+        lblSituacaoServico.setText(I18nManager.getString("client.label.service_status"));
+        lblEmail.setText(I18nManager.getString("client.label.email"));
+        lblTelefone.setText(I18nManager.getString("client.label.phone"));
+        lblCelular.setText(I18nManager.getString("client.label.mobile"));
+        lblObservacoes.setText(I18nManager.getString("client.label.observations"));
+        txtNomeCompleto.setText(I18nManager.getString("client.placeholder.fullname"));
+        txtServico.setText(I18nManager.getString("client.placeholder.service"));
+        txtTipoPessoa.setText(I18nManager.getString("client.placeholder.person_type_options"));
+        txtSituacaoServico.setText(I18nManager.getString("client.placeholder.service_status_options"));
+        txtEmail.setText(I18nManager.getString("client.placeholder.email_example"));
+        txtTelefone.setText(I18nManager.getString("client.placeholder.phone_example"));
+        txtCelular.setText(I18nManager.getString("client.placeholder.phone_example"));
+        txtObservacoes.setText(I18nManager.getString("client.placeholder.observations_hint"));
+        lblErroTipoPessoa.setText(I18nManager.getString("client.error.invalid_person_type"));
+        lblErroSituacaoServico.setText(I18nManager.getString("client.error.invalid_service_status"));
+        btnCancelar.setText(I18nManager.getString("common.button.cancel"));
+        btnCriarCliente.setText(I18nManager.getString("client.button.create"));
+
+        this.getContentPane().revalidate();
+        this.getContentPane().repaint();
     }
 }

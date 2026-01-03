@@ -43,29 +43,8 @@ public class TelaMenu extends javax.swing.JFrame {
         this.usuarioLogado = usuario;
         initComponents();
         atualizarTextos();
-        ChartPanel g1 = criarMiniGrafico(new Color(0, 200, 255), "Clientes Mensais");
-        g1.setOpaque(false);
-        jPanelBackground.add(g1, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 40, 172, 86));
-
-        ChartPanel g2 = criarMiniGrafico(new Color(0, 150, 255), "Total de Clientes");
-        g2.setOpaque(false);
-        jPanelBackground1.add(g2, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 40, 172, 86));
-
-        ChartPanel g3 = criarMiniGrafico(new Color(255, 180, 0), "Tarefas Pendentes");
-        g3.setOpaque(false);
-        jPanelBackground2.add(g3, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 40, 172, 86));
-
-        ChartPanel g4 = criarMiniGrafico(new Color(180, 100, 255), "Total de Relatórios");
-        g4.setOpaque(false);
-        jPanelBackground3.add(g4, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 40, 172, 86));
-
-        ChartPanel g5 = criarMiniGrafico(new Color(255, 80, 80), "Tarefas não Realizadas");
-        g5.setOpaque(false);
-        jPanelBackground4.add(g5, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 40, 172, 86));
-
-        ChartPanel g6 = criarMiniGrafico(new Color(80, 255, 160), "Tarefas Finalizadas");
-        g6.setOpaque(false);
-        jPanelBackground5.add(g6, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 40, 172, 86));
+        renderizarGraficoClientes();
+        atualizarPorcentagensCards();
 
         addHoverLabel(btnDashboard, "Dashboard");
         addHoverLabel(btnCalendario, "Calendário");
@@ -367,46 +346,185 @@ public class TelaMenu extends javax.swing.JFrame {
         IconUtil.setIcon(usuarioLogado, lblUserIcon);
         setIcon();
         setResizable(false);
+
+        String[] meses = {"J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"};
+        String[] anos = {"A1", "A2", "A3", "A4", "A5"};
+
+        try {
+            desenharLinhaGrafico(pnlGrafico, CTCONTAB.getClientesPorMes(), meses, Color.decode("#00D9FF"));
+            desenharLinhaGrafico(pnlGrafico1, CTCONTAB.getClientesUltimos5Anos(), anos, Color.decode("#4FACFF"));
+            desenharLinhaGrafico(pnlGrafico2, CTCONTAB.getTarefasPorStatusMes("Em andamento"), meses, Color.decode("#FFB74D"));
+            desenharLinhaGrafico(pnlGrafico3, CTCONTAB.getRelatoriosMes(), meses, Color.decode("#BA68C8"));
+            desenharLinhaGrafico(pnlGrafico4, CTCONTAB.getTarefasPorStatusMes("Pendente"), meses, Color.decode("#FF5252"));
+            desenharLinhaGrafico(pnlGrafico5, CTCONTAB.getTarefasPorStatusMes("Concluido"), meses, Color.decode("#3AFF5C"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    private ChartPanel criarMiniGrafico(Color cor, String titulo) {
+    private void renderizarGraficoClientes() {
+        try {
+            int[] dados = CTCONTAB.getClientesPorMes();
+            DefaultCategoryDataset ds = new DefaultCategoryDataset();
+            
+            String[] meses = {"Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"};
 
+            boolean temDados = false;
+            int maiorValor = 0;
+
+            for (int i = 0; i < 12; i++) {
+                ds.addValue(dados[i], "Clientes", meses[i]);
+                if (dados[i] > 0) {
+                    temDados = true;
+                }
+                if (dados[i] > maiorValor) {
+                    maiorValor = dados[i];
+                }
+            }
+
+            // Criar gráfico de linha pura
+            JFreeChart chart = ChartFactory.createLineChart(null, null, null, ds, PlotOrientation.VERTICAL, false, false, false);
+            chart.setBackgroundPaint(new Color(0, 0, 0, 0));
+
+            CategoryPlot plot = chart.getCategoryPlot();
+            plot.setBackgroundPaint(new Color(0, 0, 0, 0));
+            plot.setOutlineVisible(false);
+            plot.setRangeGridlinesVisible(false); // Remove as linhas de fundo
+            plot.setDomainGridlinesVisible(false);
+
+            // Ajuste dos Eixos (O segredo para não distorcer)
+            plot.getRangeAxis().setVisible(false); // Esconde os números da lateral (Y)
+
+            // Se quiser que a linha "suba e desça" visivelmente, definimos um range mínimo
+            if (maiorValor < 5) {
+                plot.getRangeAxis().setRange(0, 10); // Se tiver pouco cliente, fixa o topo em 10 para a linha não sumir no teto
+            }
+
+            // Customização da Linha
+            LineAndShapeRenderer renderer = new LineAndShapeRenderer();
+
+            if (temDados) {
+                renderer.setSeriesPaint(0, new Color(255, 50, 50)); // Vermelho se tiver dados
+                renderer.setSeriesShapesVisible(0, true); // Pequenos círculos nos pontos
+            } else {
+                renderer.setSeriesPaint(0, new Color(180, 180, 180)); // Cinza se for tudo zero
+                renderer.setSeriesShapesVisible(0, false);
+            }
+
+            renderer.setSeriesStroke(0, new BasicStroke(3.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+            plot.setRenderer(renderer);
+
+            // Colocar no Painel
+            ChartPanel chartPanel = new ChartPanel(chart);
+            chartPanel.setOpaque(false);
+            chartPanel.setBackground(new Color(0, 0, 0, 0));
+
+            // Melhora a resolução para não ficar serrilhado
+            chartPanel.setMaximumDrawWidth(2000);
+            chartPanel.setMaximumDrawHeight(2000);
+
+            pnlGrafico.setLayout(new java.awt.BorderLayout());
+            pnlGrafico.removeAll();
+            pnlGrafico.add(chartPanel, java.awt.BorderLayout.CENTER);
+            pnlGrafico.revalidate();
+            pnlGrafico.repaint();
+
+        } catch (Exception e) {
+            System.out.println("Erro ao gerar gráfico: " + e.getMessage());
+        }
+    }
+
+    private void desenharLinhaGrafico(javax.swing.JPanel painel, int[] dados, String[] labels, Color cor) {
         DefaultCategoryDataset ds = new DefaultCategoryDataset();
-        ds.addValue(10, titulo, "Jan");
-        ds.addValue(14, titulo, "Fev");
-        ds.addValue(8, titulo, "Mar");
-        ds.addValue(18, titulo, "Abr");
-        ds.addValue(15, titulo, "Mai");
 
-        JFreeChart chart = ChartFactory.createLineChart(
-                null, null, null, ds,
-                PlotOrientation.VERTICAL,
-                false, false, false
-        );
+        // Efeito Pirâmide: Começa do zero absoluto à esquerda
+        ds.addValue(0, "Série", "BASE");
 
+        boolean temDados = false;
+        for (int i = 0; i < dados.length; i++) {
+            ds.addValue(dados[i], "Série", labels[i]);
+            if (dados[i] > 0) {
+                temDados = true;
+            }
+        }
+
+        JFreeChart chart = ChartFactory.createLineChart(null, null, null, ds, PlotOrientation.VERTICAL, false, false, false);
         chart.setBackgroundPaint(new Color(0, 0, 0, 0));
 
-        CategoryPlot p = chart.getCategoryPlot();
-        p.setBackgroundPaint(new Color(0, 0, 0, 0));
-        p.setOutlineVisible(false);
+        CategoryPlot plot = chart.getCategoryPlot();
+        plot.setBackgroundPaint(new Color(0, 0, 0, 0));
+        plot.setOutlineVisible(false);
+        plot.getRangeAxis().setVisible(false);
+        plot.getDomainAxis().setVisible(false);
+        plot.setRangeGridlinesVisible(false);
 
-        p.getRangeAxis().setVisible(false);
-        p.getDomainAxis().setVisible(false);
-        p.setRangeGridlinesVisible(false);
-        p.setDomainGridlinesVisible(false);
+        // Encosta a linha nas bordas do painel
+        plot.getDomainAxis().setLowerMargin(0.0);
+        plot.getDomainAxis().setUpperMargin(0.0);
 
-        LineAndShapeRenderer r = (LineAndShapeRenderer) p.getRenderer();
-        r.setSeriesPaint(0, cor);
-        r.setSeriesStroke(0, new BasicStroke(2f));
-        r.setDefaultShapesVisible(false);
+        LineAndShapeRenderer r = new LineAndShapeRenderer();
+        // Usa a cor escolhida se tiver dados, senão cinza
+        r.setSeriesPaint(0, temDados ? cor : new Color(180, 180, 180));
+        r.setSeriesStroke(0, new BasicStroke(3.5f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+        r.setSeriesShapesVisible(0, false);
 
-        ChartPanel panel = new ChartPanel(chart);
-        panel.setOpaque(false);
-        panel.setBackground(new Color(0, 0, 0, 0));
-        panel.setMouseWheelEnabled(false);
-        panel.setPopupMenu(null);
+        plot.setRenderer(r);
 
-        return panel;
+        ChartPanel cp = new ChartPanel(chart);
+        cp.setOpaque(false);
+        cp.setBackground(new Color(0, 0, 0, 0));
+        cp.setMaximumDrawWidth(2000); // Evita distorção em telas grandes
+
+        painel.setLayout(new java.awt.BorderLayout());
+        painel.removeAll();
+        painel.add(cp, java.awt.BorderLayout.CENTER);
+        painel.revalidate();
+        painel.repaint();
+    }
+
+    private void atualizarPorcentagensCards() {
+        try {
+            java.util.Calendar cal = java.util.Calendar.getInstance();
+            int mesAtu = cal.get(java.util.Calendar.MONTH) + 1;
+            int anoAtu = cal.get(java.util.Calendar.YEAR);
+
+            cal.add(java.util.Calendar.MONTH, -1);
+            int mesAnt = cal.get(java.util.Calendar.MONTH) + 1;
+            int anoAnt = cal.get(java.util.Calendar.YEAR);
+
+            // jlibVariavelPorcent: CLIENTE MENSAL (Mês Atual vs Mês Anterior)
+            int cliAtu = CTCONTAB.getContagemPorPeriodo("cliente", mesAtu, anoAtu, null);
+            int cliAnt = CTCONTAB.getContagemPorPeriodo("cliente", mesAnt, anoAnt, null);
+            jlibVariavelPorcent.setText(CTCONTAB.formatarDiferenca(cliAtu, cliAnt));
+
+            // jlibVariavelPorcent1: TOTAL DE CLIENTES (Ano Atual vs Ano Anterior)
+            int cliAnoAtu = CTCONTAB.getContagemAno(anoAtu);
+            int cliAnoAnt = CTCONTAB.getContagemAno(anoAtu - 1);
+            jlibVariavelPorcent2.setText(CTCONTAB.formatarDiferenca(cliAnoAtu, cliAnoAnt));
+
+            // jlibVariavelPorcent2: TAREFA PENDENTE (Status: 'Em andamento')
+            int tarPAtu = CTCONTAB.getContagemPorPeriodo("tarefa", mesAtu, anoAtu, "Em andamento");
+            int tarPAnt = CTCONTAB.getContagemPorPeriodo("tarefa", mesAnt, anoAnt, "Em andamento");
+            jlibVariavelPorcent4.setText(CTCONTAB.formatarDiferenca(tarPAtu, tarPAnt));
+
+            // jlibVariavelPorcent3: TOTAL DE RELATÓRIOS (Mês Atual vs Mês Anterior)
+            int relAtu = CTCONTAB.getContagemPorPeriodo("relatorio", mesAtu, anoAtu, null);
+            int relAnt = CTCONTAB.getContagemPorPeriodo("relatorio", mesAnt, anoAnt, null);
+            jlibVariavelPorcent6.setText(CTCONTAB.formatarDiferenca(relAtu, relAnt));
+
+            // jlibVariavelPorcent4: TAREFA NÃO REALIZADA (Status: 'Pendente')
+            int tarNRAtu = CTCONTAB.getContagemPorPeriodo("tarefa", mesAtu, anoAtu, "Pendente");
+            int tarNRAnt = CTCONTAB.getContagemPorPeriodo("tarefa", mesAnt, anoAnt, "Pendente");
+            jlibVariavelPorcent8.setText(CTCONTAB.formatarDiferenca(tarNRAtu, tarNRAnt));
+
+            // jlibVariavelPorcent5: TAREFA FINALIZADA (Status: 'Concluido')
+            int tarFAtu = CTCONTAB.getContagemPorPeriodo("tarefa", mesAtu, anoAtu, "Concluido");
+            int tarFAnt = CTCONTAB.getContagemPorPeriodo("tarefa", mesAnt, anoAnt, "Concluido");
+            jlibVariavelPorcent10.setText(CTCONTAB.formatarDiferenca(tarFAtu, tarFAnt));
+
+        } catch (Exception e) {
+            System.err.println("Erro nas porcentagens: " + e.getMessage());
+        }
     }
 
     private void addHoverLabel(JButton botao, String texto) {
@@ -740,6 +858,7 @@ public class TelaMenu extends javax.swing.JFrame {
         jlibSeta = new javax.swing.JLabel();
         btnCadastrar = new javax.swing.JButton();
         jPanelBackground = new javax.swing.JPanel();
+        pnlGrafico = new javax.swing.JPanel();
         lblNovosClientesMes = new javax.swing.JLabel();
         lblIconPorcent1 = new javax.swing.JLabel();
         lblIconPorcent = new javax.swing.JLabel();
@@ -763,6 +882,7 @@ public class TelaMenu extends javax.swing.JFrame {
         lblIconPorcent3 = new javax.swing.JLabel();
         jlibVariavelPorcent2 = new javax.swing.JLabel();
         jlibVariavelPorcent3 = new javax.swing.JLabel();
+        pnlGrafico1 = new javax.swing.JPanel();
         jPanelBackground2 = new javax.swing.JPanel();
         lblTarefasPendentes = new javax.swing.JLabel();
         jlibVariavel2 = new javax.swing.JLabel();
@@ -775,6 +895,7 @@ public class TelaMenu extends javax.swing.JFrame {
         lblIconPorcent5 = new javax.swing.JLabel();
         jlibVariavelPorcent4 = new javax.swing.JLabel();
         jlibVariavelPorcent5 = new javax.swing.JLabel();
+        pnlGrafico2 = new javax.swing.JPanel();
         jPanelBackground3 = new javax.swing.JPanel();
         lblTotalVendas = new javax.swing.JLabel();
         jlibVariavel3 = new javax.swing.JLabel();
@@ -787,6 +908,7 @@ public class TelaMenu extends javax.swing.JFrame {
         lblIconPorcent7 = new javax.swing.JLabel();
         jlibVariavelPorcent6 = new javax.swing.JLabel();
         jlibVariavelPorcent7 = new javax.swing.JLabel();
+        pnlGrafico3 = new javax.swing.JPanel();
         jPanelBackground4 = new javax.swing.JPanel();
         lblServicosNaoRealizados = new javax.swing.JLabel();
         jlibVariavel4 = new javax.swing.JLabel();
@@ -799,6 +921,7 @@ public class TelaMenu extends javax.swing.JFrame {
         lblIconPorcent9 = new javax.swing.JLabel();
         jlibVariavelPorcent8 = new javax.swing.JLabel();
         jlibVariavelPorcent9 = new javax.swing.JLabel();
+        pnlGrafico4 = new javax.swing.JPanel();
         jPanelBackground5 = new javax.swing.JPanel();
         jlibVariavel5 = new javax.swing.JLabel();
         lblServicosFinalizados = new javax.swing.JLabel();
@@ -811,6 +934,7 @@ public class TelaMenu extends javax.swing.JFrame {
         lblIconPorcent11 = new javax.swing.JLabel();
         jlibVariavelPorcent10 = new javax.swing.JLabel();
         jlibVariavelPorcent11 = new javax.swing.JLabel();
+        pnlGrafico5 = new javax.swing.JPanel();
         btnDashboard = new javax.swing.JButton();
         btnFecharTela = new javax.swing.JButton();
         lblUserIcon = new javax.swing.JLabel();
@@ -860,6 +984,9 @@ public class TelaMenu extends javax.swing.JFrame {
 
         jPanelBackground.setBackground(new java.awt.Color(255, 255, 255, 15));
         jPanelBackground.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        pnlGrafico.setBackground(new java.awt.Color(255, 255, 255, 0));
+        jPanelBackground.add(pnlGrafico, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 120, 90));
 
         lblNovosClientesMes.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblNovosClientesMes.setForeground(new java.awt.Color(255, 255, 255));
@@ -967,6 +1094,9 @@ public class TelaMenu extends javax.swing.JFrame {
         jlibVariavelPorcent3.setPreferredSize(new java.awt.Dimension(55, 20));
         jPanelBackground1.add(jlibVariavelPorcent3, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 190, 50, 10));
 
+        pnlGrafico1.setBackground(new java.awt.Color(255, 255, 255, 0));
+        jPanelBackground1.add(pnlGrafico1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 120, 90));
+
         getContentPane().add(jPanelBackground1);
         jPanelBackground1.setBounds(330, 320, 208, 303);
 
@@ -1021,6 +1151,9 @@ public class TelaMenu extends javax.swing.JFrame {
         jlibVariavelPorcent5.setText("0.000 %");
         jlibVariavelPorcent5.setPreferredSize(new java.awt.Dimension(55, 20));
         jPanelBackground2.add(jlibVariavelPorcent5, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 190, 50, 10));
+
+        pnlGrafico2.setBackground(new java.awt.Color(255, 255, 255, 0));
+        jPanelBackground2.add(pnlGrafico2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 120, 90));
 
         getContentPane().add(jPanelBackground2);
         jPanelBackground2.setBounds(550, 320, 208, 303);
@@ -1077,6 +1210,9 @@ public class TelaMenu extends javax.swing.JFrame {
         jlibVariavelPorcent7.setPreferredSize(new java.awt.Dimension(55, 20));
         jPanelBackground3.add(jlibVariavelPorcent7, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 190, 50, 10));
 
+        pnlGrafico3.setBackground(new java.awt.Color(255, 255, 255, 0));
+        jPanelBackground3.add(pnlGrafico3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 120, 90));
+
         getContentPane().add(jPanelBackground3);
         jPanelBackground3.setBounds(770, 320, 208, 303);
 
@@ -1132,6 +1268,9 @@ public class TelaMenu extends javax.swing.JFrame {
         jlibVariavelPorcent9.setPreferredSize(new java.awt.Dimension(55, 20));
         jPanelBackground4.add(jlibVariavelPorcent9, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 190, 50, 10));
 
+        pnlGrafico4.setBackground(new java.awt.Color(255, 255, 255, 0));
+        jPanelBackground4.add(pnlGrafico4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 120, 90));
+
         getContentPane().add(jPanelBackground4);
         jPanelBackground4.setBounds(990, 320, 208, 303);
 
@@ -1186,6 +1325,9 @@ public class TelaMenu extends javax.swing.JFrame {
         jlibVariavelPorcent11.setText("0.000 %");
         jlibVariavelPorcent11.setPreferredSize(new java.awt.Dimension(55, 20));
         jPanelBackground5.add(jlibVariavelPorcent11, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 190, 50, 10));
+
+        pnlGrafico5.setBackground(new java.awt.Color(255, 255, 255, 0));
+        jPanelBackground5.add(pnlGrafico5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 120, 90));
 
         getContentPane().add(jPanelBackground5);
         jPanelBackground5.setBounds(1210, 320, 203, 303);
@@ -1542,5 +1684,11 @@ public class TelaMenu extends javax.swing.JFrame {
     private javax.swing.JLabel lbltextinho4;
     private javax.swing.JLabel lbltextinho5;
     private javax.swing.JLabel lbltextinho6;
+    private javax.swing.JPanel pnlGrafico;
+    private javax.swing.JPanel pnlGrafico1;
+    private javax.swing.JPanel pnlGrafico2;
+    private javax.swing.JPanel pnlGrafico3;
+    private javax.swing.JPanel pnlGrafico4;
+    private javax.swing.JPanel pnlGrafico5;
     // End of variables declaration//GEN-END:variables
 }
