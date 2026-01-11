@@ -737,7 +737,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
                 String idiomaAtualDaTela = I18nManager.getCurrentLocale().toString();
                 CTCONTAB.atualizarIdiomaUsuario(txtLogin.getText(), idiomaAtualDaTela);
-                new TelaMenu(usuarioLogado).setVisible(true);
+                new Dashboard(usuarioLogado).setVisible(true);
                 dispose();
             } else {
                 mostrarMensagemErro();

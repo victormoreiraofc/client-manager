@@ -55,38 +55,38 @@ dashboard.banner.action.register=CADASTRAR NOVOS CLIENTES
 # Novos Clientes
 dashboard.card.new_clients.header=Clientes Mensais
 dashboard.card.new_clients.title=Novos clientes neste mês.
-dashboard.card.new_clients.subtitle=Número bruto de novos clientes.
-dashboard.card.new_clients.description=<html>Este painel mostra a quantidade total de novos clientes adquiridos no mês, permitindo acompanhar o crescimento do público.</html>
+dashboard.card.new_clients.subtitle=Número de novos clientes.
+dashboard.card.new_clients.description=<html><p style="text-align: justify;">Este painel mostra a quantidade total de novos clientes que adquirimos no mês, permitindo acompanhar o crescimento do nosso público.</p></html>
 
 # Total de Clientes
 dashboard.card.total_clients.header=Total de Clientes
-dashboard.card.total_clients.title=Todos os clientes registrados.
-dashboard.card.total_clients.subtitle=Número bruto de clientes registrados.
-dashboard.card.total_clients.description=<html>Este painel mostra o total acumulado de clientes cadastrados, permitindo acompanhar o crescimento da base ao longo do tempo.</html>
+dashboard.card.total_clients.title=Todos clientes registrados.
+dashboard.card.total_clients.subtitle=Número de clientes registrados.
+dashboard.card.total_clients.description=<html><p style="text-align: justify;">Este painel mostra o total acumulado de clientes cadastrados, permitindo acompanhar o crescimento da base ao longo do tempo.</p></html>
 
 # Tarefas Pendentes
 dashboard.card.pending_tasks.header=Tarefas Pendentes
-dashboard.card.pending_tasks.title=Todas as tarefas pendentes.
-dashboard.card.pending_tasks.subtitle=Número bruto de tarefas aguardando.
-dashboard.card.pending_tasks.description=<html>Este painel indica todas as tarefas que ainda estão pendentes, facilitando o controle das demandas que precisam ser concluídas.</html>
+dashboard.card.pending_tasks.title=Todas tarefas pendentes.
+dashboard.card.pending_tasks.subtitle=Número de tarefas aguardando.
+dashboard.card.pending_tasks.description=<html><p style="text-align: justify;">Este painel indica todas as tarefas que ainda estão pendentes, facilitando o controle das demandas que precisam ser concluídas.</p></html>
 
 # Total de Relatórios
 dashboard.card.total_reports.header=Total de Relatórios
-dashboard.card.total_reports.title=Todos os relatórios feitos.
-dashboard.card.total_reports.subtitle=Número bruto de relatórios gerados.
-dashboard.card.total_reports.description=<html>Aqui você acompanha quantos relatórios foram emitidos, permitindo analisar o volume de registros e atividades documentadas.</html>
+dashboard.card.total_reports.title=Todos relatórios feitos.
+dashboard.card.total_reports.subtitle=Número de relatórios gerados.
+dashboard.card.total_reports.description=<html><p style="text-align: justify;">Aqui você acompanha quantos relatórios foram emitidos, permitindo analisar o volume de registros e atividades documentadas.</p></html>
 
 # Tarefas Não Realizadas
 dashboard.card.unfinished_tasks.header=Tarefas não Realizadas
 dashboard.card.unfinished_tasks.title=Tarefas não realizadas.
-dashboard.card.unfinished_tasks.subtitle=Número bruto de tarefas não concluídas.
-dashboard.card.unfinished_tasks.description=<html>Este painel mostra as tarefas que foram iniciadas mas não finalizadas, ajudando a identificar gargalos e priorizar ações.</html>
+dashboard.card.unfinished_tasks.subtitle=Número de tarefas não concluídas.
+dashboard.card.unfinished_tasks.description=<html><p style="text-align: justify;">Este painel mostra as tarefas que foram iniciadas, mas não finalizadas, ajudando a identificar gargalos e priorizar ações.</p></html>
 
 # Tarefas Finalizadas
 dashboard.card.completed_tasks.header=Tarefas Finalizadas
 dashboard.card.completed_tasks.title=Tarefas já finalizadas.
-dashboard.card.completed_tasks.subtitle=Número bruto de tarefas concluídas.
-dashboard.card.completed_tasks.description=<html>Indica todas as tarefas já finalizadas, servindo como um termômetro da produtividade e do progresso das atividades.</html>
+dashboard.card.completed_tasks.subtitle=Número de tarefas concluídas.
+dashboard.card.completed_tasks.description=<html><p style="text-align: justify;">Indica todas as tarefas já finalizadas, servindo como um termômetro da produtividade e do progresso das atividades.</p></html>
 
 # --- SIDEBAR / NAVIGATION (Hovers & Labels) ---
 navigation.sidebar.help=Ajuda
@@ -96,8 +96,11 @@ navigation.sidebar.clients=Clientes
 navigation.sidebar.reports=Relatórios
 navigation.sidebar.tasks=Tarefas
 navigation.sidebar.settings=Configuração
+navigation.sidebar.notify=Notificações
 navigation.sidebar.admin=Administração
-
+navigation.sidebar.maximize=Maximizar
+navigation.sidebar.minimize=Minimizar
+navigation.sidebar.close=Fechar
 
 client.dialog.title=Adicionar um novo cliente
 client.label.fullname=Nome Completo*

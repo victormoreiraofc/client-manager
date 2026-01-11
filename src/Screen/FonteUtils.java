@@ -133,7 +133,7 @@ public class FonteUtils {
             return new Font("SofiaSans-Bold", Font.BOLD, (int) tamanho);
         }
     }
-
+    
     public static Font carregarInterExtraBold(float tamanho) {
         try {
             File arquivoFonte = new File("src/resources/fonts/Inter_28pt-ExtraBold.ttf");
