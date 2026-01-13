@@ -760,114 +760,76 @@ public class CTCONTAB {
         st.executeUpdate();
     }
 
-    public static int[] getClientesPorMes() throws ClassNotFoundException, SQLException {
-        int[] clientesMes = new int[12]; // Array fixo para Jan-Dez
+    public static int clientesMesPassado() throws ClassNotFoundException, SQLException {
         conectado = conectar();
-
-        // Consulta que traz o mês e a contagem
-        String sql = "SELECT MONTH(DataCadastro) as mes, COUNT(*) as total "
-                + "FROM cliente "
-                + "WHERE YEAR(DataCadastro) = YEAR(CURDATE()) "
-                + "GROUP BY MONTH(DataCadastro) ORDER BY mes";
-
-        PreparedStatement st = conectado.prepareStatement(sql);
-        ResultSet resultado = st.executeQuery();
-
-        while (resultado.next()) {
-            int mes = resultado.getInt("mes");
-            clientesMes[mes - 1] = resultado.getInt("total");
-        }
-        return clientesMes;
-    }
-
-// Gráfico 1: Clientes nos últimos 5 anos
-    public static int[] getClientesUltimos5Anos() throws ClassNotFoundException, SQLException {
-        int[] dados = new int[5];
-        conectado = conectar();
-        String sql = "SELECT YEAR(DataCadastro) as ano, COUNT(*) as total FROM cliente "
-                + "GROUP BY YEAR(DataCadastro) ORDER BY ano DESC LIMIT 5";
-        PreparedStatement st = conectado.prepareStatement(sql);
+        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) AS total FROM cliente WHERE MONTH(STR_TO_DATE(DataCadastro, '%d/%m/%Y')) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH) AND YEAR(STR_TO_DATE(DataCadastro, '%d/%m/%Y')) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)");
         ResultSet rs = st.executeQuery();
-        int i = 4; // Preenche de trás para frente para manter ordem cronológica
-        while (rs.next() && i >= 0) {
-            dados[i] = rs.getInt("total");
-            i--;
-        }
-        return dados;
+        return rs.next() ? rs.getInt("total") : 0;
     }
 
-// Gráfico 2, 4 e 5: Tarefas por Status no Ano Atual
-    public static int[] getTarefasPorStatusMes(String status) throws ClassNotFoundException, SQLException {
-        int[] dados = new int[12];
+    public static int clientesAnoPassado() throws ClassNotFoundException, SQLException {
         conectado = conectar();
-        String sql = "SELECT MONTH(DataVencimento) as mes, COUNT(*) as total FROM tarefa "
-                + "WHERE StatusTarefa = ? AND YEAR(DataVencimento) = YEAR(CURDATE()) "
-                + "GROUP BY MONTH(DataVencimento)";
-        PreparedStatement st = conectado.prepareStatement(sql);
+        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) AS total FROM cliente WHERE YEAR(STR_TO_DATE(DataCadastro, '%d/%m/%Y')) = YEAR(CURRENT_DATE - INTERVAL 1 YEAR)");
+        ResultSet rs = st.executeQuery();
+        return rs.next() ? rs.getInt("total") : 0;
+    }
+
+    public static int tarefasSemanaPassada(String status) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) AS total FROM tarefa WHERE StatusTarefa = ? AND YEARWEEK(DataVencimento, 1) = YEARWEEK(CURRENT_DATE - INTERVAL 1 WEEK, 1)");
         st.setString(1, status);
         ResultSet rs = st.executeQuery();
-        while (rs.next()) {
-            dados[rs.getInt("mes") - 1] = rs.getInt("total");
-        }
-        return dados;
+        return rs.next() ? rs.getInt("total") : 0;
     }
 
-// Gráfico 3: Relatórios no Ano Atual
-    public static int[] getRelatoriosMes() throws ClassNotFoundException, SQLException {
-        int[] dados = new int[12];
+    public static int relatoriosAnoPassado() throws ClassNotFoundException, SQLException {
         conectado = conectar();
-        String sql = "SELECT MONTH(DataCadastro) as mes, COUNT(*) as total FROM relatorio "
-                + "WHERE YEAR(DataCadastro) = YEAR(CURDATE()) GROUP BY MONTH(DataCadastro)";
-        PreparedStatement st = conectado.prepareStatement(sql);
-        ResultSet rs = st.executeQuery();
-        while (rs.next()) {
-            dados[rs.getInt("mes") - 1] = rs.getInt("total");
-        }
-        return dados;
-    }
-
-// Método para contar registros baseado em mês, ano e opcionalmente status
-    public static int getContagemPorPeriodo(String tabela, int mes, int ano, String status) throws ClassNotFoundException, SQLException {
-        conectado = conectar();
-        String colunaData = tabela.equals("tarefa") ? "DataVencimento" : "DataCadastro";
-
-        StringBuilder sql = new StringBuilder("SELECT COUNT(*) as total FROM " + tabela + " WHERE MONTH(" + colunaData + ") = ? AND YEAR(" + colunaData + ") = ?");
-
-        if (status != null) {
-            sql.append(" AND Status").append(tabela.substring(0, 1).toUpperCase()).append(tabela.substring(1)).append(" = ?");
-        }
-
-        PreparedStatement st = conectado.prepareStatement(sql.toString());
-        st.setInt(1, mes);
-        st.setInt(2, ano);
-        if (status != null) {
-            st.setString(3, status);
-        }
-
+        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) AS total FROM relatorio WHERE YEAR(DataCadastro) = YEAR(CURRENT_DATE - INTERVAL 1 YEAR)");
         ResultSet rs = st.executeQuery();
         return rs.next() ? rs.getInt("total") : 0;
     }
 
-// Específico para o Card 1: Comparação de Anos (Total de Clientes)
-    public static int getContagemAno(int ano) throws ClassNotFoundException, SQLException {
+    public static int clientesSemanaAtual() throws ClassNotFoundException, SQLException {
         conectado = conectar();
-        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) as total FROM cliente WHERE YEAR(DataCadastro) = ?");
-        st.setInt(1, ano);
+        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) FROM cliente WHERE YEARWEEK(STR_TO_DATE(DataCadastro, '%d/%m/%Y'), 1) = YEARWEEK(CURDATE(), 1)");
         ResultSet rs = st.executeQuery();
-        return rs.next() ? rs.getInt("total") : 0;
+        return rs.next() ? rs.getInt(1) : 0;
     }
 
-// Formatação da Porcentagem 01% a 100%
-    public static String formatarDiferenca(int atual, int anterior) {
-        if (anterior <= 0) {
-            return atual > 0 ? "100%" : "00%";
-        }
-        double perc = ((double) atual / anterior) * 100;
-        long valor = Math.round(perc);
-        if (valor > 100) {
-            valor = 100;
-        }
-        return String.format("%02d%%", valor);
+    public static int clientesSemanaPassada() throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) FROM cliente WHERE YEARWEEK(STR_TO_DATE(DataCadastro, '%d/%m/%Y'), 1) = YEARWEEK(CURDATE() - INTERVAL 1 WEEK, 1)");
+        ResultSet rs = st.executeQuery();
+        return rs.next() ? rs.getInt(1) : 0;
     }
 
+    public static int tarefasStatusMesAtual(String status) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) FROM tarefa WHERE StatusTarefa = ? AND MONTH(DataVencimento) = MONTH(CURDATE()) AND YEAR(DataVencimento) = YEAR(CURDATE())");
+        st.setString(1, status);
+        ResultSet rs = st.executeQuery();
+        return rs.next() ? rs.getInt(1) : 0;
+    }
+
+    public static int tarefasStatusMesPassado(String status) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) FROM tarefa WHERE StatusTarefa = ? AND MONTH(DataVencimento) = MONTH(CURDATE() - INTERVAL 1 MONTH) AND YEAR(DataVencimento) = YEAR(CURDATE() - INTERVAL 1 MONTH)");
+        st.setString(1, status);
+        ResultSet rs = st.executeQuery();
+        return rs.next() ? rs.getInt(1) : 0;
+    }
+
+    public static int relatoriosMesAtual() throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) FROM relatorio WHERE MONTH(DataCadastro) = MONTH(CURDATE()) AND YEAR(DataCadastro) = YEAR(CURDATE())");
+        ResultSet rs = st.executeQuery();
+        return rs.next() ? rs.getInt(1) : 0;
+    }
+
+    public static int relatoriosMesPassado() throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) FROM relatorio WHERE MONTH(DataCadastro) = MONTH(CURDATE() - INTERVAL 1 MONTH) AND YEAR(DataCadastro) = YEAR(CURDATE() - INTERVAL 1 MONTH)");
+        ResultSet rs = st.executeQuery();
+        return rs.next() ? rs.getInt(1) : 0;
+    }
 }

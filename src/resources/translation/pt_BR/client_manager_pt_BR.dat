@@ -98,9 +98,6 @@ navigation.sidebar.tasks=Tarefas
 navigation.sidebar.settings=Configuração
 navigation.sidebar.notify=Notificações
 navigation.sidebar.admin=Administração
-navigation.sidebar.maximize=Maximizar
-navigation.sidebar.minimize=Minimizar
-navigation.sidebar.close=Fechar
 
 client.dialog.title=Adicionar um novo cliente
 client.label.fullname=Nome Completo*

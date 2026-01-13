@@ -34,6 +34,7 @@ public class Dashboard extends javax.swing.JFrame {
         setUndecorated(true);
         setResizable(false);
         setIcon();
+        carregarKPIs();
         atualizarTextos();
         IconUtil.setIcon(usuarioLogado, lblUserIcon);
         setBackground(new java.awt.Color(0, 0, 0, 0));
@@ -46,7 +47,7 @@ public class Dashboard extends javax.swing.JFrame {
         applyScaledIcon(btnMaximizarTela, "/images/Maximize Icon.png", 11, 11, "/images/Maximize White Icon.png", bgNormal, bgHoverNav);
         applyScaledIcon(btnMinimizarTela, "/images/Minimize Icon.png", 11, 2, "/images/Minimize White Icon.png", bgNormal, bgHoverNav);
         applyScaledIcon(lblDivisorTela, "/images/Divider Icon.png", 2, 11);
-        applyScaledIcon(btnInfo, "/images/Information Icon.png", 13, 13);
+        applyScaledIcon(btnInfo, "/images/Information Icon.png", 13, 13, "/images/Information White Icon.png", bgNormal, bgHoverNav);
         applyScaledIcon(lblLogo, "/images/Logo Icon.png", 40, 40);
         applyScaledIcon(btnDashboard, "/images/Dashboard Icon Active.png", 22, 22, "/images/Dashboard Icon Hover.png");
         applyScaledIcon(btnCalendario, "/images/Calendar Icon.png", 22, 22, "/images/Calendar Icon Hover.png");
@@ -63,8 +64,6 @@ public class Dashboard extends javax.swing.JFrame {
         applyScaledIcon(lblIconTarefasNaoRealizadas, "/images/Unfulfilled Tasks Icon.png", 28, 28);
         applyScaledIcon(lblIconTarefasFinalizadas, "/images/Report Completed Icon.png", 28, 28);
 
-        addHoverLabel(btnMaximizarTela, "navigation.sidebar.maximize", true);
-        addHoverLabel(btnMinimizarTela, "navigation.sidebar.minimize", true);
         addHoverLabel(btnDashboard, "navigation.sidebar.dashboard", true);
         addHoverLabel(btnCalendario, "navigation.sidebar.calendar", true);
         addHoverLabel(btnClientes, "navigation.sidebar.clients", true);
@@ -149,6 +148,113 @@ public class Dashboard extends javax.swing.JFrame {
         }
     }
 
+    private String calcularPorcentagem(int atual, int anterior) {
+        if (anterior <= 0) {
+            return atual > 0 ? "100%" : "000%";
+        }
+        double calculo = ((double) atual / anterior) * 100;
+        if (calculo > 100) {
+            calculo = 100;
+        }
+        return String.format("%03.0f%%", calculo);
+    }
+
+    private String calcularTendencia(int atual, int anterior) {
+        double variacao;
+
+        if (anterior <= 0) {
+            variacao = (atual > 0) ? 9.999 : 0.000;
+        } else {
+            variacao = ((double) atual / anterior) - 1;
+
+            if (variacao > 9.999) {
+                variacao = 9.999;
+            }
+            if (variacao < -9.999) {
+                variacao = -9.999;
+            }
+        }
+
+        return String.format("%.3f%%", variacao).replace(",", ".");
+    }
+
+    private void carregarKPIs() {
+        try {
+            int KPINovosClientes = Data.CTCONTAB.novosclientesdomes();
+            lblKPIValueClientesMensais.setText(String.format("%04d", KPINovosClientes));
+
+            int cMesAtual = Data.CTCONTAB.novosclientesdomes();
+            int cMesPassado = Data.CTCONTAB.clientesMesPassado();
+            System.out.println("DEBUG Clientes - Atual: " + cMesAtual + " | Passado: " + cMesPassado);
+            lblValueClientesMensais.setText(calcularPorcentagem(cMesAtual, cMesPassado));
+
+            lblTrendIndicatorClientesMensais.setText(calcularTendencia(CTCONTAB.clientesSemanaAtual(), CTCONTAB.clientesSemanaPassada()));
+            System.out.println("DEBUG Clientes - Atual: " + calcularTendencia(CTCONTAB.clientesSemanaAtual(), CTCONTAB.clientesSemanaPassada()));
+
+            int KPITotalClientes = Data.CTCONTAB.clienteTotalRegis();
+            lblKPIValueTotalClientes.setText(String.format("%04d", KPITotalClientes));
+
+            int cTotalAtual = Data.CTCONTAB.clienteTotalRegis();
+            int cAnoPassado = Data.CTCONTAB.clientesAnoPassado();
+            lblValueTotalClientes.setText(calcularPorcentagem(cTotalAtual, cAnoPassado));
+
+            lblTrendIndicatorTotalClientes.setText(calcularTendencia(CTCONTAB.novosclientesdomes(), CTCONTAB.clientesMesPassado()));
+
+            int KPITarefasPendentes = Data.CTCONTAB.serviçosNaoRealizados();
+            lblKPIValueTarefasPendentes.setText(String.format("%04d", KPITarefasPendentes));
+
+            int tPendAtual = Data.CTCONTAB.serviçosNaoRealizados();
+            int tPendPassada = Data.CTCONTAB.tarefasSemanaPassada("Em andamento");
+            lblValueTarefasPendentes.setText(calcularPorcentagem(tPendAtual, tPendPassada));
+
+            lblTrendIndicatorTarefasPendentes.setText(calcularTendencia(CTCONTAB.tarefasStatusMesAtual("Em andamento"), CTCONTAB.tarefasStatusMesPassado("Em andamento")));
+
+            int KPITotalRelatorios = Data.CTCONTAB.totalRelatorios();
+            lblKPIValueTotalRelatorios.setText(String.format("%04d", KPITotalRelatorios));
+
+            int rTotalAtual = Data.CTCONTAB.totalRelatorios();
+            int rAnoPassado = Data.CTCONTAB.relatoriosAnoPassado();
+            lblValueTotalRelatorios.setText(calcularPorcentagem(rTotalAtual, rAnoPassado));
+
+            lblTrendIndicatorTotalRelatorios.setText(calcularTendencia(CTCONTAB.relatoriosMesAtual(), CTCONTAB.relatoriosMesPassado()));
+
+            int KPITarefasNaoRealizadas = Data.CTCONTAB.tarefaPendentes();
+            lblKPIValueTarefasNaoRealizadas.setText(String.format("%04d", KPITarefasNaoRealizadas));
+
+            int tAndAtual = Data.CTCONTAB.tarefaPendentes();
+            int tAndPassada = Data.CTCONTAB.tarefasSemanaPassada("Pendente");
+            lblValueTarefasNaoRealizadas.setText(calcularPorcentagem(tAndAtual, tAndPassada));
+
+            lblTrendIndicatorTarefasNaoRealizadas.setText(calcularTendencia(CTCONTAB.tarefasStatusMesAtual("Pendente"), CTCONTAB.tarefasStatusMesPassado("Pendente")));
+
+            int KPITarefasFinalizadas = Data.CTCONTAB.serviçosRealizados();
+            lblKPIValueTarefasFinalizadas.setText(String.format("%04d", KPITarefasFinalizadas));
+
+            int tConcAtual = Data.CTCONTAB.serviçosRealizados();
+            int tConcPassada = Data.CTCONTAB.tarefasSemanaPassada("Concluido");
+            lblValueTarefasFinalizadas.setText(calcularPorcentagem(tConcAtual, tConcPassada));
+
+            lblTrendIndicatorTarefasFinalizadas.setText(calcularTendencia(CTCONTAB.tarefasStatusMesAtual("Concluido"), CTCONTAB.tarefasStatusMesPassado("Concluido")));
+
+        } catch (Exception e) {
+            System.err.println("Erro ao carregar KPIs: " + e.getMessage());
+
+            lblKPIValueClientesMensais.setText("0000");
+            lblKPIValueTotalClientes.setText("0000");
+            lblKPIValueTarefasPendentes.setText("0000");
+            lblKPIValueTotalRelatorios.setText("0000");
+            lblKPIValueTarefasNaoRealizadas.setText("0000");
+            lblKPIValueTarefasFinalizadas.setText("0000");
+
+            lblValueClientesMensais.setText("000%");
+            lblValueTotalClientes.setText("000%");
+            lblValueTarefasPendentes.setText("000%");
+            lblValueTotalRelatorios.setText("000%");
+            lblValueTarefasNaoRealizadas.setText("000%");
+            lblValueTarefasFinalizadas.setText("000%");
+        }
+    }
+
     private void addHoverLabel(javax.swing.JButton botao, String chaveOuTexto, boolean isI18n) {
         String textoInicial = isI18n ? Data.I18nManager.getString(chaveOuTexto) : chaveOuTexto;
 
@@ -193,7 +299,7 @@ public class Dashboard extends javax.swing.JFrame {
 
                 if (botao == btnUserIcon) {
                     label.setLocation(botao.getParent().getWidth() - label.getWidth() - 10, botao.getY() + botao.getHeight() + 5);
-                } else if (botao == btnNotificacoes || botao == btnInfo || botao == btnMinimizarTela || botao == btnMaximizarTela) {
+                } else if (botao == btnNotificacoes || botao == btnInfo) {
                     label.setLocation(botao.getX() + (botao.getWidth() - label.getWidth()) / 2, botao.getY() + botao.getHeight() + 5);
                 } else {
                     label.setLocation(botao.getX() + botao.getWidth() + 30, botao.getY() + (botao.getHeight() - label.getHeight()) / 2);
@@ -313,6 +419,7 @@ public class Dashboard extends javax.swing.JFrame {
         lblIconTarefasFinalizadas = new javax.swing.JLabel();
         pnlBackgroundTarefasFinalizadas = new RoundedPanel(10);
         lblValueTarefasFinalizadas = new javax.swing.JLabel();
+        pnlGraficoTarefasFinalizadas = new RoundedPanel(10);
         lblDescriçãoTarefasNaoRealizadas = new javax.swing.JLabel();
         pnlCardTarefasNaoRealizadas = new RoundedPanel(15);
         lblHeaderTarefasNaoRealizadas = new javax.swing.JLabel();
@@ -323,6 +430,7 @@ public class Dashboard extends javax.swing.JFrame {
         lblIconTarefasNaoRealizadas = new javax.swing.JLabel();
         pnlBackgroundTarefasNaoRealizadas = new RoundedPanel(10);
         lblValueTarefasNaoRealizadas = new javax.swing.JLabel();
+        pnlGraficoTarefasNaoRealizadas = new RoundedPanel(10);
         lblDescriçãoTotalRelatorios = new javax.swing.JLabel();
         pnlCardTotalRelatorios = new RoundedPanel(15);
         lblHeaderTotalRelatorios = new javax.swing.JLabel();
@@ -333,6 +441,7 @@ public class Dashboard extends javax.swing.JFrame {
         lblIconTotalRelatorios = new javax.swing.JLabel();
         pnlBackgroundTotalRelatorios = new RoundedPanel(10);
         lblValueTotalRelatorios = new javax.swing.JLabel();
+        pnlGraficoTotalRelatorios = new RoundedPanel(10);
         lblDescriçãoTarefasPendentes = new javax.swing.JLabel();
         pnlCardTarefasPendentes = new RoundedPanel(15);
         lblHeaderTarefasPendentes = new javax.swing.JLabel();
@@ -343,6 +452,7 @@ public class Dashboard extends javax.swing.JFrame {
         lblIconTarefasPendentes = new javax.swing.JLabel();
         pnlBackgroundTarefasPendentes = new RoundedPanel(10);
         lblValueTarefasPendentes = new javax.swing.JLabel();
+        pnlGraficoTarefasPendentes = new RoundedPanel(10);
         lblDescriçãoTotalClientes = new javax.swing.JLabel();
         pnlCardTotalClientes = new RoundedPanel(15);
         lblHeaderTotalClientes = new javax.swing.JLabel();
@@ -353,6 +463,7 @@ public class Dashboard extends javax.swing.JFrame {
         lblIconTotalClientes = new javax.swing.JLabel();
         pnlBackgroundTotalClientes = new RoundedPanel(10);
         lblValueTotalClientes = new javax.swing.JLabel();
+        pnlGraficoTotalClientes = new RoundedPanel(10);
         lblDescriçãoClientesMensais = new javax.swing.JLabel();
         pnlCardClientesMensais = new RoundedPanel(15);
         lblValueClientesMensais = new javax.swing.JLabel();
@@ -362,7 +473,10 @@ public class Dashboard extends javax.swing.JFrame {
         lblKPIValueClientesMensais = new javax.swing.JLabel();
         lblTitleTrendClientesMensais = new javax.swing.JLabel();
         lblIconClientesMensais = new javax.swing.JLabel();
+        lblIconSucessKPIValueClientesMensais = new javax.swing.JLabel();
+        lblIconSucessValueClientesMensais = new javax.swing.JLabel();
         pnlBackgroundClientesMensais = new RoundedPanel(10);
+        pnlGraficoClienteMensais = new RoundedPanel(10);
         lblBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -405,14 +519,16 @@ public class Dashboard extends javax.swing.JFrame {
         getContentPane().add(lblLogo);
         lblLogo.setBounds(15, 35, 40, 40);
 
+        lblDivisorTela.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblDivisorTela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Close Icon.png"))); // NOI18N
+        lblDivisorTela.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblDivisorTela.setPreferredSize(new java.awt.Dimension(13, 13));
         getContentPane().add(lblDivisorTela);
-        lblDivisorTela.setBounds(1335, 0, 15, 25);
+        lblDivisorTela.setBounds(1345, 0, 15, 25);
 
         lblUserIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Jonh Doe Icon.png"))); // NOI18N
         getContentPane().add(lblUserIcon);
-        lblUserIcon.setBounds(1390, 30, 512, 50);
+        lblUserIcon.setBounds(1390, 30, 50, 50);
 
         btnAdministracao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Administrative Icon.png"))); // NOI18N
         btnAdministracao.setContentAreaFilled(false);
@@ -501,13 +617,14 @@ public class Dashboard extends javax.swing.JFrame {
 
         btnInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Information Icon.png"))); // NOI18N
         btnInfo.setContentAreaFilled(false);
+        btnInfo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnInfo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInfoActionPerformed(evt);
             }
         });
         getContentPane().add(btnInfo);
-        btnInfo.setBounds(1305, 0, 15, 25);
+        btnInfo.setBounds(1315, 0, 30, 25);
 
         btnMaximizarTela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Maximize Icon.png"))); // NOI18N
         btnMaximizarTela.setContentAreaFilled(false);
@@ -637,7 +754,11 @@ public class Dashboard extends javax.swing.JFrame {
         lblValueTarefasFinalizadas.setForeground(new java.awt.Color(199, 199, 199));
         lblValueTarefasFinalizadas.setText("100%");
         pnlCardTarefasFinalizadas.add(lblValueTarefasFinalizadas);
-        lblValueTarefasFinalizadas.setBounds(130, 65, 70, 20);
+        lblValueTarefasFinalizadas.setBounds(130, 80, 70, 20);
+
+        pnlGraficoTarefasFinalizadas.setBackground(new java.awt.Color(51, 51, 51));
+        pnlCardTarefasFinalizadas.add(pnlGraficoTarefasFinalizadas);
+        pnlGraficoTarefasFinalizadas.setBounds(10, 40, 110, 100);
 
         getContentPane().add(pnlCardTarefasFinalizadas);
         pnlCardTarefasFinalizadas.setBounds(1210, 330, 208, 303);
@@ -695,7 +816,11 @@ public class Dashboard extends javax.swing.JFrame {
         lblValueTarefasNaoRealizadas.setForeground(new java.awt.Color(199, 199, 199));
         lblValueTarefasNaoRealizadas.setText("100%");
         pnlCardTarefasNaoRealizadas.add(lblValueTarefasNaoRealizadas);
-        lblValueTarefasNaoRealizadas.setBounds(130, 65, 70, 20);
+        lblValueTarefasNaoRealizadas.setBounds(130, 80, 70, 20);
+
+        pnlGraficoTarefasNaoRealizadas.setBackground(new java.awt.Color(51, 51, 51));
+        pnlCardTarefasNaoRealizadas.add(pnlGraficoTarefasNaoRealizadas);
+        pnlGraficoTarefasNaoRealizadas.setBounds(10, 40, 110, 100);
 
         getContentPane().add(pnlCardTarefasNaoRealizadas);
         pnlCardTarefasNaoRealizadas.setBounds(988, 330, 208, 303);
@@ -753,7 +878,11 @@ public class Dashboard extends javax.swing.JFrame {
         lblValueTotalRelatorios.setForeground(new java.awt.Color(199, 199, 199));
         lblValueTotalRelatorios.setText("100%");
         pnlCardTotalRelatorios.add(lblValueTotalRelatorios);
-        lblValueTotalRelatorios.setBounds(130, 65, 70, 20);
+        lblValueTotalRelatorios.setBounds(130, 80, 70, 20);
+
+        pnlGraficoTotalRelatorios.setBackground(new java.awt.Color(51, 51, 51));
+        pnlCardTotalRelatorios.add(pnlGraficoTotalRelatorios);
+        pnlGraficoTotalRelatorios.setBounds(10, 40, 110, 100);
 
         getContentPane().add(pnlCardTotalRelatorios);
         pnlCardTotalRelatorios.setBounds(766, 330, 208, 303);
@@ -811,7 +940,11 @@ public class Dashboard extends javax.swing.JFrame {
         lblValueTarefasPendentes.setForeground(new java.awt.Color(199, 199, 199));
         lblValueTarefasPendentes.setText("100%");
         pnlCardTarefasPendentes.add(lblValueTarefasPendentes);
-        lblValueTarefasPendentes.setBounds(130, 65, 70, 20);
+        lblValueTarefasPendentes.setBounds(130, 80, 70, 20);
+
+        pnlGraficoTarefasPendentes.setBackground(new java.awt.Color(51, 51, 51));
+        pnlCardTarefasPendentes.add(pnlGraficoTarefasPendentes);
+        pnlGraficoTarefasPendentes.setBounds(10, 40, 110, 100);
 
         getContentPane().add(pnlCardTarefasPendentes);
         pnlCardTarefasPendentes.setBounds(544, 330, 208, 303);
@@ -869,7 +1002,11 @@ public class Dashboard extends javax.swing.JFrame {
         lblValueTotalClientes.setForeground(new java.awt.Color(199, 199, 199));
         lblValueTotalClientes.setText("100%");
         pnlCardTotalClientes.add(lblValueTotalClientes);
-        lblValueTotalClientes.setBounds(130, 65, 70, 20);
+        lblValueTotalClientes.setBounds(130, 80, 70, 20);
+
+        pnlGraficoTotalClientes.setBackground(new java.awt.Color(51, 51, 51));
+        pnlCardTotalClientes.add(pnlGraficoTotalClientes);
+        pnlGraficoTotalClientes.setBounds(10, 40, 110, 100);
 
         getContentPane().add(pnlCardTotalClientes);
         pnlCardTotalClientes.setBounds(322, 330, 208, 303);
@@ -889,7 +1026,7 @@ public class Dashboard extends javax.swing.JFrame {
         lblValueClientesMensais.setForeground(new java.awt.Color(199, 199, 199));
         lblValueClientesMensais.setText("100%");
         pnlCardClientesMensais.add(lblValueClientesMensais);
-        lblValueClientesMensais.setBounds(130, 65, 70, 20);
+        lblValueClientesMensais.setBounds(130, 80, 70, 20);
 
         lblHeaderClientesMensais.setFont(FonteUtils.carregarInterSemiBold(11f));
         lblHeaderClientesMensais.setForeground(new java.awt.Color(199, 199, 199));
@@ -924,10 +1061,18 @@ public class Dashboard extends javax.swing.JFrame {
         lblIconClientesMensais.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pnlCardClientesMensais.add(lblIconClientesMensais);
         lblIconClientesMensais.setBounds(153, 160, 45, 45);
+        pnlCardClientesMensais.add(lblIconSucessKPIValueClientesMensais);
+        lblIconSucessKPIValueClientesMensais.setBounds(180, 80, 15, 15);
+        pnlCardClientesMensais.add(lblIconSucessValueClientesMensais);
+        lblIconSucessValueClientesMensais.setBounds(60, 195, 15, 15);
 
         pnlBackgroundClientesMensais.setBackground(new java.awt.Color(0, 217, 255));
         pnlCardClientesMensais.add(pnlBackgroundClientesMensais);
         pnlBackgroundClientesMensais.setBounds(153, 160, 45, 45);
+
+        pnlGraficoClienteMensais.setBackground(new java.awt.Color(51, 51, 51));
+        pnlCardClientesMensais.add(pnlGraficoClienteMensais);
+        pnlGraficoClienteMensais.setBounds(10, 40, 110, 100);
 
         getContentPane().add(pnlCardClientesMensais);
         pnlCardClientesMensais.setBounds(100, 330, 208, 303);
@@ -1035,6 +1180,8 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMaximizarTelaMouseExited
 
     public static void main(String args[]) {
+        System.setProperty("sun.java2d.uiScale", "1.0");
+        
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -1152,6 +1299,8 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel lblHeaderTotalClientes;
     private javax.swing.JLabel lblHeaderTotalRelatorios;
     private javax.swing.JLabel lblIconClientesMensais;
+    private javax.swing.JLabel lblIconSucessKPIValueClientesMensais;
+    private javax.swing.JLabel lblIconSucessValueClientesMensais;
     private javax.swing.JLabel lblIconTarefasFinalizadas;
     private javax.swing.JLabel lblIconTarefasNaoRealizadas;
     private javax.swing.JLabel lblIconTarefasPendentes;
@@ -1204,5 +1353,11 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel pnlCardTarefasPendentes;
     private javax.swing.JPanel pnlCardTotalClientes;
     private javax.swing.JPanel pnlCardTotalRelatorios;
+    private javax.swing.JPanel pnlGraficoClienteMensais;
+    private javax.swing.JPanel pnlGraficoTarefasFinalizadas;
+    private javax.swing.JPanel pnlGraficoTarefasNaoRealizadas;
+    private javax.swing.JPanel pnlGraficoTarefasPendentes;
+    private javax.swing.JPanel pnlGraficoTotalClientes;
+    private javax.swing.JPanel pnlGraficoTotalRelatorios;
     // End of variables declaration//GEN-END:variables
 }
