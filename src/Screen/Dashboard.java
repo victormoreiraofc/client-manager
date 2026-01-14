@@ -1,36 +1,36 @@
 package screen;
 
 import Data.CTCONTAB;
-import Data.Cliente;
 import Data.I18nManager;
-import Data.IconManager;
 import Data.IconUtil;
 import Data.Usuario;
-import Data.PermissaoUtil;
 import Screen.FonteUtils;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.util.Locale;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import java.awt.geom.RoundRectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 public class Dashboard extends javax.swing.JFrame {
 
     private Usuario usuarioLogado;
     private int mouseX, mouseY;
     private final java.util.Map<javax.swing.JLabel, String> hoverLabelsTraduziveis = new java.util.HashMap<>();
+    private final Color COR_PADRAO = new Color(4, 19, 53);
+    private final Color COR_HOVER_GERAL = new Color(26, 41, 75);
+    private final Color COR_HOVER_FECHAR = Color.RED;
 
     public Dashboard(Usuario usuario) {
         this.usuarioLogado = usuario;
         initComponents();
+        aplicarImagensDeAltaQualidade();
         setUndecorated(true);
         setResizable(false);
         setIcon();
@@ -39,30 +39,6 @@ public class Dashboard extends javax.swing.JFrame {
         IconUtil.setIcon(usuarioLogado, lblUserIcon);
         setBackground(new java.awt.Color(0, 0, 0, 0));
         setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 20, 20));
-
-        Color bgNormal = new Color(4, 19, 53);
-        Color bgHoverNav = new Color(26, 41, 75);
-
-        applyScaledIcon(btnFecharTela, "/images/Close Icon.png", 11, 11, "/images/Close White Icon.png", bgNormal, Color.RED);
-        applyScaledIcon(btnMaximizarTela, "/images/Maximize Icon.png", 11, 11, "/images/Maximize White Icon.png", bgNormal, bgHoverNav);
-        applyScaledIcon(btnMinimizarTela, "/images/Minimize Icon.png", 11, 2, "/images/Minimize White Icon.png", bgNormal, bgHoverNav);
-        applyScaledIcon(lblDivisorTela, "/images/Divider Icon.png", 2, 11);
-        applyScaledIcon(btnInfo, "/images/Information Icon.png", 13, 13, "/images/Information White Icon.png", bgNormal, bgHoverNav);
-        applyScaledIcon(lblLogo, "/images/Logo Icon.png", 40, 40);
-        applyScaledIcon(btnDashboard, "/images/Dashboard Icon Active.png", 22, 22, "/images/Dashboard Icon Hover.png");
-        applyScaledIcon(btnCalendario, "/images/Calendar Icon.png", 22, 22, "/images/Calendar Icon Hover.png");
-        applyScaledIcon(btnClientes, "/images/Client Icon.png", 22, 22, "/images/Client Icon Hover.png");
-        applyScaledIcon(btnTarefas, "/images/Tasks Icon.png", 22, 22, "/images/Tasks Icon Hover.png");
-        applyScaledIcon(btnConfiguracoes, "/images/Settings Icon.png", 22, 22, "/images/Settings Icon Hover.png");
-        applyScaledIcon(btnRelatorios, "/images/Report Icon.png", 22, 22, "/images/Report Icon  Hover.png");
-        applyScaledIcon(btnAdministracao, "/images/Administrative Icon.png", 22, 22, "/images/Administrative Icon Hover.png");
-        applyScaledIcon(btnNotificacoes, "/images/Notification Bell.png", 22, 22, "/images/Notification Bell Hover.png");
-        applyScaledIcon(lblIconClientesMensais, "/images/Monthly Clients Icon.png", 28, 28);
-        applyScaledIcon(lblIconTotalClientes, "/images/Total Clients Icon.png", 28, 28);
-        applyScaledIcon(lblIconTarefasPendentes, "/images/Pending Tasks Icon.png", 28, 28);
-        applyScaledIcon(lblIconTotalRelatorios, "/images/Total Reports Icon.png", 28, 28);
-        applyScaledIcon(lblIconTarefasNaoRealizadas, "/images/Unfulfilled Tasks Icon.png", 28, 28);
-        applyScaledIcon(lblIconTarefasFinalizadas, "/images/Report Completed Icon.png", 28, 28);
 
         addHoverLabel(btnDashboard, "navigation.sidebar.dashboard", true);
         addHoverLabel(btnCalendario, "navigation.sidebar.calendar", true);
@@ -80,72 +56,143 @@ public class Dashboard extends javax.swing.JFrame {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Logo Icon.png")));
     }
 
-    public void applyScaledIcon(javax.swing.JComponent component, String path, int width, int height) {
-        applyIconLogic(component, path, width, height);
-    }
-
-    public void applyScaledIcon(javax.swing.JComponent component, String path, int width, int height,
-            String hoverPath, java.awt.Color defaultBg, java.awt.Color hoverBg) {
-        component.setOpaque(true);
-        component.setBackground(defaultBg);
-        component.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        if (component instanceof javax.swing.JButton) {
-            javax.swing.JButton btn = (javax.swing.JButton) component;
-            btn.setContentAreaFilled(false);
-            btn.setBorderPainted(false);
-            btn.setFocusPainted(false);
-        }
-
-        applyIconLogic(component, path, width, height);
-        component.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                component.setBackground(hoverBg);
-                applyIconLogic(component, hoverPath, width, height);
-            }
-
-            @Override
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                component.setBackground(defaultBg);
-                applyIconLogic(component, path, width, height);
-            }
-        });
-    }
-
-    public void applyScaledIcon(javax.swing.JComponent component, String path, int width, int height, String hoverPath) {
-        applyIconLogic(component, path, width, height);
-
-        component.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                applyIconLogic(component, hoverPath, width, height);
-            }
-
-            @Override
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                applyIconLogic(component, path, width, height);
-            }
-        });
-    }
-
-    private void applyIconLogic(javax.swing.JComponent component, String path, int w, int h) {
+    private void aplicarImagensDeAltaQualidade() {
         try {
-            java.net.URL url = getClass().getResource(path);
-            if (url != null) {
-                java.awt.Image img = javax.imageio.ImageIO.read(url)
-                        .getScaledInstance(w, h, java.awt.Image.SCALE_SMOOTH);
-                javax.swing.ImageIcon icon = new javax.swing.ImageIcon(img);
+            BufferedImage DashboardNormal = ImageIO.read(getClass().getResource("/images/Dashboard Icon Active.png"));
+            BufferedImage DashboardHover = ImageIO.read(getClass().getResource("/images/Dashboard Icon Hover.png"));
+            BufferedImage CalendarNormal = ImageIO.read(getClass().getResource("/images/Calendar Icon.png"));
+            BufferedImage CalendarHover = ImageIO.read(getClass().getResource("/images/Calendar Icon Hover.png"));
+            BufferedImage ClientNormal = ImageIO.read(getClass().getResource("/images/Client Icon.png"));
+            BufferedImage ClientHover = ImageIO.read(getClass().getResource("/images/Client Icon Hover.png"));
+            BufferedImage TaskNormal = ImageIO.read(getClass().getResource("/images/Tasks Icon.png"));
+            BufferedImage TaskHover = ImageIO.read(getClass().getResource("/images/Tasks Icon Hover.png"));
+            BufferedImage SettingsNormal = ImageIO.read(getClass().getResource("/images/Settings Icon.png"));
+            BufferedImage SettingsHover = ImageIO.read(getClass().getResource("/images/Settings Icon Hover.png"));
+            BufferedImage ReportNormal = ImageIO.read(getClass().getResource("/images/Report Icon.png"));
+            BufferedImage ReportHover = ImageIO.read(getClass().getResource("/images/Report Icon  Hover.png"));
+            BufferedImage AdministrativeNormal = ImageIO.read(getClass().getResource("/images/Administrative Icon.png"));
+            BufferedImage AdministrativeHover = ImageIO.read(getClass().getResource("/images/Administrative Icon Hover.png"));
+            BufferedImage NotificationNormal = ImageIO.read(getClass().getResource("/images/Notification Bell.png"));
+            BufferedImage NotificationHover = ImageIO.read(getClass().getResource("/images/Notification Bell Hover.png"));
+            BufferedImage DivisorSuperiorBar = ImageIO.read(getClass().getResource("/images/Divider Icon.png"));
+            BufferedImage MonthlyClients = ImageIO.read(getClass().getResource("/images/Monthly Clients Icon.png"));
+            BufferedImage TotalClients = ImageIO.read(getClass().getResource("/images/Total Clients Icon.png"));
+            BufferedImage PendingTasks = ImageIO.read(getClass().getResource("/images/Pending Tasks Icon.png"));
+            BufferedImage TotalReports = ImageIO.read(getClass().getResource("/images/Total Reports Icon.png"));
+            BufferedImage UnfulfilledTasks = ImageIO.read(getClass().getResource("/images/Unfulfilled Tasks Icon.png"));
+            BufferedImage ReportCompleted = ImageIO.read(getClass().getResource("/images/Report Completed Icon.png"));
+            BufferedImage ArrowNewClient = ImageIO.read(getClass().getResource("/images/Button Icon.png"));
+            BufferedImage BannerNewClient = ImageIO.read(getClass().getResource("/images/Client Button.png"));
+            BufferedImage Background = ImageIO.read(getClass().getResource("/images/Dashboard Background.png"));
+            BufferedImage imgLogo = ImageIO.read(getClass().getResource("/images/Logo Icon.png"));
+            BufferedImage closeNormal = ImageIO.read(getClass().getResource("/images/Close Icon.png"));
+            BufferedImage closeWhite = ImageIO.read(getClass().getResource("/images/Close White Icon.png"));
+            BufferedImage minNormal = ImageIO.read(getClass().getResource("/images/Minimize Icon.png"));
+            BufferedImage minWhite = ImageIO.read(getClass().getResource("/images/Minimize White Icon.png"));
+            BufferedImage maxNormal = ImageIO.read(getClass().getResource("/images/Maximize Icon.png"));
+            BufferedImage maxWhite = ImageIO.read(getClass().getResource("/images/Maximize White Icon.png"));
+            BufferedImage infoNormal = ImageIO.read(getClass().getResource("/images/Information Icon.png"));
+            BufferedImage infoWhite = ImageIO.read(getClass().getResource("/images/Information White Icon.png"));
+            BufferedImage LogoText = ImageIO.read(getClass().getResource("/images/Logo Text Icon.png"));
+            BufferedImage UserIcon = ImageIO.read(getClass().getResource("/images/Jonh Doe Icon.png"));
 
-                if (component instanceof javax.swing.JLabel) {
-                    ((javax.swing.JLabel) component).setIcon(icon);
-                } else if (component instanceof javax.swing.JButton) {
-                    ((javax.swing.JButton) component).setIcon(icon);
-                }
-            }
-        } catch (Exception e) {
-            System.err.println("Erro: " + path);
+            configurarBotaoControle(btnFecharTela, closeNormal, closeWhite, 11, 11, COR_HOVER_FECHAR);
+            configurarBotaoControle(btnMinimizarTela, minNormal, minWhite, 11, 2, COR_HOVER_GERAL);
+            configurarBotaoControle(btnMaximizarTela, maxNormal, maxWhite, 11, 11, COR_HOVER_GERAL);
+            configurarBotaoControle(btnInfo, infoNormal, infoWhite, 13, 13, COR_HOVER_GERAL);
+
+            configurarBotaoComHover(btnDashboard, DashboardNormal, DashboardHover, 22, 22);
+            configurarBotaoComHover(btnCalendario, CalendarNormal, CalendarHover, 22, 22);
+            configurarBotaoComHover(btnClientes, ClientNormal, ClientHover, 22, 22);
+            configurarBotaoComHover(btnTarefas, TaskNormal, TaskHover, 22, 22);
+            configurarBotaoComHover(btnConfiguracoes, SettingsNormal, SettingsHover, 22, 22);
+            configurarBotaoComHover(btnRelatorios, ReportNormal, ReportHover, 22, 22);
+            configurarBotaoComHover(btnAdministracao, AdministrativeNormal, AdministrativeHover, 22, 22);
+            configurarBotaoComHover(btnNotificacoes, NotificationNormal, NotificationHover, 22, 22);
+
+            lblLogo.setIcon(gerarIconePerfeito(imgLogo, 40, 40));
+            lblDivisorTela.setIcon(gerarIconePerfeito(DivisorSuperiorBar, 2, 11));
+            lblIconClientesMensais.setIcon(gerarIconePerfeito(MonthlyClients, 28, 28));
+            lblIconTotalClientes.setIcon(gerarIconePerfeito(TotalClients, 28, 28));
+            lblIconTarefasPendentes.setIcon(gerarIconePerfeito(PendingTasks, 28, 28));
+            lblIconTotalRelatorios.setIcon(gerarIconePerfeito(TotalReports, 28, 28));
+            lblIconTarefasNaoRealizadas.setIcon(gerarIconePerfeito(UnfulfilledTasks, 28, 28));
+            lblIconTarefasFinalizadas.setIcon(gerarIconePerfeito(ReportCompleted, 28, 28));
+            lblSetaAdicionarClientes.setIcon(gerarIconePerfeito(ArrowNewClient, 50, 40));
+            btnAdicionarCliente.setIcon(gerarIconePerfeito(BannerNewClient, 1340, 150));
+            lblBackground.setIcon(gerarIconePerfeito(Background, 1450, 750));
+            lblLogoTexto.setIcon(gerarIconePerfeito(LogoText, 176, 46));
+            lblUserIcon.setIcon(gerarIconePerfeito(UserIcon, 50, 50));
+            lblLogo.setText("");
+
+        } catch (IOException e) {
+            System.err.println("Erro ao carregar recursos: " + e.getMessage());
         }
+    }
+
+    private void configurarBotaoControle(javax.swing.JButton botao, BufferedImage normal, BufferedImage hover, int w, int h, Color corHover) {
+        javax.swing.Icon iconNormal = gerarIconePerfeito(normal, w, h);
+        javax.swing.Icon iconHover = gerarIconePerfeito(hover, w, h);
+
+        botao.setIcon(iconNormal);
+        botao.setRolloverIcon(iconHover);
+        botao.setBackground(COR_PADRAO);
+
+        botao.setBorder(null);
+        botao.setBorderPainted(false);
+        botao.setFocusPainted(false);
+        botao.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        botao.setContentAreaFilled(false);
+
+        botao.setOpaque(true);
+        botao.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        botao.setText("");
+
+        botao.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                botao.setBackground(corHover);
+            }
+
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                botao.setBackground(COR_PADRAO);
+            }
+        });
+    }
+
+    private void configurarBotaoComHover(javax.swing.JButton botao, BufferedImage active, BufferedImage hover, int w, int h) {
+        botao.setIcon(gerarIconePerfeito(active, w, h));
+        botao.setRolloverIcon(gerarIconePerfeito(hover, w, h));
+        botao.setBorderPainted(false);
+        botao.setContentAreaFilled(false);
+        botao.setFocusPainted(false);
+        botao.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        botao.setText("");
+    }
+
+    private javax.swing.Icon gerarIconePerfeito(BufferedImage img, int targetW, int targetH) {
+        int scaleFactor = 2;
+        int w = img.getWidth();
+        int h = img.getHeight();
+        BufferedImage lastImg = img;
+
+        int wAlvoRenderizacao = targetW * scaleFactor;
+        int hAlvoRenderizacao = targetH * scaleFactor;
+
+        while (w > wAlvoRenderizacao || h > hAlvoRenderizacao) {
+            w = Math.max(w / 2, wAlvoRenderizacao);
+            h = Math.max(h / 2, hAlvoRenderizacao);
+
+            BufferedImage tmp = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g2 = tmp.createGraphics();
+            g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+            g2.drawImage(lastImg, 0, 0, w, h, null);
+            g2.dispose();
+            lastImg = tmp;
+        }
+
+        return new IconeSuave(lastImg, targetW, targetH);
     }
 
     private String calcularPorcentagem(int atual, int anterior) {
@@ -185,11 +232,9 @@ public class Dashboard extends javax.swing.JFrame {
 
             int cMesAtual = Data.CTCONTAB.novosclientesdomes();
             int cMesPassado = Data.CTCONTAB.clientesMesPassado();
-            System.out.println("DEBUG Clientes - Atual: " + cMesAtual + " | Passado: " + cMesPassado);
             lblValueClientesMensais.setText(calcularPorcentagem(cMesAtual, cMesPassado));
 
             lblTrendIndicatorClientesMensais.setText(calcularTendencia(CTCONTAB.clientesSemanaAtual(), CTCONTAB.clientesSemanaPassada()));
-            System.out.println("DEBUG Clientes - Atual: " + calcularTendencia(CTCONTAB.clientesSemanaAtual(), CTCONTAB.clientesSemanaPassada()));
 
             int KPITotalClientes = Data.CTCONTAB.clienteTotalRegis();
             lblKPIValueTotalClientes.setText(String.format("%04d", KPITotalClientes));
@@ -1180,8 +1225,6 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMaximizarTelaMouseExited
 
     public static void main(String args[]) {
-        System.setProperty("sun.java2d.uiScale", "1.0");
-        
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -1198,6 +1241,10 @@ public class Dashboard extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+
+        java.awt.EventQueue.invokeLater(() -> {
+            new TelaLogin().setVisible(true);
+        });
     }
 
     class RoundedPanel extends javax.swing.JPanel {
@@ -1263,6 +1310,39 @@ public class Dashboard extends javax.swing.JFrame {
 
             super.paintComponent(g2);
             g2.dispose();
+        }
+    }
+
+    class IconeSuave implements javax.swing.Icon {
+
+        private final Image imagem;
+        private final int larguraExibicao;
+        private final int alturaExibicao;
+
+        public IconeSuave(Image imagem, int larguraExibicao, int alturaExibicao) {
+            this.imagem = imagem;
+            this.larguraExibicao = larguraExibicao;
+            this.alturaExibicao = alturaExibicao;
+        }
+
+        @Override
+        public void paintIcon(java.awt.Component c, java.awt.Graphics g, int x, int y) {
+            java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+            g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2.drawImage(imagem, x, y, larguraExibicao, alturaExibicao, null);
+            g2.dispose();
+        }
+
+        @Override
+        public int getIconWidth() {
+            return larguraExibicao;
+        }
+
+        @Override
+        public int getIconHeight() {
+            return alturaExibicao;
         }
     }
 
