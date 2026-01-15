@@ -1,6 +1,6 @@
 package screen;
 
-import Screen.FonteUtils;
+import screen.FonteUtils;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

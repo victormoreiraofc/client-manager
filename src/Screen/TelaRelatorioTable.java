@@ -5,7 +5,7 @@ import Data.IconUtil;
 import Data.PermissaoUtil;
 import Data.Relatorio;
 import Data.Usuario;
-import Screen.FonteUtils;
+import screen.FonteUtils;
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import java.awt.event.FocusAdapter;
@@ -1186,7 +1186,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
         lblRelatorioPendenteDescricao = new javax.swing.JLabel();
         lblRelatorioNovoNumero = new javax.swing.JLabel();
         lblRelatorioNovoDescricao = new javax.swing.JLabel();
-        btnCadastrar = new Screen.RoundButton(
+        btnCadastrar = new screen.RoundButton(
                 new javax.swing.ImageIcon(getClass().getResource("/images/Plus Icon.png")));
         lblIconeFuncionarioDoMes = new javax.swing.JLabel();
         lblRelatorioNovoTitulo1 = new javax.swing.JLabel();

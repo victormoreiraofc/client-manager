@@ -1,9 +1,9 @@
-package Screen;
+package screen;
 
 import Data.CTCONTAB;
 import Data.Cliente;
 import Data.Usuario;
-import Screen.FonteUtils;
+import screen.FonteUtils;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.Border; 

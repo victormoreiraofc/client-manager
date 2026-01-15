@@ -6,7 +6,7 @@ import Data.IconUtil;
 import Data.PermissaoUtil;
 import Data.Relatorio;
 import Data.Usuario;
-import Screen.MensagemUtil;
+import screen.MensagemUtil;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.FocusAdapter;

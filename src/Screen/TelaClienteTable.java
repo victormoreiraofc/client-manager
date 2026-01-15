@@ -5,7 +5,7 @@ import Data.CTCONTAB;
 import Data.IconUtil;
 import Data.PermissaoUtil;
 import Data.Usuario;
-import Screen.FonteUtils;
+import screen.FonteUtils;
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
 import java.awt.event.FocusAdapter;
@@ -49,9 +49,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 import java.sql.SQLException;
-import Screen.TelaVisualizarCliente;
-import Screen.TelaEditarCliente;
-import Screen.PopupExclusao;
+import screen.TelaVisualizarCliente;
+import screen.TelaEditarCliente;
+import screen.PopupExclusao;
 
 public class TelaClienteTable extends javax.swing.JFrame {
 
@@ -1294,7 +1294,7 @@ public class TelaClienteTable extends javax.swing.JFrame {
         lblRelatorioPendenteDescricao = new javax.swing.JLabel();
         lblRelatorioNovoDescricao = new javax.swing.JLabel();
         lblRelatorioNovoNumero = new javax.swing.JLabel();
-        btnCadastrar = new Screen.RoundButton(
+        btnCadastrar = new screen.RoundButton(
                 new javax.swing.ImageIcon(getClass().getResource("/images/Plus Icon.png")));
         lblRelatorioNovoTitulo1 = new javax.swing.JLabel();
         lblIconeFuncionarioDoMes = new javax.swing.JLabel();

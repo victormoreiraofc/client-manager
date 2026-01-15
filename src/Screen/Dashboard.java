@@ -4,7 +4,7 @@ import Data.CTCONTAB;
 import Data.I18nManager;
 import Data.IconUtil;
 import Data.Usuario;
-import Screen.FonteUtils;
+import screen.FonteUtils;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -327,7 +327,7 @@ public class Dashboard extends javax.swing.JFrame {
         if (isAsiatico) {
             label.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 13));
         } else {
-            label.setFont(Screen.FonteUtils.carregarSofiaSansBlack(13f));
+            label.setFont(screen.FonteUtils.carregarSofiaSansBlack(13f));
         }
 
         botao.getParent().add(label, 0);
@@ -419,7 +419,7 @@ public class Dashboard extends javax.swing.JFrame {
             if (isAsiatico) {
                 lbl.setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 13));
             } else {
-                lbl.setFont(Screen.FonteUtils.carregarSofiaSansBlack(13f));
+                lbl.setFont(screen.FonteUtils.carregarSofiaSansBlack(13f));
             }
         }
 

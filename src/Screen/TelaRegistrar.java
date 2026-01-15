@@ -2,8 +2,8 @@ package screen;
 
 import Data.CTCONTAB;
 import Data.I18nManager;
-import Screen.FonteUtils;
-import Screen.MensagemUtil;
+import screen.FonteUtils;
+import screen.MensagemUtil;
 import java.sql.SQLException;
 import java.awt.Toolkit;
 import java.awt.event.FocusAdapter;

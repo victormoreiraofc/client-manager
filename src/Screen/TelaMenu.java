@@ -6,7 +6,7 @@ import Data.I18nManager;
 import Data.IconUtil;
 import Data.Usuario;
 import Data.PermissaoUtil;
-import Screen.FonteUtils;
+import screen.FonteUtils;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;

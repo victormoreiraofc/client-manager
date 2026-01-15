@@ -13,7 +13,7 @@ import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 import java.util.logging.Level;
 import org.slf4j.MDC;
-import Screen.FonteUtils;
+import screen.FonteUtils;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;

@@ -1,4 +1,4 @@
-package Screen;
+package screen;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +9,7 @@ import java.io.InputStream;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
+import screen.FonteUtils;
 
 public class TelaUpdateLoadingOverview extends JFrame {
 

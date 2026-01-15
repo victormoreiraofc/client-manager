@@ -5,7 +5,7 @@ import java.awt.*;
 import javax.swing.*;
 import Data.PermissaoUtil;
 import Data.Usuario;
-import Screen.FonteUtils;
+import screen.FonteUtils;
 import java.awt.Color;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;

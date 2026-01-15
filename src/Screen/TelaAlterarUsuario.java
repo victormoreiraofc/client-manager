@@ -11,7 +11,7 @@ import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 import java.util.logging.Level;
 import org.slf4j.MDC;
-import Screen.FonteUtils;
+import screen.FonteUtils;
 // Importação simulada para classes de dados/conexão
 
 public class TelaAlterarUsuario extends JDialog {

@@ -4,7 +4,7 @@ import Data.IconUtil;
 import Data.Usuario;
 import java.awt.Color;
 import java.awt.Toolkit;
-import Screen.FonteUtils;
+import screen.FonteUtils;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;

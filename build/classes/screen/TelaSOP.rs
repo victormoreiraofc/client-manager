@@ -1,9 +1,0 @@
-screen.TelaSOP$4
-screen.TelaSOP$5
-screen.TelaSOP$6
-screen.TelaSOP
-screen.TelaSOP$7
-screen.TelaSOP$1
-screen.TelaSOP$2
-screen.TelaSOP$3
-screen.TelaSOP$8

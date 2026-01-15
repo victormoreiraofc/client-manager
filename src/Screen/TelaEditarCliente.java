@@ -1,9 +1,9 @@
-package Screen;
+package screen;
 
 import Data.CTCONTAB;
 import Data.Cliente;
 import Data.Usuario;
-import Screen.FonteUtils;
+import screen.FonteUtils;
 import Data.IconUtil; // Import necessário para o ícone
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
