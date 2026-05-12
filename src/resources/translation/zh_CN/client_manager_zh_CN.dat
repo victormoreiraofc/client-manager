@@ -1,71 +1,104 @@
-# --- AUTHENTICATION MODULE ---
+# --- AUTHENTICATION MODULE (Login) ---
 auth.login.window_title=CT Contab Manager
-auth.login.header.title=登录
-auth.login.header.description=您的财务管理尽在一处，全数字化体验。
-auth.login.header.subtitle=
-auth.login.social.google=使用 Google 登录
-auth.login.divider.text=或使用电子邮件登录
-auth.login.form.label.email=电子邮件
-auth.login.form.label.password=密码
-auth.login.form.placeholder.email=email@example.com
-auth.login.form.checkbox.remember=记住我
-auth.login.form.link.forgot_password=忘记密码？
-auth.login.form.button.submit=登录
-auth.login.footer.not_registered=还没有账号？
-auth.login.footer.link.create_account=  创建账号
-auth.login.footer.copyright=© 2025 CT Contab. 保留所有权利。
-auth.login.feedback.error.invalid_credentials=您的电子邮件或密码错误。
+auth.login.header.title=访问您的帐户
+auth.login.social.google=通过 Google 登录
+auth.login.social.apple=通过 Apple 登录
+auth.login.divider.text=或
+auth.login.confirm=下一步
+auth.login.newacount=<html><font color='#48494B'>没有帐户？ </font><font color='#287FCE'><b>注册</b></font></html>
+auth.login.forgotpassword=忘记密码？
+auth.login.hover.user=用户名
+auth.login.default.user=用户名
+auth.login.hover.password=密码
+auth.login.default.password=密码
 
+# --- REGISTRATION MODULE (Sign Up) ---
 auth.register.window_title=CT Contab Manager
-auth.register.header.title=注册
-auth.register.header.description=您的财务管理尽在一处，全数字化体验。
-auth.register.header.subtitle=
-auth.register.form.label.username=用户名
-auth.register.form.label.email=电子邮件
-auth.register.form.label.password=密码
-auth.register.form.label.confirm_password=确认密码
-auth.register.form.placeholder.email=email@example.com
-auth.register.form.checkbox.remember=记住我
-auth.register.form.button.submit=注册
-auth.register.footer.has_account=已有账号？
-auth.register.footer.link.login=登录
-auth.register.footer.copyright=© 2025 CT Contab. 保留所有权利。
-auth.register.feedback.error.invalid_data=您的电子邮件、密码或用户名错误。
+auth.register.header.title=创建您的帐户
+auth.register.confirm=下一步
+auth.register.newacount=<html><font color='#48494B'>已有帐户？ </font><font color='#287FCE'><b>登录帐户</b></font></html>
+auth.register.hover.user=用户名
+auth.register.default.user=用户名
+auth.register.hover.password=密码
+auth.register.default.password=密码
+auth.register.hover.email=电子邮件
+auth.register.default.email=电子邮件
 
-# --- DASHBOARD MODULE ---
-dashboard.header.title=仪表板
-dashboard.banner.action.register=注册新客户
-dashboard.card.new_clients.header=月度客户
-dashboard.card.new_clients.title=本月新增客户
-dashboard.card.new_clients.subtitle=新增客户总数
-dashboard.card.new_clients.description=<html>此面板显示本月获取的新客户总数，以便跟踪受众增长。</html>
-dashboard.card.total_clients.header=客户总数
-dashboard.card.total_clients.title=所有注册客户
-dashboard.card.total_clients.subtitle=注册客户总数
-dashboard.card.total_clients.description=<html>此面板显示累计注册客户总数，以便跟踪基础增长。</html>
-dashboard.card.pending_tasks.header=待办任务
-dashboard.card.pending_tasks.title=所有待办任务
-dashboard.card.pending_tasks.subtitle=待处理任务总数
-dashboard.card.pending_tasks.description=<html>此面板指示所有仍处于待处理状态的任务。</html>
-dashboard.card.total_reports.header=报告总数
-dashboard.card.total_reports.title=已完成的所有报告
-dashboard.card.total_reports.subtitle=生成的报告总数
-dashboard.card.total_reports.description=<html>在此跟踪已发布的报告数量，分析记录量。</html>
-dashboard.card.unfinished_tasks.header=未完成任务
-dashboard.card.unfinished_tasks.title=未执行的任务
-dashboard.card.unfinished_tasks.subtitle=未完成任务总数
-dashboard.card.unfinished_tasks.description=<html>此面板显示已开始但未完成的任务，帮助识别瓶颈。</html>
-dashboard.card.completed_tasks.header=已完成任务
-dashboard.card.completed_tasks.title=已结束的任务
-dashboard.card.completed_tasks.subtitle=已完成任务总数
-dashboard.card.completed_tasks.description=<html>指示所有已完成的任务，作为生产力的晴雨表。</html>
+# --- MAIN MODULE (Home) ---
+auth.home.window_title=CT Contab Manager
+auth.home.button.home=首页
+auth.home.button.calendar=日历
+auth.home.button.client=客户
+auth.home.button.report=报告
+auth.home.button.task=任务
+auth.home.button.config=设置
+auth.home.button.admin=管理
+auth.home.banner.title=添加新客户
+auth.home.banner.description=<html>简单快速地注册新客户，在一个地方实现对账户的全面控制。</html>
+auth.home.statistic.title=统计数据
+auth.home.label.customer=客户
+auth.home.label.task=任务
+auth.home.label.report=报告
+auth.home.label.newclient=新客户
+auth.home.label.admin=管理员
+auth.home.button.newclient=新客户
 
-# --- NAVIGATION ---
-navigation.sidebar.help=帮助
-navigation.sidebar.dashboard=仪表板
-navigation.sidebar.calendar=日历
-navigation.sidebar.clients=客户
-navigation.sidebar.reports=报告
-navigation.sidebar.tasks=任务
-navigation.sidebar.settings=设置
-navigation.sidebar.admin=管理
+# --- ERROR MODULE (Error) ---
+auth.error.window_title=CT Contab Manager
+auth.error.header.title=错误
+auth.error.description=<html><p align="justify"> 哎呀！出错了。目前系统不稳定。我们的团队已收到通知并正在努力修复。请在几分钟后重试。</p></html>
+auth.error.confirm=明白
+auth.error.restart=重新启动
+
+# --- CLIENT MODULE (Client) ---
+auth.client.window_title=CT Contab Manager
+auth.client.button.search=搜索
+auth.client.button.home=首页
+auth.client.button.calendar=日历
+auth.client.button.client=客户
+auth.client.button.report=报告
+auth.client.button.task=任务
+auth.client.button.config=设置
+auth.client.button.admin=管理
+auth.client.title=客户
+auth.client.label.all=全部
+auth.client.label.finished=已完成
+auth.client.label.in_progress=进行中
+auth.client.label.pending=待处理
+auth.client.label.new_client_text=新客户
+auth.client.column.id=ID
+auth.client.column.type=姓名
+auth.client.column.status=状态
+auth.client.column.date=人员类型
+auth.client.column.name=注册日期
+
+# --- NEW CLIENT MODULE (New Client) ---
+auth.new_clients.window_title=CT Contab Manager
+auth.new_clients.button.search=搜索
+auth.new_clients.button.home=首页
+auth.new_clients.button.calendar=日历
+auth.new_clients.button.client=客户
+auth.new_clients.button.report=报告
+auth.new_clients.button.task=任务
+auth.new_clients.button.config=设置
+auth.new_clients.button.admin=管理
+auth.new_clients.label.title=注册新客户
+auth.new_clients.label.description=<html><p align="center">通过注册客户信息来保持数据库的更新。</p></html>
+auth.new_clients.label.default.name=姓名全称*
+auth.new_clients.label.default.service=服务*
+auth.new_clients.label.default.type_person=人员类型：自然人、法人或未告知？*
+auth.new_clients.label.default.type_service=服务状态：待处理、进行中或已完成？*
+auth.new_clients.label.default.email=电子邮件*
+auth.new_clients.label.default.telephone=电话
+auth.new_clients.label.default.cellphone=手机
+auth.new_clients.label.default.observation=备注
+auth.new_clients.label.hover.name=姓名全称*
+auth.new_clients.label.hover.service=服务*
+auth.new_clients.label.hover.type_person=人员类型：自然人、法人或未告知？*
+auth.new_clients.label.hover.type_service=服务状态：待处理、进行中或已完成？*
+auth.new_clients.label.hover.email=电子邮件*
+auth.new_clients.label.hover.telephone=电话
+auth.new_clients.label.hover.cellphone=手机
+auth.new_clients.label.hover.observation=备注
+auth.new_clients.label.button.cancel=取消
+auth.new_clients.label.button.register=注册

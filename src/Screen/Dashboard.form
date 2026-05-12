@@ -56,29 +56,10 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JButton" name="btnAdicionarCliente">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/images/cadastrar-imagem.jpg"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="jButton1"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAdicionarClienteActionPerformed"/>
-      </Events>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new RoundedButton(25)"/>
-      </AuxValues>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="100" y="160" width="1320" height="150"/>
-        </Constraint>
-      </Constraints>
-    </Component>
     <Component class="javax.swing.JLabel" name="lblTituloPagina">
       <Properties>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+          <Color blue="c7" green="c7" red="c7" type="rgb"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="DASHBOARD"/>
@@ -142,6 +123,25 @@
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="1390" y="30" width="50" height="50"/>
+        </Constraint>
+      </Constraints>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnAdicionarCliente">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/images/cadastrar-imagem.jpg"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="jButton1"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAdicionarClienteActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new RoundedButton(25)"/>
+      </AuxValues>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="100" y="160" width="1320" height="150"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -458,7 +458,7 @@
         <Component class="javax.swing.JLabel" name="lblKPIValueTarefasFinalizadas">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="FonteUtils.carregarInterSemiBold(22f)" type="code"/>
+              <Connection code="FonteUtils.carregarInterSemiBold(30f)" type="code"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -467,7 +467,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="9" y="175" width="120" height="20"/>
+              <AbsoluteConstraints x="9" y="165" width="120" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -499,7 +499,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="10" y="155" width="200" height="-1"/>
+              <AbsoluteConstraints x="10" y="145" width="200" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -637,7 +637,7 @@
         <Component class="javax.swing.JLabel" name="lblKPIValueTarefasNaoRealizadas">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="FonteUtils.carregarInterSemiBold(22f)" type="code"/>
+              <Connection code="FonteUtils.carregarInterSemiBold(30f)" type="code"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -646,7 +646,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="9" y="175" width="120" height="20"/>
+              <AbsoluteConstraints x="9" y="165" width="120" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -678,7 +678,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="10" y="155" width="200" height="-1"/>
+              <AbsoluteConstraints x="10" y="145" width="200" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -816,7 +816,7 @@
         <Component class="javax.swing.JLabel" name="lblKPIValueTotalRelatorios">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="FonteUtils.carregarInterSemiBold(22f)" type="code"/>
+              <Connection code="FonteUtils.carregarInterSemiBold(30f)" type="code"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -825,7 +825,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="9" y="175" width="120" height="20"/>
+              <AbsoluteConstraints x="9" y="165" width="120" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -857,7 +857,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="10" y="155" width="200" height="-1"/>
+              <AbsoluteConstraints x="10" y="145" width="200" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -995,7 +995,7 @@
         <Component class="javax.swing.JLabel" name="lblKPIValueTarefasPendentes">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="FonteUtils.carregarInterSemiBold(22f)" type="code"/>
+              <Connection code="FonteUtils.carregarInterSemiBold(30f)" type="code"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -1004,7 +1004,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="9" y="175" width="120" height="20"/>
+              <AbsoluteConstraints x="9" y="165" width="120" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -1036,7 +1036,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="10" y="155" width="200" height="-1"/>
+              <AbsoluteConstraints x="10" y="145" width="200" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -1174,7 +1174,7 @@
         <Component class="javax.swing.JLabel" name="lblKPIValueTotalClientes">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="FonteUtils.carregarInterSemiBold(22f)" type="code"/>
+              <Connection code="FonteUtils.carregarInterSemiBold(30f)" type="code"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -1183,7 +1183,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="9" y="175" width="120" height="20"/>
+              <AbsoluteConstraints x="9" y="165" width="120" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -1215,7 +1215,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="10" y="155" width="200" height="-1"/>
+              <AbsoluteConstraints x="10" y="145" width="200" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -1385,7 +1385,7 @@
         <Component class="javax.swing.JLabel" name="lblKPIValueClientesMensais">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="FonteUtils.carregarInterSemiBold(22f)" type="code"/>
+              <Connection code="FonteUtils.carregarInterSemiBold(30f)" type="code"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -1394,7 +1394,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="9" y="175" width="120" height="20"/>
+              <AbsoluteConstraints x="9" y="165" width="120" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -1410,7 +1410,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="10" y="155" width="200" height="-1"/>
+              <AbsoluteConstraints x="10" y="145" width="200" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>

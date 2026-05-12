@@ -1,71 +1,104 @@
-# --- AUTHENTICATION MODULE ---
+# --- AUTHENTICATION MODULE (Login) ---
 auth.login.window_title=CT Contab Manager
-auth.login.header.title=로그인
-auth.login.header.description=모든 회계 관리를 한 곳에서, 완벽한 디지털화.
-auth.login.header.subtitle=
-auth.login.social.google=Google로 로그인
-auth.login.divider.text=또는 이메일로 로그인
-auth.login.form.label.email=이메일
-auth.login.form.label.password=비밀번호
-auth.login.form.placeholder.email=email@example.com
-auth.login.form.checkbox.remember=로그인 상태 유지
-auth.login.form.link.forgot_password=비밀번호를 잊으셨나요?
-auth.login.form.button.submit=로그인
-auth.login.footer.not_registered=아직 등록되지 않았나요?
-auth.login.footer.link.create_account=  계정 만들기
-auth.login.footer.copyright=© 2025 CT Contab. All rights reserved.
-auth.login.feedback.error.invalid_credentials=이메일 또는 비밀번호가 올바르지 않습니다.
+auth.login.header.title=계정 액세스
+auth.login.social.google=Google 계정으로 로그인
+auth.login.social.apple=Apple로 로그인
+auth.login.divider.text=또는
+auth.login.confirm=다음
+auth.login.newacount=<html><font color='#48494B'>계정이 없으신가요? </font><font color='#287FCE'><b>가입하기</b></font></html>
+auth.login.forgotpassword=비밀번호를 잊으셨나요?
+auth.login.hover.user=사용자
+auth.login.default.user=사용자
+auth.login.hover.password=비밀번호
+auth.login.default.password=비밀번호
 
+# --- REGISTRATION MODULE (Sign Up) ---
 auth.register.window_title=CT Contab Manager
-auth.register.header.title=회원가입
-auth.register.header.description=모든 회계 관리를 한 곳에서, 완벽한 디지털화.
-auth.register.header.subtitle=
-auth.register.form.label.username=사용자 이름
-auth.register.form.label.email=이메일
-auth.register.form.label.password=비밀번호
-auth.register.form.label.confirm_password=비밀번호 확인
-auth.register.form.placeholder.email=email@example.com
-auth.register.form.checkbox.remember=로그인 상태 유지
-auth.register.form.button.submit=가입하기
-auth.register.footer.has_account=이미 계정이 있으신가요?
-auth.register.footer.link.login=로그인
-auth.register.footer.copyright=© 2025 CT Contab. All rights reserved.
-auth.register.feedback.error.invalid_data=이메일, 비밀번호 또는 사용자 이름이 올바르지 않습니다.
+auth.register.header.title=계정 만들기
+auth.register.confirm=다음
+auth.register.newacount=<html><font color='#48494B'>이미 계정이 있으신가요? </font><font color='#287FCE'><b>로그인하기</b></font></html>
+auth.register.hover.user=사용자
+auth.register.default.user=사용자
+auth.register.hover.password=비밀번호
+auth.register.default.password=비밀번호
+auth.register.hover.email=이메일
+auth.register.default.email=이메일
 
-# --- DASHBOARD MODULE ---
-dashboard.header.title=대시보드
-dashboard.banner.action.register=신규 고객 등록
-dashboard.card.new_clients.header=월간 고객
-dashboard.card.new_clients.title=이번 달 신규 고객
-dashboard.card.new_clients.subtitle=신규 고객 총 수
-dashboard.card.new_clients.description=<html>이 패널은 이번 달에 확보한 신규 고객의 총 수를 보여줍니다.</html>
-dashboard.card.total_clients.header=총 고객 수
-dashboard.card.total_clients.title=모든 등록 고객
-dashboard.card.total_clients.subtitle=등록 고객 총 수
-dashboard.card.total_clients.description=<html>이 패널은 지금까지 등록된 총 누적 고객 수를 보여줍니다.</html>
-dashboard.card.pending_tasks.header=대기 중인 작업
-dashboard.card.pending_tasks.title=모든 대기 중인 작업
-dashboard.card.pending_tasks.subtitle=대기 중인 작업 수
-dashboard.card.pending_tasks.description=<html>이 패널은 현재 보류 중인 모든 작업을 나타냅니다.</html>
-dashboard.card.total_reports.header=총 보고서
-dashboard.card.total_reports.title=작성된 모든 보고서
-dashboard.card.total_reports.subtitle=생성된 보고서 총 수
-dashboard.card.total_reports.description=<html>발행된 보고서 수를 확인하여 활동량을 분석할 수 있습니다.</html>
-dashboard.card.unfinished_tasks.header=미완료 작업
-dashboard.card.unfinished_tasks.title=수행되지 않은 작업
-dashboard.card.unfinished_tasks.subtitle=완료되지 않은 작업 수
-dashboard.card.unfinished_tasks.description=<html>시작되었으나 종료되지 않은 작업을 보여주어 병목 현상을 식별합니다.</html>
-dashboard.card.completed_tasks.header=완료된 작업
-dashboard.card.completed_tasks.title=완료된 작업
-dashboard.card.completed_tasks.subtitle=완료된 총 작업 수
-dashboard.card.completed_tasks.description=<html>종료된 모든 작업을 나타내며 생산성 지표로 활용됩니다.</html>
+# --- MAIN MODULE (Home) ---
+auth.home.window_title=CT Contab Manager
+auth.home.button.home=홈
+auth.home.button.calendar=캘린더
+auth.home.button.client=클라이언트
+auth.home.button.report=보고서
+auth.home.button.task=작업
+auth.home.button.config=설정
+auth.home.button.admin=관리
+auth.home.banner.title=새 클라이언트 추가
+auth.home.banner.description=<html>새로운 클라이언트를 쉽고 빠르게 등록하여 한 곳에서 계정을 완벽하게 관리하세요.</html>
+auth.home.statistic.title=통계
+auth.home.label.customer=고객
+auth.home.label.task=작업
+auth.home.label.report=보고서
+auth.home.label.newclient=새 고객
+auth.home.label.admin=관리자
+auth.home.button.newclient=새 고객
 
-# --- NAVIGATION ---
-navigation.sidebar.help=도움말
-navigation.sidebar.dashboard=대시보드
-navigation.sidebar.calendar=캘린더
-navigation.sidebar.clients=고객
-navigation.sidebar.reports=보고서
-navigation.sidebar.tasks=작업
-navigation.sidebar.settings=설정
-navigation.sidebar.admin=관리
+# --- ERROR MODULE (Error) ---
+auth.error.window_title=CT Contab Manager
+auth.error.header.title=오류
+auth.error.description=<html><p align="justify"> 이런! 문제가 발생했습니다. 현재 시스템이 불안정합니다. 담당 팀에 알림이 전송되었으며 복구 작업 중입니다. 잠시 후 다시 시도해 주세요.</p></html>
+auth.error.confirm=확인함
+auth.error.restart=재시작
+
+# --- CLIENT MODULE (Client) ---
+auth.client.window_title=CT Contab Manager
+auth.client.button.search=검색
+auth.client.button.home=홈
+auth.client.button.calendar=캘린더
+auth.client.button.client=클라이언트
+auth.client.button.report=보고서
+auth.client.button.task=작업
+auth.client.button.config=설정
+auth.client.button.admin=관리
+auth.client.title=클라이언트
+auth.client.label.all=전체
+auth.client.label.finished=완료됨
+auth.client.label.in_progress=진행 중
+auth.client.label.pending=대기 중
+auth.client.label.new_client_text=새 클라이언트
+auth.client.column.id=ID
+auth.client.column.type=성명
+auth.client.column.status=상태
+auth.client.column.date=유형
+auth.client.column.name=등록일
+
+# --- NEW CLIENT MODULE (New Client) ---
+auth.new_clients.window_title=CT Contab Manager
+auth.new_clients.button.search=검색
+auth.new_clients.button.home=홈
+auth.new_clients.button.calendar=캘린더
+auth.new_clients.button.client=클라이언트
+auth.new_clients.button.report=보고서
+auth.new_clients.button.task=작업
+auth.new_clients.button.config=설정
+auth.new_clients.button.admin=관리
+auth.new_clients.label.title=새 클라이언트 등록
+auth.new_clients.label.description=<html><p align="center">클라이언트 정보를 등록하여 데이터베이스를 최신 상태로 유지하십시오.</p></html>
+auth.new_clients.label.default.name=성명*
+auth.new_clients.label.default.service=서비스*
+auth.new_clients.label.default.type_person=유형: 개인, 법인 또는 미지정?*
+auth.new_clients.label.default.type_service=상태: 대기 중, 진행 중 또는 완료됨?*
+auth.new_clients.label.default.email=이메일*
+auth.new_clients.label.default.telephone=전화번호
+auth.new_clients.label.default.cellphone=휴대전화
+auth.new_clients.label.default.observation=비고
+auth.new_clients.label.hover.name=성명*
+auth.new_clients.label.hover.service=서비스*
+auth.new_clients.label.hover.type_person=유형: 개인, 법인 또는 미지정?*
+auth.new_clients.label.hover.type_service=상태: 대기 중, 진행 중 또는 완료됨?*
+auth.new_clients.label.hover.email=이메일*
+auth.new_clients.label.hover.telephone=전화번호
+auth.new_clients.label.hover.cellphone=휴대전화
+auth.new_clients.label.hover.observation=비고
+auth.new_clients.label.button.cancel=취소
+auth.new_clients.label.button.register=등록

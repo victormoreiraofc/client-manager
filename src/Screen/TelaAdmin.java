@@ -483,7 +483,7 @@ public class TelaAdmin extends javax.swing.JFrame {
         btnCancelar.setMargin(new Insets(10, 20, 10, 20));
 
         btnCancelar.addActionListener(e -> {
-            new TelaMenu(usuarioLogado).setVisible(true);
+            new Dashboard(usuarioLogado).setVisible(true);
             this.dispose();
         });
 
@@ -746,7 +746,7 @@ public class TelaAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnDashboardActionPerformed
-        new TelaMenu(usuarioLogado).setVisible(true);
+        new Dashboard(usuarioLogado).setVisible(true);
         this.dispose();
     }// GEN-LAST:event_btnDashboardActionPerformed
 

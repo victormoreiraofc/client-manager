@@ -1,71 +1,104 @@
-# --- AUTHENTICATION MODULE ---
+# --- AUTHENTICATION MODULE (Login) ---
 auth.login.window_title=CT Contab Manager
-auth.login.header.title=Accedi
-auth.login.header.description=Tutta la tua contabilità in un unico posto, completamente
-auth.login.header.subtitle=digitale.
+auth.login.header.title=Accedi al tuo account
 auth.login.social.google=Accedi con Google
-auth.login.divider.text=o accedi tramite e-mail
-auth.login.form.label.email=E-mail
-auth.login.form.label.password=Password
-auth.login.form.placeholder.email=email@esempio.com
-auth.login.form.checkbox.remember=Ricordami?
-auth.login.form.link.forgot_password=Password dimenticata?
-auth.login.form.button.submit=Accedi
-auth.login.footer.not_registered=Non sei ancora registrato?
-auth.login.footer.link.create_account=  Crea un account
-auth.login.footer.copyright=© 2025 CT Contab. Tutti i diritti riservati.
-auth.login.feedback.error.invalid_credentials=L'e-mail o la password non sono corrette.
+auth.login.social.apple=Accedi con Apple
+auth.login.divider.text=Or
+auth.login.confirm=Avanti
+auth.login.newacount=<html><font color='#48494B'>Non hai un account? </font><font color='#287FCE'><b>Iscriviti</b></font></html>
+auth.login.forgotpassword=Password dimenticata?
+auth.login.hover.user=Utente
+auth.login.default.user=Utente
+auth.login.hover.password=Password
+auth.login.default.password=Password
 
+# --- REGISTRATION MODULE (Sign Up) ---
 auth.register.window_title=CT Contab Manager
-auth.register.header.title=Registrati
-auth.register.header.description=Tutta la tua contabilità in un unico posto, completamente
-auth.register.header.subtitle=digitale.
-auth.register.form.label.username=Nome utente
-auth.register.form.label.email=E-mail
-auth.register.form.label.password=Password
-auth.register.form.label.confirm_password=Conferma Password
-auth.register.form.placeholder.email=email@esempio.com
-auth.register.form.checkbox.remember=Ricordami?
-auth.register.form.button.submit=Registrati
-auth.register.footer.has_account=Hai già un account?
-auth.register.footer.link.login=Login
-auth.register.footer.copyright=© 2025 CT Contab. Tutti i diritti riservati.
-auth.register.feedback.error.invalid_data=E-mail, password o nome utente non sono corretti.
+auth.register.header.title=Crea il tuo account
+auth.register.confirm=Avanti
+auth.register.newacount=<html><font color='#48494B'>Hai già un account? </font><font color='#287FCE'><b>Accedi</b></font></html>
+auth.register.hover.user=Utente
+auth.register.default.user=Utente
+auth.register.hover.password=Password
+auth.register.default.password=Password
+auth.register.hover.email=Email
+auth.register.default.email=Email
 
-# --- DASHBOARD MODULE ---
-dashboard.header.title=DASHBOARD
-dashboard.banner.action.register=REGISTRA NUOVI CLIENTI
-dashboard.card.new_clients.header=Clienti Mensili
-dashboard.card.new_clients.title=Nuovi clienti questo mese.
-dashboard.card.new_clients.subtitle=Numero lordo di nuovi clienti.
-dashboard.card.new_clients.description=<html>Questo pannello mostra la quantità totale di nuovi clienti acquisiti nel mese.</html>
-dashboard.card.total_clients.header=Totale Clienti
-dashboard.card.total_clients.title=Tutti i clienti registrati.
-dashboard.card.total_clients.subtitle=Numero lordo di clienti registrati.
-dashboard.card.total_clients.description=<html>Questo pannello mostra il totale accumulato dei clienti registrati.</html>
-dashboard.card.pending_tasks.header=Attività in Sospeso
-dashboard.card.pending_tasks.title=Tutte le attività in sospeso.
-dashboard.card.pending_tasks.subtitle=Numero lordo di attività in attesa.
-dashboard.card.pending_tasks.description=<html>Questo pannello indica tutte le attività ancora in sospeso.</html>
-dashboard.card.total_reports.header=Totale Rapporti
-dashboard.card.total_reports.title=Tutti i rapporti completati.
-dashboard.card.total_reports.subtitle=Numero lordo di rapporti generati.
-dashboard.card.total_reports.description=<html>Qui monitori quanti rapporti sono stati emessi.</html>
-dashboard.card.unfinished_tasks.header=Attività non Realizzate
-dashboard.card.unfinished_tasks.title=Attività non realizzate.
-dashboard.card.unfinished_tasks.subtitle=Numero lordo di attività incomplete.
-dashboard.card.unfinished_tasks.description=<html>Mostra le attività iniziate ma non portate a termine.</html>
-dashboard.card.completed_tasks.header=Attività Completate
-dashboard.card.completed_tasks.title=Attività già completate.
-dashboard.card.completed_tasks.subtitle=Numero lordo di attività concluse.
-dashboard.card.completed_tasks.description=<html>Indica tutte le attività già terminate, come termometro della produttività.</html>
+# --- MAIN MODULE (Home) ---
+auth.home.window_title=CT Contab Manager
+auth.home.button.home=Home
+auth.home.button.calendar=Calendario
+auth.home.button.client=Clienti
+auth.home.button.report=Rapporti
+auth.home.button.task=Attività
+auth.home.button.config=Impostazioni
+auth.home.button.admin=Amministrazione
+auth.home.banner.title=Aggiungi nuovi clienti
+auth.home.banner.description=<html>Registra nuovi clienti in modo semplice e veloce per avere il pieno controllo dei tuoi conti in un unico posto.</html>
+auth.home.statistic.title=Statistiche
+auth.home.label.customer=Clienti
+auth.home.label.task=Attività
+auth.home.label.report=Rapporti
+auth.home.label.newclient=Nuovi clienti
+auth.home.label.admin=Amministratori
+auth.home.button.newclient=Nuovo cliente
 
-# --- NAVIGATION ---
-navigation.sidebar.help=Aiuto
-navigation.sidebar.dashboard=Dashboard
-navigation.sidebar.calendar=Calendario
-navigation.sidebar.clients=Clienti
-navigation.sidebar.reports=Rapporti
-navigation.sidebar.tasks=Attività
-navigation.sidebar.settings=Impostazioni
-navigation.sidebar.admin=Amministrazione
+# --- ERROR MODULE (Error) ---
+auth.error.window_title=CT Contab Manager
+auth.error.header.title=Errore
+auth.error.description=<html><p align="justify"> Ops! Qualcosa è andato storto. Al momento stiamo riscontrando un'instabilità del sistema. Il nostro team è già stato informato e sta lavorando per risolvere il problema. Riprova tra qualche minuto.</p></html>
+auth.error.confirm=Ho capito
+auth.error.restart=Riavvia
+
+# --- CLIENT MODULE (Client) ---
+auth.client.window_title=CT Contab Manager
+auth.client.button.search=Cerca
+auth.client.button.home=Home
+auth.client.button.calendar=Calendario
+auth.client.button.client=Clienti
+auth.client.button.report=Rapporti
+auth.client.button.task=Attività
+auth.client.button.config=Impostazioni
+auth.client.button.admin=Amministrazione
+auth.client.title=Clienti
+auth.client.label.all=Tutti
+auth.client.label.finished=Completati
+auth.client.label.in_progress=In corso
+auth.client.label.pending=In sospeso
+auth.client.label.new_client_text=Nuovo Cliente
+auth.client.column.id=ID
+auth.client.column.type=NOME
+auth.client.column.status=STATO
+auth.client.column.date=TIPO DI PERSONA
+auth.client.column.name=DATA DI REGISTRAZIONE
+
+# --- NEW CLIENT MODULE (New Client) ---
+auth.new_clients.window_title=CT Contab Manager
+auth.new_clients.button.search=Cerca
+auth.new_clients.button.home=Home
+auth.new_clients.button.calendar=Calendario
+auth.new_clients.button.client=Clienti
+auth.new_clients.button.report=Rapporti
+auth.new_clients.button.task=Attività
+auth.new_clients.button.config=Impostazioni
+auth.new_clients.button.admin=Amministrazione
+auth.new_clients.label.title=Registra un novo cliente
+auth.new_clients.label.description=<html><p align="center">Mantieni aggiornato il nostro database registrando le informazioni del tuo cliente.</p></html>
+auth.new_clients.label.default.name=Nome completo*
+auth.new_clients.label.default.service=Servizio*
+auth.new_clients.label.default.type_person=Persona: Fisica, Giuridica o Non Informato?*
+auth.new_clients.label.default.type_service=Servizio: In sospeso, In corso o Completato?*
+auth.new_clients.label.default.email=E-mail*
+auth.new_clients.label.default.telephone=Telefono
+auth.new_clients.label.default.cellphone=Cellulare
+auth.new_clients.label.default.observation=Osservazioni
+auth.new_clients.label.hover.name=Nome completo*
+auth.new_clients.label.hover.service=Servizio*
+auth.new_clients.label.hover.type_person=Persona: Fisica, Giuridica o Non Informato?*
+auth.new_clients.label.hover.type_service=Servizio: In sospeso, In corso o Completato?*
+auth.new_clients.label.hover.email=E-mail*
+auth.new_clients.label.hover.telephone=Telefono
+auth.new_clients.label.hover.cellphone=Cellulare
+auth.new_clients.label.hover.observation=Osservazioni
+auth.new_clients.label.button.cancel=Annulla
+auth.new_clients.label.button.register=Registra

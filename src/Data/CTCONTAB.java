@@ -16,7 +16,7 @@ public class CTCONTAB {
 
     public static Connection conectar() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        conectado = DriverManager.getConnection("jdbc:mysql://root:RcvVanjynvkLXETNnfTYvtpaKqsFsRhk@crossover.proxy.rlwy.net:32174/railway", "root", "RcvVanjynvkLXETNnfTYvtpaKqsFsRhk");
+        conectado = DriverManager.getConnection("jdbc:mysql://root:uiqBomgvmgfkKsUtBUnYbZeBJYFSCGBo@yamabiko.proxy.rlwy.net:42868/railway", "root", "uiqBomgvmgfkKsUtBUnYbZeBJYFSCGBo");
         return conectado;
     }
 
@@ -831,5 +831,68 @@ public class CTCONTAB {
         PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) FROM relatorio WHERE MONTH(DataCadastro) = MONTH(CURDATE() - INTERVAL 1 MONTH) AND YEAR(DataCadastro) = YEAR(CURDATE() - INTERVAL 1 MONTH)");
         ResultSet rs = st.executeQuery();
         return rs.next() ? rs.getInt(1) : 0;
+    }
+
+    // ---- Novos Para Pegar dados para a tela HOME ------
+    public static int getTotalClients() throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) FROM cliente");
+        ResultSet rs = st.executeQuery();
+        return rs.next() ? rs.getInt(1) : 0;
+    }
+
+    public static int getTotalTasks() throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) FROM tarefa");
+        ResultSet rs = st.executeQuery();
+        return rs.next() ? rs.getInt(1) : 0;
+    }
+
+    public static int getTotalReports() throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) FROM relatorio");
+        ResultSet rs = st.executeQuery();
+        return rs.next() ? rs.getInt(1) : 0;
+    }
+
+    public static int getNewClientsThisMonth() throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        // Since DataCadastro is VARCHAR, we convert it to date to compare
+        String sql = "SELECT COUNT(*) FROM cliente WHERE "
+                + "MONTH(STR_TO_DATE(DataCadastro, '%d/%m/%Y')) = MONTH(CURDATE()) AND "
+                + "YEAR(STR_TO_DATE(DataCadastro, '%d/%m/%Y')) = YEAR(CURDATE())";
+        PreparedStatement st = conectado.prepareStatement(sql);
+        ResultSet rs = st.executeQuery();
+        return rs.next() ? rs.getInt(1) : 0;
+    }
+
+    public static int getPrivilegedUsersCount() throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement(
+                "SELECT COUNT(*) FROM usuarios WHERE Permissao IN ('ADM', 'SUPER_ADM')"
+        );
+        ResultSet rs = st.executeQuery();
+        return rs.next() ? rs.getInt(1) : 0;
+    }
+
+    // Adicione este método à classe CTCONTAB
+    public static boolean saveNewClient(String registrationDate, String name, String personType, String email, String service, String status, String cell, String phone, String obs, String user) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        String sql = "INSERT INTO cliente (DataCadastro, Nome, TipoPessoa, Email, Servico, SituacaoServico, Celular, Telefone, Observacoes, usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement st = conectado.prepareStatement(sql)) {
+            st.setString(1, registrationDate);
+            st.setString(2, name);
+            st.setString(3, personType);
+            st.setString(4, email);
+            st.setString(5, service);
+            st.setString(6, status);
+            st.setString(7, cell);
+            st.setString(8, phone);
+            st.setString(9, obs);
+            st.setString(10, user);
+
+            return st.executeUpdate() > 0;
+        }
     }
 }

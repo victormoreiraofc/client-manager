@@ -433,12 +433,12 @@ public class Dashboard extends javax.swing.JFrame {
 
         lblSetaAdicionarClientes = new javax.swing.JLabel();
         lblAdicionarClientes = new javax.swing.JLabel();
-        btnAdicionarCliente = new RoundedButton(25);
         lblTituloPagina = new javax.swing.JLabel();
         lblLogoTexto = new javax.swing.JLabel();
         lblLogo = new javax.swing.JLabel();
         lblDivisorTela = new javax.swing.JLabel();
         lblUserIcon = new javax.swing.JLabel();
+        btnAdicionarCliente = new RoundedButton(25);
         btnAdministracao = new javax.swing.JButton();
         btnConfiguracoes = new javax.swing.JButton();
         btnRelatorios = new javax.swing.JButton();
@@ -539,17 +539,7 @@ public class Dashboard extends javax.swing.JFrame {
         getContentPane().add(lblAdicionarClientes);
         lblAdicionarClientes.setBounds(800, 160, 610, 40);
 
-        btnAdicionarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cadastrar-imagem.jpg"))); // NOI18N
-        btnAdicionarCliente.setText("jButton1");
-        btnAdicionarCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdicionarClienteActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnAdicionarCliente);
-        btnAdicionarCliente.setBounds(100, 160, 1320, 150);
-
-        lblTituloPagina.setForeground(new java.awt.Color(255, 255, 255));
+        lblTituloPagina.setForeground(new java.awt.Color(199, 199, 199));
         lblTituloPagina.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTituloPagina.setText("DASHBOARD");
         lblTituloPagina.setFont(FonteUtils.carregarRoboto(13f));
@@ -574,6 +564,16 @@ public class Dashboard extends javax.swing.JFrame {
         lblUserIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Jonh Doe Icon.png"))); // NOI18N
         getContentPane().add(lblUserIcon);
         lblUserIcon.setBounds(1390, 30, 50, 50);
+
+        btnAdicionarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cadastrar-imagem.jpg"))); // NOI18N
+        btnAdicionarCliente.setText("jButton1");
+        btnAdicionarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarClienteActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnAdicionarCliente);
+        btnAdicionarCliente.setBounds(100, 160, 1320, 150);
 
         btnAdministracao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Administrative Icon.png"))); // NOI18N
         btnAdministracao.setContentAreaFilled(false);
@@ -769,11 +769,11 @@ public class Dashboard extends javax.swing.JFrame {
         pnlCardTarefasFinalizadas.add(lblTitleTarefasFinalizadas);
         lblTitleTarefasFinalizadas.setBounds(10, 5, 190, 20);
 
-        lblKPIValueTarefasFinalizadas.setFont(FonteUtils.carregarInterSemiBold(22f));
+        lblKPIValueTarefasFinalizadas.setFont(FonteUtils.carregarInterSemiBold(30f));
         lblKPIValueTarefasFinalizadas.setForeground(new java.awt.Color(255, 255, 255));
         lblKPIValueTarefasFinalizadas.setText("0000");
         pnlCardTarefasFinalizadas.add(lblKPIValueTarefasFinalizadas);
-        lblKPIValueTarefasFinalizadas.setBounds(9, 175, 120, 20);
+        lblKPIValueTarefasFinalizadas.setBounds(9, 165, 120, 30);
 
         lblTrendIndicatorTarefasFinalizadas.setFont(FonteUtils.carregarInterSemiBold(12f));
         lblTrendIndicatorTarefasFinalizadas.setForeground(new java.awt.Color(199, 199, 199));
@@ -785,7 +785,7 @@ public class Dashboard extends javax.swing.JFrame {
         lblTitleTrendTarefasFinalizadas.setForeground(new java.awt.Color(199, 199, 199));
         lblTitleTrendTarefasFinalizadas.setText("Tarefas já finalizadas.");
         pnlCardTarefasFinalizadas.add(lblTitleTrendTarefasFinalizadas);
-        lblTitleTrendTarefasFinalizadas.setBounds(10, 155, 200, 16);
+        lblTitleTrendTarefasFinalizadas.setBounds(10, 145, 200, 16);
 
         lblIconTarefasFinalizadas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pnlCardTarefasFinalizadas.add(lblIconTarefasFinalizadas);
@@ -831,11 +831,11 @@ public class Dashboard extends javax.swing.JFrame {
         pnlCardTarefasNaoRealizadas.add(lblTitleTarefasNaoRealizadas);
         lblTitleTarefasNaoRealizadas.setBounds(10, 5, 190, 20);
 
-        lblKPIValueTarefasNaoRealizadas.setFont(FonteUtils.carregarInterSemiBold(22f));
+        lblKPIValueTarefasNaoRealizadas.setFont(FonteUtils.carregarInterSemiBold(30f));
         lblKPIValueTarefasNaoRealizadas.setForeground(new java.awt.Color(255, 255, 255));
         lblKPIValueTarefasNaoRealizadas.setText("0000");
         pnlCardTarefasNaoRealizadas.add(lblKPIValueTarefasNaoRealizadas);
-        lblKPIValueTarefasNaoRealizadas.setBounds(9, 175, 120, 20);
+        lblKPIValueTarefasNaoRealizadas.setBounds(9, 165, 120, 30);
 
         lblTrendIndicatorTarefasNaoRealizadas.setFont(FonteUtils.carregarInterSemiBold(12f));
         lblTrendIndicatorTarefasNaoRealizadas.setForeground(new java.awt.Color(199, 199, 199));
@@ -847,7 +847,7 @@ public class Dashboard extends javax.swing.JFrame {
         lblTitleTrendTarefasNaoRealizadas.setForeground(new java.awt.Color(199, 199, 199));
         lblTitleTrendTarefasNaoRealizadas.setText("Tarefas não realizadas.");
         pnlCardTarefasNaoRealizadas.add(lblTitleTrendTarefasNaoRealizadas);
-        lblTitleTrendTarefasNaoRealizadas.setBounds(10, 155, 200, 16);
+        lblTitleTrendTarefasNaoRealizadas.setBounds(10, 145, 200, 16);
 
         lblIconTarefasNaoRealizadas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pnlCardTarefasNaoRealizadas.add(lblIconTarefasNaoRealizadas);
@@ -893,11 +893,11 @@ public class Dashboard extends javax.swing.JFrame {
         pnlCardTotalRelatorios.add(lblTitleTotalRelatorios);
         lblTitleTotalRelatorios.setBounds(10, 5, 190, 20);
 
-        lblKPIValueTotalRelatorios.setFont(FonteUtils.carregarInterSemiBold(22f));
+        lblKPIValueTotalRelatorios.setFont(FonteUtils.carregarInterSemiBold(30f));
         lblKPIValueTotalRelatorios.setForeground(new java.awt.Color(255, 255, 255));
         lblKPIValueTotalRelatorios.setText("0000");
         pnlCardTotalRelatorios.add(lblKPIValueTotalRelatorios);
-        lblKPIValueTotalRelatorios.setBounds(9, 175, 120, 20);
+        lblKPIValueTotalRelatorios.setBounds(9, 165, 120, 30);
 
         lblTrendIndicatorTotalRelatorios.setFont(FonteUtils.carregarInterSemiBold(12f));
         lblTrendIndicatorTotalRelatorios.setForeground(new java.awt.Color(199, 199, 199));
@@ -909,7 +909,7 @@ public class Dashboard extends javax.swing.JFrame {
         lblTitleTrendTotalRelatorios.setForeground(new java.awt.Color(199, 199, 199));
         lblTitleTrendTotalRelatorios.setText("Todas os relatórios feitos.");
         pnlCardTotalRelatorios.add(lblTitleTrendTotalRelatorios);
-        lblTitleTrendTotalRelatorios.setBounds(10, 155, 200, 16);
+        lblTitleTrendTotalRelatorios.setBounds(10, 145, 200, 16);
 
         lblIconTotalRelatorios.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pnlCardTotalRelatorios.add(lblIconTotalRelatorios);
@@ -955,11 +955,11 @@ public class Dashboard extends javax.swing.JFrame {
         pnlCardTarefasPendentes.add(lblTitleTarefasPendentes);
         lblTitleTarefasPendentes.setBounds(10, 5, 190, 20);
 
-        lblKPIValueTarefasPendentes.setFont(FonteUtils.carregarInterSemiBold(22f));
+        lblKPIValueTarefasPendentes.setFont(FonteUtils.carregarInterSemiBold(30f));
         lblKPIValueTarefasPendentes.setForeground(new java.awt.Color(255, 255, 255));
         lblKPIValueTarefasPendentes.setText("0000");
         pnlCardTarefasPendentes.add(lblKPIValueTarefasPendentes);
-        lblKPIValueTarefasPendentes.setBounds(9, 175, 120, 20);
+        lblKPIValueTarefasPendentes.setBounds(9, 165, 120, 30);
 
         lblTrendIndicatorTarefasPendentes.setFont(FonteUtils.carregarInterSemiBold(12f));
         lblTrendIndicatorTarefasPendentes.setForeground(new java.awt.Color(199, 199, 199));
@@ -971,7 +971,7 @@ public class Dashboard extends javax.swing.JFrame {
         lblTitleTrendTarefasPendentes.setForeground(new java.awt.Color(199, 199, 199));
         lblTitleTrendTarefasPendentes.setText("Todas as tarefas pendentes.");
         pnlCardTarefasPendentes.add(lblTitleTrendTarefasPendentes);
-        lblTitleTrendTarefasPendentes.setBounds(10, 155, 200, 16);
+        lblTitleTrendTarefasPendentes.setBounds(10, 145, 200, 16);
 
         lblIconTarefasPendentes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pnlCardTarefasPendentes.add(lblIconTarefasPendentes);
@@ -1017,11 +1017,11 @@ public class Dashboard extends javax.swing.JFrame {
         pnlCardTotalClientes.add(lblTitleTotalClientes);
         lblTitleTotalClientes.setBounds(10, 5, 190, 20);
 
-        lblKPIValueTotalClientes.setFont(FonteUtils.carregarInterSemiBold(22f));
+        lblKPIValueTotalClientes.setFont(FonteUtils.carregarInterSemiBold(30f));
         lblKPIValueTotalClientes.setForeground(new java.awt.Color(255, 255, 255));
         lblKPIValueTotalClientes.setText("0000");
         pnlCardTotalClientes.add(lblKPIValueTotalClientes);
-        lblKPIValueTotalClientes.setBounds(9, 175, 120, 20);
+        lblKPIValueTotalClientes.setBounds(9, 165, 120, 30);
 
         lblTrendIndicatorTotalClientes.setFont(FonteUtils.carregarInterSemiBold(12f));
         lblTrendIndicatorTotalClientes.setForeground(new java.awt.Color(199, 199, 199));
@@ -1033,7 +1033,7 @@ public class Dashboard extends javax.swing.JFrame {
         lblTitleTrendTotalClientes.setForeground(new java.awt.Color(199, 199, 199));
         lblTitleTrendTotalClientes.setText("Todos clientes registrados.");
         pnlCardTotalClientes.add(lblTitleTrendTotalClientes);
-        lblTitleTrendTotalClientes.setBounds(10, 155, 200, 16);
+        lblTitleTrendTotalClientes.setBounds(10, 145, 200, 16);
 
         lblIconTotalClientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pnlCardTotalClientes.add(lblIconTotalClientes);
@@ -1091,17 +1091,17 @@ public class Dashboard extends javax.swing.JFrame {
         pnlCardClientesMensais.add(lblTrendIndicatorClientesMensais);
         lblTrendIndicatorClientesMensais.setBounds(10, 195, 120, 16);
 
-        lblKPIValueClientesMensais.setFont(FonteUtils.carregarInterSemiBold(22f));
+        lblKPIValueClientesMensais.setFont(FonteUtils.carregarInterSemiBold(30f));
         lblKPIValueClientesMensais.setForeground(new java.awt.Color(255, 255, 255));
         lblKPIValueClientesMensais.setText("0000");
         pnlCardClientesMensais.add(lblKPIValueClientesMensais);
-        lblKPIValueClientesMensais.setBounds(9, 175, 120, 20);
+        lblKPIValueClientesMensais.setBounds(9, 165, 120, 30);
 
         lblTitleTrendClientesMensais.setFont(FonteUtils.carregarInterSemiBold(11f));
         lblTitleTrendClientesMensais.setForeground(new java.awt.Color(199, 199, 199));
         lblTitleTrendClientesMensais.setText("Novos clientes nesse mês.");
         pnlCardClientesMensais.add(lblTitleTrendClientesMensais);
-        lblTitleTrendClientesMensais.setBounds(10, 155, 200, 16);
+        lblTitleTrendClientesMensais.setBounds(10, 145, 200, 16);
 
         lblIconClientesMensais.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pnlCardClientesMensais.add(lblIconClientesMensais);

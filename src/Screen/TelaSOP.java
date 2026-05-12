@@ -350,7 +350,7 @@ public class TelaSOP extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
-        new TelaMenu(usuarioLogado).setVisible(true);
+        new Dashboard(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnHomeActionPerformed
 

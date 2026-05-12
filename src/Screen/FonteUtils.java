@@ -39,6 +39,10 @@ public class FonteUtils {
     public static Font carregarRobotoSemiBold(float tamanho) {
         return carregarFonte("Roboto-SemiBold.ttf", tamanho, "SansSerif", Font.PLAIN);
     }
+    
+    public static Font carregarRobotoBold(float tamanho) {
+        return carregarFonte("Roboto-Bold.ttf", tamanho, "SansSerif", Font.PLAIN);
+    }
 
     public static Font carregarRobotoExtraBold(float tamanho) {
         return carregarFonte("Roboto-ExtraBold.ttf", tamanho, "SansSerif", Font.BOLD);
@@ -46,6 +50,10 @@ public class FonteUtils {
 
     public static Font carregarRobotoMedium(float tamanho) {
         return carregarFonte("Roboto-Medium.ttf", tamanho, "SansSerif", Font.PLAIN);
+    }
+    
+    public static Font carregarRobotoRegular(float tamanho) {
+        return carregarFonte("Roboto-Regular.ttf", tamanho, "SansSerif", Font.PLAIN);
     }
 
     public static Font carregarRaleway(float tamanho) {
@@ -86,5 +94,9 @@ public class FonteUtils {
 
     public static Font carregarInterSemiBold(float tamanho) {
         return carregarFonte("Inter_28pt-SemiBold.ttf", tamanho, "SansSerif", Font.PLAIN);
+    }
+    
+    public static Font carregarInterBold(float tamanho) {
+        return carregarFonte("Inter_28pt-Bold.ttf", tamanho, "SansSerif", Font.PLAIN);
     }
 }

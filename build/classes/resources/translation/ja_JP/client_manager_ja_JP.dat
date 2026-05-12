@@ -1,71 +1,104 @@
-# --- AUTHENTICATION MODULE ---
+# --- AUTHENTICATION MODULE (Login) ---
 auth.login.window_title=CT Contab Manager
-auth.login.header.title=ログイン
-auth.login.header.description=会計管理のすべてを一つの場所に、完全なデジタル化。
-auth.login.header.subtitle=
+auth.login.header.title=アカウントにアクセス
 auth.login.social.google=Googleでログイン
-auth.login.divider.text=またはメールでログイン
-auth.login.form.label.email=メールアドレス
-auth.login.form.label.password=パスワード
-auth.login.form.placeholder.email=email@example.com
-auth.login.form.checkbox.remember=ログイン状態を保持する
-auth.login.form.link.forgot_password=パスワードをお忘れですか？
-auth.login.form.button.submit=ログイン
-auth.login.footer.not_registered=まだ登録されていませんか？
-auth.login.footer.link.create_account=  アカウントを作成する
-auth.login.footer.copyright=© 2025 CT Contab. All rights reserved.
-auth.login.feedback.error.invalid_credentials=メールアドレスまたはパスワードが正しくありません。
+auth.login.social.apple=Appleでサインイン
+auth.login.divider.text=又は
+auth.login.confirm=次へ
+auth.login.newacount=<html><font color='#48494B'>アカウントをお持ちでないですか？ </font><font color='#287FCE'><b>登録</b></font></html>
+auth.login.forgotpassword=パスワードをお忘れですか？
+auth.login.hover.user=ユーザー名
+auth.login.default.user=ユーザー名
+auth.login.hover.password=パスワード
+auth.login.default.password=パスワード
 
+# --- REGISTRATION MODULE (Sign Up) ---
 auth.register.window_title=CT Contab Manager
-auth.register.header.title=新規登録
-auth.register.header.description=会計管理のすべてを一つの場所に、完全なデジタル化。
-auth.register.header.subtitle=
-auth.register.form.label.username=ユーザー名
-auth.register.form.label.email=メールアドレス
-auth.register.form.label.password=パスワード
-auth.register.form.label.confirm_password=パスワードの確認
-auth.register.form.placeholder.email=email@example.com
-auth.register.form.checkbox.remember=ログイン状態を保持する
-auth.register.form.button.submit=登録する
-auth.register.footer.has_account=すでにアカウントをお持ちですか？
-auth.register.footer.link.login=ログイン
-auth.register.footer.copyright=© 2025 CT Contab. All rights reserved.
-auth.register.feedback.error.invalid_data=メールアドレス、パスワード、またはユーザー名が正しくありません。
+auth.register.header.title=アカウントを作成
+auth.register.confirm=次へ
+auth.register.newacount=<html><font color='#48494B'>既にアカウントをお持ちですか？ </font><font color='#287FCE'><b>ログイン</b></font></html>
+auth.register.hover.user=ユーザー名
+auth.register.default.user=ユーザー名
+auth.register.hover.password=パスワード
+auth.register.default.password=パスワード
+auth.register.hover.email=メールアドレス
+auth.register.default.email=メールアドレス
 
-# --- DASHBOARD MODULE ---
-dashboard.header.title=ダッシュボード
-dashboard.banner.action.register=新規顧客を登録する
-dashboard.card.new_clients.header=月間顧客数
-dashboard.card.new_clients.title=今月の新規顧客
-dashboard.card.new_clients.subtitle=新規顧客の総数
-dashboard.card.new_clients.description=<html>このパネルは、今月獲得した新規顧客の総数を示します。</html>
-dashboard.card.total_clients.header=総顧客数
-dashboard.card.total_clients.title=全登録顧客
-dashboard.card.total_clients.subtitle=登録顧客の総数
-dashboard.card.total_clients.description=<html>このパネルは、これまでに蓄積された登録顧客の総数を示します。</html>
-dashboard.card.pending_tasks.header=未完了タスク
-dashboard.card.pending_tasks.title=すべての未完了タスク
-dashboard.card.pending_tasks.subtitle=待機中のタスク数
-dashboard.card.pending_tasks.description=<html>このパネルは、現在保留中のすべてのタスクを示します。</html>
-dashboard.card.total_reports.header=レポート総数
-dashboard.card.total_reports.title=作成されたすべてのレポート
-dashboard.card.total_reports.subtitle=生成されたレポートの総数
-dashboard.card.total_reports.description=<html>ここで発行されたレポートの数を確認できます。</html>
-dashboard.card.unfinished_tasks.header=未実施タスク
-dashboard.card.unfinished_tasks.title=未実施のタスク
-dashboard.card.unfinished_tasks.subtitle=不完全なタスクの数
-dashboard.card.unfinished_tasks.description=<html>開始されたが終了していないタスクを示し、ボトルネックの特定を助けます。</html>
-dashboard.card.completed_tasks.header=完了済みタスク
-dashboard.card.completed_tasks.title=完了したタスク
-dashboard.card.completed_tasks.subtitle=完了したタスクの総数
-dashboard.card.completed_tasks.description=<html>終了したすべてのタスクを示し、生産性の指標となります。</html>
+# --- MAIN MODULE (Home) ---
+auth.home.window_title=CT Contab Manager
+auth.home.button.home=ホーム
+auth.home.button.calendar=カレンダー
+auth.home.button.client=クライアント
+auth.home.button.report=レポート
+auth.home.button.task=タスク
+auth.home.button.config=設定
+auth.home.button.admin=管理
+auth.home.banner.title=新規クライアントの追加
+auth.home.banner.description=<html>新しいクライアントを素早く簡単に登録し、すべてのアカウントを1か所で完全に管理できます。</html>
+auth.home.statistic.title=統計
+auth.home.label.customer=クライアント
+auth.home.label.task=タスク
+auth.home.label.report=レポート
+auth.home.label.newclient=新規クライアント
+auth.home.label.admin=管理者
+auth.home.button.newclient=新規クライアント
 
-# --- NAVIGATION ---
-navigation.sidebar.help=ヘルプ
-navigation.sidebar.dashboard=ダッシュボード
-navigation.sidebar.calendar=カレンダー
-navigation.sidebar.clients=顧客
-navigation.sidebar.reports=レポート
-navigation.sidebar.tasks=タスク
-navigation.sidebar.settings=設定
-navigation.sidebar.admin=管理
+# --- ERROR MODULE (Error) ---
+auth.error.window_title=CT Contab Manager
+auth.error.header.title=エラー
+auth.error.description=<html><p align="justify"> おっと！予期せぬエラーが発生しました。現在システムが不安定になっています。担当チームに通知済みで、現在修復作業中です。数分後にもう一度お試しください。</p></html>
+auth.error.confirm=了解
+auth.error.restart=再起動
+
+# --- CLIENT MODULE (Client) ---
+auth.client.window_title=CT Contab Manager
+auth.client.button.search=検索
+auth.client.button.home=ホーム
+auth.client.button.calendar=カレンダー
+auth.client.button.client=クライアント
+auth.client.button.report=レポート
+auth.client.button.task=タスク
+auth.client.button.config=設定
+auth.client.button.admin=管理
+auth.client.title=クライアント
+auth.client.label.all=すべて
+auth.client.label.finished=完了済み
+auth.client.label.in_progress=進行中
+auth.client.label.pending=保留中
+auth.client.label.new_client_text=新規クライアント
+auth.client.column.id=ID
+auth.client.column.type=氏名
+auth.client.column.status=ステータス
+auth.client.column.date=区分
+auth.client.column.name=登録日
+
+# --- NEW CLIENT MODULE (New Client) ---
+auth.new_clients.window_title=CT Contab Manager
+auth.new_clients.button.search=検索
+auth.new_clients.button.home=ホーム
+auth.new_clients.button.calendar=カレンダー
+auth.new_clients.button.client=クライアント
+auth.new_clients.button.report=レポート
+auth.new_clients.button.task=タスク
+auth.new_clients.button.config=設定
+auth.new_clients.button.admin=管理
+auth.new_clients.label.title=新規クライアント登録
+auth.new_clients.label.description=<html><p align="center">クライアント情報を登録して、データベースを最新の状態に保ちます。</p></html>
+auth.new_clients.label.default.name=氏名（フルネーム）*
+auth.new_clients.label.default.service=サービス*
+auth.new_clients.label.default.type_person=区分：個人、法人、または未指定？*
+auth.new_clients.label.default.type_service=状況：保留、進行中、または完了？*
+auth.new_clients.label.default.email=メールアドレス*
+auth.new_clients.label.default.telephone=電話番号
+auth.new_clients.label.default.cellphone=携帯電話
+auth.new_clients.label.default.observation=備考
+auth.new_clients.label.hover.name=氏名（フルネーム）*
+auth.new_clients.label.hover.service=サービス*
+auth.new_clients.label.hover.type_person=区分：個人、法人、または未指定？*
+auth.new_clients.label.hover.type_service=状況：保留、進行中、または完了？*
+auth.new_clients.label.hover.email=メールアドレス*
+auth.new_clients.label.hover.telephone=電話番号
+auth.new_clients.label.hover.cellphone=携帯電話
+auth.new_clients.label.hover.observation=備考
+auth.new_clients.label.button.cancel=キャンセル
+auth.new_clients.label.button.register=登録

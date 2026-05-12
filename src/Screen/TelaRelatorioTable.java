@@ -1771,7 +1771,7 @@ public class TelaRelatorioTable extends javax.swing.JFrame {
     }// GEN-LAST:event_btnFecharTelaActionPerformed
 
     private void btnDashboardActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnDashboardActionPerformed
-        new TelaMenu(usuarioLogado).setVisible(true);
+        new Dashboard(usuarioLogado).setVisible(true);
         this.dispose();
     }// GEN-LAST:event_btnDashboardActionPerformed
 

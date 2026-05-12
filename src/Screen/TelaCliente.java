@@ -725,7 +725,7 @@ public class TelaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
-        new TelaMenu(usuarioLogado).setVisible(true);
+        new Dashboard(usuarioLogado).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnHomeActionPerformed
 
