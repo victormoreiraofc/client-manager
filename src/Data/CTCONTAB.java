@@ -16,7 +16,7 @@ public class CTCONTAB {
 
     public static Connection conectar() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        conectado = DriverManager.getConnection("jdbc:mysql://root:uiqBomgvmgfkKsUtBUnYbZeBJYFSCGBo@yamabiko.proxy.rlwy.net:42868/railway", "root", "uiqBomgvmgfkKsUtBUnYbZeBJYFSCGBo");
+        conectado = DriverManager.getConnection("jdbc:mysql://root:gaBRynSEmfkGLynsYOndgtJVtiZUAWMi@gondola.proxy.rlwy.net:39359/railway", "root", "gaBRynSEmfkGLynsYOndgtJVtiZUAWMi");
         return conectado;
     }
 
@@ -35,6 +35,29 @@ public class CTCONTAB {
         st.setString(1, usuario);
         st.setString(2, acao);
         st.executeUpdate();
+    }
+
+    public static List<Auditoria> listarAuditoria() throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        List<Auditoria> lista = new ArrayList<>();
+
+        PreparedStatement st = conectado.prepareStatement(
+                "SELECT id, usuario, acao, DATE_FORMAT(data_hora, '%H:%i') AS hora, "
+                + "DATE_FORMAT(data_hora, '%d/%m/%Y') AS data "
+                + "FROM auditoria ORDER BY id DESC LIMIT 500"
+        );
+        ResultSet rs = st.executeQuery();
+
+        while (rs.next()) {
+            lista.add(new Auditoria(
+                    rs.getInt("id"),
+                    rs.getString("usuario"),
+                    rs.getString("acao"),
+                    rs.getString("hora"),
+                    rs.getString("data")
+            ));
+        }
+        return lista;
     }
 
     public static Usuario fazerLoginU(String u, String s) throws ClassNotFoundException, SQLException {
@@ -192,7 +215,7 @@ public class CTCONTAB {
     }
 
     public static void registrarTarefa(Tarefa tarefa) throws ClassNotFoundException, SQLException {
-        String sql = "INSERT INTO tarefa (NomeTarefa, Descrição, StatusTarefa, DataVencimento, Prioridade, responsavel) "
+        String sql = "INSERT INTO tarefa (NomeTarefa, Descrição, StatusTarefa, DataCadastro, Prioridade, responsavel) "
                 + "VALUES (?, ?, ?, ?, ?, ?)";
 
         conectado = conectar();
@@ -200,7 +223,7 @@ public class CTCONTAB {
         st.setString(1, tarefa.getNomeTarefa());
         st.setString(2, tarefa.getDescricao());
         st.setString(3, tarefa.getStatusTarefa());
-        st.setString(4, tarefa.getDataVencimento());
+        st.setString(4, tarefa.getDataCadastro());
         st.setString(5, tarefa.getPrioridade());
         st.setString(6, tarefa.getResponsavel());
 
@@ -273,7 +296,7 @@ public class CTCONTAB {
     public static List<Tarefa> listarTarefas() throws ClassNotFoundException, SQLException {
         List<Tarefa> tarefas = new ArrayList<>();
         conectado = conectar();
-        String query = "SELECT ID, NomeTarefa, Descrição, StatusTarefa, DataVencimento, Prioridade, responsavel FROM tarefa";
+        String query = "SELECT ID, NomeTarefa, Descrição, StatusTarefa, DataCadastro, Prioridade, responsavel FROM tarefa";
         PreparedStatement st = conectado.prepareStatement(query);
         ResultSet resultado = st.executeQuery();
 
@@ -283,7 +306,7 @@ public class CTCONTAB {
                     resultado.getString("NomeTarefa"),
                     resultado.getString("Descrição"),
                     resultado.getString("StatusTarefa"),
-                    resultado.getString("DataVencimento"),
+                    resultado.getString("DataCadastro"),
                     resultado.getString("Prioridade"),
                     resultado.getString("responsavel")
             );
@@ -424,13 +447,13 @@ public class CTCONTAB {
     public static void atualizarTarefa(Tarefa tarefa) throws ClassNotFoundException, SQLException {
         conectado = conectar();
 
-        String sql = "UPDATE tarefa SET NomeTarefa = ?, Descrição = ?, StatusTarefa = ?, DataVencimento = ?, Prioridade = ? WHERE ID = ?";
+        String sql = "UPDATE tarefa SET NomeTarefa = ?, Descrição = ?, StatusTarefa = ?, DataCadastro = ?, Prioridade = ? WHERE ID = ?";
 
         try (PreparedStatement st = conectado.prepareStatement(sql)) {
             st.setString(1, tarefa.getNomeTarefa());
             st.setString(2, tarefa.getDescricao());
             st.setString(3, tarefa.getStatusTarefa());
-            st.setString(4, tarefa.getDataVencimento());
+            st.setString(4, tarefa.getDataCadastro());
             st.setString(5, tarefa.getPrioridade());
             st.setInt(6, tarefa.getId());
 
@@ -776,7 +799,7 @@ public class CTCONTAB {
 
     public static int tarefasSemanaPassada(String status) throws ClassNotFoundException, SQLException {
         conectado = conectar();
-        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) AS total FROM tarefa WHERE StatusTarefa = ? AND YEARWEEK(DataVencimento, 1) = YEARWEEK(CURRENT_DATE - INTERVAL 1 WEEK, 1)");
+        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) AS total FROM tarefa WHERE StatusTarefa = ? AND YEARWEEK(DataCadastro, 1) = YEARWEEK(CURRENT_DATE - INTERVAL 1 WEEK, 1)");
         st.setString(1, status);
         ResultSet rs = st.executeQuery();
         return rs.next() ? rs.getInt("total") : 0;
@@ -805,7 +828,7 @@ public class CTCONTAB {
 
     public static int tarefasStatusMesAtual(String status) throws ClassNotFoundException, SQLException {
         conectado = conectar();
-        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) FROM tarefa WHERE StatusTarefa = ? AND MONTH(DataVencimento) = MONTH(CURDATE()) AND YEAR(DataVencimento) = YEAR(CURDATE())");
+        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) FROM tarefa WHERE StatusTarefa = ? AND MONTH(DataCadastro) = MONTH(CURDATE()) AND YEAR(DataCadastro) = YEAR(CURDATE())");
         st.setString(1, status);
         ResultSet rs = st.executeQuery();
         return rs.next() ? rs.getInt(1) : 0;
@@ -813,7 +836,7 @@ public class CTCONTAB {
 
     public static int tarefasStatusMesPassado(String status) throws ClassNotFoundException, SQLException {
         conectado = conectar();
-        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) FROM tarefa WHERE StatusTarefa = ? AND MONTH(DataVencimento) = MONTH(CURDATE() - INTERVAL 1 MONTH) AND YEAR(DataVencimento) = YEAR(CURDATE() - INTERVAL 1 MONTH)");
+        PreparedStatement st = conectado.prepareStatement("SELECT COUNT(*) FROM tarefa WHERE StatusTarefa = ? AND MONTH(DataCadastro) = MONTH(CURDATE() - INTERVAL 1 MONTH) AND YEAR(DataCadastro) = YEAR(CURDATE() - INTERVAL 1 MONTH)");
         st.setString(1, status);
         ResultSet rs = st.executeQuery();
         return rs.next() ? rs.getInt(1) : 0;
@@ -894,5 +917,12 @@ public class CTCONTAB {
 
             return st.executeUpdate() > 0;
         }
+    }
+    
+    public static void deletarCliente(int id) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement("DELETE FROM cliente WHERE ID = ?");
+        st.setInt(1, id);
+        st.executeUpdate();
     }
 }

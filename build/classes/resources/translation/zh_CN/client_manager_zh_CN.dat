@@ -67,10 +67,10 @@ auth.client.label.in_progress=进行中
 auth.client.label.pending=待处理
 auth.client.label.new_client_text=新客户
 auth.client.column.id=ID
-auth.client.column.type=姓名
+auth.client.column.name=姓名
 auth.client.column.status=状态
-auth.client.column.date=人员类型
-auth.client.column.name=注册日期
+auth.client.column.type=人员类型
+auth.client.column.date=注册日期
 
 # --- NEW CLIENT MODULE (New Client) ---
 auth.new_clients.window_title=CT Contab Manager

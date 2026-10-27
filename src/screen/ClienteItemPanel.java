@@ -15,6 +15,7 @@ public class ClienteItemPanel extends JPanel {
     private String tipoPessoaTraduzido;
     private boolean selecionado = false;
     private final Client parent;
+    private final Data.Cliente cliente;
 
     private String traduzirValor(String valor) {
         if (valor == null) {
@@ -155,6 +156,7 @@ public class ClienteItemPanel extends JPanel {
     }
 
     public ClienteItemPanel(Data.Cliente c, Client parent) {
+        this.cliente = c;
         this.id = c.getId();
         this.nome = c.getNome();
         this.status = c.getSituacaoServico();
@@ -173,7 +175,7 @@ public class ClienteItemPanel extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 parent.selecionarItem(ClienteItemPanel.this);
-                System.out.println("botão de ID " + id);
+                parent.abrirCliente(cliente);
             }
         });
     }

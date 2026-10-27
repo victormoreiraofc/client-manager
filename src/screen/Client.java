@@ -20,6 +20,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import screen.ClienteItemPanel;
+import java.awt.FontMetrics;
 
 public class Client extends javax.swing.JFrame {
 
@@ -32,7 +33,7 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.Timer timerVoltarHome;
     private javax.swing.Timer timerExpandir;
     private final int LARGURA_MIN = 30;
-    private final int LARGURA_MAX = 114;
+    private int LARGURA_MAX = 114;
     private ClienteItemPanel itemSelecionado = null;
     private java.util.List<Data.Cliente> cacheClientes = new java.util.ArrayList<>();
 
@@ -94,7 +95,6 @@ public class Client extends javax.swing.JFrame {
 
         alternarAba("All");
 
-        // Adicione os eventos de clique (Exemplo para os Labels ou Painéis de fundo)
         AllClientesLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 alternarAba("All");
@@ -240,6 +240,24 @@ public class Client extends javax.swing.JFrame {
         }
     }
 
+    private static final int TEXTO_DIREITA_FIXA = 1222;
+    private static final int BOTAO_PADDING_ESQUERDO = 20;
+    private static final int BOTAO_LARGURA_MIN_EXPANDIDO = 114;
+
+    private void ajustarLarguraBotaoNovoCliente() {
+        String texto = lblTextoNovoCliente.getText();
+        FontMetrics fm = lblTextoNovoCliente.getFontMetrics(lblTextoNovoCliente.getFont());
+        int larguraTexto = fm.stringWidth(texto);
+
+        int novoXTexto = TEXTO_DIREITA_FIXA - (larguraTexto + 4);
+        lblTextoNovoCliente.setBounds(novoXTexto, lblTextoNovoCliente.getY(),
+                larguraTexto + 4, lblTextoNovoCliente.getHeight());
+
+        int paddingDireitoIcone = (1221 + LARGURA_MIN) - TEXTO_DIREITA_FIXA;
+        int larguraNecessaria = paddingDireitoIcone + larguraTexto + 4 + BOTAO_PADDING_ESQUERDO;
+        LARGURA_MAX = Math.max(BOTAO_LARGURA_MIN_EXPANDIDO, larguraNecessaria);
+    }
+
     private void localizeAuthScreen() {
         Locale loc = I18nManager.getCurrentLocale();
         String langTag = loc.toString();
@@ -261,12 +279,13 @@ public class Client extends javax.swing.JFrame {
         ProgressClientesLabel.setText(I18nManager.getString("auth.client.label.in_progress"));
         PendingClientesLabel.setText(I18nManager.getString("auth.client.label.pending"));
         lblTextoNovoCliente.setText(I18nManager.getString("auth.client.label.new_client_text"));
+        ajustarLarguraBotaoNovoCliente();
         ColumnIDLabel.setText(I18nManager.getString("auth.client.column.id"));
         ColumnTypeLabel.setText(I18nManager.getString("auth.client.column.type"));
         ColumnStatsLabel.setText(I18nManager.getString("auth.client.column.status"));
         ColumnDateLabel.setText(I18nManager.getString("auth.client.column.date"));
         ColumnNameLabel.setText(I18nManager.getString("auth.client.column.name"));
-        ((RoundedTextField)txtBuscar).setPlaceholder(I18nManager.getString("auth.client.button.search"));
+        ((RoundedTextField) txtBuscar).setPlaceholder(I18nManager.getString("auth.client.button.search"));
 
         this.getContentPane().revalidate();
         this.getContentPane().repaint();
@@ -380,7 +399,6 @@ public class Client extends javax.swing.JFrame {
             timerExpandir.stop();
         }
 
-        // Ponto fixo da direita (X original + largura mínima)
         final int X_FIXO_DIREITA = 1221 + LARGURA_MIN;
 
         timerExpandir = new javax.swing.Timer(10, new java.awt.event.ActionListener() {
@@ -393,7 +411,6 @@ public class Client extends javax.swing.JFrame {
                 if (expandir) {
                     if (larguraAtual < LARGURA_MAX) {
                         novaLargura = Math.min(larguraAtual + velocidade, LARGURA_MAX);
-                        // Move o X para a esquerda enquanto aumenta a largura
                         NewClientButtonPanel.setBounds(X_FIXO_DIREITA - novaLargura, NewClientButtonPanel.getY(), novaLargura, 30);
                         NewClientButtonPanel.setBackground(COR_HOVER_BTN);
 
@@ -408,7 +425,6 @@ public class Client extends javax.swing.JFrame {
                 } else {
                     if (larguraAtual > LARGURA_MIN) {
                         novaLargura = Math.max(larguraAtual - velocidade, LARGURA_MIN);
-                        // Recua o X para a direita enquanto diminui a largura
                         NewClientButtonPanel.setBounds(X_FIXO_DIREITA - novaLargura, NewClientButtonPanel.getY(), novaLargura, 30);
                         NewClientButtonPanel.setBackground(COR_NORMAL_BTN);
 
@@ -436,9 +452,14 @@ public class Client extends javax.swing.JFrame {
         itemSelecionado.setSelecionado(true);
     }
 
+    public void abrirCliente(Data.Cliente cliente) {
+        NewClient tela = new NewClient(usuarioLogado, cliente);
+        tela.setVisible(true);
+        this.dispose();
+    }
+
     private void carregarListaClientes() {
         try {
-            // Busca os clientes usando o método já existente no seu CTCONTAB.java 
             java.util.List<Data.Cliente> clientes = Data.CTCONTAB.listarClientes();
 
             if (clientes.isEmpty()) {
@@ -446,12 +467,10 @@ public class Client extends javax.swing.JFrame {
                 return;
             }
 
-            // Painel que conterá a lista
             JPanel pnlLista = new JPanel();
-            pnlLista.setBackground(new Color(37, 49, 71)); // Cor de fundo solicitada #253147
-            pnlLista.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 7)); // Distância de 7px entre itens
+            pnlLista.setBackground(new Color(37, 49, 71));
+            pnlLista.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 7));
 
-            // Ajusta altura dinâmica do painel para o scroll funcionar
             int alturaTotal = clientes.size() * (50 + 7);
             pnlLista.setPreferredSize(new Dimension(976, alturaTotal));
 
@@ -459,13 +478,11 @@ public class Client extends javax.swing.JFrame {
                 ClienteItemPanel item = new ClienteItemPanel(c, this);
                 pnlLista.add(item);
 
-                // Seleciona o primeiro item por padrão como solicitado
                 if (itemSelecionado == null) {
                     selecionarItem(item);
                 }
             }
 
-            // Configura o ScrollPane
             jScrollPane1.setViewportView(pnlLista);
             jScrollPane1.setBorder(null);
             jScrollPane1.getViewport().setBackground(new Color(37, 49, 71));
@@ -477,32 +494,25 @@ public class Client extends javax.swing.JFrame {
     }
 
     private void alternarAba(String abaAtiva) {
-        // Definição das Cores
-        Color corAtiva = new Color(205, 168, 12);   // #CDA80C
-        Color corInativa = new Color(209, 213, 219); // #D1D5DB
+        Color corAtiva = new Color(205, 168, 12);
+        Color corInativa = new Color(209, 213, 219);
 
-        // 1. Resetar todos para o estado inativo
-        // All
         AllClientesLabel.setForeground(corInativa);
         AllClientesSeparator.setVisible(false);
         AllClientesButton.setVisible(false);
 
-        // Finalizados (End)
         EndClientesLabel.setForeground(corInativa);
         EndClientesSeparator.setVisible(false);
         EndClientesButton.setVisible(false);
 
-        // Em Andamento (Progress)
         ProgressClientesLabel.setForeground(corInativa);
         ProgressClientesSeparator.setVisible(false);
         ProgressClientesButton.setVisible(false);
 
-        // Pendentes (Pending)
         PendingClientesLabel.setForeground(corInativa);
         PendingClientesSeparator.setVisible(false);
         PendingClientesButton.setVisible(false);
 
-        // 2. Ativar apenas a selecionada
         switch (abaAtiva) {
             case "All":
                 AllClientesLabel.setForeground(corAtiva);
@@ -532,7 +542,6 @@ public class Client extends javax.swing.JFrame {
     }
 
     private void carregarListaClientesComFiltro(String filtro) {
-        // 1. Se o cache estiver vazio, busca do banco uma única vez
         if (cacheClientes.isEmpty()) {
             try {
                 cacheClientes = Data.CTCONTAB.listarClientes();
@@ -541,11 +550,8 @@ public class Client extends javax.swing.JFrame {
             }
         }
 
-        // 2. Ordenação Universal: Do último para o primeiro (ID decrescente)
-        // Isso garante que todas as abas sigam a mesma regra
         cacheClientes.sort((c1, c2) -> Integer.compare(c2.getId(), c1.getId()));
 
-        // 3. Filtragem ultra rápida em memória
         java.util.List<Data.Cliente> listaFiltrada = new java.util.ArrayList<>();
         for (Data.Cliente c : cacheClientes) {
             if (filtro.equals("Todos") || c.getSituacaoServico().equalsIgnoreCase(filtro)) {
@@ -553,7 +559,6 @@ public class Client extends javax.swing.JFrame {
             }
         }
 
-        // 4. Renderização Direta
         renderizarLista(listaFiltrada);
     }
 
@@ -570,7 +575,6 @@ public class Client extends javax.swing.JFrame {
         int alturaTotal = lista.size() * (50 + 7);
         pnlLista.setPreferredSize(new Dimension(976, Math.max(alturaTotal, jScrollPane1.getHeight())));
 
-        // Reset de seleção
         itemSelecionado = null;
 
         for (Data.Cliente c : lista) {
@@ -582,7 +586,6 @@ public class Client extends javax.swing.JFrame {
             }
         }
 
-        // Atualização atômica (troca tudo de uma vez para ser instantâneo)
         jScrollPane1.setViewportView(pnlLista);
         jScrollPane1.setVisible(true);
         jScrollPane1.revalidate();
@@ -1296,7 +1299,6 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCloseActionPerformed
 
     private void btnMaximizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaximizeActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnMaximizeActionPerformed
 
     private void btnMinimizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinimizeActionPerformed
@@ -1329,7 +1331,6 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCalendarMouseExited
 
     private void btnCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnCalendarActionPerformed
 
     private void btnClientMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClientMouseEntered
@@ -1344,7 +1345,8 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClientMouseExited
 
     private void btnClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientActionPerformed
-        // TODO add your handling code here:
+        new Client(usuarioLogado).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnClientActionPerformed
 
     private void btnReportMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportMouseEntered
@@ -1358,7 +1360,8 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReportMouseExited
 
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
-        // TODO add your handling code here:
+        new Report(usuarioLogado).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnReportActionPerformed
 
     private void btnTaskMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTaskMouseEntered
@@ -1372,7 +1375,8 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTaskMouseExited
 
     private void btnTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaskActionPerformed
-        // TODO add your handling code here:
+        new Task(usuarioLogado).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnTaskActionPerformed
 
     private void btnConfigMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfigMouseEntered
@@ -1386,7 +1390,6 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConfigMouseExited
 
     private void btnConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfigActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnConfigActionPerformed
 
     private void btnAdminMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdminMouseEntered
@@ -1400,7 +1403,6 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdminMouseExited
 
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnAdminActionPerformed
 
     private void btnEllipseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEllipseMouseEntered
@@ -1414,7 +1416,6 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEllipseMouseExited
 
     private void btnEllipseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEllipseActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnEllipseActionPerformed
 
     private void AllClientesButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AllClientesButtonMouseEntered
@@ -1426,7 +1427,6 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_AllClientesButtonMouseExited
 
     private void AllClientesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AllClientesButtonActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_AllClientesButtonActionPerformed
 
     private void EndClientesButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EndClientesButtonMouseEntered
@@ -1438,7 +1438,6 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_EndClientesButtonMouseExited
 
     private void EndClientesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EndClientesButtonActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_EndClientesButtonActionPerformed
 
     private void PendingClientesButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PendingClientesButtonMouseEntered
@@ -1450,7 +1449,6 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_PendingClientesButtonMouseExited
 
     private void PendingClientesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PendingClientesButtonActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_PendingClientesButtonActionPerformed
 
     private void ProgressClientesButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProgressClientesButtonMouseEntered
@@ -1462,7 +1460,6 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_ProgressClientesButtonMouseExited
 
     private void ProgressClientesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProgressClientesButtonActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_ProgressClientesButtonActionPerformed
 
     private void NewClientButtonPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NewClientButtonPanelMousePressed
@@ -1535,9 +1532,6 @@ public class Client extends javax.swing.JFrame {
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -1616,6 +1610,7 @@ public class Client extends javax.swing.JFrame {
     }
 
     class RoundedTextField extends javax.swing.JTextField {
+
         private String placeholderText = "";
 
         public RoundedTextField() {

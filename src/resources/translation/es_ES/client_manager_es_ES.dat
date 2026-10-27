@@ -67,10 +67,10 @@ auth.client.label.in_progress=En curso
 auth.client.label.pending=Pendientes
 auth.client.label.new_client_text=Nuevo Cliente
 auth.client.column.id=ID
-auth.client.column.type=NOMBRE
+auth.client.column.name=NOMBRE
 auth.client.column.status=ESTADO
-auth.client.column.date=TIPO DE PERSONA
-auth.client.column.name=FECHA DE REGISTRO
+auth.client.column.type=TIPO DE PERSONA
+auth.client.column.date=FECHA DE REGISTRO
 
 # --- NEW CLIENT MODULE (New Client) ---
 auth.new_clients.window_title=CT Contab Manager

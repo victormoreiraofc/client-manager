@@ -1,5 +1,6 @@
 package screen;
 
+import Data.AuditUtil;
 import Data.CTCONTAB;
 import Data.I18nManager;
 import Data.Usuario;
@@ -766,6 +767,7 @@ public class Login extends javax.swing.JFrame {
             if (usuarioLogado != null) {
                 String idiomaAtualDaTela = I18nManager.getCurrentLocale().toString();
                 CTCONTAB.atualizarIdiomaUsuario(usernameField.getText(), idiomaAtualDaTela);
+                AuditUtil.registrar(usuarioLogado.getUsuario(), "audit.user_login", usuarioLogado.getUsuario());
                 new Home(usuarioLogado).setVisible(true);
                 dispose();
             } else {

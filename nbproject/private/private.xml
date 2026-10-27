@@ -3,7 +3,27 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/Data/PermissaoUtil.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/screen/Home.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/screen/Client.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/screen/TelaCliente.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/screen/Login.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/screen/Register.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/Data/CTCONTAB.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/Data/LayoutManager.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/Data/IconUtil.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/Data/Usuario.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/Data/Cliente.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/screen/Error.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/screen/RoundButton.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/screen/ClienteItemPanel.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/screen/NewClient.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/screen/MensagemUtil.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/screen/FonteUtils.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/screen/GoogleCalendarAuth.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/screen/GoogleCalendarEvents.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/screen/Report.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/screen/Task.java</file>
+            <file>file:/C:/Users/victo/OneDrive/Documentos/GitHub/client-manager/src/screen/Audit.java</file>
         </group>
     </open-files>
 </project-private>

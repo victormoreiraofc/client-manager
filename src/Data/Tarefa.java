@@ -6,16 +6,16 @@ public class Tarefa {
     private String nomeTarefa;
     private String descricao;
     private String statusTarefa;
-    private String dataVencimento;
+    private String dataCadastro;
     private String prioridade;
     private String responsavel;
 
-    public Tarefa(int id, String nomeTarefa, String descricao, String statusTarefa, String dataVencimento, String prioridade, String responsavel) {
+    public Tarefa(int id, String nomeTarefa, String descricao, String statusTarefa, String dataCadastro, String prioridade, String responsavel) {
         this.id = id;
         this.nomeTarefa = nomeTarefa;
         this.descricao = descricao;
         this.statusTarefa = statusTarefa;
-        this.dataVencimento = dataVencimento;
+        this.dataCadastro = dataCadastro;
         this.prioridade = prioridade;
         this.responsavel = responsavel;
     }
@@ -55,12 +55,12 @@ public class Tarefa {
         this.statusTarefa = statusTarefa;
     }
 
-    public String getDataVencimento() {
-        return dataVencimento;
+    public String getDataCadastro() {
+        return dataCadastro;
     }
 
-    public void setDataVencimento(String dataVencimento) {
-        this.dataVencimento = dataVencimento;
+    public void setDataCadastro(String dataCadastro) {
+        this.dataCadastro = dataCadastro;
     }
 
     public String getPrioridade() {

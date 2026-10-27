@@ -33,6 +33,7 @@ auth.home.button.report=Relatórios
 auth.home.button.task=Tarefas
 auth.home.button.config=Configurações
 auth.home.button.admin=Administração
+
 auth.home.banner.title=Adicione novos clientes
 auth.home.banner.description=<html>Cadastre novos clientes de forma simples e rápida para ter o controle total de suas contas em um só lugar.</html>
 auth.home.statistic.title=Estatísticas
@@ -60,6 +61,7 @@ auth.client.button.report=Relatórios
 auth.client.button.task=Tarefas
 auth.client.button.config=Configurações
 auth.client.button.admin=Administração
+
 auth.client.title=Clientes
 auth.client.label.all=Todos
 auth.client.label.finished=Finalizados
@@ -67,10 +69,10 @@ auth.client.label.in_progress=Em andamento
 auth.client.label.pending=Pendentes
 auth.client.label.new_client_text=Novo Cliente
 auth.client.column.id=ID
-auth.client.column.type=TIPO DE PESSOA
-auth.client.column.status=STATUS
-auth.client.column.date=DATA DE CADASTRO
 auth.client.column.name=NOME
+auth.client.column.status=STATUS
+auth.client.column.type=TIPO DE PESSOA
+auth.client.column.date=DATA DE CADASTRO
 
 # --- NEW CLIENT MODULE (New Client) ---
 auth.new_clients.window_title=CT Contab Manager
@@ -82,6 +84,7 @@ auth.new_clients.button.report=Relatórios
 auth.new_clients.button.task=Tarefas
 auth.new_clients.button.config=Configurações
 auth.new_clients.button.admin=Administração
+
 auth.new_clients.label.title=Cadastre um novo cliente
 auth.new_clients.label.description=<html><p align="center">Mantenha nossa base atualizada cadastrando as informações do seu cliente.</p></html>
 auth.new_clients.label.default.name=Nome Completo*
@@ -102,3 +105,89 @@ auth.new_clients.label.hover.cellphone=Celular
 auth.new_clients.label.hover.observation=Observações
 auth.new_clients.label.button.cancel=Cancelar
 auth.new_clients.label.button.register=Cadastrar
+
+auth.used_client.label.title=Editar Cliente
+auth.used_client.label.description=<html><p align="center">Mantenha nossa base atualizada modificando as informações do seu cliente.</p></html>
+auth.used_client.label.button.save=Salvar Alterações
+auth.used_client.label.button.delete=Deletar
+
+auth.used_client.confirm_delete.title=Confirmar exclusão
+auth.used_client.confirm_delete.message=Tem certeza que deseja excluir o cliente "%s"?
+auth.used_client.confirm_delete.button.yes=Sim
+auth.used_client.confirm_delete.button.no=Não
+auth.used_client.confirm_delete.success=Cliente excluído com sucesso.
+auth.used_client.confirm_delete.error=Erro ao excluir o cliente. Verifique sua conexão.
+auth.used_client.register.success=Registro de cliente finalizado com sucesso. O histórico já está disponivel para a consulta.
+auth.used_client.register.error=Não conseguimos conectar ao banco de dados no momento. Por favor, verifique sua internet ou tente novamente mais tarde.
+
+
+# --- REPORT MODULE --- #
+auth.report.window_title=CT Contab Manager
+auth.report.button.search=Buscar
+auth.report.button.home=Home
+auth.report.button.calendar=Calendário
+auth.report.button.client=Clientes
+auth.report.button.report=Relatórios
+auth.report.button.task=Tarefas
+auth.report.button.config=Configurações
+auth.report.button.admin=Administração
+
+auth.report.title=Relatório
+auth.report.label.all=Todos
+auth.report.label.finished=Finalizados
+auth.report.label.in_progress=Em andamento
+auth.report.label.pending=Pendentes
+auth.report.label.new_report_text=Novo Relatório
+auth.report.column.id=ID
+auth.report.column.name=NOME DO RELATÓRIO
+auth.report.column.status=STATUS
+auth.report.column.date=DATA DE CADASTRO
+
+# --- TASK MODULE --- #
+auth.task.window_title=Tarefas
+auth.task.button.home=Home
+auth.task.button.calendar=Calendário
+auth.task.button.client=Clientes
+auth.task.button.report=Relatórios
+auth.task.button.task=Tarefas
+auth.task.button.config=Configurações
+auth.task.button.admin=Administração
+auth.task.title=Tarefas
+auth.task.label.all=Todas
+auth.task.label.finished=Finalizadas
+auth.task.label.in_progress=Em andamento
+auth.task.label.pending=Pendentes
+auth.task.label.new_task_text=Nova Tarefa
+auth.task.column.id=ID
+auth.task.column.name=NOME DA TAREFA
+auth.task.column.status=STATUS
+auth.task.column.priority=PRIORIDADE
+auth.task.column.date=DATA DE CADASTRO
+auth.task.column.responsible=USUÁRIO RESPONSÁVEL
+auth.task.button.search=Buscar
+
+# --- ADMIN MODULE --- #
+auth.admin.window_title=Administração
+auth.admin.button.home=Home
+auth.admin.button.calendar=Calendário
+auth.admin.button.client=Clientes
+auth.admin.button.report=Relatórios
+auth.admin.button.task=Tarefas
+auth.admin.button.config=Configurações
+auth.admin.button.admin=Administração
+auth.admin.title=Administração
+auth.admin.label.users=Usuários
+auth.admin.label.audit=Auditoria
+auth.admin.label.new_user_text=Novo Usuário
+auth.admin.column.id=ID
+auth.admin.column.name=NOME
+auth.admin.column.email=EMAIL
+auth.admin.column.permissions=PERMISSÕES
+auth.admin.column.date=DATA DE CADASTRO
+auth.admin.button.search=Buscar
+
+# --- AUDIT MODULE --- #
+audit.time_suffix=às %s de %s
+audit.user_login=O usuário %s entrou no sistema
+audit.user_created=O usuário %s foi criado
+audit.user_deleted=O usuário %s foi deletado por %s (%s)

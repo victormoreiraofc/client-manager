@@ -67,10 +67,10 @@ auth.client.label.in_progress=진행 중
 auth.client.label.pending=대기 중
 auth.client.label.new_client_text=새 클라이언트
 auth.client.column.id=ID
-auth.client.column.type=성명
+auth.client.column.name=이름
 auth.client.column.status=상태
-auth.client.column.date=유형
-auth.client.column.name=등록일
+auth.client.column.type=개인 유형
+auth.client.column.date=등록일
 
 # --- NEW CLIENT MODULE (New Client) ---
 auth.new_clients.window_title=CT Contab Manager

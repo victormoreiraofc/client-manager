@@ -23,8 +23,18 @@ public class NewClient extends javax.swing.JFrame {
     private final Color COR_PADRAO = new Color(28, 37, 54);
     private final Color COR_HOVER_GERAL = new Color(50, 63, 89);
     private final Color COR_HOVER_FECHAR = new Color(196, 43, 28);
+
+    private final Color COR_REGISTRAR_PADRAO = new Color(0xDD, 0xA9, 0x2A);
+    private final Color COR_REGISTRAR_HOVER = new Color(0xC4, 0x94, 0x21);
+
+    private final Color COR_CANCELAR_PADRAO = new Color(37, 49, 71);
+    private final Color COR_CANCELAR_HOVER = new Color(81, 90, 108);
+
+    private final Color COR_EXCLUIR_PADRAO = new Color(0xDC, 0x44, 0x50);
+    private final Color COR_EXCLUIR_HOVER = new Color(0xB9, 0x1F, 0x2A);
     private javax.swing.Timer timerVoltarHome;
     private static final int MAX_LENGTH = 50;
+    private Data.Cliente clienteEmEdicao = null;
 
     public NewClient(Usuario usuario) {
         this.usuarioLogado = usuario;
@@ -44,9 +54,21 @@ public class NewClient extends javax.swing.JFrame {
         setupInputField((RoundedTextField) cellphoneField, "Celular", 50);
         setupInputField((RoundedTextField) emailField, "Email*", 50);
         setupInputField((RoundedTextField) telephoneField, "Telefone", 50);
-        setupInputField((RoundedTextField) observationField, "Observações", 50);
+        setupInputField((RoundedTextField) observationField, "Observações", 200);
         observationField.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 10, 130, 15));
+
+        ((RoundedPanel) registerButtonPanel).setShowBorder(false);
+
         ((RoundedPanel) cancelButtonPanel).setShowBorder(true);
+        ((RoundedPanel) cancelButtonPanel).setBorderColor(new Color(80, 96, 122));
+
+        cancelButton.setFocusPainted(false);
+        cancelButton.setBorderPainted(false);
+        registerButton.setFocusPainted(false);
+        registerButton.setBorderPainted(false);
+
+        registerButtonPanel.setBackground(COR_REGISTRAR_PADRAO);
+        cancelButtonPanel.setBackground(COR_CANCELAR_PADRAO);
 
         defaultClientNameLabel.setVisible(true);
         defaultServiceLabel.setVisible(true);
@@ -109,7 +131,85 @@ public class NewClient extends javax.swing.JFrame {
                 javax.swing.BorderFactory.createLineBorder(new java.awt.Color(62, 76, 89), 2),
                 javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 5)
         ));
+      
+    }
 
+    public NewClient(Usuario usuario, Data.Cliente clienteParaEditar) {
+        this(usuario);
+        this.clienteEmEdicao = clienteParaEditar;
+
+        clientnameField.setText(clienteParaEditar.getNome());
+        serviceField.setText(clienteParaEditar.getServico());
+        emailField.setText(clienteParaEditar.getEmail());
+        telephoneField.setText(clienteParaEditar.getTelefone());
+        cellphoneField.setText(clienteParaEditar.getCelular());
+        observationField.setText(clienteParaEditar.getObservacoes());
+        typeofpersonField.setText(clienteParaEditar.getTipoPessoa());
+        typeofserviceField.setText(clienteParaEditar.getSituacaoServico());
+
+        updateFieldCounter(clientnameField, containClientNameLabel);
+        updateFieldCounter(serviceField, containServiceLabel);
+        updateFieldCounter(emailField, containEmailLabel);
+        updateFieldCounter(telephoneField, containTelephoneLabel);
+        updateFieldCounter(cellphoneField, containCellphoneLabel);
+        updateFieldCounter(observationField, containObservationLabel);
+        updateFieldCounter(typeofpersonField, containTypeOfPersonLabel);
+        updateFieldCounter(typeofserviceField, containTypeOfServiceLabel);
+
+        ativarEstadoPreenchido();
+        localizarModoEdicao();
+    }
+    
+    private void localizarModoEdicao() {
+        titleLabel.setText(I18nManager.getString("auth.used_client.label.title"));
+        registerButtonLabel.setText(I18nManager.getString("auth.used_client.label.button.save"));
+        descriptionLabel.setText(I18nManager.getString("auth.used_client.label.description"));
+        cancelButtonLabel.setText(I18nManager.getString("auth.used_client.label.button.delete"));
+        cancelButtonPanel.setBackground(COR_EXCLUIR_PADRAO);
+        ((RoundedPanel) cancelButtonPanel).setShowBorder(false);
+    }
+    
+    private void ativarEstadoPreenchido() {
+        if (!clientnameField.getText().isEmpty()) {
+            defaultClientNameLabel.setVisible(false);
+            hoverClientNameLabel.setVisible(true);
+            containClientNameLabel.setVisible(true);
+        }
+        if (!serviceField.getText().isEmpty()) {
+            defaultServiceLabel.setVisible(false);
+            hoverServiceLabel.setVisible(true);
+            containServiceLabel.setVisible(true);
+        }
+        if (!emailField.getText().isEmpty()) {
+            defaultEmailLabel.setVisible(false);
+            hoverEmailLabel.setVisible(true);
+            containEmailLabel.setVisible(true);
+        }
+        if (!telephoneField.getText().isEmpty()) {
+            defaultTelephoneLabel.setVisible(false);
+            hoverTelephoneLabel.setVisible(true);
+            containTelephoneLabel.setVisible(true);
+        }
+        if (!cellphoneField.getText().isEmpty()) {
+            defaultCellphoneLabel.setVisible(false);
+            hoverCellphoneLabel.setVisible(true);
+            containCellphoneLabel.setVisible(true);
+        }
+        if (!observationField.getText().isEmpty()) {
+            defaultObservationLabel.setVisible(false);
+            hoverObservationLabel.setVisible(true);
+            containObservationLabel.setVisible(true);
+        }
+        if (!typeofpersonField.getText().isEmpty()) {
+            defaultTypeOfPersonLabel.setVisible(false);
+            hoverTypeOfPersonLabel.setVisible(true);
+            containTypeOfPersonLabel.setVisible(true);
+        }
+        if (!typeofserviceField.getText().isEmpty()) {
+            defaultTypeOfServiceLabel.setVisible(false);
+            hoverTypeOfServiceLabel.setVisible(true);
+            containTypeOfServiceLabel.setVisible(true);
+        }
     }
 
     private void setIcon() {
@@ -387,7 +487,10 @@ public class NewClient extends javax.swing.JFrame {
 
     private void updateFieldCounter(javax.swing.JTextField textField, javax.swing.JLabel feedbackLabel) {
         int currentLength = textField.getText().length();
-        feedbackLabel.setText(currentLength + " / " + MAX_LENGTH);
+        int limite = (textField instanceof RoundedTextField)
+                ? ((RoundedTextField) textField).getLimiteCaracteres()
+                : MAX_LENGTH;
+        feedbackLabel.setText(currentLength + " / " + limite);
     }
 
     private void setupInputField(RoundedTextField campo, String label, int limite) {
@@ -455,12 +558,11 @@ public class NewClient extends javax.swing.JFrame {
         }
         String cleanInput = input.toLowerCase().trim();
 
-        // Dicionário Multi-idioma (PT, EN, ES, DE, FR, IT, JA, KO, ZH)
         if (category.equals("PERSON_TYPE")) {
-            if (cleanInput.matches(".*(fisica|natural|física|natürliche|physique|fisica|個人|개인|自然人).*")) {
+            if (cleanInput.matches(".*(fisica|fisico|natural|física|natürliche|physique|fisica|個人|개인|自然人).*")) {
                 return "Fisica";
             }
-            if (cleanInput.matches(".*(jurídica|legal|jurídica|juristische|morale|giuridica|法人|법인|法人).*")) {
+            if (cleanInput.matches(".*(juridica|juridico|legal|jurídica|juristische|morale|giuridica|法人|법인|法人).*")) {
                 return "Juridica";
             }
             if (cleanInput.matches(".*(ni|nao informado|not informed|no informado|nicht angegeben|non renseigné|non informato|未指定|미지정|未告知).*")) {
@@ -472,10 +574,10 @@ public class NewClient extends javax.swing.JFrame {
             if (cleanInput.matches(".*(pendente|pending|pendiente|ausstehend|attente|sospeso|保留中|대기 중|待处理).*")) {
                 return "Pendente";
             }
-            if (cleanInput.matches(".*(andamento|progress|curso|bearbeitung|cours|corso|進行中|진행 중|进行中).*")) {
+            if (cleanInput.matches(".*(andamento|em andamento|progress|curso|bearbeitung|cours|corso|進行中|진행 중|进行中).*")) {
                 return "Em andamento";
             }
-            if (cleanInput.matches(".*(concluído|completed|completado|abgeschlossen|terminé|completato|完了|완료됨|已完成).*")) {
+            if (cleanInput.matches(".*(concluído|concluido|completo|completed|completado|abgeschlossen|terminé|completato|完了|완료됨|已完成).*")) {
                 return "Concluido";
             }
         }
@@ -496,7 +598,6 @@ public class NewClient extends javax.swing.JFrame {
     private void handleClientRegistration() {
         boolean validationError = false;
 
-        // Verificação Individual para os 5 campos principais
         if (clientnameField.getText().trim().isEmpty()) {
             applyTemporaryErrorToLabel(defaultClientNameLabel);
             validationError = true;
@@ -522,7 +623,6 @@ public class NewClient extends javax.swing.JFrame {
             return;
         }
 
-        // 2. Normalização de Enums
         String personType = normalizeValue(typeofpersonField.getText(), "PERSON_TYPE");
         String serviceStatus = normalizeValue(typeofserviceField.getText(), "SERVICE_STATUS");
 
@@ -537,38 +637,35 @@ public class NewClient extends javax.swing.JFrame {
             return;
         }
 
-        // 3. Auto-Translation for Free Text (Professional Background Process)
-        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR)); // Cursor de carregamento
+        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 
-        // Traduzindo campos (Exceto Nome e Email como pedido)
         String translatedService = translateToPortuguese(serviceField.getText());
         String translatedObservations = translateToPortuguese(observationField.getText());
 
-        // 4. Persistence
         try {
             String currentDate = new java.text.SimpleDateFormat("dd/MM/yyyy").format(new java.util.Date());
             String user = (usuarioLogado != null) ? usuarioLogado.getUsuario() : "System";
 
             boolean success = CTCONTAB.saveNewClient(
                     currentDate,
-                    clientnameField.getText().trim(), // Nome (Mantém original/Russo)
-                    personType, // Normalizado para BD
-                    emailField.getText().trim(), // Email (Mantém original)
-                    translatedService, // Traduzido para PT
-                    serviceStatus, // Normalizado para BD
+                    clientnameField.getText().trim(),
+                    personType,
+                    emailField.getText().trim(),
+                    translatedService,
+                    serviceStatus,
                     cellphoneField.getText().trim(),
                     telephoneField.getText().trim(),
-                    translatedObservations, // Traduzido para PT
+                    translatedObservations,
                     user
             );
 
             if (success) {
-                MensagemUtil.exibirErro("Registro de cliente finalizado com sucesso. O histórico já está disponivel para a consulta.");
+                MensagemUtil.exibirErro(I18nManager.getString("auth.used_client.register.success"));
                 new Client(usuarioLogado).setVisible(true);
                 this.dispose();
             }
         } catch (Exception ex) {
-            MensagemUtil.exibirErro("Não conseguimos conectar ao banco de dados no momento. Por favor, verifique sua internet ou tente novamente mais tarde.");
+            MensagemUtil.exibirErro(I18nManager.getString("auth.used_client.register.error"));
         } finally {
             setCursor(Cursor.getDefaultCursor());
         }
@@ -839,7 +936,7 @@ public class NewClient extends javax.swing.JFrame {
         containObservationLabel.setFont(FonteUtils.carregarRobotoBold(11f));
         containObservationLabel.setForeground(new java.awt.Color(102, 107, 111));
         containObservationLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        containObservationLabel.setText("0 / 50");
+        containObservationLabel.setText("0 / 200");
         getContentPane().add(containObservationLabel);
         containObservationLabel.setBounds(1175, 447, 50, 14);
 
@@ -1673,7 +1770,6 @@ public class NewClient extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCloseActionPerformed
 
     private void btnMaximizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMaximizeActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnMaximizeActionPerformed
 
     private void btnMinimizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinimizeActionPerformed
@@ -1691,7 +1787,6 @@ public class NewClient extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHomeMouseExited
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnHomeActionPerformed
 
     private void btnCalendarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCalendarMouseEntered
@@ -1705,7 +1800,6 @@ public class NewClient extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCalendarMouseExited
 
     private void btnCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnCalendarActionPerformed
 
     private void btnClientMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClientMouseEntered
@@ -1721,7 +1815,6 @@ public class NewClient extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClientMouseExited
 
     private void btnClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnClientActionPerformed
 
     private void btnReportMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportMouseEntered
@@ -1735,7 +1828,6 @@ public class NewClient extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReportMouseExited
 
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnReportActionPerformed
 
     private void btnTaskMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTaskMouseEntered
@@ -1749,7 +1841,6 @@ public class NewClient extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTaskMouseExited
 
     private void btnTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaskActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnTaskActionPerformed
 
     private void btnConfigMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfigMouseEntered
@@ -1763,7 +1854,6 @@ public class NewClient extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConfigMouseExited
 
     private void btnConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfigActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnConfigActionPerformed
 
     private void btnAdminMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdminMouseEntered
@@ -1777,7 +1867,6 @@ public class NewClient extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdminMouseExited
 
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnAdminActionPerformed
 
     private void btnEllipseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEllipseMouseEntered
@@ -1791,7 +1880,6 @@ public class NewClient extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEllipseMouseExited
 
     private void btnEllipseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEllipseActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnEllipseActionPerformed
 
     private void clientnameFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_clientnameFieldFocusGained
@@ -1819,7 +1907,6 @@ public class NewClient extends javax.swing.JFrame {
     }//GEN-LAST:event_clientnameFieldMousePressed
 
     private void clientnameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientnameFieldActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_clientnameFieldActionPerformed
 
     private void clientnameFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_clientnameFieldKeyPressed
@@ -1861,7 +1948,6 @@ public class NewClient extends javax.swing.JFrame {
     }//GEN-LAST:event_serviceFieldMousePressed
 
     private void serviceFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serviceFieldActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_serviceFieldActionPerformed
 
     private void serviceFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_serviceFieldKeyPressed
@@ -1903,7 +1989,6 @@ public class NewClient extends javax.swing.JFrame {
     }//GEN-LAST:event_emailFieldMousePressed
 
     private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_emailFieldActionPerformed
 
     private void emailFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_emailFieldKeyPressed
@@ -1945,7 +2030,6 @@ public class NewClient extends javax.swing.JFrame {
     }//GEN-LAST:event_typeofpersonFieldMousePressed
 
     private void typeofpersonFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeofpersonFieldActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_typeofpersonFieldActionPerformed
 
     private void typeofpersonFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_typeofpersonFieldKeyPressed
@@ -1987,7 +2071,6 @@ public class NewClient extends javax.swing.JFrame {
     }//GEN-LAST:event_typeofserviceFieldMousePressed
 
     private void typeofserviceFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeofserviceFieldActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_typeofserviceFieldActionPerformed
 
     private void typeofserviceFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_typeofserviceFieldKeyPressed
@@ -2029,7 +2112,6 @@ public class NewClient extends javax.swing.JFrame {
     }//GEN-LAST:event_cellphoneFieldMousePressed
 
     private void cellphoneFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cellphoneFieldActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_cellphoneFieldActionPerformed
 
     private void cellphoneFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cellphoneFieldKeyPressed
@@ -2071,7 +2153,6 @@ public class NewClient extends javax.swing.JFrame {
     }//GEN-LAST:event_telephoneFieldMousePressed
 
     private void telephoneFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_telephoneFieldActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_telephoneFieldActionPerformed
 
     private void telephoneFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_telephoneFieldKeyPressed
@@ -2113,7 +2194,6 @@ public class NewClient extends javax.swing.JFrame {
     }//GEN-LAST:event_observationFieldMousePressed
 
     private void observationFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_observationFieldActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_observationFieldActionPerformed
 
     private void observationFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_observationFieldKeyPressed
@@ -2125,18 +2205,18 @@ public class NewClient extends javax.swing.JFrame {
     }//GEN-LAST:event_observationFieldKeyReleased
 
     private void observationFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_observationFieldKeyTyped
-        if (observationField.getText().length() >= MAX_LENGTH) {
+        if (observationField.getText().length() >= ((RoundedTextField) observationField).getLimiteCaracteres()) {
             evt.consume();
         }
     }//GEN-LAST:event_observationFieldKeyTyped
 
     private void registerButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerButtonMouseEntered
-        registerButtonPanel.setBackground(new java.awt.Color(184, 150, 10));
+        registerButtonPanel.setBackground(COR_REGISTRAR_HOVER);
         setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     }//GEN-LAST:event_registerButtonMouseEntered
 
     private void registerButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerButtonMouseExited
-        registerButtonPanel.setBackground(new java.awt.Color(205, 168, 12));
+        registerButtonPanel.setBackground(COR_REGISTRAR_PADRAO);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_registerButtonMouseExited
 
@@ -2149,18 +2229,45 @@ public class NewClient extends javax.swing.JFrame {
     }//GEN-LAST:event_registerButtonPanelMouseEntered
 
     private void cancelButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseEntered
-        cancelButtonPanel.setBackground(new java.awt.Color(74, 98, 142));
+        if (clienteEmEdicao != null) {
+            cancelButtonPanel.setBackground(COR_EXCLUIR_HOVER);
+        } else {
+            cancelButtonPanel.setBackground(COR_CANCELAR_HOVER);
+        }
         setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     }//GEN-LAST:event_cancelButtonMouseEntered
 
     private void cancelButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelButtonMouseExited
-        cancelButtonPanel.setBackground(new java.awt.Color(37, 49, 71));
+        if (clienteEmEdicao != null) {
+            cancelButtonPanel.setBackground(COR_EXCLUIR_PADRAO);
+        } else {
+            cancelButtonPanel.setBackground(COR_CANCELAR_PADRAO);
+        }
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_cancelButtonMouseExited
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        new Client(usuarioLogado).setVisible(true);
-        dispose();
+            if (clienteEmEdicao != null) {
+            boolean confirmado = MensagemUtil.exibirConfirmacao(
+                I18nManager.getString("auth.used_client.confirm_delete.title"),
+                String.format(I18nManager.getString("auth.used_client.confirm_delete.message"), clienteEmEdicao.getNome()),
+                I18nManager.getString("auth.used_client.confirm_delete.button.yes"),
+                I18nManager.getString("auth.used_client.confirm_delete.button.no")
+            );
+            if (confirmado) {
+                try {
+                    Data.CTCONTAB.deletarCliente(clienteEmEdicao.getId());
+                    MensagemUtil.exibirErro(I18nManager.getString("auth.used_client.confirm_delete.success"));
+                    new Client(usuarioLogado).setVisible(true);
+                    dispose();
+                } catch (Exception ex) {
+                    MensagemUtil.exibirErro(I18nManager.getString("auth.used_client.confirm_delete.error"));
+                }
+            }
+        } else {
+            new Client(usuarioLogado).setVisible(true);
+            dispose();
+        }
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void closeButtonPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeButtonPanelMouseEntered
@@ -2207,9 +2314,6 @@ public class NewClient extends javax.swing.JFrame {
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -2239,17 +2343,22 @@ public class NewClient extends javax.swing.JFrame {
     class RoundedPanel extends javax.swing.JPanel {
 
         private int radius;
-        private boolean showBorder = false; // Por padrão, não mostra borda
+        private boolean showBorder = false;
         private Color borderColor = new Color(105, 105, 105);
+        private float borderWidth = 1.2f;
 
         public RoundedPanel(int radius) {
             this.radius = radius;
             setOpaque(false);
         }
 
-        // Método para ativar a borda apenas quando necessário
         public void setShowBorder(boolean mostrar) {
             this.showBorder = mostrar;
+            repaint();
+        }
+
+        public void setBorderColor(Color cor) {
+            this.borderColor = cor;
             repaint();
         }
 
@@ -2259,14 +2368,19 @@ public class NewClient extends javax.swing.JFrame {
             java.awt.Graphics2D g2 = (java.awt.Graphics2D) g.create();
             g2.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
 
-            // Pinta o fundo
             g2.setColor(getBackground());
             g2.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, radius, radius);
 
-            // Pinta a borda apenas se estiver ativado
             if (showBorder) {
+                g2.setStroke(new java.awt.BasicStroke(borderWidth, java.awt.BasicStroke.CAP_ROUND, java.awt.BasicStroke.JOIN_ROUND));
                 g2.setColor(borderColor);
-                g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, radius, radius);
+                float inset = borderWidth / 2f;
+                float arco = Math.max(radius - inset, 0f);
+                g2.draw(new java.awt.geom.RoundRectangle2D.Float(
+                        inset, inset,
+                        (getWidth() - 1) - borderWidth,
+                        (getHeight() - 1) - borderWidth,
+                        arco, arco));
             }
 
             g2.dispose();
@@ -2331,6 +2445,10 @@ public class NewClient extends javax.swing.JFrame {
 
         public void setLimiteCaracteres(int l) {
             this.limiteCaracteres = l;
+        }
+
+        public int getLimiteCaracteres() {
+            return this.limiteCaracteres;
         }
 
         public void setAtivado(boolean status) {

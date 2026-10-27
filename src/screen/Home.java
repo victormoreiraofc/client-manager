@@ -15,6 +15,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Locale;
 import javax.imageio.ImageIO;
+import java.awt.FontMetrics;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Home extends javax.swing.JFrame {
 
@@ -27,7 +30,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.Timer timerVoltarHome;
     private javax.swing.Timer timerExpandir;
     private final int LARGURA_MIN = 30;
-    private final int LARGURA_MAX = 114;
+    private int LARGURA_MAX = 114;
 
     public Home(Usuario usuario) {
         this.usuarioLogado = usuario;
@@ -210,6 +213,109 @@ public class Home extends javax.swing.JFrame {
             }
         }
     }
+    
+    private static final int X_ESQUERDA_FIXO_BANNER = 266;
+    private static final int LARGURA_MINIMA_BANNER = 228;
+    private static final int LARGURA_MAXIMA_BANNER = 340;
+    private static final int MAX_LINHAS_DESCRICAO_BANNER = 3;
+ 
+    private void ajustarBannerDescricao(String textoPuro) {
+        Font fonte = lblDescriptionBanner.getFont();
+        FontMetrics fm = lblDescriptionBanner.getFontMetrics(fonte);
+ 
+        List<String> melhoresLinhas = null;
+        double melhorDesequilibrio = Double.MAX_VALUE;
+
+        for (int largura = LARGURA_MINIMA_BANNER; largura <= LARGURA_MAXIMA_BANNER; largura += 2) {
+            List<String> linhas = quebrarLinhas(textoPuro, fm, largura);
+            if (linhas.size() <= MAX_LINHAS_DESCRICAO_BANNER) {
+                double desequilibrio = calcularDesequilibrioLinhas(linhas, fm);
+                if (desequilibrio < melhorDesequilibrio) {
+                    melhorDesequilibrio = desequilibrio;
+                    melhoresLinhas = linhas;
+                }
+            }
+        }
+
+        if (melhoresLinhas == null) {
+            melhoresLinhas = quebrarLinhas(textoPuro, fm, LARGURA_MAXIMA_BANNER);
+        }
+ 
+        int larguraMaiorLinha = 0;
+        for (String linha : melhoresLinhas) {
+            larguraMaiorLinha = Math.max(larguraMaiorLinha, fm.stringWidth(linha));
+        }
+        int larguraFinal = Math.max(LARGURA_MINIMA_BANNER, larguraMaiorLinha + 10);
+ 
+        StringBuilder html = new StringBuilder("<html><div style=\"margin:0;padding:0;\">");
+        for (int i = 0; i < melhoresLinhas.size(); i++) {
+            if (i > 0) {
+                html.append("<br>");
+            }
+            html.append(melhoresLinhas.get(i));
+        }
+        html.append("</div></html>");
+ 
+        int novoX = X_ESQUERDA_FIXO_BANNER;
+        lblDescriptionBanner.setBounds(novoX, lblDescriptionBanner.getY(), larguraFinal, lblDescriptionBanner.getHeight());
+        lblDescriptionBanner.setText(html.toString());
+    }
+ 
+    private List<String> quebrarLinhas(String texto, FontMetrics fm, int largura) {
+        List<String> linhas = new ArrayList<>();
+        String[] palavras = texto.trim().split("\\s+");
+        StringBuilder linhaAtual = new StringBuilder();
+ 
+        for (String palavra : palavras) {
+            String tentativa = linhaAtual.length() == 0 ? palavra : linhaAtual + " " + palavra;
+            if (fm.stringWidth(tentativa) <= largura) {
+                linhaAtual = new StringBuilder(tentativa);
+            } else {
+                if (linhaAtual.length() > 0) {
+                    linhas.add(linhaAtual.toString());
+                }
+                linhaAtual = new StringBuilder(palavra);
+            }
+        }
+        if (linhaAtual.length() > 0) {
+            linhas.add(linhaAtual.toString());
+        }
+        return linhas;
+    }
+ 
+    private double calcularDesequilibrioLinhas(List<String> linhas, FontMetrics fm) {
+        if (linhas.isEmpty()) {
+            return 0;
+        }
+        double soma = 0;
+        double somaQuadrados = 0;
+        for (String linha : linhas) {
+            int largura = fm.stringWidth(linha);
+            soma += largura;
+            somaQuadrados += (double) largura * largura;
+        }
+        double media = soma / linhas.size();
+        return (somaQuadrados / linhas.size()) - (media * media);
+    }
+    
+        private static final int BOTAO_PADDING_ESQUERDO_TEXTO = 31;
+    private static final int BOTAO_PADDING_DIREITO = 20;
+    private static final int BOTAO_LARGURA_MIN_EXPANDIDO = 114;
+ 
+    private void ajustarLarguraBotaoNovoCliente() {
+        String texto = lblTextoNovoCliente.getText();
+        FontMetrics fm = lblTextoNovoCliente.getFontMetrics(lblTextoNovoCliente.getFont());
+        int larguraTexto = fm.stringWidth(texto);
+ 
+        // Redimensiona o próprio label do texto para caber a tradução inteira sem cortar
+        // (x e y continuam os mesmos, só a largura acompanha o texto).
+        lblTextoNovoCliente.setBounds(lblTextoNovoCliente.getX(), lblTextoNovoCliente.getY(),
+                larguraTexto + 4, lblTextoNovoCliente.getHeight());
+ 
+        // Recalcula até onde o botão precisa expandir, nunca menor que o tamanho original.
+        int larguraNecessaria = BOTAO_PADDING_ESQUERDO_TEXTO + larguraTexto + BOTAO_PADDING_DIREITO;
+        LARGURA_MAX = Math.max(BOTAO_LARGURA_MIN_EXPANDIDO, larguraNecessaria);
+    }
 
     private void localizeAuthScreen() {
         Locale loc = I18nManager.getCurrentLocale();
@@ -227,7 +333,7 @@ public class Home extends javax.swing.JFrame {
         lblButtonConfig.setText(I18nManager.getString("auth.home.button.config"));
         lblButtonAdmin.setText(I18nManager.getString("auth.home.button.admin"));
         lblTitleBanner.setText(I18nManager.getString("auth.home.banner.title"));
-        lblDescriptionBanner.setText(I18nManager.getString("auth.home.banner.description"));
+        ajustarBannerDescricao(I18nManager.getString("auth.home.banner.description"));
         lblEstatisticaTitle.setText(I18nManager.getString("auth.home.statistic.title"));
 
         customerCountLabel.setText(I18nManager.getString("auth.home.label.customer"));
@@ -236,6 +342,7 @@ public class Home extends javax.swing.JFrame {
         newclientCountLabel.setText(I18nManager.getString("auth.home.label.newclient"));
         adminCountLabel.setText(I18nManager.getString("auth.home.label.admin"));
         lblTextoNovoCliente.setText(I18nManager.getString("auth.home.button.newclient"));
+        ajustarLarguraBotaoNovoCliente();
 
         this.getContentPane().revalidate();
         this.getContentPane().repaint();
@@ -325,6 +432,19 @@ public class Home extends javax.swing.JFrame {
         }
     }
 
+    private String formatarContador(int valor) {
+        String digitos = String.format("%04d", valor);
+        StringBuilder sb = new StringBuilder();
+        int resto = digitos.length() % 3;
+        for (int i = 0; i < digitos.length(); i++) {
+            if (i > 0 && (i - resto) % 3 == 0) {
+                sb.append('.');
+            }
+            sb.append(digitos.charAt(i));
+        }
+        return sb.toString();
+    }
+
     private void refreshDashboardData() {
         try {
             int totalClients = Data.CTCONTAB.getTotalClients();
@@ -333,19 +453,19 @@ public class Home extends javax.swing.JFrame {
             int newClients = Data.CTCONTAB.getNewClientsThisMonth();
             int totalAdmins = Data.CTCONTAB.getPrivilegedUsersCount();
 
-            customerCountLabel1.setText(String.format("%04d", totalClients));
-            taskCountLabel1.setText(String.format("%04d", totalTasks));
-            reportCountLabel1.setText(String.format("%04d", totalReports));
-            newclientCountLabel1.setText(String.format("%04d", newClients));
-            adminCountLabel1.setText(String.format("%04d", totalAdmins));
+            customerCountLabel1.setText(formatarContador(totalClients));
+            taskCountLabel1.setText(formatarContador(totalTasks));
+            reportCountLabel1.setText(formatarContador(totalReports));
+            newclientCountLabel1.setText(formatarContador(newClients));
+            adminCountLabel1.setText(formatarContador(totalAdmins));
 
         } catch (ClassNotFoundException | java.sql.SQLException e) {
             e.printStackTrace();
-            customerCountLabel1.setText("0000");
-            taskCountLabel1.setText("0000");
-            reportCountLabel1.setText("0000");
-            newclientCountLabel1.setText("0000");
-            adminCountLabel1.setText("0000");
+            customerCountLabel1.setText("0.000");
+            taskCountLabel1.setText("0.000");
+            reportCountLabel1.setText("0.000");
+            newclientCountLabel1.setText("0.000");
+            adminCountLabel1.setText("0.000");
         }
     }
 
@@ -1062,7 +1182,8 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReportMouseExited
 
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
-        // TODO add your handling code here:
+        new Report(usuarioLogado).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnReportActionPerformed
 
     private void btnTaskMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTaskMouseEntered
@@ -1076,7 +1197,8 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTaskMouseExited
 
     private void btnTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaskActionPerformed
-        // TODO add your handling code here:
+        new Task(usuarioLogado).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnTaskActionPerformed
 
     private void btnConfigMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfigMouseEntered
@@ -1104,7 +1226,8 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdminMouseExited
 
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
-        // TODO add your handling code here:
+        new Admin(usuarioLogado).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnAdminActionPerformed
 
     private void btnEllipseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEllipseMouseEntered

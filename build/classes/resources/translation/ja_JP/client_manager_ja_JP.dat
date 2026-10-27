@@ -67,10 +67,10 @@ auth.client.label.in_progress=進行中
 auth.client.label.pending=保留中
 auth.client.label.new_client_text=新規クライアント
 auth.client.column.id=ID
-auth.client.column.type=氏名
+auth.client.column.name=名前
 auth.client.column.status=ステータス
-auth.client.column.date=区分
-auth.client.column.name=登録日
+auth.client.column.type=個人タイプ
+auth.client.column.date=登録日
 
 # --- NEW CLIENT MODULE (New Client) ---
 auth.new_clients.window_title=CT Contab Manager
