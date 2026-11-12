@@ -1,11 +1,11 @@
 # --- AUTHENTICATION MODULE (Login) ---
 auth.login.window_title=CT Contab Manager
-auth.login.header.title=访问您的帐户
-auth.login.social.google=通过 Google 登录
-auth.login.social.apple=通过 Apple 登录
+auth.login.header.title=登录您的账户
+auth.login.social.google=使用 Google 登录
+auth.login.social.apple=使用 Apple 登录
 auth.login.divider.text=或
 auth.login.confirm=下一步
-auth.login.newacount=<html><font color='#48494B'>没有帐户？ </font><font color='#287FCE'><b>注册</b></font></html>
+auth.login.newacount=<html><font color='#48494B'>还没有账户？ </font><font color='#287FCE'><b>立即注册</b></font></html>
 auth.login.forgotpassword=忘记密码？
 auth.login.hover.user=用户名
 auth.login.default.user=用户名
@@ -14,15 +14,15 @@ auth.login.default.password=密码
 
 # --- REGISTRATION MODULE (Sign Up) ---
 auth.register.window_title=CT Contab Manager
-auth.register.header.title=创建您的帐户
+auth.register.header.title=创建您的账户
 auth.register.confirm=下一步
-auth.register.newacount=<html><font color='#48494B'>已有帐户？ </font><font color='#287FCE'><b>登录帐户</b></font></html>
+auth.register.newacount=<html><font color='#48494B'>已有账户？ </font><font color='#287FCE'><b>登录</b></font></html>
 auth.register.hover.user=用户名
 auth.register.default.user=用户名
 auth.register.hover.password=密码
 auth.register.default.password=密码
-auth.register.hover.email=电子邮件
-auth.register.default.email=电子邮件
+auth.register.hover.email=电子邮箱
+auth.register.default.email=电子邮箱
 
 # --- MAIN MODULE (Home) ---
 auth.home.window_title=CT Contab Manager
@@ -33,21 +33,22 @@ auth.home.button.report=报告
 auth.home.button.task=任务
 auth.home.button.config=设置
 auth.home.button.admin=管理
+
 auth.home.banner.title=添加新客户
-auth.home.banner.description=<html>简单快速地注册新客户，在一个地方实现对账户的全面控制。</html>
-auth.home.statistic.title=统计数据
+auth.home.banner.description=<html>简单快捷地添加新客户，在一个平台上全面掌控您的所有账户。</html>
+auth.home.statistic.title=统计
 auth.home.label.customer=客户
 auth.home.label.task=任务
 auth.home.label.report=报告
 auth.home.label.newclient=新客户
 auth.home.label.admin=管理员
-auth.home.button.newclient=新客户
+auth.home.button.newclient=新建客户
 
 # --- ERROR MODULE (Error) ---
 auth.error.window_title=CT Contab Manager
 auth.error.header.title=错误
-auth.error.description=<html><p align="justify"> 哎呀！出错了。目前系统不稳定。我们的团队已收到通知并正在努力修复。请在几分钟后重试。</p></html>
-auth.error.confirm=明白
+auth.error.description=<html><p align="justify"> 抱歉，出现了意外问题。系统目前不稳定。我们的团队已收到通知，正在紧急修复。请几分钟后重试。</p></html>
+auth.error.confirm=知道了
 auth.error.restart=重新启动
 
 # --- CLIENT MODULE (Client) ---
@@ -60,17 +61,18 @@ auth.client.button.report=报告
 auth.client.button.task=任务
 auth.client.button.config=设置
 auth.client.button.admin=管理
+
 auth.client.title=客户
 auth.client.label.all=全部
 auth.client.label.finished=已完成
 auth.client.label.in_progress=进行中
 auth.client.label.pending=待处理
-auth.client.label.new_client_text=新客户
+auth.client.label.new_client_text=新建客户
 auth.client.column.id=ID
 auth.client.column.name=姓名
 auth.client.column.status=状态
-auth.client.column.type=人员类型
-auth.client.column.date=注册日期
+auth.client.column.type=主体类型
+auth.client.column.date=创建日期
 
 # --- NEW CLIENT MODULE (New Client) ---
 auth.new_clients.window_title=CT Contab Manager
@@ -82,23 +84,414 @@ auth.new_clients.button.report=报告
 auth.new_clients.button.task=任务
 auth.new_clients.button.config=设置
 auth.new_clients.button.admin=管理
-auth.new_clients.label.title=注册新客户
-auth.new_clients.label.description=<html><p align="center">通过注册客户信息来保持数据库的更新。</p></html>
-auth.new_clients.label.default.name=姓名全称*
+
+auth.new_clients.label.title=添加新客户
+auth.new_clients.label.description=<html><p align="center">请录入客户信息，保持我们的数据库为最新状态。</p></html>
+auth.new_clients.label.default.name=姓名*
 auth.new_clients.label.default.service=服务*
-auth.new_clients.label.default.type_person=人员类型：自然人、法人或未告知？*
-auth.new_clients.label.default.type_service=服务状态：待处理、进行中或已完成？*
-auth.new_clients.label.default.email=电子邮件*
+auth.new_clients.label.default.type_person=主体类型：自然人、法人或 NI？*
+auth.new_clients.label.default.type_service=服务：待处理、进行中或已完成？*
+auth.new_clients.label.default.email=电子邮箱*
 auth.new_clients.label.default.telephone=电话
 auth.new_clients.label.default.cellphone=手机
 auth.new_clients.label.default.observation=备注
-auth.new_clients.label.hover.name=姓名全称*
+auth.new_clients.label.hover.name=姓名*
 auth.new_clients.label.hover.service=服务*
-auth.new_clients.label.hover.type_person=人员类型：自然人、法人或未告知？*
-auth.new_clients.label.hover.type_service=服务状态：待处理、进行中或已完成？*
-auth.new_clients.label.hover.email=电子邮件*
+auth.new_clients.label.hover.type_person=主体类型：自然人、法人或 NI？*
+auth.new_clients.label.hover.type_service=服务：待处理、进行中或已完成？*
+auth.new_clients.label.hover.email=电子邮箱*
 auth.new_clients.label.hover.telephone=电话
 auth.new_clients.label.hover.cellphone=手机
 auth.new_clients.label.hover.observation=备注
 auth.new_clients.label.button.cancel=取消
-auth.new_clients.label.button.register=注册
+auth.new_clients.label.button.register=添加
+
+auth.used_client.label.title=编辑客户
+auth.used_client.label.description=<html><p align="center">请修改客户信息，保持我们的数据库为最新状态。</p></html>
+auth.used_client.label.button.save=保存更改
+auth.used_client.label.button.delete=删除
+
+auth.used_client.confirm_delete.title=确认删除
+auth.used_client.confirm_delete.message=确定要删除客户“%s”吗？
+auth.used_client.confirm_delete.button.yes=是
+auth.used_client.confirm_delete.button.no=否
+auth.used_client.confirm_delete.success=客户已成功删除。
+auth.used_client.confirm_delete.error=删除客户时出错。请检查您的网络连接。
+auth.used_client.register.success=客户登记已成功完成。历史记录现已可供查询。
+auth.used_client.register.error=目前无法连接到数据库。请检查您的网络连接，或稍后再试。
+
+
+# --- REPORT MODULE --- #
+auth.report.window_title=CT Contab Manager
+auth.report.button.search=搜索
+auth.report.button.home=首页
+auth.report.button.calendar=日历
+auth.report.button.client=客户
+auth.report.button.report=报告
+auth.report.button.task=任务
+auth.report.button.config=设置
+auth.report.button.admin=管理
+
+auth.report.title=报告
+auth.report.label.all=全部
+auth.report.label.finished=已完成
+auth.report.label.in_progress=进行中
+auth.report.label.pending=待处理
+auth.report.label.new_report_text=新建报告
+auth.report.column.id=ID
+auth.report.column.name=报告名称
+auth.report.column.status=状态
+auth.report.column.date=创建日期
+
+# --- TASK MODULE --- #
+auth.task.window_title=任务
+auth.task.button.home=首页
+auth.task.button.calendar=日历
+auth.task.button.client=客户
+auth.task.button.report=报告
+auth.task.button.task=任务
+auth.task.button.config=设置
+auth.task.button.admin=管理
+auth.task.title=任务
+auth.task.label.all=全部
+auth.task.label.finished=已完成
+auth.task.label.in_progress=进行中
+auth.task.label.pending=待处理
+auth.task.label.new_task_text=新建任务
+auth.task.column.id=ID
+auth.task.column.name=任务名称
+auth.task.column.status=状态
+auth.task.column.priority=优先级
+auth.task.column.date=创建日期
+auth.task.column.responsible=负责用户
+auth.task.button.search=搜索
+
+# --- ADMIN MODULE --- #
+auth.admin.window_title=管理
+auth.admin.button.home=首页
+auth.admin.button.calendar=日历
+auth.admin.button.client=客户
+auth.admin.button.report=报告
+auth.admin.button.task=任务
+auth.admin.button.config=设置
+auth.admin.button.admin=管理
+auth.admin.title=管理
+auth.admin.label.users=用户
+auth.admin.label.audit=审计
+auth.admin.label.new_user_text=新建用户
+auth.admin.column.id=ID
+auth.admin.column.name=姓名
+auth.admin.column.email=电子邮箱
+auth.admin.column.permissions=权限
+auth.admin.column.date=创建日期
+auth.admin.button.search=搜索
+
+# --- AUDIT MODULE --- #
+audit.time_suffix=%s（%s）
+audit.user_login=用户 %s 已登录系统
+audit.user_created=用户 %s 已创建
+audit.user_deleted=用户 %s 已被 %s（%s）删除
+
+# --- NEW REPORT MODULE --- #
+auth.new_report.window_title=CT Contab Manager
+auth.new_report.button.search=搜索
+auth.new_report.button.home=首页
+auth.new_report.button.calendar=日历
+auth.new_report.button.client=客户
+auth.new_report.button.report=报告
+auth.new_report.button.task=任务
+auth.new_report.button.config=设置
+auth.new_report.button.admin=管理
+
+auth.new_report.label.title=添加新报告
+auth.new_report.label.description=<html><p align="center">请录入报告信息，保持我们的数据库为最新状态。</p></html>
+auth.new_report.label.default.name=报告名称*
+auth.new_report.label.default.service=负责人
+auth.new_report.label.default.type_service=状态：待处理、进行中或已完成？*
+auth.new_report.label.default.observation=备注
+auth.new_report.label.hover.name=报告名称*
+auth.new_report.label.hover.service=负责人
+auth.new_report.label.hover.type_service=状态：待处理、进行中或已完成？*
+auth.new_report.label.hover.observation=备注
+auth.new_report.label.button.cancel=取消
+auth.new_report.label.button.register=添加
+auth.new_report.error.invalid_status=状态无效。请使用待处理、进行中或已完成。
+auth.new_report.error.invalid_user=未找到负责人。请输入已有的用户。
+
+auth.used_report.label.title=编辑报告
+auth.used_report.label.description=<html><p align="center">请修改报告信息，保持我们的数据库为最新状态。</p></html>
+auth.used_report.label.button.save=保存更改
+auth.used_report.label.button.delete=删除
+
+auth.used_report.confirm_delete.title=确认删除
+auth.used_report.confirm_delete.message=确定要删除报告“%s”吗？
+auth.used_report.confirm_delete.button.yes=是
+auth.used_report.confirm_delete.button.no=否
+auth.used_report.confirm_delete.success=报告已成功删除。
+auth.used_report.confirm_delete.error=删除报告时出错。请检查您的网络连接。
+auth.used_report.register.success=报告已成功保存。
+auth.used_report.register.error=目前无法连接到数据库。请检查您的网络连接，或稍后再试。
+
+# --- NEW TASK MODULE --- #
+auth.new_task.window_title=CT Contab Manager
+auth.new_task.button.search=搜索
+auth.new_task.button.home=首页
+auth.new_task.button.calendar=日历
+auth.new_task.button.client=客户
+auth.new_task.button.report=报告
+auth.new_task.button.task=任务
+auth.new_task.button.config=设置
+auth.new_task.button.admin=管理
+
+auth.new_task.label.title=添加新任务
+auth.new_task.label.description=<html><p align="center">请录入待完成任务的信息，保持我们的数据库为最新状态。</p></html>
+auth.new_task.label.default.name=任务名称*
+auth.new_task.label.default.service=负责人
+auth.new_task.label.default.type_service=状态：待处理、进行中或已完成？*
+auth.new_task.label.default.priority=优先级：低、中或高？*
+auth.new_task.label.default.observation=备注
+auth.new_task.label.hover.name=任务名称*
+auth.new_task.label.hover.service=负责人
+auth.new_task.label.hover.type_service=状态：待处理、进行中或已完成？*
+auth.new_task.label.hover.priority=优先级：低、中或高？*
+auth.new_task.label.hover.observation=备注
+auth.new_task.label.button.cancel=取消
+auth.new_task.label.button.register=添加
+auth.new_task.error.invalid_status=状态无效。请使用待处理、进行中或已完成。
+auth.new_task.error.invalid_priority=优先级无效。请使用低、中或高。
+auth.new_task.error.invalid_user=未找到负责人。请输入已有的用户。
+
+auth.used_task.label.title=编辑任务
+auth.used_task.label.description=<html><p align="center">请修改待完成任务的信息，保持我们的数据库为最新状态。</p></html>
+auth.used_task.label.button.save=保存更改
+auth.used_task.label.button.delete=删除
+
+auth.used_task.confirm_delete.title=确认删除
+auth.used_task.confirm_delete.message=确定要删除任务“%s”吗？
+auth.used_task.confirm_delete.button.yes=是
+auth.used_task.confirm_delete.button.no=否
+auth.used_task.confirm_delete.success=任务已成功删除。
+auth.used_task.confirm_delete.error=删除任务时出错。请检查您的网络连接。
+auth.used_task.register.success=任务已成功保存。
+auth.used_task.register.error=目前无法连接到数据库。请检查您的网络连接，或稍后再试。
+
+# --- CONFIG PROFILE MODULE --- #
+auth.config.window_title=CT Contab Manager
+auth.config.button.search=搜索
+auth.config.button.home=首页
+auth.config.button.calendar=日历
+auth.config.button.client=客户
+auth.config.button.report=报告
+auth.config.button.task=任务
+auth.config.button.config=设置
+auth.config.button.admin=管理
+auth.config.title=设置
+
+auth.config.tab.profile=个人资料
+auth.config.tab.security=安全
+auth.config.tab.preferences=偏好设置
+auth.config.tab.account=账户
+
+auth.config.profile.photo_title=头像
+auth.config.profile.photo_hint=PNG、JPG 或 GIF。最大 2MB。
+auth.config.field.user=用户名
+auth.config.field.email=电子邮箱
+auth.config.field.phone=电话
+auth.config.button.save=保存更改
+auth.config.button.change_image=更换图片
+
+auth.config.permission.null=员工
+auth.config.permission.adm=管理员
+auth.config.permission.super_adm=超级管理员
+
+auth.config.last_access.label=上次访问：%s
+auth.config.last_access.today=今天 %s
+auth.config.last_access.yesterday=昨天 %s
+auth.config.last_access.date=%s %s
+auth.config.last_access.first=上次访问：首次访问系统
+
+auth.config.card.security.title=安全
+auth.config.card.security.description=<html>修改密码，确保您的账户安全。</html>
+auth.config.card.security.button=管理密码
+auth.config.card.preferences.title=偏好设置
+auth.config.card.preferences.description=<html>管理语言、主题和系统偏好设置。</html>
+auth.config.card.preferences.button=配置
+auth.config.card.account.title=账户
+auth.config.card.account.description=<html>查看您的账户信息和最近活动。</html>
+auth.config.card.account.button=查看
+auth.config.card.danger.title=危险区域
+auth.config.card.danger.description=<html>此类操作不可撤销，请谨慎使用。</html>
+auth.config.card.danger.button_delete=删除账户
+auth.config.card.danger.button_logout=退出登录
+
+auth.config.error.username_invalid=用户名无效。请仅使用字母和数字，且不要包含空格。
+auth.config.error.email_invalid=电子邮箱无效。请输入 name@domain.com 格式的邮箱地址。
+auth.config.error.phone_invalid=电话号码无效。仅可使用数字、空格以及符号 + ( ) -。
+auth.config.error.username_taken=该用户名已被使用。
+auth.config.error.email_taken=该电子邮箱已被使用。
+auth.config.error.no_changes=没有需要保存的更改。
+auth.config.save_success=更改已成功保存。
+auth.config.save_error=无法保存您的更改。请检查网络连接后重试。
+
+auth.config.image.chooser_title=选择头像图片
+auth.config.image.chooser_filter=图片（PNG、JPG、GIF、BMP）
+auth.config.image.too_large=图片大于 2MB。请选择较小的文件。
+auth.config.image.invalid=无法读取该图片。请选择有效的 PNG、JPG、GIF 或 BMP 文件。
+auth.config.image.success=头像已成功更新。
+auth.config.image.error=无法更新您的图片。请检查网络连接后重试。
+
+audit.profile_username_changed=用户 %s 将用户名更改为 %s
+audit.profile_email_changed=用户 %s 将电子邮箱从 %s 更改为 %s
+audit.profile_phone_changed=用户 %s 将电话号码从 %s 更改为 %s
+audit.profile_image_changed=用户 %s 更改了头像
+
+auth.config.delete_account.title=删除账户
+auth.config.delete_account.message=确定要删除您的账户“%s”吗？此操作无法撤销。
+auth.config.delete_account.button.yes=是
+auth.config.delete_account.button.no=否
+auth.config.delete_account.success=账户已成功删除。
+auth.config.delete_account.error=无法删除您的账户。请检查网络连接后重试。
+auth.config.delete_account.linked=您的账户已关联客户、报告、任务或活动，因此无法删除。
+audit.account_deleted=用户 %s 删除了自己的账户
+
+
+# --- CONFIG SECURITY MODULE --- #
+auth.security.title=修改密码
+auth.security.field.current=当前密码
+auth.security.field.new=新密码
+auth.security.field.confirm=确认新密码
+
+auth.security.strength.title=密码强度
+auth.security.strength.strong=强
+auth.security.strength.weak=弱
+auth.security.strength.medium=中等
+auth.security.strength.good=良好
+
+auth.security.tips.title=设置安全密码的小提示
+auth.security.tips.length=至少使用 8 个字符
+auth.security.tips.case=包含大写和小写字母
+auth.security.tips.numbers_symbols=包含数字和符号
+auth.security.tips.personal=避免使用个人信息
+
+auth.security.error.empty_fields=请填写当前密码、新密码和确认密码。
+auth.security.error.whitespace=新密码不能包含空格。
+auth.security.error.too_long=新密码最多为 50 个字符。
+auth.security.error.mismatch=确认密码与新密码不一致。
+auth.security.error.same_as_current=新密码必须与当前密码不同。
+auth.security.error.wrong_current=当前密码不正确。
+auth.security.save_success=密码已成功修改。
+auth.security.save_error=无法修改您的密码。请检查网络连接后重试。
+
+audit.profile_password_changed=用户 %s 修改了密码
+
+# --- CONFIG ACCOUNT MODULE --- #
+auth.account.title=个人信息
+auth.account.field.id=用户 ID
+auth.account.field.role=角色
+auth.account.field.created=注册日期
+auth.account.field.last_access=上次访问
+auth.account.field.email=注册邮箱
+auth.account.field.status=账户状态
+auth.account.status.active=正常
+auth.account.last_access.at=%s %s
+auth.account.last_access.first=首次访问
+
+auth.account.danger.title=危险区域
+auth.account.danger.delete.title=删除账户
+auth.account.danger.delete.description=<html>永久删除您的账户及登录数据。此操作无法撤销。</html>
+auth.account.danger.delete.button=删除账户
+auth.account.danger.logout.title=退出登录
+auth.account.danger.logout.description=<html>在此设备上退出您的账户，并返回登录界面。</html>
+auth.account.danger.logout.button=退出登录
+
+# --- CONFIG PREFERENCES MODULE --- #
+auth.preferences.language.title=系统语言
+auth.preferences.language.description=请选择应用程序语言。
+
+auth.preferences.theme.title=界面主题
+auth.preferences.theme.description=请选择应用程序的外观主题。
+auth.preferences.theme.dark.title=深色
+auth.preferences.theme.dark.description=默认深色主题
+auth.preferences.theme.light.title=浅色
+auth.preferences.theme.light.description=浅色主题
+
+auth.preferences.notify.title=通知
+auth.preferences.notify.description=管理您接收通知的方式。
+auth.preferences.notify.push.title=接收通知
+auth.preferences.notify.push.description=开启后即可接收通知
+auth.preferences.notify.tasks.title=接收任务提醒
+auth.preferences.notify.tasks.description=有关截止日期和待办事项的提醒
+auth.preferences.notify.email.title=接收系统邮件
+auth.preferences.notify.email.description=通过邮件接收公告和更新
+
+auth.preferences.other.title=其他偏好设置
+auth.preferences.other.description=应用程序附加设置
+auth.preferences.other.timezone=时区
+auth.preferences.other.date_format=日期格式
+auth.preferences.other.hour_format=时间格式
+
+auth.preferences.timezone.brasilia=(UTC-03:00) 巴西利亚
+auth.preferences.timezone.manaus=(UTC-04:00) 马瑙斯
+auth.preferences.timezone.rio_branco=(UTC-05:00) 里奥布朗库
+auth.preferences.timezone.noronha=(UTC-02:00) 费尔南多-迪诺罗尼亚
+auth.preferences.timezone.utc=(UTC+00:00) UTC
+auth.preferences.timezone.lisboa=(UTC+00:00) 里斯本
+auth.preferences.timezone.new_york=(UTC-05:00) 纽约
+auth.preferences.timezone.tokyo=(UTC+09:00) 东京
+
+auth.preferences.date_format.dmy=DD/MM/YYYY
+auth.preferences.date_format.mdy=MM/DD/YYYY
+auth.preferences.date_format.ymd=YYYY-MM-DD
+
+auth.preferences.hour_format.h24=24小时制 (HH:mm)
+auth.preferences.hour_format.h12=12小时制 (hh:mm AM/PM)
+
+# --- CALENDAR MODULE --- #
+auth.calendar.title=日历
+auth.calendar.label.new_event_text=新建活动
+auth.calendar.more_events=+%d 项
+
+# --- NEW EVENT MODULE --- #
+auth.new_event.window_title=CT Contab Manager
+auth.new_event.button.search=搜索
+auth.new_event.button.home=首页
+auth.new_event.button.calendar=日历
+auth.new_event.button.client=客户
+auth.new_event.button.report=报告
+auth.new_event.button.task=任务
+auth.new_event.button.config=设置
+auth.new_event.button.admin=管理
+
+auth.new_event.label.title=添加新活动
+auth.new_event.label.description=<html><p align="center">请录入团队活动，保持公司日程为最新状态。</p></html>
+auth.new_event.label.default.name=活动名称*
+auth.new_event.label.default.responsible=负责人*
+auth.new_event.label.default.sector=负责部门
+auth.new_event.label.default.time=活动时间*
+auth.new_event.label.default.date=活动日期*
+auth.new_event.label.default.observation=备注
+auth.new_event.label.hover.name=活动名称*
+auth.new_event.label.hover.responsible=负责人*
+auth.new_event.label.hover.sector=负责部门
+auth.new_event.label.hover.time=活动时间*
+auth.new_event.label.hover.date=活动日期*
+auth.new_event.label.hover.observation=备注
+auth.new_event.label.button.cancel=取消
+auth.new_event.label.button.register=添加
+auth.new_event.error.invalid_date=日期无效。请使用 DD/MM/YYYY 格式，例如 25/12/2026。
+auth.new_event.error.invalid_time=时间无效。请使用 HH:mm 格式，例如 18:30。
+auth.new_event.error.invalid_user=未找到负责人。请输入已有的用户。
+
+auth.used_event.label.title=编辑活动
+auth.used_event.label.description=<html><p align="center">请修改活动信息，保持公司日程为最新状态。</p></html>
+auth.used_event.label.button.save=保存更改
+auth.used_event.label.button.delete=删除
+
+auth.used_event.confirm_delete.title=确认删除
+auth.used_event.confirm_delete.message=确定要删除活动“%s”吗？
+auth.used_event.confirm_delete.button.yes=是
+auth.used_event.confirm_delete.button.no=否
+auth.used_event.confirm_delete.success=活动已成功删除。
+auth.used_event.confirm_delete.error=删除活动时出错。请检查您的网络连接。
+auth.used_event.register.success=活动已成功保存。
+auth.used_event.register.error=目前无法连接到数据库。请检查您的网络连接，或稍后再试。

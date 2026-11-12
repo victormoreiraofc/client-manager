@@ -1,5 +1,5 @@
 # Configurações originais (Português - pt_BR)
-layout.login.header.title=30,100,300,50
+layout.login.header.title=30,100,600,50
 layout.login.header.description=30,160,330,50
 layout.login.form.label.email=30,320,190,20
 layout.login.form.label.password=30,390,170,20

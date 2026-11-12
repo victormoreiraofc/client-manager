@@ -16,6 +16,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Locale;
 import javax.imageio.ImageIO;
+import javax.swing.text.DocumentFilter;
 
 public class NewClient extends javax.swing.JFrame {
 
@@ -30,8 +31,8 @@ public class NewClient extends javax.swing.JFrame {
     private final Color COR_CANCELAR_PADRAO = new Color(37, 49, 71);
     private final Color COR_CANCELAR_HOVER = new Color(81, 90, 108);
 
-    private final Color COR_EXCLUIR_PADRAO = new Color(0xDC, 0x44, 0x50);
-    private final Color COR_EXCLUIR_HOVER = new Color(0xB9, 0x1F, 0x2A);
+    private final Color COR_EXCLUIR_PADRAO = new Color(37, 49, 71);
+    private final Color COR_EXCLUIR_HOVER = new Color(81, 90, 108);
     private javax.swing.Timer timerVoltarHome;
     private static final int MAX_LENGTH = 50;
     private Data.Cliente clienteEmEdicao = null;
@@ -55,6 +56,8 @@ public class NewClient extends javax.swing.JFrame {
         setupInputField((RoundedTextField) emailField, "Email*", 50);
         setupInputField((RoundedTextField) telephoneField, "Telefone", 50);
         setupInputField((RoundedTextField) observationField, "Observações", 200);
+        aplicarMascara(telephoneField, "(##)####-####");
+        aplicarMascara(cellphoneField, "(##)#####-####");
         observationField.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 10, 130, 15));
 
         ((RoundedPanel) registerButtonPanel).setShowBorder(false);
@@ -166,7 +169,7 @@ public class NewClient extends javax.swing.JFrame {
         descriptionLabel.setText(I18nManager.getString("auth.used_client.label.description"));
         cancelButtonLabel.setText(I18nManager.getString("auth.used_client.label.button.delete"));
         cancelButtonPanel.setBackground(COR_EXCLUIR_PADRAO);
-        ((RoundedPanel) cancelButtonPanel).setShowBorder(false);
+        ((RoundedPanel) cancelButtonPanel).setShowBorder(true);
     }
     
     private void ativarEstadoPreenchido() {
@@ -483,6 +486,79 @@ public class NewClient extends javax.swing.JFrame {
 
     private boolean isFieldEmpty(javax.swing.JTextField field) {
         return field.getText().trim().isEmpty();
+    }
+    
+    private void irParaHome() {
+        new Home(usuarioLogado).setVisible(true);
+        this.dispose();
+    }
+    
+    private void irParaCalendario() {
+        new Calendar(usuarioLogado).setVisible(true);
+        this.dispose();
+    }
+    
+    private void irParaClientes() {
+        new Client(usuarioLogado).setVisible(true);
+        this.dispose();
+    }
+    
+    private void irParaRelatorios() {
+        new Report(usuarioLogado).setVisible(true);
+        this.dispose();
+    }
+    
+    private void irParaTarefas() {
+        new Task(usuarioLogado).setVisible(true);
+        this.dispose();
+    }
+    
+    private void irParaConfiguracoes() {
+        new ConfigProfile(usuarioLogado).setVisible(true);
+        this.dispose();
+    }
+    
+    private void irParaAdministracao() {
+        new Admin(usuarioLogado).setVisible(true);
+        this.dispose();
+    }
+    
+    private void aplicarMascara(javax.swing.JTextField campo, String padrao) {
+        ((javax.swing.text.AbstractDocument) campo.getDocument()).setDocumentFilter(new javax.swing.text.DocumentFilter() {
+            private String formatar(String texto) {
+                String digitos = texto.replaceAll("\\D", "");
+                StringBuilder resultado = new StringBuilder();
+                int usados = 0;
+                for (char modelo : padrao.toCharArray()) {
+                    if (usados >= digitos.length()) {
+                        break;
+                    }
+                    if (modelo == '#') {
+                        resultado.append(digitos.charAt(usados++));
+                    } else {
+                        resultado.append(modelo);
+                    }
+                }
+                return resultado.toString();
+            }
+
+            @Override
+            public void insertString(DocumentFilter.FilterBypass fb, int posicao, String texto, javax.swing.text.AttributeSet atributos) throws javax.swing.text.BadLocationException {
+                replace(fb, posicao, 0, texto, atributos);
+            }
+
+            @Override
+            public void replace(DocumentFilter.FilterBypass fb, int posicao, int tamanho, String texto, javax.swing.text.AttributeSet atributos) throws javax.swing.text.BadLocationException {
+                String atual = fb.getDocument().getText(0, fb.getDocument().getLength());
+                String novo = atual.substring(0, posicao) + (texto == null ? "" : texto) + atual.substring(posicao + tamanho);
+                fb.replace(0, atual.length(), formatar(novo), atributos);
+            }
+
+            @Override
+            public void remove(DocumentFilter.FilterBypass fb, int posicao, int tamanho) throws javax.swing.text.BadLocationException {
+                replace(fb, posicao, tamanho, "", null);
+            }
+        });
     }
 
     private void updateFieldCounter(javax.swing.JTextField textField, javax.swing.JLabel feedbackLabel) {
@@ -1012,7 +1088,7 @@ public class NewClient extends javax.swing.JFrame {
 
         observationField.setBackground(new java.awt.Color(25, 25, 25));
         observationField.setFont(FonteUtils.carregarRobotoBold(13f));
-        observationField.setForeground(new java.awt.Color(255, 255, 255));
+        observationField.setForeground(new java.awt.Color(209, 213, 219));
         observationField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(28, 37, 54)));
         observationField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -1051,7 +1127,7 @@ public class NewClient extends javax.swing.JFrame {
 
         telephoneField.setBackground(new java.awt.Color(25, 25, 25));
         telephoneField.setFont(FonteUtils.carregarRobotoBold(13f));
-        telephoneField.setForeground(new java.awt.Color(255, 255, 255));
+        telephoneField.setForeground(new java.awt.Color(209, 213, 219));
         telephoneField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(28, 37, 54)));
         telephoneField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -1090,7 +1166,7 @@ public class NewClient extends javax.swing.JFrame {
 
         cellphoneField.setBackground(new java.awt.Color(25, 25, 25));
         cellphoneField.setFont(FonteUtils.carregarRobotoBold(13f));
-        cellphoneField.setForeground(new java.awt.Color(255, 255, 255));
+        cellphoneField.setForeground(new java.awt.Color(209, 213, 219));
         cellphoneField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(28, 37, 54)));
         cellphoneField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -1129,7 +1205,7 @@ public class NewClient extends javax.swing.JFrame {
 
         typeofserviceField.setBackground(new java.awt.Color(25, 25, 25));
         typeofserviceField.setFont(FonteUtils.carregarRobotoBold(13f));
-        typeofserviceField.setForeground(new java.awt.Color(255, 255, 255));
+        typeofserviceField.setForeground(new java.awt.Color(209, 213, 219));
         typeofserviceField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(28, 37, 54)));
         typeofserviceField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -1168,7 +1244,7 @@ public class NewClient extends javax.swing.JFrame {
 
         typeofpersonField.setBackground(new java.awt.Color(25, 25, 25));
         typeofpersonField.setFont(FonteUtils.carregarRobotoBold(13f));
-        typeofpersonField.setForeground(new java.awt.Color(255, 255, 255));
+        typeofpersonField.setForeground(new java.awt.Color(209, 213, 219));
         typeofpersonField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(28, 37, 54)));
         typeofpersonField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -1207,7 +1283,7 @@ public class NewClient extends javax.swing.JFrame {
 
         emailField.setBackground(new java.awt.Color(25, 25, 25));
         emailField.setFont(FonteUtils.carregarRobotoBold(13f));
-        emailField.setForeground(new java.awt.Color(255, 255, 255));
+        emailField.setForeground(new java.awt.Color(209, 213, 219));
         emailField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(28, 37, 54)));
         emailField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -1246,7 +1322,7 @@ public class NewClient extends javax.swing.JFrame {
 
         serviceField.setBackground(new java.awt.Color(25, 25, 25));
         serviceField.setFont(FonteUtils.carregarRobotoBold(13f));
-        serviceField.setForeground(new java.awt.Color(255, 255, 255));
+        serviceField.setForeground(new java.awt.Color(209, 213, 219));
         serviceField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(28, 37, 54)));
         serviceField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -1285,7 +1361,7 @@ public class NewClient extends javax.swing.JFrame {
 
         clientnameField.setBackground(new java.awt.Color(25, 25, 25));
         clientnameField.setFont(FonteUtils.carregarRobotoBold(13f));
-        clientnameField.setForeground(new java.awt.Color(255, 255, 255));
+        clientnameField.setForeground(new java.awt.Color(209, 213, 219));
         clientnameField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(28, 37, 54)));
         clientnameField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -1787,6 +1863,7 @@ public class NewClient extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHomeMouseExited
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
+        irParaHome();
     }//GEN-LAST:event_btnHomeActionPerformed
 
     private void btnCalendarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCalendarMouseEntered
@@ -1800,6 +1877,7 @@ public class NewClient extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCalendarMouseExited
 
     private void btnCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarActionPerformed
+        irParaCalendario();
     }//GEN-LAST:event_btnCalendarActionPerformed
 
     private void btnClientMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClientMouseEntered
@@ -1815,6 +1893,7 @@ public class NewClient extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClientMouseExited
 
     private void btnClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientActionPerformed
+        irParaClientes();
     }//GEN-LAST:event_btnClientActionPerformed
 
     private void btnReportMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportMouseEntered
@@ -1828,6 +1907,7 @@ public class NewClient extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReportMouseExited
 
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
+        irParaRelatorios();
     }//GEN-LAST:event_btnReportActionPerformed
 
     private void btnTaskMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTaskMouseEntered
@@ -1841,6 +1921,7 @@ public class NewClient extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTaskMouseExited
 
     private void btnTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaskActionPerformed
+        irParaTarefas();
     }//GEN-LAST:event_btnTaskActionPerformed
 
     private void btnConfigMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfigMouseEntered
@@ -1854,6 +1935,7 @@ public class NewClient extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConfigMouseExited
 
     private void btnConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfigActionPerformed
+        irParaConfiguracoes();
     }//GEN-LAST:event_btnConfigActionPerformed
 
     private void btnAdminMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdminMouseEntered
@@ -1867,6 +1949,7 @@ public class NewClient extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdminMouseExited
 
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
+        irParaAdministracao();
     }//GEN-LAST:event_btnAdminActionPerformed
 
     private void btnEllipseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEllipseMouseEntered
@@ -2308,8 +2391,7 @@ public class NewClient extends javax.swing.JFrame {
     }//GEN-LAST:event_arrowBackButtonMouseExited
 
     private void arrowBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_arrowBackButtonActionPerformed
-        new Client(usuarioLogado).setVisible(true);
-        this.dispose();
+        irParaClientes();
     }//GEN-LAST:event_arrowBackButtonActionPerformed
 
     public static void main(String args[]) {

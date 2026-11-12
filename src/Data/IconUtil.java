@@ -18,7 +18,7 @@ public class IconUtil {
                 BufferedImage img = ImageIO.read(new ByteArrayInputStream(imagemByte));
 
                 if (img != null) {
-                    label.setIcon(gerarIconePerfeito(img, largura, altura));
+                    label.setIcon(gerarIconeCircular(img, Math.min(largura, altura)));
                 } else {
                     setIconPadrao(label, largura, altura);
                 }
@@ -50,6 +50,41 @@ public class IconUtil {
             e.printStackTrace();
             label.setIcon(null);
         }
+    }
+
+    private static javax.swing.Icon gerarIconeCircular(BufferedImage img, int diametro) {
+        int escala = 4;
+        int lado = diametro * escala;
+        int origem = Math.min(img.getWidth(), img.getHeight());
+        int sx = (img.getWidth() - origem) / 2;
+        int sy = (img.getHeight() - origem) / 2;
+
+        BufferedImage quadrada = img.getSubimage(sx, sy, origem, origem);
+        BufferedImage atual = quadrada;
+        int w = origem;
+        while (w / 2 > lado) {
+            w = w / 2;
+            BufferedImage tmp = new BufferedImage(w, w, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g = tmp.createGraphics();
+            g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+            g.drawImage(atual, 0, 0, w, w, null);
+            g.dispose();
+            atual = tmp;
+        }
+
+        BufferedImage saida = new BufferedImage(lado, lado, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = saida.createGraphics();
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+        g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        g2.setComposite(java.awt.AlphaComposite.Src);
+        g2.setColor(java.awt.Color.WHITE);
+        g2.fill(new java.awt.geom.Ellipse2D.Double(0, 0, lado, lado));
+        g2.setComposite(java.awt.AlphaComposite.SrcAtop);
+        g2.drawImage(atual, 0, 0, lado, lado, null);
+        g2.dispose();
+
+        return new IconeSuave(saida, diametro, diametro);
     }
 
     private static javax.swing.Icon gerarIconePerfeito(BufferedImage img, int targetW, int targetH) {

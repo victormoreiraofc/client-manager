@@ -1,24 +1,24 @@
 # --- AUTHENTICATION MODULE (Login) ---
 auth.login.window_title=CT Contab Manager
-auth.login.header.title=계정 액세스
-auth.login.social.google=Google 계정으로 로그인
+auth.login.header.title=계정에 로그인하세요
+auth.login.social.google=Google로 로그인
 auth.login.social.apple=Apple로 로그인
 auth.login.divider.text=또는
 auth.login.confirm=다음
-auth.login.newacount=<html><font color='#48494B'>계정이 없으신가요? </font><font color='#287FCE'><b>가입하기</b></font></html>
+auth.login.newacount=<html><font color='#48494B'>계정이 없으신가요? </font><font color='#287FCE'><b>회원가입</b></font></html>
 auth.login.forgotpassword=비밀번호를 잊으셨나요?
-auth.login.hover.user=사용자
-auth.login.default.user=사용자
+auth.login.hover.user=사용자 이름
+auth.login.default.user=사용자 이름
 auth.login.hover.password=비밀번호
 auth.login.default.password=비밀번호
 
 # --- REGISTRATION MODULE (Sign Up) ---
 auth.register.window_title=CT Contab Manager
-auth.register.header.title=계정 만들기
+auth.register.header.title=계정을 만드세요
 auth.register.confirm=다음
-auth.register.newacount=<html><font color='#48494B'>이미 계정이 있으신가요? </font><font color='#287FCE'><b>로그인하기</b></font></html>
-auth.register.hover.user=사용자
-auth.register.default.user=사용자
+auth.register.newacount=<html><font color='#48494B'>이미 계정이 있으신가요? </font><font color='#287FCE'><b>로그인</b></font></html>
+auth.register.hover.user=사용자 이름
+auth.register.default.user=사용자 이름
 auth.register.hover.password=비밀번호
 auth.register.default.password=비밀번호
 auth.register.hover.email=이메일
@@ -28,48 +28,50 @@ auth.register.default.email=이메일
 auth.home.window_title=CT Contab Manager
 auth.home.button.home=홈
 auth.home.button.calendar=캘린더
-auth.home.button.client=클라이언트
+auth.home.button.client=고객
 auth.home.button.report=보고서
 auth.home.button.task=작업
 auth.home.button.config=설정
 auth.home.button.admin=관리
-auth.home.banner.title=새 클라이언트 추가
-auth.home.banner.description=<html>새로운 클라이언트를 쉽고 빠르게 등록하여 한 곳에서 계정을 완벽하게 관리하세요.</html>
+
+auth.home.banner.title=새 고객 추가
+auth.home.banner.description=<html>새 고객을 간편하고 빠르게 등록하고, 모든 계정을 한곳에서 완벽하게 관리하세요.</html>
 auth.home.statistic.title=통계
 auth.home.label.customer=고객
 auth.home.label.task=작업
 auth.home.label.report=보고서
-auth.home.label.newclient=새 고객
+auth.home.label.newclient=신규 고객
 auth.home.label.admin=관리자
 auth.home.button.newclient=새 고객
 
 # --- ERROR MODULE (Error) ---
 auth.error.window_title=CT Contab Manager
 auth.error.header.title=오류
-auth.error.description=<html><p align="justify"> 이런! 문제가 발생했습니다. 현재 시스템이 불안정합니다. 담당 팀에 알림이 전송되었으며 복구 작업 중입니다. 잠시 후 다시 시도해 주세요.</p></html>
-auth.error.confirm=확인함
-auth.error.restart=재시작
+auth.error.description=<html><p align="justify"> 죄송합니다. 예상치 못한 문제가 발생했습니다. 현재 시스템이 불안정한 상태입니다. 담당 팀에 이미 알림이 전달되었으며 문제를 해결하는 중입니다. 잠시 후 다시 시도해 주세요.</p></html>
+auth.error.confirm=확인
+auth.error.restart=다시 시작
 
 # --- CLIENT MODULE (Client) ---
 auth.client.window_title=CT Contab Manager
 auth.client.button.search=검색
 auth.client.button.home=홈
 auth.client.button.calendar=캘린더
-auth.client.button.client=클라이언트
+auth.client.button.client=고객
 auth.client.button.report=보고서
 auth.client.button.task=작업
 auth.client.button.config=설정
 auth.client.button.admin=관리
-auth.client.title=클라이언트
+
+auth.client.title=고객
 auth.client.label.all=전체
-auth.client.label.finished=완료됨
+auth.client.label.finished=완료
 auth.client.label.in_progress=진행 중
 auth.client.label.pending=대기 중
-auth.client.label.new_client_text=새 클라이언트
+auth.client.label.new_client_text=새 고객
 auth.client.column.id=ID
 auth.client.column.name=이름
 auth.client.column.status=상태
-auth.client.column.type=개인 유형
+auth.client.column.type=개인/법인 구분
 auth.client.column.date=등록일
 
 # --- NEW CLIENT MODULE (New Client) ---
@@ -77,28 +79,419 @@ auth.new_clients.window_title=CT Contab Manager
 auth.new_clients.button.search=검색
 auth.new_clients.button.home=홈
 auth.new_clients.button.calendar=캘린더
-auth.new_clients.button.client=클라이언트
+auth.new_clients.button.client=고객
 auth.new_clients.button.report=보고서
 auth.new_clients.button.task=작업
 auth.new_clients.button.config=설정
 auth.new_clients.button.admin=관리
-auth.new_clients.label.title=새 클라이언트 등록
-auth.new_clients.label.description=<html><p align="center">클라이언트 정보를 등록하여 데이터베이스를 최신 상태로 유지하십시오.</p></html>
+
+auth.new_clients.label.title=새 고객 등록
+auth.new_clients.label.description=<html><p align="center">고객 정보를 등록하여 데이터베이스를 최신 상태로 유지해 주세요.</p></html>
 auth.new_clients.label.default.name=성명*
 auth.new_clients.label.default.service=서비스*
-auth.new_clients.label.default.type_person=유형: 개인, 법인 또는 미지정?*
-auth.new_clients.label.default.type_service=상태: 대기 중, 진행 중 또는 완료됨?*
+auth.new_clients.label.default.type_person=구분: 개인, 법인 또는 NI?*
+auth.new_clients.label.default.type_service=서비스: 대기 중, 진행 중 또는 완료?*
 auth.new_clients.label.default.email=이메일*
 auth.new_clients.label.default.telephone=전화번호
-auth.new_clients.label.default.cellphone=휴대전화
+auth.new_clients.label.default.cellphone=휴대폰
 auth.new_clients.label.default.observation=비고
 auth.new_clients.label.hover.name=성명*
 auth.new_clients.label.hover.service=서비스*
-auth.new_clients.label.hover.type_person=유형: 개인, 법인 또는 미지정?*
-auth.new_clients.label.hover.type_service=상태: 대기 중, 진행 중 또는 완료됨?*
+auth.new_clients.label.hover.type_person=구분: 개인, 법인 또는 NI?*
+auth.new_clients.label.hover.type_service=서비스: 대기 중, 진행 중 또는 완료?*
 auth.new_clients.label.hover.email=이메일*
 auth.new_clients.label.hover.telephone=전화번호
-auth.new_clients.label.hover.cellphone=휴대전화
+auth.new_clients.label.hover.cellphone=휴대폰
 auth.new_clients.label.hover.observation=비고
 auth.new_clients.label.button.cancel=취소
 auth.new_clients.label.button.register=등록
+
+auth.used_client.label.title=고객 수정
+auth.used_client.label.description=<html><p align="center">고객 정보를 수정하여 데이터베이스를 최신 상태로 유지해 주세요.</p></html>
+auth.used_client.label.button.save=변경 사항 저장
+auth.used_client.label.button.delete=삭제
+
+auth.used_client.confirm_delete.title=삭제 확인
+auth.used_client.confirm_delete.message=고객 "%s"을(를) 삭제하시겠습니까?
+auth.used_client.confirm_delete.button.yes=예
+auth.used_client.confirm_delete.button.no=아니요
+auth.used_client.confirm_delete.success=고객이 삭제되었습니다.
+auth.used_client.confirm_delete.error=고객을 삭제하는 중 오류가 발생했습니다. 연결 상태를 확인해 주세요.
+auth.used_client.register.success=고객 등록이 완료되었습니다. 이제 기록을 조회할 수 있습니다.
+auth.used_client.register.error=현재 데이터베이스에 연결할 수 없습니다. 인터넷 연결을 확인하거나 나중에 다시 시도해 주세요.
+
+
+# --- REPORT MODULE --- #
+auth.report.window_title=CT Contab Manager
+auth.report.button.search=검색
+auth.report.button.home=홈
+auth.report.button.calendar=캘린더
+auth.report.button.client=고객
+auth.report.button.report=보고서
+auth.report.button.task=작업
+auth.report.button.config=설정
+auth.report.button.admin=관리
+
+auth.report.title=보고서
+auth.report.label.all=전체
+auth.report.label.finished=완료
+auth.report.label.in_progress=진행 중
+auth.report.label.pending=대기 중
+auth.report.label.new_report_text=새 보고서
+auth.report.column.id=ID
+auth.report.column.name=보고서 이름
+auth.report.column.status=상태
+auth.report.column.date=등록일
+
+# --- TASK MODULE --- #
+auth.task.window_title=작업
+auth.task.button.home=홈
+auth.task.button.calendar=캘린더
+auth.task.button.client=고객
+auth.task.button.report=보고서
+auth.task.button.task=작업
+auth.task.button.config=설정
+auth.task.button.admin=관리
+auth.task.title=작업
+auth.task.label.all=전체
+auth.task.label.finished=완료
+auth.task.label.in_progress=진행 중
+auth.task.label.pending=대기 중
+auth.task.label.new_task_text=새 작업
+auth.task.column.id=ID
+auth.task.column.name=작업 이름
+auth.task.column.status=상태
+auth.task.column.priority=우선순위
+auth.task.column.date=등록일
+auth.task.column.responsible=담당 사용자
+auth.task.button.search=검색
+
+# --- ADMIN MODULE --- #
+auth.admin.window_title=관리
+auth.admin.button.home=홈
+auth.admin.button.calendar=캘린더
+auth.admin.button.client=고객
+auth.admin.button.report=보고서
+auth.admin.button.task=작업
+auth.admin.button.config=설정
+auth.admin.button.admin=관리
+auth.admin.title=관리
+auth.admin.label.users=사용자
+auth.admin.label.audit=감사
+auth.admin.label.new_user_text=새 사용자
+auth.admin.column.id=ID
+auth.admin.column.name=이름
+auth.admin.column.email=이메일
+auth.admin.column.permissions=권한
+auth.admin.column.date=등록일
+auth.admin.button.search=검색
+
+# --- AUDIT MODULE --- #
+audit.time_suffix=%s (%s)
+audit.user_login=사용자 %s이(가) 시스템에 로그인했습니다
+audit.user_created=사용자 %s이(가) 생성되었습니다
+audit.user_deleted=사용자 %s이(가) %s(%s)에 의해 삭제되었습니다
+
+# --- NEW REPORT MODULE --- #
+auth.new_report.window_title=CT Contab Manager
+auth.new_report.button.search=검색
+auth.new_report.button.home=홈
+auth.new_report.button.calendar=캘린더
+auth.new_report.button.client=고객
+auth.new_report.button.report=보고서
+auth.new_report.button.task=작업
+auth.new_report.button.config=설정
+auth.new_report.button.admin=관리
+
+auth.new_report.label.title=새 보고서 등록
+auth.new_report.label.description=<html><p align="center">보고서 정보를 등록하여 데이터베이스를 최신 상태로 유지해 주세요.</p></html>
+auth.new_report.label.default.name=보고서 이름*
+auth.new_report.label.default.service=담당자
+auth.new_report.label.default.type_service=상태: 대기 중, 진행 중 또는 완료?*
+auth.new_report.label.default.observation=비고
+auth.new_report.label.hover.name=보고서 이름*
+auth.new_report.label.hover.service=담당자
+auth.new_report.label.hover.type_service=상태: 대기 중, 진행 중 또는 완료?*
+auth.new_report.label.hover.observation=비고
+auth.new_report.label.button.cancel=취소
+auth.new_report.label.button.register=등록
+auth.new_report.error.invalid_status=잘못된 상태입니다. 대기 중, 진행 중 또는 완료 중에서 선택해 주세요.
+auth.new_report.error.invalid_user=담당자를 찾을 수 없습니다. 존재하는 사용자를 입력해 주세요.
+
+auth.used_report.label.title=보고서 수정
+auth.used_report.label.description=<html><p align="center">보고서 정보를 수정하여 데이터베이스를 최신 상태로 유지해 주세요.</p></html>
+auth.used_report.label.button.save=변경 사항 저장
+auth.used_report.label.button.delete=삭제
+
+auth.used_report.confirm_delete.title=삭제 확인
+auth.used_report.confirm_delete.message=보고서 "%s"을(를) 삭제하시겠습니까?
+auth.used_report.confirm_delete.button.yes=예
+auth.used_report.confirm_delete.button.no=아니요
+auth.used_report.confirm_delete.success=보고서가 삭제되었습니다.
+auth.used_report.confirm_delete.error=보고서를 삭제하는 중 오류가 발생했습니다. 연결 상태를 확인해 주세요.
+auth.used_report.register.success=보고서가 저장되었습니다.
+auth.used_report.register.error=현재 데이터베이스에 연결할 수 없습니다. 인터넷 연결을 확인하거나 나중에 다시 시도해 주세요.
+
+# --- NEW TASK MODULE --- #
+auth.new_task.window_title=CT Contab Manager
+auth.new_task.button.search=검색
+auth.new_task.button.home=홈
+auth.new_task.button.calendar=캘린더
+auth.new_task.button.client=고객
+auth.new_task.button.report=보고서
+auth.new_task.button.task=작업
+auth.new_task.button.config=설정
+auth.new_task.button.admin=관리
+
+auth.new_task.label.title=새 작업 등록
+auth.new_task.label.description=<html><p align="center">해야 할 작업의 정보를 등록하여 데이터베이스를 최신 상태로 유지해 주세요.</p></html>
+auth.new_task.label.default.name=작업 이름*
+auth.new_task.label.default.service=담당자
+auth.new_task.label.default.type_service=상태: 대기 중, 진행 중 또는 완료?*
+auth.new_task.label.default.priority=우선순위: 낮음, 보통 또는 높음?*
+auth.new_task.label.default.observation=비고
+auth.new_task.label.hover.name=작업 이름*
+auth.new_task.label.hover.service=담당자
+auth.new_task.label.hover.type_service=상태: 대기 중, 진행 중 또는 완료?*
+auth.new_task.label.hover.priority=우선순위: 낮음, 보통 또는 높음?*
+auth.new_task.label.hover.observation=비고
+auth.new_task.label.button.cancel=취소
+auth.new_task.label.button.register=등록
+auth.new_task.error.invalid_status=잘못된 상태입니다. 대기 중, 진행 중 또는 완료 중에서 선택해 주세요.
+auth.new_task.error.invalid_priority=잘못된 우선순위입니다. 낮음, 보통 또는 높음 중에서 선택해 주세요.
+auth.new_task.error.invalid_user=담당자를 찾을 수 없습니다. 존재하는 사용자를 입력해 주세요.
+
+auth.used_task.label.title=작업 수정
+auth.used_task.label.description=<html><p align="center">해야 할 작업의 정보를 수정하여 데이터베이스를 최신 상태로 유지해 주세요.</p></html>
+auth.used_task.label.button.save=변경 사항 저장
+auth.used_task.label.button.delete=삭제
+
+auth.used_task.confirm_delete.title=삭제 확인
+auth.used_task.confirm_delete.message=작업 "%s"을(를) 삭제하시겠습니까?
+auth.used_task.confirm_delete.button.yes=예
+auth.used_task.confirm_delete.button.no=아니요
+auth.used_task.confirm_delete.success=작업이 삭제되었습니다.
+auth.used_task.confirm_delete.error=작업을 삭제하는 중 오류가 발생했습니다. 연결 상태를 확인해 주세요.
+auth.used_task.register.success=작업이 저장되었습니다.
+auth.used_task.register.error=현재 데이터베이스에 연결할 수 없습니다. 인터넷 연결을 확인하거나 나중에 다시 시도해 주세요.
+
+# --- CONFIG PROFILE MODULE --- #
+auth.config.window_title=CT Contab Manager
+auth.config.button.search=검색
+auth.config.button.home=홈
+auth.config.button.calendar=캘린더
+auth.config.button.client=고객
+auth.config.button.report=보고서
+auth.config.button.task=작업
+auth.config.button.config=설정
+auth.config.button.admin=관리
+auth.config.title=설정
+
+auth.config.tab.profile=프로필
+auth.config.tab.security=보안
+auth.config.tab.preferences=환경설정
+auth.config.tab.account=계정
+
+auth.config.profile.photo_title=프로필 사진
+auth.config.profile.photo_hint=PNG, JPG 또는 GIF. 최대 2MB.
+auth.config.field.user=사용자 이름
+auth.config.field.email=이메일
+auth.config.field.phone=전화번호
+auth.config.button.save=변경 사항 저장
+auth.config.button.change_image=이미지 변경
+
+auth.config.permission.null=직원
+auth.config.permission.adm=관리자
+auth.config.permission.super_adm=최고 관리자
+
+auth.config.last_access.label=마지막 접속: %s
+auth.config.last_access.today=오늘 %s
+auth.config.last_access.yesterday=어제 %s
+auth.config.last_access.date=%s %s
+auth.config.last_access.first=마지막 접속: 시스템 최초 접속
+
+auth.config.card.security.title=보안
+auth.config.card.security.description=<html>비밀번호를 변경하여 계정을 안전하게 유지하세요.</html>
+auth.config.card.security.button=비밀번호 관리
+auth.config.card.preferences.title=환경설정
+auth.config.card.preferences.description=<html>언어, 테마 및 시스템 환경설정을 관리하세요.</html>
+auth.config.card.preferences.button=설정
+auth.config.card.account.title=계정
+auth.config.card.account.description=<html>계정 정보와 최근 활동을 확인하세요.</html>
+auth.config.card.account.button=보기
+auth.config.card.danger.title=위험 구역
+auth.config.card.danger.description=<html>되돌릴 수 없는 작업입니다. 신중하게 사용하세요.</html>
+auth.config.card.danger.button_delete=계정 삭제
+auth.config.card.danger.button_logout=로그아웃
+
+auth.config.error.username_invalid=사용자 이름이 올바르지 않습니다. 공백 없이 문자와 숫자만 사용하세요.
+auth.config.error.email_invalid=이메일이 올바르지 않습니다. name@domain.com 형식으로 입력해 주세요.
+auth.config.error.phone_invalid=전화번호가 올바르지 않습니다. 숫자, 공백 및 + ( ) - 기호만 사용할 수 있습니다.
+auth.config.error.username_taken=이미 사용 중인 사용자 이름입니다.
+auth.config.error.email_taken=이미 사용 중인 이메일입니다.
+auth.config.error.no_changes=저장할 변경 사항이 없습니다.
+auth.config.save_success=변경 사항이 저장되었습니다.
+auth.config.save_error=변경 사항을 저장하지 못했습니다. 연결 상태를 확인한 후 다시 시도해 주세요.
+
+auth.config.image.chooser_title=프로필 이미지를 선택하세요
+auth.config.image.chooser_filter=이미지 (PNG, JPG, GIF, BMP)
+auth.config.image.too_large=이미지가 2MB를 초과합니다. 더 작은 파일을 선택해 주세요.
+auth.config.image.invalid=이미지를 읽을 수 없습니다. 올바른 PNG, JPG, GIF 또는 BMP 파일을 선택해 주세요.
+auth.config.image.success=프로필 이미지가 업데이트되었습니다.
+auth.config.image.error=이미지를 업데이트하지 못했습니다. 연결 상태를 확인한 후 다시 시도해 주세요.
+
+audit.profile_username_changed=사용자 %s이(가) 사용자 이름을 %s(으)로 변경했습니다
+audit.profile_email_changed=사용자 %s이(가) 이메일을 %s에서 %s(으)로 변경했습니다
+audit.profile_phone_changed=사용자 %s이(가) 전화번호를 %s에서 %s(으)로 변경했습니다
+audit.profile_image_changed=사용자 %s이(가) 프로필 이미지를 변경했습니다
+
+auth.config.delete_account.title=계정 삭제
+auth.config.delete_account.message=계정 "%s"을(를) 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.
+auth.config.delete_account.button.yes=예
+auth.config.delete_account.button.no=아니요
+auth.config.delete_account.success=계정이 삭제되었습니다.
+auth.config.delete_account.error=계정을 삭제하지 못했습니다. 연결 상태를 확인한 후 다시 시도해 주세요.
+auth.config.delete_account.linked=고객, 보고서, 작업 또는 이벤트가 연결되어 있어 계정을 삭제할 수 없습니다.
+audit.account_deleted=사용자 %s이(가) 본인 계정을 삭제했습니다
+
+
+# --- CONFIG SECURITY MODULE --- #
+auth.security.title=비밀번호 변경
+auth.security.field.current=현재 비밀번호
+auth.security.field.new=새 비밀번호
+auth.security.field.confirm=새 비밀번호 확인
+
+auth.security.strength.title=비밀번호 강도
+auth.security.strength.strong=강함
+auth.security.strength.weak=약함
+auth.security.strength.medium=보통
+auth.security.strength.good=좋음
+
+auth.security.tips.title=안전한 비밀번호를 위한 팁
+auth.security.tips.length=8자 이상으로 설정하세요
+auth.security.tips.case=대문자와 소문자를 포함하세요
+auth.security.tips.numbers_symbols=숫자와 기호를 포함하세요
+auth.security.tips.personal=개인 정보를 사용하지 마세요
+
+auth.security.error.empty_fields=현재 비밀번호, 새 비밀번호 및 확인 비밀번호를 입력해 주세요.
+auth.security.error.whitespace=새 비밀번호에는 공백을 포함할 수 없습니다.
+auth.security.error.too_long=새 비밀번호는 최대 50자까지 입력할 수 있습니다.
+auth.security.error.mismatch=확인 비밀번호가 새 비밀번호와 일치하지 않습니다.
+auth.security.error.same_as_current=새 비밀번호는 현재 비밀번호와 달라야 합니다.
+auth.security.error.wrong_current=현재 비밀번호가 올바르지 않습니다.
+auth.security.save_success=비밀번호가 변경되었습니다.
+auth.security.save_error=비밀번호를 변경하지 못했습니다. 연결 상태를 확인한 후 다시 시도해 주세요.
+
+audit.profile_password_changed=사용자 %s이(가) 비밀번호를 변경했습니다
+
+# --- CONFIG ACCOUNT MODULE --- #
+auth.account.title=개인 정보
+auth.account.field.id=사용자 ID
+auth.account.field.role=역할
+auth.account.field.created=등록일
+auth.account.field.last_access=마지막 접속
+auth.account.field.email=등록된 이메일
+auth.account.field.status=계정 상태
+auth.account.status.active=활성
+auth.account.last_access.at=%s %s
+auth.account.last_access.first=최초 접속
+
+auth.account.danger.title=위험 구역
+auth.account.danger.delete.title=계정 삭제
+auth.account.danger.delete.description=<html>계정과 접속 정보를 영구적으로 삭제합니다. 이 작업은 되돌릴 수 없습니다.</html>
+auth.account.danger.delete.button=계정 삭제
+auth.account.danger.logout.title=로그아웃
+auth.account.danger.logout.description=<html>이 기기에서 계정을 로그아웃하고 로그인 화면으로 돌아갑니다.</html>
+auth.account.danger.logout.button=로그아웃
+
+# --- CONFIG PREFERENCES MODULE --- #
+auth.preferences.language.title=시스템 언어
+auth.preferences.language.description=애플리케이션 언어를 선택하세요.
+
+auth.preferences.theme.title=인터페이스 테마
+auth.preferences.theme.description=애플리케이션의 화면 테마를 선택하세요.
+auth.preferences.theme.dark.title=다크
+auth.preferences.theme.dark.description=기본 다크 테마
+auth.preferences.theme.light.title=라이트
+auth.preferences.theme.light.description=라이트 테마
+
+auth.preferences.notify.title=알림
+auth.preferences.notify.description=알림을 받는 방식을 관리하세요.
+auth.preferences.notify.push.title=알림 받기
+auth.preferences.notify.push.description=켜면 알림을 받을 수 있습니다
+auth.preferences.notify.tasks.title=작업 알림 받기
+auth.preferences.notify.tasks.description=마감일 및 미처리 항목에 대한 알림
+auth.preferences.notify.email.title=시스템 이메일 받기
+auth.preferences.notify.email.description=공지 및 업데이트를 이메일로 받습니다
+
+auth.preferences.other.title=기타 환경설정
+auth.preferences.other.description=애플리케이션 추가 설정
+auth.preferences.other.timezone=시간대
+auth.preferences.other.date_format=날짜 형식
+auth.preferences.other.hour_format=시간 형식
+
+auth.preferences.timezone.brasilia=(UTC-03:00) 브라질리아
+auth.preferences.timezone.manaus=(UTC-04:00) 마나우스
+auth.preferences.timezone.rio_branco=(UTC-05:00) 히우브랑쿠
+auth.preferences.timezone.noronha=(UTC-02:00) 페르난두지노로냐
+auth.preferences.timezone.utc=(UTC+00:00) UTC
+auth.preferences.timezone.lisboa=(UTC+00:00) 리스본
+auth.preferences.timezone.new_york=(UTC-05:00) 뉴욕
+auth.preferences.timezone.tokyo=(UTC+09:00) 도쿄
+
+auth.preferences.date_format.dmy=DD/MM/YYYY
+auth.preferences.date_format.mdy=MM/DD/YYYY
+auth.preferences.date_format.ymd=YYYY-MM-DD
+
+auth.preferences.hour_format.h24=24시간 (HH:mm)
+auth.preferences.hour_format.h12=12시간 (hh:mm AM/PM)
+
+# --- CALENDAR MODULE --- #
+auth.calendar.title=캘린더
+auth.calendar.label.new_event_text=새 이벤트
+auth.calendar.more_events=+%d개 더
+
+# --- NEW EVENT MODULE --- #
+auth.new_event.window_title=CT Contab Manager
+auth.new_event.button.search=검색
+auth.new_event.button.home=홈
+auth.new_event.button.calendar=캘린더
+auth.new_event.button.client=고객
+auth.new_event.button.report=보고서
+auth.new_event.button.task=작업
+auth.new_event.button.config=설정
+auth.new_event.button.admin=관리
+
+auth.new_event.label.title=새 이벤트 등록
+auth.new_event.label.description=<html><p align="center">팀 이벤트를 등록하여 회사 일정을 최신 상태로 유지해 주세요.</p></html>
+auth.new_event.label.default.name=이벤트 이름*
+auth.new_event.label.default.responsible=담당자*
+auth.new_event.label.default.sector=담당 부서
+auth.new_event.label.default.time=이벤트 시간*
+auth.new_event.label.default.date=이벤트 날짜*
+auth.new_event.label.default.observation=비고
+auth.new_event.label.hover.name=이벤트 이름*
+auth.new_event.label.hover.responsible=담당자*
+auth.new_event.label.hover.sector=담당 부서
+auth.new_event.label.hover.time=이벤트 시간*
+auth.new_event.label.hover.date=이벤트 날짜*
+auth.new_event.label.hover.observation=비고
+auth.new_event.label.button.cancel=취소
+auth.new_event.label.button.register=등록
+auth.new_event.error.invalid_date=날짜가 올바르지 않습니다. DD/MM/YYYY 형식으로 입력해 주세요. 예: 25/12/2026
+auth.new_event.error.invalid_time=시간이 올바르지 않습니다. HH:mm 형식으로 입력해 주세요. 예: 18:30
+auth.new_event.error.invalid_user=담당자를 찾을 수 없습니다. 존재하는 사용자를 입력해 주세요.
+
+auth.used_event.label.title=이벤트 수정
+auth.used_event.label.description=<html><p align="center">이벤트 정보를 수정하여 회사 일정을 최신 상태로 유지해 주세요.</p></html>
+auth.used_event.label.button.save=변경 사항 저장
+auth.used_event.label.button.delete=삭제
+
+auth.used_event.confirm_delete.title=삭제 확인
+auth.used_event.confirm_delete.message=이벤트 "%s"을(를) 삭제하시겠습니까?
+auth.used_event.confirm_delete.button.yes=예
+auth.used_event.confirm_delete.button.no=아니요
+auth.used_event.confirm_delete.success=이벤트가 삭제되었습니다.
+auth.used_event.confirm_delete.error=이벤트를 삭제하는 중 오류가 발생했습니다. 연결 상태를 확인해 주세요.
+auth.used_event.register.success=이벤트가 저장되었습니다.
+auth.used_event.register.error=현재 데이터베이스에 연결할 수 없습니다. 인터넷 연결을 확인하거나 나중에 다시 시도해 주세요.

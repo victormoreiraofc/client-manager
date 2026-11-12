@@ -1,11 +1,11 @@
 # --- AUTHENTICATION MODULE (Login) ---
 auth.login.window_title=CT Contab Manager
-auth.login.header.title=アカウントにアクセス
+auth.login.header.title=アカウントにログインしてください
 auth.login.social.google=Googleでログイン
-auth.login.social.apple=Appleでサインイン
-auth.login.divider.text=又は
+auth.login.social.apple=Appleでログイン
+auth.login.divider.text=または
 auth.login.confirm=次へ
-auth.login.newacount=<html><font color='#48494B'>アカウントをお持ちでないですか？ </font><font color='#287FCE'><b>登録</b></font></html>
+auth.login.newacount=<html><font color='#48494B'>アカウントをお持ちでないですか？ </font><font color='#287FCE'><b>新規登録</b></font></html>
 auth.login.forgotpassword=パスワードをお忘れですか？
 auth.login.hover.user=ユーザー名
 auth.login.default.user=ユーザー名
@@ -16,7 +16,7 @@ auth.login.default.password=パスワード
 auth.register.window_title=CT Contab Manager
 auth.register.header.title=アカウントを作成
 auth.register.confirm=次へ
-auth.register.newacount=<html><font color='#48494B'>既にアカウントをお持ちですか？ </font><font color='#287FCE'><b>ログイン</b></font></html>
+auth.register.newacount=<html><font color='#48494B'>すでにアカウントをお持ちですか？ </font><font color='#287FCE'><b>ログイン</b></font></html>
 auth.register.hover.user=ユーザー名
 auth.register.default.user=ユーザー名
 auth.register.hover.password=パスワード
@@ -28,26 +28,27 @@ auth.register.default.email=メールアドレス
 auth.home.window_title=CT Contab Manager
 auth.home.button.home=ホーム
 auth.home.button.calendar=カレンダー
-auth.home.button.client=クライアント
+auth.home.button.client=顧客
 auth.home.button.report=レポート
 auth.home.button.task=タスク
 auth.home.button.config=設定
 auth.home.button.admin=管理
-auth.home.banner.title=新規クライアントの追加
-auth.home.banner.description=<html>新しいクライアントを素早く簡単に登録し、すべてのアカウントを1か所で完全に管理できます。</html>
+
+auth.home.banner.title=新しい顧客を追加
+auth.home.banner.description=<html>新しい顧客を簡単かつ迅速に登録して、すべてのアカウントを一か所で完全に管理できます。</html>
 auth.home.statistic.title=統計
-auth.home.label.customer=クライアント
+auth.home.label.customer=顧客
 auth.home.label.task=タスク
 auth.home.label.report=レポート
-auth.home.label.newclient=新規クライアント
+auth.home.label.newclient=新規顧客
 auth.home.label.admin=管理者
-auth.home.button.newclient=新規クライアント
+auth.home.button.newclient=新規顧客
 
 # --- ERROR MODULE (Error) ---
 auth.error.window_title=CT Contab Manager
 auth.error.header.title=エラー
-auth.error.description=<html><p align="justify"> おっと！予期せぬエラーが発生しました。現在システムが不安定になっています。担当チームに通知済みで、現在修復作業中です。数分後にもう一度お試しください。</p></html>
-auth.error.confirm=了解
+auth.error.description=<html><p align="justify"> 申し訳ございません。予期しない問題が発生しました。現在、システムが不安定な状態にあります。担当チームにはすでに通知されており、復旧作業を進めております。数分後にもう一度お試しください。</p></html>
+auth.error.confirm=了解しました
 auth.error.restart=再起動
 
 # --- CLIENT MODULE (Client) ---
@@ -55,21 +56,22 @@ auth.client.window_title=CT Contab Manager
 auth.client.button.search=検索
 auth.client.button.home=ホーム
 auth.client.button.calendar=カレンダー
-auth.client.button.client=クライアント
+auth.client.button.client=顧客
 auth.client.button.report=レポート
 auth.client.button.task=タスク
 auth.client.button.config=設定
 auth.client.button.admin=管理
-auth.client.title=クライアント
+
+auth.client.title=顧客
 auth.client.label.all=すべて
-auth.client.label.finished=完了済み
+auth.client.label.finished=完了
 auth.client.label.in_progress=進行中
 auth.client.label.pending=保留中
-auth.client.label.new_client_text=新規クライアント
+auth.client.label.new_client_text=新規顧客
 auth.client.column.id=ID
 auth.client.column.name=名前
 auth.client.column.status=ステータス
-auth.client.column.type=個人タイプ
+auth.client.column.type=個人/法人区分
 auth.client.column.date=登録日
 
 # --- NEW CLIENT MODULE (New Client) ---
@@ -77,28 +79,419 @@ auth.new_clients.window_title=CT Contab Manager
 auth.new_clients.button.search=検索
 auth.new_clients.button.home=ホーム
 auth.new_clients.button.calendar=カレンダー
-auth.new_clients.button.client=クライアント
+auth.new_clients.button.client=顧客
 auth.new_clients.button.report=レポート
 auth.new_clients.button.task=タスク
 auth.new_clients.button.config=設定
 auth.new_clients.button.admin=管理
-auth.new_clients.label.title=新規クライアント登録
-auth.new_clients.label.description=<html><p align="center">クライアント情報を登録して、データベースを最新の状態に保ちます。</p></html>
-auth.new_clients.label.default.name=氏名（フルネーム）*
+
+auth.new_clients.label.title=新しい顧客を登録
+auth.new_clients.label.description=<html><p align="center">顧客情報を登録して、データベースを常に最新の状態に保ってください。</p></html>
+auth.new_clients.label.default.name=氏名*
 auth.new_clients.label.default.service=サービス*
-auth.new_clients.label.default.type_person=区分：個人、法人、または未指定？*
-auth.new_clients.label.default.type_service=状況：保留、進行中、または完了？*
+auth.new_clients.label.default.type_person=区分：個人、法人、またはNI？*
+auth.new_clients.label.default.type_service=サービス：保留中、進行中、または完了？*
 auth.new_clients.label.default.email=メールアドレス*
 auth.new_clients.label.default.telephone=電話番号
 auth.new_clients.label.default.cellphone=携帯電話
 auth.new_clients.label.default.observation=備考
-auth.new_clients.label.hover.name=氏名（フルネーム）*
+auth.new_clients.label.hover.name=氏名*
 auth.new_clients.label.hover.service=サービス*
-auth.new_clients.label.hover.type_person=区分：個人、法人、または未指定？*
-auth.new_clients.label.hover.type_service=状況：保留、進行中、または完了？*
+auth.new_clients.label.hover.type_person=区分：個人、法人、またはNI？*
+auth.new_clients.label.hover.type_service=サービス：保留中、進行中、または完了？*
 auth.new_clients.label.hover.email=メールアドレス*
 auth.new_clients.label.hover.telephone=電話番号
 auth.new_clients.label.hover.cellphone=携帯電話
 auth.new_clients.label.hover.observation=備考
 auth.new_clients.label.button.cancel=キャンセル
 auth.new_clients.label.button.register=登録
+
+auth.used_client.label.title=顧客を編集
+auth.used_client.label.description=<html><p align="center">顧客情報を編集して、データベースを常に最新の状態に保ってください。</p></html>
+auth.used_client.label.button.save=変更を保存
+auth.used_client.label.button.delete=削除
+
+auth.used_client.confirm_delete.title=削除の確認
+auth.used_client.confirm_delete.message=顧客「%s」を削除してもよろしいですか？
+auth.used_client.confirm_delete.button.yes=はい
+auth.used_client.confirm_delete.button.no=いいえ
+auth.used_client.confirm_delete.success=顧客を削除しました。
+auth.used_client.confirm_delete.error=顧客の削除中にエラーが発生しました。接続をご確認ください。
+auth.used_client.register.success=顧客の登録が完了しました。履歴はすでに参照できます。
+auth.used_client.register.error=現在、データベースに接続できません。インターネット接続をご確認いただくか、しばらくしてからもう一度お試しください。
+
+
+# --- REPORT MODULE --- #
+auth.report.window_title=CT Contab Manager
+auth.report.button.search=検索
+auth.report.button.home=ホーム
+auth.report.button.calendar=カレンダー
+auth.report.button.client=顧客
+auth.report.button.report=レポート
+auth.report.button.task=タスク
+auth.report.button.config=設定
+auth.report.button.admin=管理
+
+auth.report.title=レポート
+auth.report.label.all=すべて
+auth.report.label.finished=完了
+auth.report.label.in_progress=進行中
+auth.report.label.pending=保留中
+auth.report.label.new_report_text=新規レポート
+auth.report.column.id=ID
+auth.report.column.name=レポート名
+auth.report.column.status=ステータス
+auth.report.column.date=登録日
+
+# --- TASK MODULE --- #
+auth.task.window_title=タスク
+auth.task.button.home=ホーム
+auth.task.button.calendar=カレンダー
+auth.task.button.client=顧客
+auth.task.button.report=レポート
+auth.task.button.task=タスク
+auth.task.button.config=設定
+auth.task.button.admin=管理
+auth.task.title=タスク
+auth.task.label.all=すべて
+auth.task.label.finished=完了
+auth.task.label.in_progress=進行中
+auth.task.label.pending=保留中
+auth.task.label.new_task_text=新規タスク
+auth.task.column.id=ID
+auth.task.column.name=タスク名
+auth.task.column.status=ステータス
+auth.task.column.priority=優先度
+auth.task.column.date=登録日
+auth.task.column.responsible=担当ユーザー
+auth.task.button.search=検索
+
+# --- ADMIN MODULE --- #
+auth.admin.window_title=管理
+auth.admin.button.home=ホーム
+auth.admin.button.calendar=カレンダー
+auth.admin.button.client=顧客
+auth.admin.button.report=レポート
+auth.admin.button.task=タスク
+auth.admin.button.config=設定
+auth.admin.button.admin=管理
+auth.admin.title=管理
+auth.admin.label.users=ユーザー
+auth.admin.label.audit=監査
+auth.admin.label.new_user_text=新規ユーザー
+auth.admin.column.id=ID
+auth.admin.column.name=名前
+auth.admin.column.email=メールアドレス
+auth.admin.column.permissions=権限
+auth.admin.column.date=登録日
+auth.admin.button.search=検索
+
+# --- AUDIT MODULE --- #
+audit.time_suffix=%s（%s）
+audit.user_login=ユーザー %s がシステムにログインしました
+audit.user_created=ユーザー %s が作成されました
+audit.user_deleted=ユーザー %s は %s（%s）によって削除されました
+
+# --- NEW REPORT MODULE --- #
+auth.new_report.window_title=CT Contab Manager
+auth.new_report.button.search=検索
+auth.new_report.button.home=ホーム
+auth.new_report.button.calendar=カレンダー
+auth.new_report.button.client=顧客
+auth.new_report.button.report=レポート
+auth.new_report.button.task=タスク
+auth.new_report.button.config=設定
+auth.new_report.button.admin=管理
+
+auth.new_report.label.title=新しいレポートを登録
+auth.new_report.label.description=<html><p align="center">レポート情報を登録して、データベースを常に最新の状態に保ってください。</p></html>
+auth.new_report.label.default.name=レポート名*
+auth.new_report.label.default.service=担当者
+auth.new_report.label.default.type_service=ステータス：保留中、進行中、または完了？*
+auth.new_report.label.default.observation=備考
+auth.new_report.label.hover.name=レポート名*
+auth.new_report.label.hover.service=担当者
+auth.new_report.label.hover.type_service=ステータス：保留中、進行中、または完了？*
+auth.new_report.label.hover.observation=備考
+auth.new_report.label.button.cancel=キャンセル
+auth.new_report.label.button.register=登録
+auth.new_report.error.invalid_status=ステータスが正しくありません。保留中、進行中、または完了のいずれかを指定してください。
+auth.new_report.error.invalid_user=担当者が見つかりません。既存のユーザーを指定してください。
+
+auth.used_report.label.title=レポートを編集
+auth.used_report.label.description=<html><p align="center">レポート情報を編集して、データベースを常に最新の状態に保ってください。</p></html>
+auth.used_report.label.button.save=変更を保存
+auth.used_report.label.button.delete=削除
+
+auth.used_report.confirm_delete.title=削除の確認
+auth.used_report.confirm_delete.message=レポート「%s」を削除してもよろしいですか？
+auth.used_report.confirm_delete.button.yes=はい
+auth.used_report.confirm_delete.button.no=いいえ
+auth.used_report.confirm_delete.success=レポートを削除しました。
+auth.used_report.confirm_delete.error=レポートの削除中にエラーが発生しました。接続をご確認ください。
+auth.used_report.register.success=レポートを保存しました。
+auth.used_report.register.error=現在、データベースに接続できません。インターネット接続をご確認いただくか、しばらくしてからもう一度お試しください。
+
+# --- NEW TASK MODULE --- #
+auth.new_task.window_title=CT Contab Manager
+auth.new_task.button.search=検索
+auth.new_task.button.home=ホーム
+auth.new_task.button.calendar=カレンダー
+auth.new_task.button.client=顧客
+auth.new_task.button.report=レポート
+auth.new_task.button.task=タスク
+auth.new_task.button.config=設定
+auth.new_task.button.admin=管理
+
+auth.new_task.label.title=新しいタスクを登録
+auth.new_task.label.description=<html><p align="center">実施予定のタスクの情報を登録して、データベースを常に最新の状態に保ってください。</p></html>
+auth.new_task.label.default.name=タスク名*
+auth.new_task.label.default.service=担当者
+auth.new_task.label.default.type_service=ステータス：保留中、進行中、または完了？*
+auth.new_task.label.default.priority=優先度：低、中、または高？*
+auth.new_task.label.default.observation=備考
+auth.new_task.label.hover.name=タスク名*
+auth.new_task.label.hover.service=担当者
+auth.new_task.label.hover.type_service=ステータス：保留中、進行中、または完了？*
+auth.new_task.label.hover.priority=優先度：低、中、または高？*
+auth.new_task.label.hover.observation=備考
+auth.new_task.label.button.cancel=キャンセル
+auth.new_task.label.button.register=登録
+auth.new_task.error.invalid_status=ステータスが正しくありません。保留中、進行中、または完了のいずれかを指定してください。
+auth.new_task.error.invalid_priority=優先度が正しくありません。低、中、高のいずれかを指定してください。
+auth.new_task.error.invalid_user=担当者が見つかりません。既存のユーザーを指定してください。
+
+auth.used_task.label.title=タスクを編集
+auth.used_task.label.description=<html><p align="center">実施予定のタスクの情報を編集して、データベースを常に最新の状態に保ってください。</p></html>
+auth.used_task.label.button.save=変更を保存
+auth.used_task.label.button.delete=削除
+
+auth.used_task.confirm_delete.title=削除の確認
+auth.used_task.confirm_delete.message=タスク「%s」を削除してもよろしいですか？
+auth.used_task.confirm_delete.button.yes=はい
+auth.used_task.confirm_delete.button.no=いいえ
+auth.used_task.confirm_delete.success=タスクを削除しました。
+auth.used_task.confirm_delete.error=タスクの削除中にエラーが発生しました。接続をご確認ください。
+auth.used_task.register.success=タスクを保存しました。
+auth.used_task.register.error=現在、データベースに接続できません。インターネット接続をご確認いただくか、しばらくしてからもう一度お試しください。
+
+# --- CONFIG PROFILE MODULE --- #
+auth.config.window_title=CT Contab Manager
+auth.config.button.search=検索
+auth.config.button.home=ホーム
+auth.config.button.calendar=カレンダー
+auth.config.button.client=顧客
+auth.config.button.report=レポート
+auth.config.button.task=タスク
+auth.config.button.config=設定
+auth.config.button.admin=管理
+auth.config.title=設定
+
+auth.config.tab.profile=プロフィール
+auth.config.tab.security=セキュリティ
+auth.config.tab.preferences=環境設定
+auth.config.tab.account=アカウント
+
+auth.config.profile.photo_title=プロフィール写真
+auth.config.profile.photo_hint=PNG、JPG、GIF形式。最大2MB。
+auth.config.field.user=ユーザー名
+auth.config.field.email=メールアドレス
+auth.config.field.phone=電話番号
+auth.config.button.save=変更を保存
+auth.config.button.change_image=画像を変更
+
+auth.config.permission.null=従業員
+auth.config.permission.adm=管理者
+auth.config.permission.super_adm=スーパー管理者
+
+auth.config.last_access.label=最終アクセス：%s
+auth.config.last_access.today=本日 %s
+auth.config.last_access.yesterday=昨日 %s
+auth.config.last_access.date=%s %s
+auth.config.last_access.first=最終アクセス：システムへの初回アクセス
+
+auth.config.card.security.title=セキュリティ
+auth.config.card.security.description=<html>パスワードを変更して、アカウントを安全に保ってください。</html>
+auth.config.card.security.button=パスワードを管理
+auth.config.card.preferences.title=環境設定
+auth.config.card.preferences.description=<html>言語、テーマ、システムの環境設定を管理します。</html>
+auth.config.card.preferences.button=設定する
+auth.config.card.account.title=アカウント
+auth.config.card.account.description=<html>アカウント情報と最近のアクティビティを確認できます。</html>
+auth.config.card.account.button=表示
+auth.config.card.danger.title=危険ゾーン
+auth.config.card.danger.description=<html>元に戻せない操作です。慎重に行ってください。</html>
+auth.config.card.danger.button_delete=アカウントを削除
+auth.config.card.danger.button_logout=ログアウト
+
+auth.config.error.username_invalid=ユーザー名が正しくありません。文字と数字のみを使用し、スペースは入れないでください。
+auth.config.error.email_invalid=メールアドレスが正しくありません。name@domain.com の形式で入力してください。
+auth.config.error.phone_invalid=電話番号が正しくありません。数字、スペース、および記号 + ( ) - のみ使用できます。
+auth.config.error.username_taken=このユーザー名はすでに使用されています。
+auth.config.error.email_taken=このメールアドレスはすでに使用されています。
+auth.config.error.no_changes=保存する変更はありません。
+auth.config.save_success=変更を保存しました。
+auth.config.save_error=変更を保存できませんでした。接続をご確認のうえ、もう一度お試しください。
+
+auth.config.image.chooser_title=プロフィール画像を選択してください
+auth.config.image.chooser_filter=画像（PNG、JPG、GIF、BMP）
+auth.config.image.too_large=画像が2MBを超えています。より小さいファイルを選択してください。
+auth.config.image.invalid=画像を読み込めませんでした。有効なPNG、JPG、GIF、またはBMPファイルを選択してください。
+auth.config.image.success=プロフィール画像を更新しました。
+auth.config.image.error=画像を更新できませんでした。接続をご確認のうえ、もう一度お試しください。
+
+audit.profile_username_changed=ユーザー %s がユーザー名を %s に変更しました
+audit.profile_email_changed=ユーザー %s がメールアドレスを %s から %s に変更しました
+audit.profile_phone_changed=ユーザー %s が電話番号を %s から %s に変更しました
+audit.profile_image_changed=ユーザー %s がプロフィール画像を変更しました
+
+auth.config.delete_account.title=アカウントを削除
+auth.config.delete_account.message=アカウント「%s」を削除してもよろしいですか？この操作は元に戻せません。
+auth.config.delete_account.button.yes=はい
+auth.config.delete_account.button.no=いいえ
+auth.config.delete_account.success=アカウントを削除しました。
+auth.config.delete_account.error=アカウントを削除できませんでした。接続をご確認のうえ、もう一度お試しください。
+auth.config.delete_account.linked=顧客、レポート、タスク、またはイベントが関連付けられているため、アカウントを削除できません。
+audit.account_deleted=ユーザー %s がアカウントを削除しました
+
+
+# --- CONFIG SECURITY MODULE --- #
+auth.security.title=パスワードを変更
+auth.security.field.current=現在のパスワード
+auth.security.field.new=新しいパスワード
+auth.security.field.confirm=新しいパスワードの確認
+
+auth.security.strength.title=パスワードの強度
+auth.security.strength.strong=強い
+auth.security.strength.weak=弱い
+auth.security.strength.medium=普通
+auth.security.strength.good=良い
+
+auth.security.tips.title=安全なパスワードのヒント
+auth.security.tips.length=8文字以上で設定してください
+auth.security.tips.case=大文字と小文字を含めてください
+auth.security.tips.numbers_symbols=数字と記号を含めてください
+auth.security.tips.personal=個人情報を使用しないでください
+
+auth.security.error.empty_fields=現在のパスワード、新しいパスワード、および確認用パスワードを入力してください。
+auth.security.error.whitespace=新しいパスワードにスペースを含めることはできません。
+auth.security.error.too_long=新しいパスワードは50文字以内で入力してください。
+auth.security.error.mismatch=確認用パスワードが新しいパスワードと一致しません。
+auth.security.error.same_as_current=新しいパスワードは現在のパスワードと異なるものにしてください。
+auth.security.error.wrong_current=現在のパスワードが正しくありません。
+auth.security.save_success=パスワードを変更しました。
+auth.security.save_error=パスワードを変更できませんでした。接続をご確認のうえ、もう一度お試しください。
+
+audit.profile_password_changed=ユーザー %s がパスワードを変更しました
+
+# --- CONFIG ACCOUNT MODULE --- #
+auth.account.title=個人情報
+auth.account.field.id=ユーザーID
+auth.account.field.role=役割
+auth.account.field.created=登録日
+auth.account.field.last_access=最終アクセス
+auth.account.field.email=登録済みメールアドレス
+auth.account.field.status=アカウントの状態
+auth.account.status.active=有効
+auth.account.last_access.at=%s %s
+auth.account.last_access.first=初回アクセス
+
+auth.account.danger.title=危険ゾーン
+auth.account.danger.delete.title=アカウントを削除
+auth.account.danger.delete.description=<html>アカウントとアクセスデータを完全に削除します。この操作は元に戻せません。</html>
+auth.account.danger.delete.button=アカウントを削除
+auth.account.danger.logout.title=ログアウト
+auth.account.danger.logout.description=<html>このデバイスでアカウントからログアウトし、ログイン画面に戻ります。</html>
+auth.account.danger.logout.button=ログアウト
+
+# --- CONFIG PREFERENCES MODULE --- #
+auth.preferences.language.title=システム言語
+auth.preferences.language.description=アプリケーションの言語を選択してください。
+
+auth.preferences.theme.title=インターフェースのテーマ
+auth.preferences.theme.description=アプリケーションの外観テーマを選択してください。
+auth.preferences.theme.dark.title=ダーク
+auth.preferences.theme.dark.description=デフォルトのダークテーマ
+auth.preferences.theme.light.title=ライト
+auth.preferences.theme.light.description=ライトテーマ
+
+auth.preferences.notify.title=通知
+auth.preferences.notify.description=通知の受信方法を管理します。
+auth.preferences.notify.push.title=通知を受け取る
+auth.preferences.notify.push.description=オンにすると通知を受け取れます
+auth.preferences.notify.tasks.title=タスクのアラートを受け取る
+auth.preferences.notify.tasks.description=期限や未処理の項目に関するアラート
+auth.preferences.notify.email.title=システムからのメールを受け取る
+auth.preferences.notify.email.description=お知らせや更新情報をメールで受け取れます
+
+auth.preferences.other.title=その他の環境設定
+auth.preferences.other.description=アプリケーションの追加設定
+auth.preferences.other.timezone=タイムゾーン
+auth.preferences.other.date_format=日付の形式
+auth.preferences.other.hour_format=時刻の形式
+
+auth.preferences.timezone.brasilia=(UTC-03:00) ブラジリア
+auth.preferences.timezone.manaus=(UTC-04:00) マナウス
+auth.preferences.timezone.rio_branco=(UTC-05:00) リオブランコ
+auth.preferences.timezone.noronha=(UTC-02:00) フェルナンド・デ・ノローニャ
+auth.preferences.timezone.utc=(UTC+00:00) UTC
+auth.preferences.timezone.lisboa=(UTC+00:00) リスボン
+auth.preferences.timezone.new_york=(UTC-05:00) ニューヨーク
+auth.preferences.timezone.tokyo=(UTC+09:00) 東京
+
+auth.preferences.date_format.dmy=DD/MM/YYYY
+auth.preferences.date_format.mdy=MM/DD/YYYY
+auth.preferences.date_format.ymd=YYYY-MM-DD
+
+auth.preferences.hour_format.h24=24時間制 (HH:mm)
+auth.preferences.hour_format.h12=12時間制 (hh:mm AM/PM)
+
+# --- CALENDAR MODULE --- #
+auth.calendar.title=カレンダー
+auth.calendar.label.new_event_text=新規イベント
+auth.calendar.more_events=+%d 件
+
+# --- NEW EVENT MODULE --- #
+auth.new_event.window_title=CT Contab Manager
+auth.new_event.button.search=検索
+auth.new_event.button.home=ホーム
+auth.new_event.button.calendar=カレンダー
+auth.new_event.button.client=顧客
+auth.new_event.button.report=レポート
+auth.new_event.button.task=タスク
+auth.new_event.button.config=設定
+auth.new_event.button.admin=管理
+
+auth.new_event.label.title=新しいイベントを登録
+auth.new_event.label.description=<html><p align="center">チームのイベントを登録して、会社のスケジュールを常に最新の状態に保ってください。</p></html>
+auth.new_event.label.default.name=イベント名*
+auth.new_event.label.default.responsible=担当者*
+auth.new_event.label.default.sector=担当部署
+auth.new_event.label.default.time=イベントの時刻*
+auth.new_event.label.default.date=イベントの日付*
+auth.new_event.label.default.observation=備考
+auth.new_event.label.hover.name=イベント名*
+auth.new_event.label.hover.responsible=担当者*
+auth.new_event.label.hover.sector=担当部署
+auth.new_event.label.hover.time=イベントの時刻*
+auth.new_event.label.hover.date=イベントの日付*
+auth.new_event.label.hover.observation=備考
+auth.new_event.label.button.cancel=キャンセル
+auth.new_event.label.button.register=登録
+auth.new_event.error.invalid_date=日付が正しくありません。DD/MM/YYYY の形式で入力してください（例：25/12/2026）。
+auth.new_event.error.invalid_time=時刻が正しくありません。HH:mm の形式で入力してください（例：18:30）。
+auth.new_event.error.invalid_user=担当者が見つかりません。既存のユーザーを指定してください。
+
+auth.used_event.label.title=イベントを編集
+auth.used_event.label.description=<html><p align="center">イベント情報を編集して、会社のスケジュールを常に最新の状態に保ってください。</p></html>
+auth.used_event.label.button.save=変更を保存
+auth.used_event.label.button.delete=削除
+
+auth.used_event.confirm_delete.title=削除の確認
+auth.used_event.confirm_delete.message=イベント「%s」を削除してもよろしいですか？
+auth.used_event.confirm_delete.button.yes=はい
+auth.used_event.confirm_delete.button.no=いいえ
+auth.used_event.confirm_delete.success=イベントを削除しました。
+auth.used_event.confirm_delete.error=イベントの削除中にエラーが発生しました。接続をご確認ください。
+auth.used_event.register.success=イベントを保存しました。
+auth.used_event.register.error=現在、データベースに接続できません。インターネット接続をご確認いただくか、しばらくしてからもう一度お試しください。

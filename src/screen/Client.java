@@ -457,6 +457,46 @@ public class Client extends javax.swing.JFrame {
         tela.setVisible(true);
         this.dispose();
     }
+    
+    private void irParaHome() {
+        new Home(usuarioLogado).setVisible(true);
+        this.dispose();
+    }
+    
+    private void irParaCalendario() {
+        new Calendar(usuarioLogado).setVisible(true);
+        this.dispose();
+    }
+    
+    private void irParaClientes() {
+        new Client(usuarioLogado).setVisible(true);
+        this.dispose();
+    }
+    
+    private void irParaRelatorios() {
+        new Report(usuarioLogado).setVisible(true);
+        this.dispose();
+    }
+    
+    private void irParaTarefas() {
+        new Task(usuarioLogado).setVisible(true);
+        this.dispose();
+    }
+    
+    private void irParaConfiguracoes() {
+        new ConfigProfile(usuarioLogado).setVisible(true);
+        this.dispose();
+    }
+    
+    private void irParaAdministracao() {
+        new Admin(usuarioLogado).setVisible(true);
+        this.dispose();
+    }
+    
+    private void irParaNovoCliente() {
+        new NewClient(usuarioLogado).setVisible(true);
+        this.dispose();
+    }
 
     private void carregarListaClientes() {
         try {
@@ -1316,8 +1356,7 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHomeMouseExited
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
-        new Home(usuarioLogado).setVisible(true);
-        this.dispose();
+        irParaHome();
     }//GEN-LAST:event_btnHomeActionPerformed
 
     private void btnCalendarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCalendarMouseEntered
@@ -1331,6 +1370,7 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCalendarMouseExited
 
     private void btnCalendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarActionPerformed
+        irParaCalendario();
     }//GEN-LAST:event_btnCalendarActionPerformed
 
     private void btnClientMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClientMouseEntered
@@ -1345,8 +1385,7 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClientMouseExited
 
     private void btnClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientActionPerformed
-        new Client(usuarioLogado).setVisible(true);
-        this.dispose();
+        irParaClientes();
     }//GEN-LAST:event_btnClientActionPerformed
 
     private void btnReportMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportMouseEntered
@@ -1360,8 +1399,7 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReportMouseExited
 
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
-        new Report(usuarioLogado).setVisible(true);
-        this.dispose();
+        irParaRelatorios();
     }//GEN-LAST:event_btnReportActionPerformed
 
     private void btnTaskMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTaskMouseEntered
@@ -1375,8 +1413,7 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTaskMouseExited
 
     private void btnTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaskActionPerformed
-        new Task(usuarioLogado).setVisible(true);
-        this.dispose();
+        irParaTarefas();
     }//GEN-LAST:event_btnTaskActionPerformed
 
     private void btnConfigMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnConfigMouseEntered
@@ -1390,6 +1427,7 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_btnConfigMouseExited
 
     private void btnConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfigActionPerformed
+        irParaConfiguracoes();
     }//GEN-LAST:event_btnConfigActionPerformed
 
     private void btnAdminMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdminMouseEntered
@@ -1403,6 +1441,7 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdminMouseExited
 
     private void btnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminActionPerformed
+        irParaAdministracao();
     }//GEN-LAST:event_btnAdminActionPerformed
 
     private void btnEllipseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEllipseMouseEntered
@@ -1463,8 +1502,7 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_ProgressClientesButtonActionPerformed
 
     private void NewClientButtonPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NewClientButtonPanelMousePressed
-        new NewClient(usuarioLogado).setVisible(true);
-        this.dispose();
+        irParaNovoCliente();
     }//GEN-LAST:event_NewClientButtonPanelMousePressed
 
     private void arrowBackButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_arrowBackButtonMouseEntered
@@ -1478,8 +1516,7 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_arrowBackButtonMouseExited
 
     private void arrowBackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_arrowBackButtonActionPerformed
-        new Home(usuarioLogado).setVisible(true);
-        this.dispose();
+        irParaHome();
     }//GEN-LAST:event_arrowBackButtonActionPerformed
 
     private void NewClientButtonPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NewClientButtonPanelMouseEntered

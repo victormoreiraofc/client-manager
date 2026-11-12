@@ -692,7 +692,7 @@ public class Login extends javax.swing.JFrame {
         lblTitle.setText("Acesse sua conta");
         lblTitle.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         getContentPane().add(lblTitle);
-        lblTitle.setBounds(504, 168, 450, 40);
+        lblTitle.setBounds(504, 168, 750, 40);
         getContentPane().add(lblLogo);
         lblLogo.setBounds(624, 106, 30, 30);
 
@@ -767,6 +767,7 @@ public class Login extends javax.swing.JFrame {
             if (usuarioLogado != null) {
                 String idiomaAtualDaTela = I18nManager.getCurrentLocale().toString();
                 CTCONTAB.atualizarIdiomaUsuario(usernameField.getText(), idiomaAtualDaTela);
+                usuarioLogado.setUltimoAcesso(CTCONTAB.registrarAcesso(usuarioLogado.getUsuario()));
                 AuditUtil.registrar(usuarioLogado.getUsuario(), "audit.user_login", usuarioLogado.getUsuario());
                 new Home(usuarioLogado).setVisible(true);
                 dispose();

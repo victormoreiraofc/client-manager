@@ -191,3 +191,307 @@ audit.time_suffix=às %s de %s
 audit.user_login=O usuário %s entrou no sistema
 audit.user_created=O usuário %s foi criado
 audit.user_deleted=O usuário %s foi deletado por %s (%s)
+
+# --- NEW REPORT MODULE --- #
+auth.new_report.window_title=CT Contab Manager
+auth.new_report.button.search=Buscar
+auth.new_report.button.home=Home
+auth.new_report.button.calendar=Calendário
+auth.new_report.button.client=Clientes
+auth.new_report.button.report=Relatórios
+auth.new_report.button.task=Tarefas
+auth.new_report.button.config=Configurações
+auth.new_report.button.admin=Administração
+
+auth.new_report.label.title=Cadastre um novo relatório
+auth.new_report.label.description=<html><p align="center">Mantenha nossa base atualizada cadastrando as informações do seu relatório.</p></html>
+auth.new_report.label.default.name=Nome do Relatório*
+auth.new_report.label.default.service=Responsável
+auth.new_report.label.default.type_service=Status: Pendente, Em Andamento ou Concluído?*
+auth.new_report.label.default.observation=Observações
+auth.new_report.label.hover.name=Nome do Relatório*
+auth.new_report.label.hover.service=Responsável
+auth.new_report.label.hover.type_service=Status: Pendente, Em Andamento ou Concluído?*
+auth.new_report.label.hover.observation=Observações
+auth.new_report.label.button.cancel=Cancelar
+auth.new_report.label.button.register=Cadastrar
+auth.new_report.error.invalid_status=Status inválido. Use Pendente, Em andamento ou Concluído.
+auth.new_report.error.invalid_user=Responsável não encontrado. Informe um usuário existente.
+
+auth.used_report.label.title=Editar Relatório
+auth.used_report.label.description=<html><p align="center">Mantenha nossa base atualizada modificando as informações do seu relatório.</p></html>
+auth.used_report.label.button.save=Salvar Alterações
+auth.used_report.label.button.delete=Deletar
+
+auth.used_report.confirm_delete.title=Confirmar exclusão
+auth.used_report.confirm_delete.message=Tem certeza que deseja excluir o relatório "%s"?
+auth.used_report.confirm_delete.button.yes=Sim
+auth.used_report.confirm_delete.button.no=Não
+auth.used_report.confirm_delete.success=Relatório excluído com sucesso.
+auth.used_report.confirm_delete.error=Erro ao excluir o relatório. Verifique sua conexão.
+auth.used_report.register.success=Relatório salvo com sucesso.
+auth.used_report.register.error=Não conseguimos conectar ao banco de dados no momento. Por favor, verifique sua internet ou tente novamente mais tarde.
+
+# --- NEW TASK MODULE --- #
+auth.new_task.window_title=CT Contab Manager
+auth.new_task.button.search=Buscar
+auth.new_task.button.home=Home
+auth.new_task.button.calendar=Calendário
+auth.new_task.button.client=Clientes
+auth.new_task.button.report=Relatórios
+auth.new_task.button.task=Tarefas
+auth.new_task.button.config=Configurações
+auth.new_task.button.admin=Administração
+
+auth.new_task.label.title=Cadastre uma nova tarefa
+auth.new_task.label.description=<html><p align="center">Mantenha nossa base atualizada cadastrando as informações das tarefas a serem feitas.</p></html>
+auth.new_task.label.default.name=Nome da Tarefa*
+auth.new_task.label.default.service=Responsável
+auth.new_task.label.default.type_service=Status: Pendente, Em Andamento ou Concluído?*
+auth.new_task.label.default.priority=Prioridade: Baixa, Média ou Alta?*
+auth.new_task.label.default.observation=Observações
+auth.new_task.label.hover.name=Nome da Tarefa*
+auth.new_task.label.hover.service=Responsável
+auth.new_task.label.hover.type_service=Status: Pendente, Em Andamento ou Concluído?*
+auth.new_task.label.hover.priority=Prioridade: Baixa, Média ou Alta?*
+auth.new_task.label.hover.observation=Observações
+auth.new_task.label.button.cancel=Cancelar
+auth.new_task.label.button.register=Cadastrar
+auth.new_task.error.invalid_status=Status inválido. Use Pendente, Em andamento ou Concluído.
+auth.new_task.error.invalid_priority=Prioridade inválida. Use Baixa, Média ou Alta.
+auth.new_task.error.invalid_user=Responsável não encontrado. Informe um usuário existente.
+
+auth.used_task.label.title=Editar Tarefa
+auth.used_task.label.description=<html><p align="center">Mantenha nossa base atualizada modificando as informações das tarefas a serem feitas.</p></html>
+auth.used_task.label.button.save=Salvar Alterações
+auth.used_task.label.button.delete=Deletar
+
+auth.used_task.confirm_delete.title=Confirmar exclusão
+auth.used_task.confirm_delete.message=Tem certeza que deseja excluir a tarefa "%s"?
+auth.used_task.confirm_delete.button.yes=Sim
+auth.used_task.confirm_delete.button.no=Não
+auth.used_task.confirm_delete.success=Tarefa excluída com sucesso.
+auth.used_task.confirm_delete.error=Erro ao excluir a tarefa. Verifique sua conexão.
+auth.used_task.register.success=Tarefa salva com sucesso.
+auth.used_task.register.error=Não conseguimos conectar ao banco de dados no momento. Por favor, verifique sua internet ou tente novamente mais tarde.
+
+# --- CONFIG PROFILE MODULE --- #
+auth.config.window_title=CT Contab Manager
+auth.config.button.search=Buscar
+auth.config.button.home=Home
+auth.config.button.calendar=Calendário
+auth.config.button.client=Clientes
+auth.config.button.report=Relatórios
+auth.config.button.task=Tarefas
+auth.config.button.config=Configurações
+auth.config.button.admin=Administração
+auth.config.title=Configurações
+
+auth.config.tab.profile=Perfil
+auth.config.tab.security=Segurança
+auth.config.tab.preferences=Preferências
+auth.config.tab.account=Conta
+
+auth.config.profile.photo_title=Foto de Perfil
+auth.config.profile.photo_hint=PNG, JPG ou GIF. Máx. 2MB.
+auth.config.field.user=Usuário
+auth.config.field.email=Email
+auth.config.field.phone=Telefone
+auth.config.button.save=Salvar Alterações
+auth.config.button.change_image=Alterar Imagem
+
+auth.config.permission.null=Funcionário
+auth.config.permission.adm=Administrador
+auth.config.permission.super_adm=Administrador Mestre
+
+auth.config.last_access.label=Último acesso: %s
+auth.config.last_access.today=Hoje às %s
+auth.config.last_access.yesterday=Ontem às %s
+auth.config.last_access.date=%s às %s
+auth.config.last_access.first=Último acesso: primeiro acesso ao sistema
+
+auth.config.card.security.title=Segurança
+auth.config.card.security.description=<html>Altere sua senha e mantenha sua conta segura.</html>
+auth.config.card.security.button=Gerenciar Senha
+auth.config.card.preferences.title=Preferências
+auth.config.card.preferences.description=<html>Gerencie idioma, tema e preferências do sistema.</html>
+auth.config.card.preferences.button=Configurar
+auth.config.card.account.title=Conta
+auth.config.card.account.description=<html>Veja informações da sua conta e atividades recentes.</html>
+auth.config.card.account.button=Visualizar
+auth.config.card.danger.title=Zona de Perigo
+auth.config.card.danger.description=<html>Ações irreversíveis. Utilize com cuidado.</html>
+auth.config.card.danger.button_delete=Excluir Conta
+auth.config.card.danger.button_logout=Encerrar Sessão
+
+auth.config.error.username_invalid=Usuário inválido. Use apenas letras e números, sem espaços.
+auth.config.error.email_invalid=Email inválido. Informe um email no formato nome@dominio.com.
+auth.config.error.phone_invalid=Telefone inválido. Use apenas números, espaços e os símbolos + ( ) -.
+auth.config.error.username_taken=Este nome de usuário já está em uso.
+auth.config.error.email_taken=Este email já está em uso.
+auth.config.error.no_changes=Nenhuma alteração para salvar.
+auth.config.save_success=Alterações salvas com sucesso.
+auth.config.save_error=Não conseguimos salvar suas alterações. Verifique sua conexão e tente novamente.
+
+auth.config.image.chooser_title=Selecione uma imagem de perfil
+auth.config.image.chooser_filter=Imagens (PNG, JPG, GIF, BMP)
+auth.config.image.too_large=A imagem é maior que 2MB. Escolha um arquivo menor.
+auth.config.image.invalid=Não foi possível ler a imagem. Escolha um arquivo PNG, JPG, GIF ou BMP válido.
+auth.config.image.success=Imagem de perfil atualizada com sucesso.
+auth.config.image.error=Não conseguimos atualizar sua imagem. Verifique sua conexão e tente novamente.
+
+audit.profile_username_changed=O usuário %s alterou seu nome de usuário para %s
+audit.profile_email_changed=O usuário %s alterou o email de %s para %s
+audit.profile_phone_changed=O usuário %s alterou o telefone de %s para %s
+audit.profile_image_changed=O usuário %s alterou sua imagem de perfil
+
+auth.config.delete_account.title=Excluir conta
+auth.config.delete_account.message=Tem certeza que deseja excluir sua conta "%s"? Esta ação não pode ser desfeita.
+auth.config.delete_account.button.yes=Sim
+auth.config.delete_account.button.no=Não
+auth.config.delete_account.success=Conta excluída com sucesso.
+auth.config.delete_account.error=Não conseguimos excluir sua conta. Verifique sua conexão e tente novamente.
+auth.config.delete_account.linked=Não é possível excluir sua conta porque existem clientes, relatórios, tarefas ou eventos vinculados a ela.
+audit.account_deleted=O usuário %s excluiu a própria conta
+
+
+# --- CONFIG SECURITY MODULE --- #
+auth.security.title=Alterar Senha
+auth.security.field.current=Senha Atual
+auth.security.field.new=Nova Senha
+auth.security.field.confirm=Confirmar Nova Senha
+
+auth.security.strength.title=Força da Senha
+auth.security.strength.strong=Forte
+auth.security.strength.weak=Fraca
+auth.security.strength.medium=Médio
+auth.security.strength.good=Bom
+
+auth.security.tips.title=Dicas para uma senha segura
+auth.security.tips.length=Use pelo menos 8 caracteres
+auth.security.tips.case=Inclua letras maiúsculas e minúsculas
+auth.security.tips.numbers_symbols=Inclua números e símbolos
+auth.security.tips.personal=Evite informações pessoais
+
+auth.security.error.empty_fields=Preencha a senha atual, a nova senha e a confirmação.
+auth.security.error.whitespace=A nova senha não pode conter espaços.
+auth.security.error.too_long=A nova senha pode ter no máximo 50 caracteres.
+auth.security.error.mismatch=A confirmação não é igual à nova senha.
+auth.security.error.same_as_current=A nova senha deve ser diferente da senha atual.
+auth.security.error.wrong_current=A senha atual está incorreta.
+auth.security.save_success=Senha alterada com sucesso.
+auth.security.save_error=Não conseguimos alterar sua senha. Verifique sua conexão e tente novamente.
+
+audit.profile_password_changed=O usuário %s alterou sua senha
+
+# --- CONFIG ACCOUNT MODULE --- #
+auth.account.title=Informações Pessoais
+auth.account.field.id=ID do Usuário
+auth.account.field.role=Cargo
+auth.account.field.created=Data de Cadastro
+auth.account.field.last_access=Último Acesso
+auth.account.field.email=E-mail Cadastrado
+auth.account.field.status=Status da Conta
+auth.account.status.active=Ativa
+auth.account.last_access.at=%s às %s
+auth.account.last_access.first=Primeiro acesso
+
+auth.account.danger.title=Zona de Perigo
+auth.account.danger.delete.title=Excluir Conta
+auth.account.danger.delete.description=<html>Exclui permanentemente a sua conta e os seus dados de acesso. Esta ação não pode ser desfeita.</html>
+auth.account.danger.delete.button=Excluir Conta
+auth.account.danger.logout.title=Encerrar Sessão
+auth.account.danger.logout.description=<html>Saia da sua conta neste dispositivo e volte para a tela de login.</html>
+auth.account.danger.logout.button=Encerrar Sessão
+
+# --- CONFIG PREFERENCES MODULE --- #
+auth.preferences.language.title=Idioma do Sistema
+auth.preferences.language.description=Selecione o idioma da aplicação.
+
+auth.preferences.theme.title=Tema da Interface
+auth.preferences.theme.description=Escolha o tema de aparência da aplicação.
+auth.preferences.theme.dark.title=Escuro
+auth.preferences.theme.dark.description=Tema escuro padrão
+auth.preferences.theme.light.title=Claro
+auth.preferences.theme.light.description=Tema claro
+
+auth.preferences.notify.title=Notificações
+auth.preferences.notify.description=Gerencie como você deseja receber notificações.
+auth.preferences.notify.push.title=Receber notificações
+auth.preferences.notify.push.description=Ative para receber notificações
+auth.preferences.notify.tasks.title=Receber alerta de tarefas
+auth.preferences.notify.tasks.description=Alerta sobre prazos e pendências
+auth.preferences.notify.email.title=Receber emails do sistema
+auth.preferences.notify.email.description=Comunicados e atualizações por email
+
+auth.preferences.other.title=Outras Preferências
+auth.preferences.other.description=Configurações adicionais da aplicação
+auth.preferences.other.timezone=Fuso Horário
+auth.preferences.other.date_format=Formato da data
+auth.preferences.other.hour_format=Formato da hora
+
+auth.preferences.timezone.brasilia=(UTC-03:00) Brasília
+auth.preferences.timezone.manaus=(UTC-04:00) Manaus
+auth.preferences.timezone.rio_branco=(UTC-05:00) Rio Branco
+auth.preferences.timezone.noronha=(UTC-02:00) Fernando de Noronha
+auth.preferences.timezone.utc=(UTC+00:00) UTC
+auth.preferences.timezone.lisboa=(UTC+00:00) Lisboa
+auth.preferences.timezone.new_york=(UTC-05:00) Nova York
+auth.preferences.timezone.tokyo=(UTC+09:00) Tóquio
+
+auth.preferences.date_format.dmy=DD/MM/AAAA
+auth.preferences.date_format.mdy=MM/DD/AAAA
+auth.preferences.date_format.ymd=AAAA-MM-DD
+
+auth.preferences.hour_format.h24=24 horas (HH:mm)
+auth.preferences.hour_format.h12=12 horas (hh:mm AM/PM)
+
+# --- CALENDAR MODULE --- #
+auth.calendar.title=Calendário
+auth.calendar.label.new_event_text=Novo Evento
+auth.calendar.more_events=+%d mais
+
+# --- NEW EVENT MODULE --- #
+auth.new_event.window_title=CT Contab Manager
+auth.new_event.button.search=Buscar
+auth.new_event.button.home=Home
+auth.new_event.button.calendar=Calendário
+auth.new_event.button.client=Clientes
+auth.new_event.button.report=Relatórios
+auth.new_event.button.task=Tarefas
+auth.new_event.button.config=Configurações
+auth.new_event.button.admin=Administração
+
+auth.new_event.label.title=Cadastre um novo compromisso
+auth.new_event.label.description=<html><p align="center">Mantenha a agenda da empresa atualizada cadastrando os compromissos da equipe.</p></html>
+auth.new_event.label.default.name=Nome do Compromisso*
+auth.new_event.label.default.responsible=Responsável*
+auth.new_event.label.default.sector=Setor Responsável
+auth.new_event.label.default.time=Horário do Compromisso*
+auth.new_event.label.default.date=Data do Compromisso*
+auth.new_event.label.default.observation=Observações
+auth.new_event.label.hover.name=Nome do Compromisso*
+auth.new_event.label.hover.responsible=Responsável*
+auth.new_event.label.hover.sector=Setor Responsável
+auth.new_event.label.hover.time=Horário do Compromisso*
+auth.new_event.label.hover.date=Data do Compromisso*
+auth.new_event.label.hover.observation=Observações
+auth.new_event.label.button.cancel=Cancelar
+auth.new_event.label.button.register=Cadastrar
+auth.new_event.error.invalid_date=Data inválida. Use o formato DD/MM/AAAA, por exemplo 25/12/2026.
+auth.new_event.error.invalid_time=Horário inválido. Use o formato HH:mm, por exemplo 18:30.
+auth.new_event.error.invalid_user=Responsável não encontrado. Informe um usuário existente.
+
+auth.used_event.label.title=Editar Compromisso
+auth.used_event.label.description=<html><p align="center">Mantenha a agenda da empresa atualizada modificando as informações do compromisso.</p></html>
+auth.used_event.label.button.save=Salvar Alterações
+auth.used_event.label.button.delete=Deletar
+
+auth.used_event.confirm_delete.title=Confirmar exclusão
+auth.used_event.confirm_delete.message=Tem certeza que deseja excluir o compromisso "%s"?
+auth.used_event.confirm_delete.button.yes=Sim
+auth.used_event.confirm_delete.button.no=Não
+auth.used_event.confirm_delete.success=Compromisso excluído com sucesso.
+auth.used_event.confirm_delete.error=Erro ao excluir o compromisso. Verifique sua conexão.
+auth.used_event.register.success=Compromisso salvo com sucesso.
+auth.used_event.register.error=Não conseguimos conectar ao banco de dados no momento. Por favor, verifique sua internet ou tente novamente mais tarde.

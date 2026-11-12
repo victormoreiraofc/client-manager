@@ -140,7 +140,7 @@ public class ClienteItemPanel extends JPanel {
                     case "fr":
                         return "Non renseigné";
                     case "it":
-                        return "Giuridica";
+                        return "Non informato";
                     case "ja":
                         return "未指定";
                     case "ko":
@@ -148,7 +148,7 @@ public class ClienteItemPanel extends JPanel {
                     case "zh":
                         return "未告知";
                     default:
-                        return "Jurídica";
+                        return "NI";
                 }
             default:
                 return valor;

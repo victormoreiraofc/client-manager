@@ -1,24 +1,24 @@
 # --- AUTHENTICATION MODULE (Login) ---
 auth.login.window_title=CT Contab Manager
-auth.login.header.title=Accedi al tuo account
+auth.login.header.title=Acceda al suo account
 auth.login.social.google=Accedi con Google
 auth.login.social.apple=Accedi con Apple
-auth.login.divider.text=Or
-auth.login.confirm=Avanti
-auth.login.newacount=<html><font color='#48494B'>Non hai un account? </font><font color='#287FCE'><b>Iscriviti</b></font></html>
-auth.login.forgotpassword=Password dimenticata?
-auth.login.hover.user=Utente
-auth.login.default.user=Utente
+auth.login.divider.text=Oppure
+auth.login.confirm=Continua
+auth.login.newacount=<html><font color='#48494B'>Non ha un account? </font><font color='#287FCE'><b>Registrarsi</b></font></html>
+auth.login.forgotpassword=Ha dimenticato la password?
+auth.login.hover.user=Nome utente
+auth.login.default.user=Nome utente
 auth.login.hover.password=Password
 auth.login.default.password=Password
 
 # --- REGISTRATION MODULE (Sign Up) ---
 auth.register.window_title=CT Contab Manager
-auth.register.header.title=Crea il tuo account
-auth.register.confirm=Avanti
-auth.register.newacount=<html><font color='#48494B'>Hai già un account? </font><font color='#287FCE'><b>Accedi</b></font></html>
-auth.register.hover.user=Utente
-auth.register.default.user=Utente
+auth.register.header.title=Crei il suo account
+auth.register.confirm=Continua
+auth.register.newacount=<html><font color='#48494B'>Ha già un account? </font><font color='#287FCE'><b>Accedere</b></font></html>
+auth.register.hover.user=Nome utente
+auth.register.default.user=Nome utente
 auth.register.hover.password=Password
 auth.register.default.password=Password
 auth.register.hover.email=Email
@@ -29,16 +29,17 @@ auth.home.window_title=CT Contab Manager
 auth.home.button.home=Home
 auth.home.button.calendar=Calendario
 auth.home.button.client=Clienti
-auth.home.button.report=Rapporti
+auth.home.button.report=Report
 auth.home.button.task=Attività
 auth.home.button.config=Impostazioni
 auth.home.button.admin=Amministrazione
-auth.home.banner.title=Aggiungi nuovi clienti
-auth.home.banner.description=<html>Registra nuovi clienti in modo semplice e veloce per avere il pieno controllo dei tuoi conti in un unico posto.</html>
+
+auth.home.banner.title=Aggiunga nuovi clienti
+auth.home.banner.description=<html>Registri nuovi clienti in modo semplice e rapido per avere il pieno controllo dei suoi conti in un unico posto.</html>
 auth.home.statistic.title=Statistiche
 auth.home.label.customer=Clienti
 auth.home.label.task=Attività
-auth.home.label.report=Rapporti
+auth.home.label.report=Report
 auth.home.label.newclient=Nuovi clienti
 auth.home.label.admin=Amministratori
 auth.home.button.newclient=Nuovo cliente
@@ -46,7 +47,7 @@ auth.home.button.newclient=Nuovo cliente
 # --- ERROR MODULE (Error) ---
 auth.error.window_title=CT Contab Manager
 auth.error.header.title=Errore
-auth.error.description=<html><p align="justify"> Ops! Qualcosa è andato storto. Al momento stiamo riscontrando un'instabilità del sistema. Il nostro team è già stato informato e sta lavorando per risolvere il problema. Riprova tra qualche minuto.</p></html>
+auth.error.description=<html><p align="justify"> Ops! Qualcosa non è andato come previsto. Al momento il sistema presenta delle instabilità. Il nostro team è già stato avvisato e sta lavorando alla risoluzione. La preghiamo di riprovare tra qualche minuto.</p></html>
 auth.error.confirm=Ho capito
 auth.error.restart=Riavvia
 
@@ -56,16 +57,17 @@ auth.client.button.search=Cerca
 auth.client.button.home=Home
 auth.client.button.calendar=Calendario
 auth.client.button.client=Clienti
-auth.client.button.report=Rapporti
+auth.client.button.report=Report
 auth.client.button.task=Attività
 auth.client.button.config=Impostazioni
 auth.client.button.admin=Amministrazione
+
 auth.client.title=Clienti
 auth.client.label.all=Tutti
 auth.client.label.finished=Completati
 auth.client.label.in_progress=In corso
 auth.client.label.pending=In sospeso
-auth.client.label.new_client_text=Nuovo Cliente
+auth.client.label.new_client_text=Nuovo cliente
 auth.client.column.id=ID
 auth.client.column.name=NOME
 auth.client.column.status=STATO
@@ -78,27 +80,418 @@ auth.new_clients.button.search=Cerca
 auth.new_clients.button.home=Home
 auth.new_clients.button.calendar=Calendario
 auth.new_clients.button.client=Clienti
-auth.new_clients.button.report=Rapporti
+auth.new_clients.button.report=Report
 auth.new_clients.button.task=Attività
 auth.new_clients.button.config=Impostazioni
 auth.new_clients.button.admin=Amministrazione
-auth.new_clients.label.title=Registra un novo cliente
-auth.new_clients.label.description=<html><p align="center">Mantieni aggiornato il nostro database registrando le informazioni del tuo cliente.</p></html>
+
+auth.new_clients.label.title=Registri un nuovo cliente
+auth.new_clients.label.description=<html><p align="center">Mantenga aggiornata la nostra base dati registrando le informazioni del suo cliente.</p></html>
 auth.new_clients.label.default.name=Nome completo*
 auth.new_clients.label.default.service=Servizio*
-auth.new_clients.label.default.type_person=Persona: Fisica, Giuridica o Non Informato?*
+auth.new_clients.label.default.type_person=Persona: Fisica, Giuridica o NI?*
 auth.new_clients.label.default.type_service=Servizio: In sospeso, In corso o Completato?*
-auth.new_clients.label.default.email=E-mail*
+auth.new_clients.label.default.email=Email*
 auth.new_clients.label.default.telephone=Telefono
 auth.new_clients.label.default.cellphone=Cellulare
-auth.new_clients.label.default.observation=Osservazioni
+auth.new_clients.label.default.observation=Note
 auth.new_clients.label.hover.name=Nome completo*
 auth.new_clients.label.hover.service=Servizio*
-auth.new_clients.label.hover.type_person=Persona: Fisica, Giuridica o Non Informato?*
+auth.new_clients.label.hover.type_person=Persona: Fisica, Giuridica o NI?*
 auth.new_clients.label.hover.type_service=Servizio: In sospeso, In corso o Completato?*
-auth.new_clients.label.hover.email=E-mail*
+auth.new_clients.label.hover.email=Email*
 auth.new_clients.label.hover.telephone=Telefono
 auth.new_clients.label.hover.cellphone=Cellulare
-auth.new_clients.label.hover.observation=Osservazioni
+auth.new_clients.label.hover.observation=Note
 auth.new_clients.label.button.cancel=Annulla
 auth.new_clients.label.button.register=Registra
+
+auth.used_client.label.title=Modifica cliente
+auth.used_client.label.description=<html><p align="center">Mantenga aggiornata la nostra base dati modificando le informazioni del suo cliente.</p></html>
+auth.used_client.label.button.save=Salva modifiche
+auth.used_client.label.button.delete=Elimina
+
+auth.used_client.confirm_delete.title=Conferma eliminazione
+auth.used_client.confirm_delete.message=È sicuro di voler eliminare il cliente “%s”?
+auth.used_client.confirm_delete.button.yes=Sì
+auth.used_client.confirm_delete.button.no=No
+auth.used_client.confirm_delete.success=Cliente eliminato con successo.
+auth.used_client.confirm_delete.error=Errore durante l'eliminazione del cliente. Verifichi la connessione.
+auth.used_client.register.success=La registrazione del cliente è stata completata con successo. Lo storico è ora disponibile per la consultazione.
+auth.used_client.register.error=Al momento non è stato possibile connettersi al database. Verifichi la connessione a Internet o riprovi più tardi.
+
+
+# --- REPORT MODULE --- #
+auth.report.window_title=CT Contab Manager
+auth.report.button.search=Cerca
+auth.report.button.home=Home
+auth.report.button.calendar=Calendario
+auth.report.button.client=Clienti
+auth.report.button.report=Report
+auth.report.button.task=Attività
+auth.report.button.config=Impostazioni
+auth.report.button.admin=Amministrazione
+
+auth.report.title=Report
+auth.report.label.all=Tutti
+auth.report.label.finished=Completati
+auth.report.label.in_progress=In corso
+auth.report.label.pending=In sospeso
+auth.report.label.new_report_text=Nuovo report
+auth.report.column.id=ID
+auth.report.column.name=NOME DEL REPORT
+auth.report.column.status=STATO
+auth.report.column.date=DATA DI REGISTRAZIONE
+
+# --- TASK MODULE --- #
+auth.task.window_title=Attività
+auth.task.button.home=Home
+auth.task.button.calendar=Calendario
+auth.task.button.client=Clienti
+auth.task.button.report=Report
+auth.task.button.task=Attività
+auth.task.button.config=Impostazioni
+auth.task.button.admin=Amministrazione
+auth.task.title=Attività
+auth.task.label.all=Tutte
+auth.task.label.finished=Completate
+auth.task.label.in_progress=In corso
+auth.task.label.pending=In sospeso
+auth.task.label.new_task_text=Nuova attività
+auth.task.column.id=ID
+auth.task.column.name=NOME DELL'ATTIVITÀ
+auth.task.column.status=STATO
+auth.task.column.priority=PRIORITÀ
+auth.task.column.date=DATA DI REGISTRAZIONE
+auth.task.column.responsible=UTENTE RESPONSABILE
+auth.task.button.search=Cerca
+
+# --- ADMIN MODULE --- #
+auth.admin.window_title=Amministrazione
+auth.admin.button.home=Home
+auth.admin.button.calendar=Calendario
+auth.admin.button.client=Clienti
+auth.admin.button.report=Report
+auth.admin.button.task=Attività
+auth.admin.button.config=Impostazioni
+auth.admin.button.admin=Amministrazione
+auth.admin.title=Amministrazione
+auth.admin.label.users=Utenti
+auth.admin.label.audit=Audit
+auth.admin.label.new_user_text=Nuovo utente
+auth.admin.column.id=ID
+auth.admin.column.name=NOME
+auth.admin.column.email=EMAIL
+auth.admin.column.permissions=PERMESSI
+auth.admin.column.date=DATA DI REGISTRAZIONE
+auth.admin.button.search=Cerca
+
+# --- AUDIT MODULE --- #
+audit.time_suffix=alle %s del %s
+audit.user_login=L'utente %s ha effettuato l'accesso al sistema
+audit.user_created=L'utente %s è stato creato
+audit.user_deleted=L'utente %s è stato eliminato da %s (%s)
+
+# --- NEW REPORT MODULE --- #
+auth.new_report.window_title=CT Contab Manager
+auth.new_report.button.search=Cerca
+auth.new_report.button.home=Home
+auth.new_report.button.calendar=Calendario
+auth.new_report.button.client=Clienti
+auth.new_report.button.report=Report
+auth.new_report.button.task=Attività
+auth.new_report.button.config=Impostazioni
+auth.new_report.button.admin=Amministrazione
+
+auth.new_report.label.title=Registri un nuovo report
+auth.new_report.label.description=<html><p align="center">Mantenga aggiornata la nostra base dati registrando le informazioni del suo report.</p></html>
+auth.new_report.label.default.name=Nome del report*
+auth.new_report.label.default.service=Responsabile
+auth.new_report.label.default.type_service=Stato: In sospeso, In corso o Completato?*
+auth.new_report.label.default.observation=Note
+auth.new_report.label.hover.name=Nome del report*
+auth.new_report.label.hover.service=Responsabile
+auth.new_report.label.hover.type_service=Stato: In sospeso, In corso o Completato?*
+auth.new_report.label.hover.observation=Note
+auth.new_report.label.button.cancel=Annulla
+auth.new_report.label.button.register=Registra
+auth.new_report.error.invalid_status=Stato non valido. Utilizzi In sospeso, In corso o Completato.
+auth.new_report.error.invalid_user=Responsabile non trovato. Indichi un utente esistente.
+
+auth.used_report.label.title=Modifica report
+auth.used_report.label.description=<html><p align="center">Mantenga aggiornata la nostra base dati modificando le informazioni del suo report.</p></html>
+auth.used_report.label.button.save=Salva modifiche
+auth.used_report.label.button.delete=Elimina
+
+auth.used_report.confirm_delete.title=Conferma eliminazione
+auth.used_report.confirm_delete.message=È sicuro di voler eliminare il report “%s”?
+auth.used_report.confirm_delete.button.yes=Sì
+auth.used_report.confirm_delete.button.no=No
+auth.used_report.confirm_delete.success=Report eliminato con successo.
+auth.used_report.confirm_delete.error=Errore durante l'eliminazione del report. Verifichi la connessione.
+auth.used_report.register.success=Report salvato con successo.
+auth.used_report.register.error=Al momento non è stato possibile connettersi al database. Verifichi la connessione a Internet o riprovi più tardi.
+
+# --- NEW TASK MODULE --- #
+auth.new_task.window_title=CT Contab Manager
+auth.new_task.button.search=Cerca
+auth.new_task.button.home=Home
+auth.new_task.button.calendar=Calendario
+auth.new_task.button.client=Clienti
+auth.new_task.button.report=Report
+auth.new_task.button.task=Attività
+auth.new_task.button.config=Impostazioni
+auth.new_task.button.admin=Amministrazione
+
+auth.new_task.label.title=Registri una nuova attività
+auth.new_task.label.description=<html><p align="center">Mantenga aggiornata la nostra base dati registrando le informazioni sulle attività da svolgere.</p></html>
+auth.new_task.label.default.name=Nome dell'attività*
+auth.new_task.label.default.service=Responsabile
+auth.new_task.label.default.type_service=Stato: In sospeso, In corso o Completato?*
+auth.new_task.label.default.priority=Priorità: Bassa, Media o Alta?*
+auth.new_task.label.default.observation=Note
+auth.new_task.label.hover.name=Nome dell'attività*
+auth.new_task.label.hover.service=Responsabile
+auth.new_task.label.hover.type_service=Stato: In sospeso, In corso o Completato?*
+auth.new_task.label.hover.priority=Priorità: Bassa, Media o Alta?*
+auth.new_task.label.hover.observation=Note
+auth.new_task.label.button.cancel=Annulla
+auth.new_task.label.button.register=Registra
+auth.new_task.error.invalid_status=Stato non valido. Utilizzi In sospeso, In corso o Completato.
+auth.new_task.error.invalid_priority=Priorità non valida. Utilizzi Bassa, Media o Alta.
+auth.new_task.error.invalid_user=Responsabile non trovato. Indichi un utente esistente.
+
+auth.used_task.label.title=Modifica attività
+auth.used_task.label.description=<html><p align="center">Mantenga aggiornata la nostra base dati modificando le informazioni sulle attività da svolgere.</p></html>
+auth.used_task.label.button.save=Salva modifiche
+auth.used_task.label.button.delete=Elimina
+
+auth.used_task.confirm_delete.title=Conferma eliminazione
+auth.used_task.confirm_delete.message=È sicuro di voler eliminare l'attività “%s”?
+auth.used_task.confirm_delete.button.yes=Sì
+auth.used_task.confirm_delete.button.no=No
+auth.used_task.confirm_delete.success=Attività eliminata con successo.
+auth.used_task.confirm_delete.error=Errore durante l'eliminazione dell'attività. Verifichi la connessione.
+auth.used_task.register.success=Attività salvata con successo.
+auth.used_task.register.error=Al momento non è stato possibile connettersi al database. Verifichi la connessione a Internet o riprovi più tardi.
+
+# --- CONFIG PROFILE MODULE --- #
+auth.config.window_title=CT Contab Manager
+auth.config.button.search=Cerca
+auth.config.button.home=Home
+auth.config.button.calendar=Calendario
+auth.config.button.client=Clienti
+auth.config.button.report=Report
+auth.config.button.task=Attività
+auth.config.button.config=Impostazioni
+auth.config.button.admin=Amministrazione
+auth.config.title=Impostazioni
+
+auth.config.tab.profile=Profilo
+auth.config.tab.security=Sicurezza
+auth.config.tab.preferences=Preferenze
+auth.config.tab.account=Account
+
+auth.config.profile.photo_title=Foto del profilo
+auth.config.profile.photo_hint=PNG, JPG o GIF. Max 2 MB.
+auth.config.field.user=Nome utente
+auth.config.field.email=Email
+auth.config.field.phone=Telefono
+auth.config.button.save=Salva modifiche
+auth.config.button.change_image=Cambia immagine
+
+auth.config.permission.null=Dipendente
+auth.config.permission.adm=Amministratore
+auth.config.permission.super_adm=Super amministratore
+
+auth.config.last_access.label=Ultimo accesso: %s
+auth.config.last_access.today=Oggi alle %s
+auth.config.last_access.yesterday=Ieri alle %s
+auth.config.last_access.date=%s alle %s
+auth.config.last_access.first=Ultimo accesso: primo accesso al sistema
+
+auth.config.card.security.title=Sicurezza
+auth.config.card.security.description=<html>Modifichi la password e mantenga il suo account al sicuro.</html>
+auth.config.card.security.button=Gestisci password
+auth.config.card.preferences.title=Preferenze
+auth.config.card.preferences.description=<html>Gestisca lingua, tema e preferenze del sistema.</html>
+auth.config.card.preferences.button=Configura
+auth.config.card.account.title=Account
+auth.config.card.account.description=<html>Visualizzi le informazioni del suo account e le attività recenti.</html>
+auth.config.card.account.button=Visualizza
+auth.config.card.danger.title=Zona di pericolo
+auth.config.card.danger.description=<html>Azioni irreversibili. Utilizzare con cautela.</html>
+auth.config.card.danger.button_delete=Elimina account
+auth.config.card.danger.button_logout=Esci
+
+auth.config.error.username_invalid=Nome utente non valido. Utilizzi solo lettere e numeri, senza spazi.
+auth.config.error.email_invalid=Email non valida. Inserisca un indirizzo nel formato nome@dominio.com.
+auth.config.error.phone_invalid=Numero di telefono non valido. Utilizzi solo numeri, spazi e i simboli + ( ) -.
+auth.config.error.username_taken=Questo nome utente è già in uso.
+auth.config.error.email_taken=Questa email è già in uso.
+auth.config.error.no_changes=Nessuna modifica da salvare.
+auth.config.save_success=Modifiche salvate con successo.
+auth.config.save_error=Non è stato possibile salvare le modifiche. Verifichi la connessione e riprovi.
+
+auth.config.image.chooser_title=Selezioni un'immagine del profilo
+auth.config.image.chooser_filter=Immagini (PNG, JPG, GIF, BMP)
+auth.config.image.too_large=L'immagine supera i 2 MB. Scelga un file più piccolo.
+auth.config.image.invalid=Non è stato possibile leggere l'immagine. Scelga un file PNG, JPG, GIF o BMP valido.
+auth.config.image.success=Immagine del profilo aggiornata con successo.
+auth.config.image.error=Non è stato possibile aggiornare l'immagine. Verifichi la connessione e riprovi.
+
+audit.profile_username_changed=L'utente %s ha cambiato il proprio nome utente in %s
+audit.profile_email_changed=L'utente %s ha cambiato l'email da %s a %s
+audit.profile_phone_changed=L'utente %s ha cambiato il telefono da %s a %s
+audit.profile_image_changed=L'utente %s ha cambiato la propria immagine del profilo
+
+auth.config.delete_account.title=Elimina account
+auth.config.delete_account.message=È sicuro di voler eliminare il suo account “%s”? Questa azione non può essere annullata.
+auth.config.delete_account.button.yes=Sì
+auth.config.delete_account.button.no=No
+auth.config.delete_account.success=Account eliminato con successo.
+auth.config.delete_account.error=Non è stato possibile eliminare l'account. Verifichi la connessione e riprovi.
+auth.config.delete_account.linked=Non è possibile eliminare il suo account perché sono presenti clienti, report, attività o eventi collegati.
+audit.account_deleted=L'utente %s ha eliminato il proprio account
+
+
+# --- CONFIG SECURITY MODULE --- #
+auth.security.title=Cambia password
+auth.security.field.current=Password attuale
+auth.security.field.new=Nuova password
+auth.security.field.confirm=Conferma nuova password
+
+auth.security.strength.title=Robustezza della password
+auth.security.strength.strong=Forte
+auth.security.strength.weak=Debole
+auth.security.strength.medium=Media
+auth.security.strength.good=Buona
+
+auth.security.tips.title=Consigli per una password sicura
+auth.security.tips.length=Utilizzi almeno 8 caratteri
+auth.security.tips.case=Includa lettere maiuscole e minuscole
+auth.security.tips.numbers_symbols=Includa numeri e simboli
+auth.security.tips.personal=Eviti informazioni personali
+
+auth.security.error.empty_fields=Inserisca la password attuale, la nuova password e la conferma.
+auth.security.error.whitespace=La nuova password non può contenere spazi.
+auth.security.error.too_long=La nuova password può contenere al massimo 50 caratteri.
+auth.security.error.mismatch=La conferma non corrisponde alla nuova password.
+auth.security.error.same_as_current=La nuova password deve essere diversa da quella attuale.
+auth.security.error.wrong_current=La password attuale non è corretta.
+auth.security.save_success=Password modificata con successo.
+auth.security.save_error=Non è stato possibile modificare la password. Verifichi la connessione e riprovi.
+
+audit.profile_password_changed=L'utente %s ha modificato la propria password
+
+# --- CONFIG ACCOUNT MODULE --- #
+auth.account.title=Informazioni personali
+auth.account.field.id=ID utente
+auth.account.field.role=Ruolo
+auth.account.field.created=Data di registrazione
+auth.account.field.last_access=Ultimo accesso
+auth.account.field.email=Email registrata
+auth.account.field.status=Stato dell'account
+auth.account.status.active=Attivo
+auth.account.last_access.at=%s alle %s
+auth.account.last_access.first=Primo accesso
+
+auth.account.danger.title=Zona di pericolo
+auth.account.danger.delete.title=Elimina account
+auth.account.danger.delete.description=<html>Elimina definitivamente il suo account e i suoi dati di accesso. Questa azione non può essere annullata.</html>
+auth.account.danger.delete.button=Elimina account
+auth.account.danger.logout.title=Esci
+auth.account.danger.logout.description=<html>Esca dal suo account su questo dispositivo e torni alla schermata di accesso.</html>
+auth.account.danger.logout.button=Esci
+
+# --- CONFIG PREFERENCES MODULE --- #
+auth.preferences.language.title=Lingua del sistema
+auth.preferences.language.description=Selezioni la lingua dell'applicazione.
+
+auth.preferences.theme.title=Tema dell'interfaccia
+auth.preferences.theme.description=Scelga il tema di aspetto dell'applicazione.
+auth.preferences.theme.dark.title=Scuro
+auth.preferences.theme.dark.description=Tema scuro predefinito
+auth.preferences.theme.light.title=Chiaro
+auth.preferences.theme.light.description=Tema chiaro
+
+auth.preferences.notify.title=Notifiche
+auth.preferences.notify.description=Gestisca come desidera ricevere le notifiche.
+auth.preferences.notify.push.title=Ricevi notifiche
+auth.preferences.notify.push.description=Attivi per ricevere le notifiche
+auth.preferences.notify.tasks.title=Ricevi avvisi sulle attività
+auth.preferences.notify.tasks.description=Avvisi su scadenze e attività in sospeso
+auth.preferences.notify.email.title=Ricevi email dal sistema
+auth.preferences.notify.email.description=Comunicazioni e aggiornamenti via email
+
+auth.preferences.other.title=Altre preferenze
+auth.preferences.other.description=Impostazioni aggiuntive dell'applicazione
+auth.preferences.other.timezone=Fuso orario
+auth.preferences.other.date_format=Formato della data
+auth.preferences.other.hour_format=Formato dell'ora
+
+auth.preferences.timezone.brasilia=(UTC-03:00) Brasilia
+auth.preferences.timezone.manaus=(UTC-04:00) Manaus
+auth.preferences.timezone.rio_branco=(UTC-05:00) Rio Branco
+auth.preferences.timezone.noronha=(UTC-02:00) Fernando de Noronha
+auth.preferences.timezone.utc=(UTC+00:00) UTC
+auth.preferences.timezone.lisboa=(UTC+00:00) Lisbona
+auth.preferences.timezone.new_york=(UTC-05:00) New York
+auth.preferences.timezone.tokyo=(UTC+09:00) Tokyo
+
+auth.preferences.date_format.dmy=GG/MM/AAAA
+auth.preferences.date_format.mdy=MM/GG/AAAA
+auth.preferences.date_format.ymd=AAAA-MM-GG
+
+auth.preferences.hour_format.h24=24 ore (HH:mm)
+auth.preferences.hour_format.h12=12 ore (hh:mm AM/PM)
+
+# --- CALENDAR MODULE --- #
+auth.calendar.title=Calendario
+auth.calendar.label.new_event_text=Nuovo evento
+auth.calendar.more_events=+%d altri
+
+# --- NEW EVENT MODULE --- #
+auth.new_event.window_title=CT Contab Manager
+auth.new_event.button.search=Cerca
+auth.new_event.button.home=Home
+auth.new_event.button.calendar=Calendario
+auth.new_event.button.client=Clienti
+auth.new_event.button.report=Report
+auth.new_event.button.task=Attività
+auth.new_event.button.config=Impostazioni
+auth.new_event.button.admin=Amministrazione
+
+auth.new_event.label.title=Registri un nuovo evento
+auth.new_event.label.description=<html><p align="center">Mantenga aggiornata l'agenda aziendale registrando gli eventi del team.</p></html>
+auth.new_event.label.default.name=Nome dell'evento*
+auth.new_event.label.default.responsible=Responsabile*
+auth.new_event.label.default.sector=Settore responsabile
+auth.new_event.label.default.time=Orario dell'evento*
+auth.new_event.label.default.date=Data dell'evento*
+auth.new_event.label.default.observation=Note
+auth.new_event.label.hover.name=Nome dell'evento*
+auth.new_event.label.hover.responsible=Responsabile*
+auth.new_event.label.hover.sector=Settore responsabile
+auth.new_event.label.hover.time=Orario dell'evento*
+auth.new_event.label.hover.date=Data dell'evento*
+auth.new_event.label.hover.observation=Note
+auth.new_event.label.button.cancel=Annulla
+auth.new_event.label.button.register=Registra
+auth.new_event.error.invalid_date=Data non valida. Utilizzi il formato GG/MM/AAAA, ad esempio 25/12/2026.
+auth.new_event.error.invalid_time=Orario non valido. Utilizzi il formato HH:mm, ad esempio 18:30.
+auth.new_event.error.invalid_user=Responsabile non trovato. Indichi un utente esistente.
+
+auth.used_event.label.title=Modifica evento
+auth.used_event.label.description=<html><p align="center">Mantenga aggiornata l'agenda aziendale modificando le informazioni dell'evento.</p></html>
+auth.used_event.label.button.save=Salva modifiche
+auth.used_event.label.button.delete=Elimina
+
+auth.used_event.confirm_delete.title=Conferma eliminazione
+auth.used_event.confirm_delete.message=È sicuro di voler eliminare l'evento “%s”?
+auth.used_event.confirm_delete.button.yes=Sì
+auth.used_event.confirm_delete.button.no=No
+auth.used_event.confirm_delete.success=Evento eliminato con successo.
+auth.used_event.confirm_delete.error=Errore durante l'eliminazione dell'evento. Verifichi la connessione.
+auth.used_event.register.success=Evento salvato con successo.
+auth.used_event.register.error=Al momento non è stato possibile connettersi al database. Verifichi la connessione a Internet o riprovi più tardi.

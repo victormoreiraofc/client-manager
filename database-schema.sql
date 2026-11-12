@@ -8,9 +8,11 @@ CREATE TABLE usuarios (
     email VARCHAR(100) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
     idioma VARCHAR(10) DEFAULT 'pt_BR',
+    telefone VARCHAR(30) NULL,
     Imagem BLOB,
     Permissao ENUM('NULL', 'ADM', 'SUPER_ADM') NOT NULL DEFAULT 'NULL',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    ultimo_acesso DATETIME NULL,
     CHECK (usuario REGEXP '^[a-zA-Z0-9]+$'),
     CHECK (senha REGEXP '^[^[:space:]]+$'),
     CHECK (cargo REGEXP '^[a-zA-Z]+$')
@@ -59,9 +61,19 @@ CREATE TABLE agenda (
     DataFinal DATE NOT NULL,
     HorarioInicial TIME NOT NULL,
     HorarioFinal TIME NOT NULL,
+    setor VARCHAR(100) NULL,
+    observacoes TEXT NULL;
     usuario VARCHAR(255) NOT NULL,
+    google_event_id VARCHAR(255) NULL,
+    atualizado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    sincronizado_em TIMESTAMP NULL,
+    UNIQUE KEY uk_agenda_google_event (google_event_id),
     CONSTRAINT fk_usuario FOREIGN KEY (usuario) REFERENCES usuarios(usuario) ON UPDATE CASCADE
 );
+
+CREATE USER 'n8n_agenda'@'%' IDENTIFIED BY 'CTCONTAB-PASSWORD-CALENDAR';
+GRANT SELECT, INSERT, UPDATE, DELETE ON ctcontab.agenda TO 'n8n_agenda'@'%';
+GRANT SELECT ON ctcontab.usuarios TO 'n8n_agenda'@'%';
 
 CREATE TABLE auditoria (
     id INT AUTO_INCREMENT PRIMARY KEY,

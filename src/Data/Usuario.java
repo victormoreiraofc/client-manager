@@ -13,6 +13,8 @@ public class Usuario implements Serializable {
     private String permissao;
     private Date created_at;
     private byte[] imagem;
+    private String telefone;
+    private String ultimoAcesso;
 
     public Usuario() {
     }
@@ -63,6 +65,22 @@ public class Usuario implements Serializable {
 
     public void setImagem(byte[] imagem) {
         this.imagem = imagem;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getUltimoAcesso() {
+        return ultimoAcesso;
+    }
+
+    public void setUltimoAcesso(String ultimoAcesso) {
+        this.ultimoAcesso = ultimoAcesso;
     }
 
     public Date getCreatedAt() {

@@ -614,7 +614,7 @@ public class Register extends javax.swing.JFrame {
         lblTitle.setText("Crie sua conta");
         lblTitle.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         getContentPane().add(lblTitle);
-        lblTitle.setBounds(504, 219, 450, 40);
+        lblTitle.setBounds(504, 219, 730, 40);
         getContentPane().add(lblLogo);
         lblLogo.setBounds(624, 157, 30, 30);
 

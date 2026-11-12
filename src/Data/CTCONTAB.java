@@ -925,4 +925,291 @@ public class CTCONTAB {
         st.setInt(1, id);
         st.executeUpdate();
     }
+
+    public static boolean saveNewRelatorio(String dataCadastro, String nome, String descricao, String status, String usuario) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        String sql = "INSERT INTO relatorio (NomeRelatorio, Descrição, StatusRelatorio, DataCadastro, usuario) VALUES (?, ?, ?, ?, ?)";
+
+        try (PreparedStatement st = conectado.prepareStatement(sql)) {
+            st.setString(1, nome);
+            st.setString(2, descricao);
+            st.setString(3, status);
+            st.setString(4, dataCadastro);
+            st.setString(5, usuario);
+
+            return st.executeUpdate() > 0;
+        }
+    }
+
+    public static boolean updateRelatorio(int id, String nome, String descricao, String status, String usuario) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        String sql = "UPDATE relatorio SET NomeRelatorio = ?, Descrição = ?, StatusRelatorio = ?, usuario = ? WHERE ID = ?";
+
+        try (PreparedStatement st = conectado.prepareStatement(sql)) {
+            st.setString(1, nome);
+            st.setString(2, descricao);
+            st.setString(3, status);
+            st.setString(4, usuario);
+            st.setInt(5, id);
+
+            return st.executeUpdate() > 0;
+        }
+    }
+
+    public static void deletarRelatorio(int id) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement("DELETE FROM relatorio WHERE ID = ?");
+        st.setInt(1, id);
+        st.executeUpdate();
+    }
+
+    public static String responsavelDoRelatorio(int id) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement("SELECT usuario FROM relatorio WHERE ID = ?");
+        st.setInt(1, id);
+        ResultSet rs = st.executeQuery();
+        return rs.next() ? rs.getString("usuario") : "";
+    }
+
+    public static String buscarNomeUsuario(String nome) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement("SELECT usuario FROM usuarios WHERE usuario = ?");
+        st.setString(1, nome);
+        ResultSet rs = st.executeQuery();
+        return rs.next() ? rs.getString("usuario") : null;
+    }
+
+    public static boolean saveNewTarefa(String dataCadastro, String nome, String descricao, String status, String prioridade, String responsavel) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        String sql = "INSERT INTO tarefa (NomeTarefa, Descrição, StatusTarefa, DataCadastro, Prioridade, responsavel) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement st = conectado.prepareStatement(sql)) {
+            st.setString(1, nome);
+            st.setString(2, descricao);
+            st.setString(3, status);
+            st.setString(4, dataCadastro);
+            st.setString(5, prioridade);
+            st.setString(6, responsavel);
+
+            return st.executeUpdate() > 0;
+        }
+    }
+
+    public static boolean updateTarefa(int id, String nome, String descricao, String status, String prioridade, String responsavel) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        String sql = "UPDATE tarefa SET NomeTarefa = ?, Descrição = ?, StatusTarefa = ?, Prioridade = ?, responsavel = ? WHERE ID = ?";
+
+        try (PreparedStatement st = conectado.prepareStatement(sql)) {
+            st.setString(1, nome);
+            st.setString(2, descricao);
+            st.setString(3, status);
+            st.setString(4, prioridade);
+            st.setString(5, responsavel);
+            st.setInt(6, id);
+
+            return st.executeUpdate() > 0;
+        }
+    }
+
+    public static void deletarTarefa(int id) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement("DELETE FROM tarefa WHERE ID = ?");
+        st.setInt(1, id);
+        st.executeUpdate();
+    }
+
+    public static String registrarAcesso(String usuario) {
+        try {
+            conectado = conectar();
+            String anterior = null;
+            PreparedStatement sel = conectado.prepareStatement("SELECT DATE_FORMAT(ultimo_acesso, '%Y-%m-%d %H:%i:%s') FROM usuarios WHERE usuario = ?");
+            sel.setString(1, usuario);
+            ResultSet rs = sel.executeQuery();
+            if (rs.next()) {
+                anterior = rs.getString(1);
+            }
+
+            PreparedStatement upd = conectado.prepareStatement("UPDATE usuarios SET ultimo_acesso = CONVERT_TZ(NOW(), @@session.time_zone, '-03:00') WHERE usuario = ?");
+            upd.setString(1, usuario);
+            upd.executeUpdate();
+            return anterior;
+        } catch (Exception e) {
+            System.err.println("Falha ao registrar último acesso: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public static String buscarTelefone(String usuario) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement("SELECT telefone FROM usuarios WHERE usuario = ?");
+        st.setString(1, usuario);
+        ResultSet rs = st.executeQuery();
+        if (rs.next()) {
+            String telefone = rs.getString(1);
+            return telefone == null ? "" : telefone;
+        }
+        return "";
+    }
+
+    public static String verificarDuplicidadePerfil(String usuarioAtual, String novoUsuario, String novoEmail) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement("SELECT usuario, email FROM usuarios WHERE (usuario = ? OR email = ?) AND usuario <> ?");
+        st.setString(1, novoUsuario);
+        st.setString(2, novoEmail);
+        st.setString(3, usuarioAtual);
+        ResultSet rs = st.executeQuery();
+
+        String resultado = null;
+        while (rs.next()) {
+            if (novoUsuario.equalsIgnoreCase(rs.getString("usuario"))) {
+                return "USER";
+            }
+            if (novoEmail.equalsIgnoreCase(rs.getString("email"))) {
+                resultado = "EMAIL";
+            }
+        }
+        return resultado;
+    }
+
+    public static boolean atualizarPerfil(String usuarioAtual, String novoUsuario, String novoEmail, String novoTelefone) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        String sql = "UPDATE usuarios SET usuario = ?, email = ?, telefone = ? WHERE usuario = ?";
+
+        try (PreparedStatement st = conectado.prepareStatement(sql)) {
+            st.setString(1, novoUsuario);
+            st.setString(2, novoEmail);
+            if (novoTelefone == null || novoTelefone.isEmpty()) {
+                st.setNull(3, java.sql.Types.VARCHAR);
+            } else {
+                st.setString(3, novoTelefone);
+            }
+            st.setString(4, usuarioAtual);
+
+            return st.executeUpdate() > 0;
+        }
+    }
+
+    public static boolean atualizarImagemUsuario(String usuario, byte[] imagem) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        try (PreparedStatement st = conectado.prepareStatement("UPDATE usuarios SET Imagem = ? WHERE usuario = ?")) {
+            st.setBytes(1, imagem);
+            st.setString(2, usuario);
+
+            return st.executeUpdate() > 0;
+        }
+    }
+
+    public static boolean verificarSenhaAtual(String usuario, String senha) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        try (PreparedStatement st = conectado.prepareStatement("SELECT 1 FROM usuarios WHERE usuario = ? AND senha = ?")) {
+            st.setString(1, usuario);
+            st.setString(2, senha);
+            ResultSet rs = st.executeQuery();
+            return rs.next();
+        }
+    }
+
+    public static boolean atualizarSenha(String usuario, String novaSenha) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        try (PreparedStatement st = conectado.prepareStatement("UPDATE usuarios SET senha = ? WHERE usuario = ?")) {
+            st.setString(1, novaSenha);
+            st.setString(2, usuario);
+            return st.executeUpdate() > 0;
+        }
+    }
+
+    public static String[] buscarInformacoesConta(String usuario) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        String sql = "SELECT id, cargo, email, Permissao, DATE_FORMAT(created_at, '%d/%m/%Y') FROM usuarios WHERE usuario = ?";
+        try (PreparedStatement st = conectado.prepareStatement(sql)) {
+            st.setString(1, usuario);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return new String[]{
+                    String.valueOf(rs.getInt(1)),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5)
+                };
+            }
+            return null;
+        }
+    }
+
+    public static List<Evento> listarEventosPeriodo(String inicio, String fim) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        List<Evento> eventos = new ArrayList<>();
+        String sql = "SELECT ID, Evento, DATE_FORMAT(DataInicio, '%Y-%m-%d'), DATE_FORMAT(DataFinal, '%Y-%m-%d'), "
+                + "TIME_FORMAT(HorarioInicial, '%H:%i'), TIME_FORMAT(HorarioFinal, '%H:%i'), usuario "
+                + "FROM agenda WHERE DataFinal >= ? AND DataInicio <= ? ORDER BY DataInicio, HorarioInicial";
+
+        try (PreparedStatement st = conectado.prepareStatement(sql)) {
+            st.setString(1, inicio);
+            st.setString(2, fim);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                eventos.add(new Evento(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
+                        rs.getString(5), rs.getString(6), rs.getString(7)));
+            }
+        }
+        return eventos;
+    }
+
+    public static boolean saveNewEvento(String nome, String dataInicio, String dataFinal, String horarioInicial, String horarioFinal, String setor, String observacoes, String usuario) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        String sql = "INSERT INTO agenda (Evento, DataInicio, DataFinal, HorarioInicial, HorarioFinal, usuario, setor, observacoes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement st = conectado.prepareStatement(sql)) {
+            st.setString(1, nome);
+            st.setString(2, dataInicio);
+            st.setString(3, dataFinal);
+            st.setString(4, horarioInicial);
+            st.setString(5, horarioFinal);
+            st.setString(6, usuario);
+            st.setString(7, setor == null || setor.isEmpty() ? null : setor);
+            st.setString(8, observacoes == null || observacoes.isEmpty() ? null : observacoes);
+
+            return st.executeUpdate() > 0;
+        }
+    }
+
+    public static boolean updateEvento(int id, String nome, String dataInicio, String dataFinal, String horarioInicial, String horarioFinal, String setor, String observacoes, String usuario) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        String sql = "UPDATE agenda SET Evento = ?, DataInicio = ?, DataFinal = ?, HorarioInicial = ?, HorarioFinal = ?, usuario = ?, setor = ?, observacoes = ? WHERE ID = ?";
+
+        try (PreparedStatement st = conectado.prepareStatement(sql)) {
+            st.setString(1, nome);
+            st.setString(2, dataInicio);
+            st.setString(3, dataFinal);
+            st.setString(4, horarioInicial);
+            st.setString(5, horarioFinal);
+            st.setString(6, usuario);
+            st.setString(7, setor == null || setor.isEmpty() ? null : setor);
+            st.setString(8, observacoes == null || observacoes.isEmpty() ? null : observacoes);
+            st.setInt(9, id);
+
+            return st.executeUpdate() > 0;
+        }
+    }
+
+    public static void deletarEvento(int id) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        PreparedStatement st = conectado.prepareStatement("DELETE FROM agenda WHERE ID = ?");
+        st.setInt(1, id);
+        st.executeUpdate();
+    }
+
+    public static String[] buscarDetalhesEvento(int id) throws ClassNotFoundException, SQLException {
+        conectado = conectar();
+        try (PreparedStatement st = conectado.prepareStatement("SELECT setor, observacoes FROM agenda WHERE ID = ?")) {
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return new String[]{rs.getString(1), rs.getString(2)};
+            }
+            return null;
+        }
+    }
+
 }

@@ -124,6 +124,10 @@ public class RelatorioItemPanel extends JPanel {
         });
     }
 
+    public RelatorioItemPanel(Data.Relatorio r, Object parent) {
+        this(r, (Report) parent);
+    }
+
     public void setSelecionado(boolean sel) {
         this.selecionado = sel;
         repaint();
