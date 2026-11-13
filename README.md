@@ -1,7 +1,5 @@
 <div align="center">
 
-<img src="src/images/ctcontab.png" alt="CT Contab" width="200">
-
 <img src="src/images/client-manager-title.svg" alt="Client Manager" width="420">
 
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=flat&logo=openjdk&logoColor=white)
